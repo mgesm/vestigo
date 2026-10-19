@@ -401,13 +401,18 @@
       <div class="controls-row">
         <div class="ctrl-left">
           <button class="ctrl-btn" id="play-btn" onclick="togglePlay()">
-            <span id="play-icon">▶</span> <span id="play-label">REPRODUCIR</span>
+            <span id="play-icon" style="display:inline-flex; align-items:center; margin-right:4px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            </span>
+            <span id="play-label">REPRODUCIR</span>
           </button>
           <button class="ctrl-btn" id="voice-btn" onclick="toggleVoice()">
-            🎙️ <span id="voice-label">VOZ: ACTIVADA</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+            <span id="voice-label">VOZ: ACTIVADA</span>
           </button>
           <button class="ctrl-btn" id="music-btn" onclick="toggleMusic()">
-            🎵 <span id="music-label">MÚSICA: ON</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+            <span id="music-label">MÚSICA: ON</span>
           </button>
           <div class="timer-display">
             <span id="cur-time">00:00</span> / <span id="tot-time">03:40</span>
@@ -434,11 +439,13 @@
       <span style="color:#94a3b8; margin-left:8px;">Tenéis listos los expedientes oficiales en PDF y la terminal web interactiva:</span>
     </div>
     <div style="display:flex; gap:10px;">
-      <a href="../documentos-imprimibles/index.html" target="_blank" class="ctrl-btn" style="background:#1e3a8a; border-color:#38bdf8; text-decoration:none;">
-        📑 DESCARGAR DOSSIERS PDF
+      <a href="../documentos-imprimibles/index.html" target="_blank" class="ctrl-btn" style="background:#1e3a8a; border-color:#38bdf8; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        <span>DESCARGAR DOSSIERS PDF</span>
       </a>
-      <a href="../terminal-policial/index.html" target="_blank" class="ctrl-btn" style="background:#065f46; border-color:#34d399; text-decoration:none;">
-        💻 TERMINAL SITRA-JUD
+      <a href="../terminal-policial/index.html" target="_blank" class="ctrl-btn" style="background:#065f46; border-color:#34d399; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+        <span>TERMINAL SITRA-JUD</span>
       </a>
     </div>
   </div>
@@ -664,7 +671,8 @@
 
     function playVideo() {
       isPlaying = true;
-      document.getElementById('play-icon').innerText = '⏸';
+      const playIcon = document.getElementById('play-icon');
+      if (playIcon) playIcon.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
       document.getElementById('play-label').innerText = 'PAUSAR';
       startDrone();
       renderScene(currentSceneIdx);
@@ -683,7 +691,8 @@
 
     function pauseVideo() {
       isPlaying = false;
-      document.getElementById('play-icon').innerText = '▶';
+      const playIcon = document.getElementById('play-icon');
+      if (playIcon) playIcon.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
       document.getElementById('play-label').innerText = 'REANUDAR';
       stopDrone();
       if ('speechSynthesis' in window) window.speechSynthesis.cancel();

@@ -59,6 +59,10 @@
   }
 
   body {
+    padding-bottom: 24px !important;
+  }
+
+  body.in-case-view {
     padding-bottom: var(--vg-content-bottom-clearance) !important;
   }
 
@@ -140,59 +144,101 @@
    4. DE-CLUTTERING & PROGRESSIVE DISCLOSURE (NO MORE WALL-OF-TEXT FATIGUE!)
    ============================================================================ */
 @media screen and (max-width: 768px) {
-  /* --- HERO BANNER DECLUTTER --- */
-  .hero-banner {
-    padding: 24px 16px 20px 16px !important;
-    margin-bottom: 20px !important;
-    border-radius: 20px !important;
-    text-align: left !important;
+  /* --- MOBILE TOPBAR ANTI-OVERFLOW & COMPACTNESS --- */
+  .vg-desktop-header {
+    width: calc(100% - 24px) !important;
+    margin: 8px auto 14px auto !important;
+    height: 52px !important;
+    padding: 0 14px !important;
+    gap: 8px !important;
   }
 
-  .hero-tag {
-    font-size: 10px !important;
-    letter-spacing: 1.2px !important;
-    margin-bottom: 8px !important;
-    display: inline-block !important;
+  .vg-header-brand {
+    gap: 8px !important;
   }
 
-  .hero-title {
-    font-size: 22px !important;
-    line-height: 1.25 !important;
-    letter-spacing: -0.02em !important;
-    margin-bottom: 8px !important;
+  .vg-header-brand span:first-child {
+    font-size: 0.95rem !important;
   }
 
-  /* Mobile Progressive Disclosure for Hero Description */
-  .hero-desc {
-    font-size: 13px !important;
-    line-height: 1.5 !important;
-    color: var(--vg-text-secondary, #94a3b8) !important;
-    margin-bottom: 0 !important;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    transition: all 0.3s ease;
+  .vg-header-brand span:last-child {
+    font-size: 0.52rem !important;
   }
 
-  .hero-desc.expanded {
-    -webkit-line-clamp: unset !important;
+  .vg-header-logo-icon {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .vg-header-logo-img {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  /* Strict Mobile Rule: Hide desktop command pills to eliminate horizontal cutoff */
+  .vg-header-right .vg-cmd-pill {
+    display: none !important;
+  }
+
+  .vg-header-right {
+    gap: 6px !important;
+  }
+
+  .vg-status-pill {
+    font-size: 9px !important;
+    padding: 3px 8px !important;
+  }
+
+  /* --- MINIMALIST CATALOG HEADER (NO BULKY HERO BANNER) --- */
+  .catalog-clean-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-end !important;
+    margin-bottom: 16px !important;
+    padding: 4px 0 12px 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+
+  .catalog-kicker {
+    font-family: var(--vg-font-mono, monospace) !important;
+    font-size: 9px !important;
+    color: var(--vg-cyan, #00E5FF) !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
     display: block !important;
+    margin-bottom: 2px !important;
   }
 
-  /* Tap-to-expand chip for text summaries */
-  .vg-disclosure-trigger {
-    background: rgba(0, 229, 255, 0.08);
-    border: 1px solid rgba(0, 229, 255, 0.25);
-    color: var(--vg-cyan, #00e5ff);
-    font-family: var(--vg-font-mono, monospace);
-    font-size: 11px;
-    padding: 4px 12px;
-    border-radius: 9999px;
-    margin-top: 8px;
-    gap: 6px;
-    width: auto;
-    align-self: flex-start;
+  .catalog-main-title {
+    font-size: 19px !important;
+    font-weight: 800 !important;
+    color: #FFFFFF !important;
+    letter-spacing: -0.02em !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+  }
+
+  .catalog-header-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    font-family: var(--vg-font-mono, monospace) !important;
+    font-size: 9px !important;
+    padding: 3px 8px !important;
+    border-radius: 9999px !important;
+    background: rgba(34, 197, 94, 0.12) !important;
+    border: 1px solid rgba(34, 197, 94, 0.3) !important;
+    color: #4ade80 !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+  }
+
+  .catalog-badge-dot {
+    width: 5px !important;
+    height: 5px !important;
+    border-radius: 50% !important;
+    background: #22c55e !important;
+    box-shadow: 0 0 6px rgba(34, 197, 94, 0.8) !important;
   }
 
   /* --- CASE CARDS STREAMLINING --- */
@@ -314,7 +360,8 @@
   }
 
   /* Hide redundant horizontal tab bar on phone when Floating Dock is active */
-  .case-tabs-bar {
+  .case-tabs-bar,
+  .vg-desktop-tabs-bar {
     display: none !important;
   }
 
@@ -663,7 +710,7 @@
    7. FLOATING GLASS MOBILE BOTTOM NAVIGATION (CURVED DOCK ISLAND)
    ============================================================================ */
 @media screen and (max-width: 768px) {
-  /* Container positioning */
+  /* Container positioning: HIDDEN by default on mobile (catalog view) */
   .mobile-bottom-nav,
   .vg-bottom-nav-container {
     position: fixed !important;
@@ -677,11 +724,17 @@
     -webkit-backdrop-filter: none !important;
     border: none !important;
     padding: 0 16px !important;
-    display: flex !important;
+    display: none !important;
     justify-content: center !important;
     align-items: center !important;
     z-index: 1000 !important;
     pointer-events: none !important;
+  }
+
+  /* Only reveal floating dock when investigator is actively inside a case */
+  body.in-case-view .mobile-bottom-nav,
+  body.in-case-view .vg-bottom-nav-container {
+    display: flex !important;
   }
 
   /* Floating Glass Curved Island Dock */

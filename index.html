@@ -904,9 +904,11 @@
     <!-- Center: Forensic Case Search Bar (Ctrl+K or /) -->
     <div class="vg-header-center">
       <div class="vg-search-capsule">
-        <span class="vg-search-icon">🔍</span>
+        <span class="vg-search-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </span>
         <input type="text" id="vg-global-search" class="vg-search-input" placeholder="Buscar pruebas, matrículas, coartadas, actas... (Ctrl+K)" autocomplete="off">
-        <span class="vg-search-shortcut-pill">⌘K</span>
+        <span class="vg-search-shortcut-pill">Ctrl+K</span>
       </div>
 
       <!-- Live Search Results Dropdown -->
@@ -945,21 +947,21 @@
 
       <!-- Dual Sidecar Pane Toggle (D) -->
       <button class="vg-cmd-pill" id="btn-toggle-sidecar" onclick="toggleDualSidecar()" title="Abrir/Cerrar Panel Lateral Dual (Tecla D)">
-        <span>◫ Panel Dual</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:2px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="15" y1="3" x2="15" y2="21"></line></svg>
+        <span>Panel Dual</span>
         <span class="vg-cmd-pill-kbd">D</span>
       </button>
 
       <!-- Keyboard Shortcuts Cheatsheet Modal Trigger (?) -->
       <button class="vg-cmd-pill" onclick="openShortcutsModal()" title="Guía de Atajos de Teclado">
-        <span>⌨ Atajos</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:2px;"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6" y2="8"></line><line x1="10" y1="8" x2="10" y2="8"></line><line x1="14" y1="8" x2="14" y2="8"></line><line x1="18" y1="8" x2="18" y2="8"></line><line x1="6" y1="12" x2="6" y2="12"></line><line x1="10" y1="12" x2="10" y2="12"></line><line x1="14" y1="12" x2="14" y2="12"></line><line x1="18" y1="12" x2="18" y2="12"></line><line x1="7" y1="16" x2="17" y2="16"></line></svg>
+        <span>Atajos</span>
         <span class="vg-cmd-pill-kbd">?</span>
       </button>
 
-      <a href="branding/index.html" class="vg-cmd-pill" title="Identidad de Marca">
-        <span>💎 Brand</span>
-      </a>
       <a href="https://github.com/mgesm/vestigo" target="_blank" class="vg-cmd-pill" title="Repositorio en GitHub">
-        <span>🐙 GitHub</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right:2px;"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        <span>GitHub</span>
       </a>
     </div>
   </header>
@@ -972,16 +974,16 @@
     <!-- ======================================================== -->
     <section id="view-catalog" class="view-section active">
       
-      <!-- HERO BANNER -->
-      <div class="hero-banner">
-        <div class="hero-tag">PLATAFORMA DE INVESTIGACIÓN POLICIAL HÍBRIDA</div>
-        <h1 class="hero-title">Expedientes de Instrucción Criminalística</h1>
-        <p class="hero-desc" id="heroDescMain">
-          Resuelve crímenes verosímiles mediante el cruce de atestados físicos periciales, autopsias tanatológicas, lectores de tráfico DGT, circuitos de televisión y deducción científica implacable.
-        </p>
-        <button class="vg-disclosure-trigger" data-target="heroDescMain" data-expand-text="Ver introducción forense ▾" data-collapse-text="Ocultar síntesis ▴">
-          Ver introducción forense ▾
-        </button>
+      <!-- ENCABEZADO MINIMALISTA DE EXPEDIENTES -->
+      <div class="catalog-clean-header">
+        <div>
+          <span class="catalog-kicker">INSTRUCCIÓN CRIMINALÍSTICA</span>
+          <h1 class="catalog-main-title">Expedientes Disponibles</h1>
+        </div>
+        <div class="catalog-header-badge">
+          <span class="catalog-badge-dot"></span>
+          <span>1 ACTIVO</span>
+        </div>
       </div>
 
       <!-- REJILLA DE CASOS -->
@@ -1000,12 +1002,9 @@
             <div>
               <div class="case-number">DILIGENCIAS PREVIAS Nº 402/2024</div>
               <h2 class="case-title">El Último Mosto de Bodegas Valdeluna</h2>
-              <p class="case-summary" id="caseSummary01">
-                Peñafiel, noche gélida de vendimia. El cuerpo del prestigioso bodeguero Gonzalo de la Serna yace a los pies de la Tina 4. Una aparente asfixia por gas carbónico desmentida por livideces dorsales y un reactivo químico azul revelador.
+              <p class="case-summary">
+                Peñafiel, noche gélida de vendimia. El cuerpo del bodeguero Gonzalo de la Serna yace a los pies de la Tina 4. Una aparente asfixia por gas carbónico desmentida por livideces dorsales y un reactivo químico azul revelador.
               </p>
-              <button class="vg-disclosure-trigger" data-target="caseSummary01" data-expand-text="Ver sinopsis del caso ▾" data-collapse-text="Ocultar síntesis ▴">
-                Ver sinopsis del caso ▾
-              </button>
             </div>
 
             <div>
@@ -1025,7 +1024,8 @@
               </div>
 
               <button class="btn-enter-case" onclick="openCase('valdeluna')">
-                ABRIR EXPEDIENTE Y JUGAR ▶
+                <span>ABRIR EXPEDIENTE</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
               </button>
             </div>
           </div>
@@ -1035,7 +1035,7 @@
         <div class="case-card" style="opacity: 0.75;">
           <div class="case-cover-wrap">
             <div style="width:100%; height:100%; background: linear-gradient(135deg, #091e3a, #030a14); display:flex; align-items:center; justify-content:center;">
-              <span style="font-size: 40px; opacity: 0.3;">⚓</span>
+              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.35; color:#38bdf8;"><circle cx="12" cy="5" r="3"></circle><line x1="12" y1="22" x2="12" y2="8"></line><path d="M5 12H2a10 10 0 0 0 20 0h-3"></path></svg>
             </div>
             <div class="case-badge-overlay">
               <span class="case-badge badge-locked">CASO 02 · EN DESARROLLO</span>
@@ -1067,7 +1067,8 @@
               </div>
 
               <button class="btn-enter-case btn-locked" disabled>
-                🔒 CASO EN INSTRUCCIÓN
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-right:5px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <span>CASO EN INSTRUCCIÓN</span>
               </button>
             </div>
           </div>
@@ -1077,7 +1078,7 @@
         <div class="case-card" style="opacity: 0.6;">
           <div class="case-cover-wrap">
             <div style="width:100%; height:100%; background: linear-gradient(135deg, #2b112c, #070308); display:flex; align-items:center; justify-content:center;">
-              <span style="font-size: 40px; opacity: 0.3;">🏛️</span>
+              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.35; color:#a855f7;"><line x1="2" y1="22" x2="22" y2="22"></line><line x1="2" y1="22" x2="22" y2="22"></line><path d="M4 22V6"></path><path d="M8 22V6"></path><path d="M16 22V6"></path><path d="M20 22V6"></path><path d="M4 6h16"></path></svg>
             </div>
             <div class="case-badge-overlay">
               <span class="case-badge badge-locked">CASO 03 · PLANIFICADO</span>
@@ -1109,7 +1110,8 @@
               </div>
 
               <button class="btn-enter-case btn-locked" disabled>
-                🔒 CASO EN INSTRUCCIÓN
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-right:5px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <span>CASO EN INSTRUCCIÓN</span>
               </button>
             </div>
           </div>
@@ -1127,13 +1129,9 @@
       <!-- CABECERA SUPERIOR DEL CASO -->
       <div class="case-header-nav">
         <button class="back-btn" onclick="switchView('catalog')">
-          ← VOLVER AL CATÁLOGO
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          VOLVER A EXPEDIENTES
         </button>
-        <div style="display:flex; gap:10px;">
-          <a href="documentos-imprimibles/index.html" target="_blank" class="back-btn">
-            📥 HUB DE DESCARGAS
-          </a>
-        </div>
       </div>
 
       <!-- TARJETA META DEL CASO -->
@@ -1152,23 +1150,28 @@
       <nav class="vg-desktop-tabs-bar" aria-label="Navegación del Expediente">
         <button class="vg-tab-item active" id="tab-nav-briefing" onclick="switchCaseTab('briefing')">
           <span class="vg-tab-num-key">1</span>
-          <span>🎬 Vídeo Briefing</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+          <span>Vídeo Briefing</span>
         </button>
         <button class="vg-tab-item" id="tab-nav-dossiers" onclick="switchCaseTab('dossiers')">
           <span class="vg-tab-num-key">2</span>
-          <span>📄 Dossiers &amp; PDFs (31 págs)</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <span>Dossiers &amp; PDFs</span>
         </button>
         <button class="vg-tab-item" id="tab-nav-terminal" onclick="switchCaseTab('terminal')">
           <span class="vg-tab-num-key">3</span>
-          <span>💻 Terminal SITRA-JUD</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+          <span>Terminal SITRA-JUD</span>
         </button>
         <button class="vg-tab-item" id="tab-nav-evidencias" onclick="switchCaseTab('evidencias')">
           <span class="vg-tab-num-key">4</span>
-          <span>👥 Sospechosos &amp; Escena</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <span>Sospechosos &amp; Escena</span>
         </button>
         <button class="vg-tab-item" id="tab-nav-notas" onclick="switchCaseTab('notas')">
           <span class="vg-tab-num-key">5</span>
-          <span>📓 Bloc de Notas</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+          <span>Bloc de Notas</span>
         </button>
       </nav>
 
@@ -1212,8 +1215,14 @@
               </div>
             </div>
             <div class="dossier-btns">
-              <a href="documentos-imprimibles/INSTRUCCIONES_DE_JUEGO.pdf" target="_blank" class="btn-pdf" style="background:#facc15; color:#000;">DESCARGAR PDF 📥</a>
-              <button onclick="openDocReader('documentos-imprimibles/instrucciones_juego.html', 'Manual de Instrucciones del Investigador', 'GUÍA DE OPERACIONES')" class="btn-html">VER EN LECTOR ➔</button>
+              <a href="documentos-imprimibles/INSTRUCCIONES_DE_JUEGO.pdf" target="_blank" class="btn-pdf" style="background:#facc15; color:#000;">
+                <span>DESCARGAR PDF</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              </a>
+              <button onclick="openDocReader('documentos-imprimibles/instrucciones_juego.html', 'Manual de Instrucciones del Investigador', 'GUÍA DE OPERACIONES')" class="btn-html">
+                <span>LEER DOCUMENTO</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
             </div>
           </div>
 
@@ -1227,8 +1236,14 @@
               </div>
             </div>
             <div class="dossier-btns">
-              <a href="documentos-imprimibles/SOBRE_A_PIEZA_PRINCIPAL.pdf" target="_blank" class="btn-pdf">DESCARGAR PDF 📥</a>
-              <button onclick="openDocReader('documentos-imprimibles/sobre_a.html', 'Sobre A: Pieza Principal y Autopsia', 'SOBRE A - INICIAL')" class="btn-html">VER EN LECTOR ➔</button>
+              <a href="documentos-imprimibles/SOBRE_A_PIEZA_PRINCIPAL.pdf" target="_blank" class="btn-pdf">
+                <span>DESCARGAR PDF</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              </a>
+              <button onclick="openDocReader('documentos-imprimibles/sobre_a.html', 'Sobre A: Pieza Principal y Autopsia', 'SOBRE A - INICIAL')" class="btn-html">
+                <span>LEER DOCUMENTO</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
             </div>
           </div>
 
@@ -1242,8 +1257,14 @@
               </div>
             </div>
             <div class="dossier-btns">
-              <a href="documentos-imprimibles/SOBRE_B_PIEZA_SEPARADA_1.pdf" target="_blank" class="btn-pdf">DESCARGAR PDF 📥</a>
-              <button onclick="openDocReader('documentos-imprimibles/sobre_b.html', 'Sobre B: Escenario y Testigos', 'SOBRE B - PRECINTADO')" class="btn-html">VER EN LECTOR ➔</button>
+              <a href="documentos-imprimibles/SOBRE_B_PIEZA_SEPARADA_1.pdf" target="_blank" class="btn-pdf">
+                <span>DESCARGAR PDF</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              </a>
+              <button onclick="openDocReader('documentos-imprimibles/sobre_b.html', 'Sobre B: Escenario y Testigos', 'SOBRE B - PRECINTADO')" class="btn-html">
+                <span>LEER DOCUMENTO</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
             </div>
           </div>
 
@@ -1257,8 +1278,14 @@
               </div>
             </div>
             <div class="dossier-btns">
-              <a href="documentos-imprimibles/SOBRE_C_PIEZA_CONVICCION.pdf" target="_blank" class="btn-pdf">DESCARGAR PDF 📥</a>
-              <button onclick="openDocReader('documentos-imprimibles/sobre_c.html', 'Sobre C: Pieza de Convicción Final', 'SOBRE C - SECRETO')" class="btn-html">VER EN LECTOR ➔</button>
+              <a href="documentos-imprimibles/SOBRE_C_PIEZA_CONVICCION.pdf" target="_blank" class="btn-pdf">
+                <span>DESCARGAR PDF</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              </a>
+              <button onclick="openDocReader('documentos-imprimibles/sobre_c.html', 'Sobre C: Pieza de Convicción Final', 'SOBRE C - SECRETO')" class="btn-html">
+                <span>LEER DOCUMENTO</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
             </div>
           </div>
 
@@ -1272,8 +1299,14 @@
               </div>
             </div>
             <div class="dossier-btns">
-              <a href="documentos-imprimibles/EXTRAS_INMERSION.pdf" target="_blank" class="btn-pdf">DESCARGAR PDF 📥</a>
-              <button onclick="openDocReader('documentos-imprimibles/extras_inmersion.html', 'Fichas de Filiación y Prensa Local', 'EXTRAS INMERSIÓN')" class="btn-html">VER EN LECTOR ➔</button>
+              <a href="documentos-imprimibles/EXTRAS_INMERSION.pdf" target="_blank" class="btn-pdf">
+                <span>DESCARGAR PDF</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              </a>
+              <button onclick="openDocReader('documentos-imprimibles/extras_inmersion.html', 'Fichas de Filiación y Prensa Local', 'EXTRAS INMERSIÓN')" class="btn-html">
+                <span>LEER DOCUMENTO</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
             </div>
           </div>
 
@@ -1287,8 +1320,14 @@
               </div>
             </div>
             <div class="dossier-btns">
-              <a href="documentos-imprimibles/DOSSIER_NOTARIAL_Y_FORENSE.pdf" target="_blank" class="btn-pdf">DESCARGAR PDF 📥</a>
-              <button onclick="openDocReader('documentos-imprimibles/dossier_notarial_y_forense.html', 'Dossier Notarial y Bancario', 'PIEZA ANEXA')" class="btn-html">VER EN LECTOR ➔</button>
+              <a href="documentos-imprimibles/DOSSIER_NOTARIAL_Y_FORENSE.pdf" target="_blank" class="btn-pdf">
+                <span>DESCARGAR PDF</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              </a>
+              <button onclick="openDocReader('documentos-imprimibles/dossier_notarial_y_forense.html', 'Dossier Notarial y Bancario', 'PIEZA ANEXA')" class="btn-html">
+                <span>LEER DOCUMENTO</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
             </div>
           </div>
 
@@ -1431,13 +1470,17 @@
         <div class="notepad-wrap">
           <div class="notepad-header">
             <div>
-              <div class="notepad-title">📓 Cuaderno de Campo del Investigador</div>
+              <div class="notepad-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                <span>Cuaderno de Campo del Investigador</span>
+              </div>
               <p style="font-size:12px; color:var(--text-muted); font-family:var(--font-mono);">
                 Las notas se guardan automáticamente en tu dispositivo (localStorage).
               </p>
             </div>
             <button class="back-btn" onclick="clearNotepad()">
-              🗑️ BORRAR NOTAS
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:5px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              BORRAR NOTAS
             </button>
           </div>
           <textarea id="investigator-notes" class="notepad-textarea" placeholder="Escribe aquí tus deducciones, horas de paso por el radar de tráfico, análisis de las coartadas, discordancias de la autopsia..."></textarea>
@@ -1452,7 +1495,7 @@
       <aside class="vg-split-sidecar" id="vg-sidecar-drawer">
         <div class="vg-sidecar-header">
           <div class="vg-sidecar-title-wrap">
-            <span style="color:#00E5FF; font-size:1.1rem;">◫</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="15" y1="3" x2="15" y2="21"></line></svg>
             <span class="vg-sidecar-title">Inspección Paralela (Sidecar)</span>
           </div>
           <button class="modal-close" onclick="toggleDualSidecar()" title="Cerrar Panel (Tecla D o Esc)">&times;</button>
@@ -1461,13 +1504,16 @@
         <!-- Selector de Contenido Sidecar -->
         <div class="vg-sidecar-tabs">
           <button class="vg-sidecar-tab-btn active" id="sidecar-tab-btn-notas" onclick="switchSidecarTab('notas')">
-            📓 Notas Rápidas
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+            <span>Notas Rápidas</span>
           </button>
           <button class="vg-sidecar-tab-btn" id="sidecar-tab-btn-sospechosos" onclick="switchSidecarTab('sospechosos')">
-            👥 Sospechosos
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span>Sospechosos</span>
           </button>
           <button class="vg-sidecar-tab-btn" id="sidecar-tab-btn-doc" onclick="switchSidecarTab('doc')">
-            📄 Extracto Atestado
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            <span>Extracto Atestado</span>
           </button>
         </div>
 
@@ -1543,30 +1589,36 @@
 
   <!-- BARRA DE NAVEGACIÓN MÓVIL INFERIOR (FLOATING GLASS DOCK) -->
   <nav class="mobile-bottom-nav">
-    <div class="nav-item active" id="mob-nav-catalog" onclick="switchView('catalog')">
-      <span class="nav-icon">🗂️</span>
-      <span>Casos</span>
-    </div>
-    <div class="nav-item" id="mob-nav-briefing" onclick="switchView('case'); switchCaseTab('briefing');">
-      <span class="nav-icon">🎬</span>
+    <button class="nav-item active" id="mob-nav-briefing" onclick="switchCaseTab('briefing');">
+      <span class="nav-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+      </span>
       <span>Vídeo</span>
-    </div>
-    <div class="nav-item" id="mob-nav-dossiers" onclick="switchView('case'); switchCaseTab('dossiers');">
-      <span class="nav-icon">📄</span>
-      <span>PDFs</span>
-    </div>
-    <div class="nav-item" id="mob-nav-terminal" onclick="switchView('case'); switchCaseTab('terminal');">
-      <span class="nav-icon">💻</span>
+    </button>
+    <button class="nav-item" id="mob-nav-dossiers" onclick="switchCaseTab('dossiers');">
+      <span class="nav-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+      </span>
+      <span>Dossiers</span>
+    </button>
+    <button class="nav-item" id="mob-nav-terminal" onclick="switchCaseTab('terminal');">
+      <span class="nav-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+      </span>
       <span>Terminal</span>
-    </div>
-    <div class="nav-item" id="mob-nav-evidencias" onclick="switchView('case'); switchCaseTab('evidencias');">
-      <span class="nav-icon">👥</span>
+    </button>
+    <button class="nav-item" id="mob-nav-evidencias" onclick="switchCaseTab('evidencias');">
+      <span class="nav-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      </span>
       <span>Pruebas</span>
-    </div>
-    <div class="nav-item" id="mob-nav-notas" onclick="switchView('case'); switchCaseTab('notas');">
-      <span class="nav-icon">📓</span>
+    </button>
+    <button class="nav-item" id="mob-nav-notas" onclick="switchCaseTab('notas');">
+      <span class="nav-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+      </span>
       <span>Notas</span>
-    </div>
+    </button>
   </nav>
 
   <!-- MODAL DE IMÁGENES / PERFILES EN ALTA DEFINICIÓN (NATIVE iOS BOTTOM SHEET) -->
@@ -1608,17 +1660,20 @@
         <button class="vg-reader-ctrl-btn" onclick="adjustDocZoom(0.1)" title="Acercar (+)">+</button>
         <button class="vg-reader-ctrl-btn" onclick="resetDocZoom()" title="Restablecer (100%)" style="font-size:0.7rem;">1:1</button>
         <button class="vg-reader-uv-btn" id="btn-reader-uv" onclick="toggleReaderUV()" title="Alternar Filtro UV / Luminol Forense (Tecla U)">
-          <span>⚡ Modo UV</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          <span>Modo UV</span>
         </button>
       </div>
 
       <!-- Actions -->
       <div class="vg-reader-actions">
         <button class="vg-cmd-pill" onclick="printCurrentDoc()" title="Imprimir Documento">
-          <span>🖨️ Imprimir</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          <span>Imprimir</span>
         </button>
         <a id="btn-reader-download-pdf" href="documentos-imprimibles/SOBRE_A_PIEZA_PRINCIPAL.pdf" target="_blank" class="vg-cmd-pill" title="Descargar PDF Original">
-          <span>📥 PDF</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span>PDF</span>
         </a>
         <button class="modal-close" onclick="closeDocReader()" title="Cerrar Visor (Esc)">&times;</button>
       </div>
@@ -1639,7 +1694,7 @@
     <div class="vg-shortcuts-modal-card" onclick="event.stopPropagation()">
       <div class="vg-shortcuts-header">
         <div style="display:flex; align-items:center; gap:8px;">
-          <span style="color:#00E5FF; font-size:1.2rem;">⌨</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6" y2="8"></line><line x1="10" y1="8" x2="10" y2="8"></line><line x1="14" y1="8" x2="14" y2="8"></line><line x1="18" y1="8" x2="18" y2="8"></line><line x1="6" y1="12" x2="6" y2="12"></line><line x1="10" y1="12" x2="10" y2="12"></line><line x1="14" y1="12" x2="14" y2="12"></line><line x1="18" y1="12" x2="18" y2="12"></line><line x1="7" y1="16" x2="17" y2="16"></line></svg>
           <h3 style="font-size:1.05rem; font-weight:800; color:#fff;">Atajos de Teclado del Investigador</h3>
         </div>
         <button class="modal-close" onclick="closeShortcutsModal()">&times;</button>
@@ -1723,21 +1778,23 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
-      // Actualizar Breadcrumbs dinámicas
+      // Actualizar Breadcrumbs dinámicas y clase de vista en el body
       const crumbCase = document.getElementById('crumb-case-name');
       const crumbTab = document.getElementById('crumb-active-tab');
       if (viewName === 'catalog') {
+        document.body.classList.remove('in-case-view');
         if (crumbCase) crumbCase.style.display = 'none';
         if (crumbTab) crumbTab.style.display = 'none';
       } else {
+        document.body.classList.add('in-case-view');
         if (crumbCase) crumbCase.style.display = 'inline-flex';
         if (crumbTab) crumbTab.style.display = 'inline-flex';
       }
 
-      // Actualizar bottom nav móvil
+      // Actualizar bottom nav móvil (solo activo cuando se está dentro de un caso)
       document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-      if (viewName === 'catalog') {
-        const item = document.getElementById('mob-nav-catalog');
+      if (viewName === 'case') {
+        const item = document.getElementById('mob-nav-' + currentTab);
         if (item) item.classList.add('active');
       }
       if (window.VestigoTouch) window.VestigoTouch.triggerHaptic('light');

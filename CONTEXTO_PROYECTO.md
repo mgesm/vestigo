@@ -78,6 +78,27 @@ flowchart TD
 
 ## 📝 4. REGISTRO HISTÓRICO DE CAMBIOS (CHANGELOG)
 
+### [v1.4.0] — 2026-10-19
+#### Refactorización Estética, Navegación Móvil y Estándar Cero Emojis
+- **Eliminación Total del Hero Banner:** Supresión completa del bloque inicial decorativo ("Plataforma de Investigación Policial Híbrida", síntesis y desplegables innecesarios). Reemplazado por un encabezado de expedientes minimalista, limpio y profesional (`catalog-clean-header`) con badge dinámico de casos activos.
+- **Jerarquía y Navegación Móvil Estricta:**
+  - En la vista inicial de catálogo en móvil, la barra de tareas inferior (`.mobile-bottom-nav`) se oculta por completo (`display: none`), permitiendo al usuario ver exclusivamente los expedientes disponibles sin saltar a pestañas internas antes de entrar a un caso.
+  - Al abrir un expediente (`openCase('valdeluna')`), se activa la clase `in-case-view` en el `body`, desplegando el dock flotante de navegación de 5 pestañas (Vídeo, Dossiers, Terminal, Pruebas, Notas).
+  - Al volver a la lista de casos mediante el botón de retorno o el logotipo, el dock se oculta instantáneamente y se restablece el padding normal del viewport.
+- **Regla Estricta: Estándar 100% Iconos Vectoriales SVG (Cero Emojis):**
+  - Erradicación absoluta de emojis en toda la plataforma (topbar, catálogo, botones de acción, fichas de casos, dossiers, lector de documentos, terminal policial y vídeo briefing).
+  - Integración de iconos SVG limpios, de trazo fino (estilo Apple SF Symbols / Lucide) para búsqueda, atajos, panel dual, candados, flechas de acción, terminal, reproducción, lupa y herramientas forenses.
+- **Eliminación de Botones y Elementos Redundantes:**
+  - Supresión del botón "Brand" de la cabecera (acceso integrado en el isotipo de la marca).
+  - Supresión del botón secundario "Hub de Descargas" en el área de trabajo del caso (redundante con la pestaña de Dossiers).
+  - Supresión de botones tipo acordeón/disclosure en la sinopsis del caso para evitar saltos visuales y sobrecarga.
+- **Resolución de Recortes y Desbordamientos en Pantalla Móvil:**
+  - Ocultación en viewports móviles (< 768px) de píldoras exclusivas de teclado físico (Panel Dual 'D', Atajos '?') que forzaban el ancho de la cabecera y provocaban cortes laterales.
+  - Ocultación de la barra de pestañas horizontal duplicada (`.vg-desktop-tabs-bar`) en dispositivos táctiles, cediendo todo el control ergonómico al dock inferior táctil.
+  - Normalización del scroll horizontal y padding inferior dinámico para evitar solapamientos o vacíos molestos.
+
+---
+
 ### [v1.3.0] — 2026-10-19
 #### Añadido & Rediseñado (Overhaul Completo UI/UX)
 - **Pipeline de 3 Subagentes Especializados Completado:**
