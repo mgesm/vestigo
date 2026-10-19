@@ -134,6 +134,35 @@ flowchart TD
 
 ---
 
+### [v1.6.0] — 2026-10-19
+#### Auditoría Global y Overhaul Integral (Equipo de 5 Agentes Especialistas)
+- **Solución Definitiva al Visor Documental / PDF en Móviles:**
+  - Inyección de `<meta name="viewport">` y reglas `@media screen and (max-width: 820px)` en los 6 dossiers HTML (`sobre_a.html`, `sobre_b.html`, `sobre_c.html`, `instrucciones_juego.html`, `extras_inmersion.html`, `dossier_notarial_y_forense.html`).
+  - Eliminación del recorte del 53% provocado por el ancho fijo rígido de 210 mm en pantallas de 393 px.
+  - Reemplazo de `transform: scale()` por motor de zoom vectorial continuo con listener `postMessage('VESTIGO_ZOOM')`.
+  - Enlace prominente a visor nativo del sistema operativo (`ABRIR PDF OFICIAL`) para lectura con gestos táctiles de pellizco.
+  - Recompilación verificada de los 6 archivos PDF oficiales (31 páginas en A4) mediante headless Edge sin alterar la maquetación física.
+- **Descongestión Visual y Ergonomía de Botones:**
+  - Pestaña Dossiers descongestionada: reducción del 50% de botones (de 12 a 6), unificando en una única acción principal `ABRIR EXPEDIENTE ➔` y un botón secundario compacto para el PDF.
+  - Catálogo de casos optimizado: Casos 02 y 03 comprimidos a tarjetas teaser minimalistas («Próximamente») sin botones deshabilitados ni tablas vacías.
+  - Eliminación de la doble cabecera en móvil: ocultación de `.case-meta-header` (-140 px de espacio vertical) e integración de indicador compacto en la barra sticky `← VOLVER A EXPEDIENTES`.
+  - Catálogo móvil 100% despejado: barra de tareas inferior oculta por completo en el dashboard de expedientes (solo emerge al entrar a un caso).
+- **Regla Estricta Cero Emojis:**
+  - 100% de símbolos sustituidos por iconos vectoriales SVG limpios y entidades HTML en toda la plataforma. Verificación automatizada con 0 coincidencias en todo el árbol de archivos.
+- **Corrección de 9 Fallos de Interactividad y Audio:**
+  - Fuga y solapamiento de audio 112 corregida en `terminal-policial/index.html` (cancelación de `speechSynthesis` y desconexión de `AudioContext`).
+  - Desconexión limpia de osciladores y sincronización de scrubber al pausar en `video-briefing/index.html`.
+  - Eliminación de callejones sin salida: añadidos botones de retorno al expediente central en terminal y briefing.
+  - Protección de atajos numéricos `1-5` y `D` frente a combinaciones del sistema (`Ctrl`/`Cmd`).
+  - Buscador forense `Ctrl+K` ampliado a 16 entidades y expedientes.
+- **Optimización de Rendimiento y PWA:**
+  - Sustitución de logo PNG rasterizado (479 KB) por SVG vectorial nativo (4.2 KB).
+  - Eliminación de `@import` bloqueante de fuentes en `css/liquid-glass.css`.
+  - Inclusión de `loading="lazy"`, `decoding="async"` y dimensiones explícitas en todas las fotografías periciales.
+  - Service Worker v1.6.0 (`sw.js`) con precache y estrategia *Stale-While-Revalidate* para assets estáticos y *Network-First* para HTML.
+
+---
+
 ### [v1.2.0] — 2026-10-19
 #### Añadido
 - **Universal Responsive Web App Shell (`index.html`):** Punto de entrada unificado y responsive para **Móvil, iPad/Tablet y Ordenador de escritorio**.

@@ -621,6 +621,10 @@
       </div>
     </div>
     <div class="terminal-status">
+      <a href="../index.html" style="background: rgba(15, 23, 42, 0.85); color: var(--accent-cyan); padding: 6px 12px; border-radius: 4px; text-decoration: none; font-weight: 700; font-size: 11px; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--accent-cyan); transition: all 0.2s;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>VOLVER AL EXPEDIENTE</span>
+      </a>
       <a href="../video-briefing/index.html" target="_blank" style="background: #e11d48; color: #fff; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-weight: 700; font-size: 11px; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 0 10px rgba(225,29,72,0.4); border: 1px solid #f43f5e; transition: transform 0.2s;">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
         <span>VÍDEO BRIEFING</span>
@@ -699,6 +703,10 @@
         <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">
           Consulte las fichas de filiación con mugshots, notas del agente instructor y hemeroteca:
         </p>
+        <a href="../index.html" class="tool-btn" style="background:#090d16; border-color:var(--accent-cyan); text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px; color:var(--accent-cyan); font-weight:800; margin-top:8px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          <span>VOLVER AL EXPEDIENTE CENTRAL</span>
+        </a>
         <a href="../video-briefing/index.html" target="_blank" class="tool-btn" style="background:#e11d48; border-color:#f43f5e; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px; color:#fff; font-weight:800; margin-top:8px; box-shadow: 0 0 10px rgba(225,29,72,0.4);">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
           <span>VÍDEO BRIEFING DEL CASO</span>
@@ -999,6 +1007,17 @@
             <p style="color: var(--accent-cyan); font-weight: 600;">
               ENHORABUENA, AGENTES. HABÉIS RESUELTO EL CASO CON ÉXITO Y RIGOR FORENSE ABSOLUTO.
             </p>
+
+            <div style="margin-top: 24px; padding-top: 18px; border-top: 1px dashed var(--accent-green); display: flex; gap: 12px; flex-wrap: wrap;">
+              <a href="../index.html" class="submit-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <span>VOLVER AL EXPEDIENTE PRINCIPAL</span>
+              </a>
+              <a href="../video-briefing/index.html" class="submit-btn" style="text-decoration: none; background: #e11d48; color: #fff; display: inline-flex; align-items: center; gap: 8px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+                <span>VER VÍDEO BRIEFING COMPLETO</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -1009,7 +1028,9 @@
   <!-- MODAL DE DESPRECINTO Y CLAVE -->
   <div class="success-modal" id="success-modal">
     <div class="modal-box">
-      <div class="modal-icon">✓</div>
+      <div class="modal-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </div>
       <h3 class="modal-title" id="modal-title">DILIGENCIA VERIFICADA</h3>
       <p id="modal-desc" style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
         El Juez de Instrucción ha admitido la hipótesis criminal. Podéis romper el precinto del siguiente sobre.
@@ -1026,7 +1047,7 @@
     <div class="modal-box" style="max-width: 800px; text-align: left; max-height: 85vh; overflow-y: auto;">
       <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:10px; margin-bottom:14px;">
         <h3 style="color:var(--accent-cyan); font-family:var(--font-mono); font-size:15px;">FICHAS DE FILIACIÓN BIOMÉTRICA (SIRDEE)</h3>
-        <button onclick="closeProfilesModal()" style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;">✕</button>
+        <button onclick="closeProfilesModal()" style="background:none; border:none; color:#fff; font-size:22px; cursor:pointer;" title="Cerrar">&times;</button>
       </div>
 
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; font-size:11px;">
@@ -1101,7 +1122,7 @@
     <div class="modal-box" style="max-width: 650px; text-align: left; max-height: 80vh; overflow-y: auto; background:#0f172a;">
       <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:10px; margin-bottom:14px;">
         <h3 style="color:#a78bfa; font-family:var(--font-mono); font-size:14px;">CUADERNO DE NOTAS DEL INSTRUCTOR (TIP GC-84.920)</h3>
-        <button onclick="closeNotebookModal()" style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;">✕</button>
+        <button onclick="closeNotebookModal()" style="background:none; border:none; color:#fff; font-size:22px; cursor:pointer;" title="Cerrar">&times;</button>
       </div>
       <div style="font-family:var(--font-mono); font-size:11px; line-height:1.7; color:#cbd5e1;">
         <p style="color:#fde047;">[APUNTES DE URGENCIA 05/10 - 10:30 H]</p>
@@ -1125,7 +1146,7 @@
           <div style="font-family:'Newsreader', serif; font-size:22px; font-weight:700;">EL NORTE DE CASTILLA</div>
           <div style="font-size:9px; color:#57534e;">DOMINGO, 6 DE OCTUBRE DE 2024 · EDICIÓN RIBERA DEL DUERO</div>
         </div>
-        <button onclick="closePressModal()" style="background:none; border:none; color:#000; font-size:20px; cursor:pointer;">✕</button>
+        <button onclick="closePressModal()" style="background:none; border:none; color:#000; font-size:22px; cursor:pointer;" title="Cerrar">&times;</button>
       </div>
       <div style="font-family:'Newsreader', serif; font-size:13px; font-weight:700; line-height:1.2; margin-bottom:6px;">
         CONSTERNACIÓN EN PEÑAFIEL: HALLAN MUERTO EN SUS BODEGAS AL ENÓLOGO GONZALO DE LA SERNA
@@ -1144,7 +1165,7 @@
     <div class="modal-box" style="max-width: 850px; text-align: left; max-height: 85vh; overflow-y: auto;">
       <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:10px; margin-bottom:14px;">
         <h3 style="color:#38bdf8; font-family:var(--font-mono); font-size:15px;">FOTOTECA FORENSE JUDICIAL — DILIGENCIAS 402/2024</h3>
-        <button onclick="closePhotosModal()" style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;">✕</button>
+        <button onclick="closePhotosModal()" style="background:none; border:none; color:#fff; font-size:22px; cursor:pointer;" title="Cerrar">&times;</button>
       </div>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
         <div style="background:#0a0e14; border:1px solid #334155; padding:8px; border-radius:4px;">
@@ -1179,7 +1200,7 @@
     <div class="modal-box" style="max-width: 850px; text-align: left; max-height: 85vh; overflow-y: auto;">
       <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:10px; margin-bottom:14px;">
         <h3 style="color:#2dd4bf; font-family:var(--font-mono); font-size:15px;">MAPA TÁCTICO SIG — COMARCA DE PEÑAFIEL / RIBERA DEL DUERO</h3>
-        <button onclick="closeMapModal()" style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;">✕</button>
+        <button onclick="closeMapModal()" style="background:none; border:none; color:#fff; font-size:22px; cursor:pointer;" title="Cerrar">&times;</button>
       </div>
 
       <div style="background:#070d14; border:1px solid #1e293b; border-radius:4px; padding:10px; position:relative;">
@@ -1242,10 +1263,10 @@
           <div>
             <label style="color:#94a3b8;">Trayecto a verificar:</label>
             <select id="route-select" onchange="calcRoute()" style="width:100%; background:#161e29; border:1px solid #334155; color:#fff; padding:6px; font-family:var(--font-mono); margin-top:4px;">
-              <option value="bodega_hotel">Bodegas Valdeluna ➔ Hotel Las Claras (Peñafiel)</option>
-              <option value="bodega_mirador">Bodegas Valdeluna ➔ Mirador del Castillo</option>
-              <option value="bodega_tudela">Bodegas Valdeluna ➔ Radar Tudela de Duero (km 322)</option>
-              <option value="bodega_valladolid">Bodegas Valdeluna ➔ Parking Plaza Mayor Valladolid</option>
+              <option value="bodega_hotel">Bodegas Valdeluna &rarr; Hotel Las Claras (Peñafiel)</option>
+              <option value="bodega_mirador">Bodegas Valdeluna &rarr; Mirador del Castillo</option>
+              <option value="bodega_tudela">Bodegas Valdeluna &rarr; Radar Tudela de Duero (km 322)</option>
+              <option value="bodega_valladolid">Bodegas Valdeluna &rarr; Parking Plaza Mayor Valladolid</option>
             </select>
           </div>
           <div id="route-result" style="background:#111827; border:1px dashed #2dd4bf; padding:8px; border-radius:4px; font-family:var(--font-mono);">
@@ -1270,7 +1291,7 @@
           <span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:#ef4444;"></span>
           <h3 style="color:#34d399; font-family:var(--font-mono); font-size:15px;">GRABADOR DIGITAL CCTV — BODEGAS VALDELUNA</h3>
         </div>
-        <button onclick="closeCctvModal()" style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;">✕</button>
+        <button onclick="closeCctvModal()" style="background:none; border:none; color:#fff; font-size:22px; cursor:pointer;" title="Cerrar">&times;</button>
       </div>
 
       <div style="display:flex; gap:10px; margin-bottom:10px;">
@@ -1301,7 +1322,7 @@
     <div class="modal-box" style="max-width: 650px; text-align: left; max-height: 85vh; overflow-y: auto;">
       <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:10px; margin-bottom:14px;">
         <h3 style="color:#facc15; font-family:var(--font-mono); font-size:15px;">MESA DE APOYO / CENTRAL DE MANDO (PISTAS)</h3>
-        <button onclick="closeHintsModal()" style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;">✕</button>
+        <button onclick="closeHintsModal()" style="background:none; border:none; color:#fff; font-size:22px; cursor:pointer;" title="Cerrar">&times;</button>
       </div>
       <p style="font-size:11px; color:#94a3b8; margin-bottom:12px;">
         Si os encontráis atascados en alguna deducción, desplegad las pistas de forma progresiva. Cada pista está oculta para no arruinaros la experiencia.
@@ -1688,27 +1709,48 @@
       if (!audioPlaying) {
         audioPlaying = true;
         btn.innerText = '⏸';
-        waveform.parentElement.parentElement.classList.add('audio-playing');
+        if (waveform && waveform.parentElement && waveform.parentElement.parentElement) {
+          waveform.parentElement.parentElement.classList.add('audio-playing');
+        }
         playVoiceSimulation();
       } else {
         audioPlaying = false;
         btn.innerText = '▶';
-        waveform.parentElement.parentElement.classList.remove('audio-playing');
+        if (waveform && waveform.parentElement && waveform.parentElement.parentElement) {
+          waveform.parentElement.parentElement.classList.remove('audio-playing');
+        }
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+        }
       }
     }
 
     function playVoiceSimulation() {
       // Simulación de audio con síntesis o tonos
       if ('speechSynthesis' in window) {
-        const text = "Emergencias 112. Vengan rápido a Bodegas Valdeluna, don Gonzalo está en el suelo de la nave de cubas, no respira.";
+        window.speechSynthesis.cancel();
+        const text = "Emergencias uno uno dos. Dígame. Vengan rápido por favor a Bodegas Valdeluna... don Gonzalo está tendido en el suelo de la nave de cubas... ¡no respira, está helado!";
         const utter = new SpeechSynthesisUtterance(text);
         utter.lang = 'es-ES';
-        utter.rate = 1.1;
-        utter.pitch = 0.9;
+        utter.rate = 1.05;
+        utter.pitch = 0.95;
         utter.onend = () => {
           audioPlaying = false;
-          document.getElementById('play-112-btn').innerText = '▶';
-          document.getElementById('waveform').parentElement.parentElement.classList.remove('audio-playing');
+          const btn = document.getElementById('play-112-btn');
+          if (btn) btn.innerText = '▶';
+          const waveform = document.getElementById('waveform');
+          if (waveform && waveform.parentElement && waveform.parentElement.parentElement) {
+            waveform.parentElement.parentElement.classList.remove('audio-playing');
+          }
+        };
+        utter.onerror = () => {
+          audioPlaying = false;
+          const btn = document.getElementById('play-112-btn');
+          if (btn) btn.innerText = '▶';
+          const waveform = document.getElementById('waveform');
+          if (waveform && waveform.parentElement && waveform.parentElement.parentElement) {
+            waveform.parentElement.parentElement.classList.remove('audio-playing');
+          }
         };
         window.speechSynthesis.speak(utter);
       }

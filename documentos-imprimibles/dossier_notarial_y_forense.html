@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DOSSIER JUDICIAL - PIEZA COMPLEMENTARIA: NOTARIAL, BANCARIA Y FOTOGRÁFICA</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -375,6 +376,134 @@
       justify-content: space-between;
       box-shadow: 2px 4px 10px rgba(0,0,0,0.2);
     }
+
+    /* =====================================================================
+       RESPONSIVE MOBILE ERGONOMICS (< 820px) — SCREEN ONLY
+       Preserves 100% of @media print for physical print & headless PDF engine
+       ===================================================================== */
+    @media screen and (max-width: 820px) {
+      body {
+        padding: 8px 6px 40px 6px;
+        background-color: #0b0f19;
+      }
+
+      .no-print-bar {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 10px 14px;
+        margin-bottom: 12px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        border-radius: 8px;
+      }
+
+      .no-print-bar .print-btn {
+        width: 100%;
+        text-align: center;
+        padding: 10px 14px;
+      }
+
+      .sheet {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: auto !important;
+        padding: 18px 14px !important;
+        margin-bottom: 16px !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+        border-radius: 10px !important;
+        overflow-x: hidden;
+      }
+
+      .official-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+      }
+
+      .official-title {
+        font-size: 10px !important;
+        line-height: 1.35 !important;
+      }
+
+      .case-number {
+        width: 100% !important;
+        text-align: left !important;
+        font-size: 10px !important;
+        padding: 4px 6px !important;
+      }
+
+      .stamp-confidential {
+        top: 14px !important;
+        right: 12px !important;
+        font-size: 11px !important;
+        padding: 2px 6px !important;
+        letter-spacing: 1px !important;
+        opacity: 0.6 !important;
+      }
+
+      h1.doc-title {
+        font-size: 12px !important;
+        letter-spacing: 0.5px !important;
+        margin: 8px 0 12px 0 !important;
+        line-height: 1.35 !important;
+      }
+
+      p.legal-text {
+        font-size: 10.5px !important;
+        line-height: 1.55 !important;
+        text-align: left !important;
+        margin-bottom: 8px !important;
+        word-break: break-word !important;
+      }
+
+      .notarial-border {
+        padding: 10px !important;
+      }
+
+      .notarial-stamp {
+        position: static !important;
+        margin: 12px auto !important;
+      }
+
+      .keycard-box {
+        width: 100% !important;
+        max-width: 300px !important;
+        height: auto !important;
+      }
+
+      .photo-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+      }
+
+      .table-responsive {
+        width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        margin: 8px 0 !important;
+      }
+
+      .data-table {
+        min-width: 100% !important;
+        font-size: 9px !important;
+      }
+
+      .data-table th, .data-table td {
+        padding: 4px 6px !important;
+      }
+
+      .signature-area {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 14px !important;
+      }
+
+      .signature-box {
+        width: 100% !important;
+        max-width: 220px !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -384,7 +513,7 @@
       <strong>MATERIAL ANEXO: PIEZA NOTARIAL, BANCARIA Y FOTO-FORENSE</strong>
       <div style="font-size: 11px; color: #94a3b8;">Fotografías de escena de crimen, testamento de la víctima, extracto bancario y auditoría de accesos.</div>
     </div>
-    <button class="print-btn" onclick="window.print()">🖨️ IMPRIMIR PIEZA ANEXA (PDF / PAPEL)</button>
+    <button class="print-btn" onclick="window.print()">IMPRIMIR PIEZA ANEXA (PDF / PAPEL)</button>
   </div>
 
   <!-- ======================================================== -->
@@ -741,7 +870,7 @@
         <div class="keycard-box">
           <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 4px;">
             <span style="font-size: 11px; font-weight: bold; letter-spacing: 1px;">HOTEL CONVENTO LAS CLARAS</span>
-            <span style="font-size: 8px; color: #38bdf8;">★★★★</span>
+            <span style="font-size: 9px; font-weight: 700; color: #38bdf8; letter-spacing: 0.5px;">4 ESTRELLAS</span>
           </div>
           <div style="text-align: center;">
             <div style="font-size: 9px; color: #94a3b8; text-transform: uppercase;">Habitación</div>
@@ -872,5 +1001,19 @@
     </div>
   </div>
 
+  <script>
+    // Smooth zoom handler via postMessage from VESTIGO in-app reader
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.type === 'VESTIGO_ZOOM') {
+        var zoom = e.data.zoom || 1.0;
+        if (typeof document.body.style.zoom !== 'undefined') {
+          document.body.style.zoom = zoom;
+        } else {
+          document.body.style.transform = zoom === 1.0 ? 'none' : 'scale(' + zoom + ')';
+          document.body.style.transformOrigin = 'top center';
+        }
+      }
+    });
+  </script>
 </body>
 </html>
