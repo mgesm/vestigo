@@ -116,6 +116,7 @@ flowchart TD
   5. *📓 Bloc de Notas del Investigador:* Cuaderno interactivo con guardado en tiempo real en `localStorage` para móviles y tablets.
 - **Doble Navegación Responsiva Adaptativa:** Barra de navegación inferior fija para teléfonos móviles (`mobile-bottom-nav`) con soporte de área segura de iOS, y pestañas superiores para iPad y escritorio.
 - **PWA & Offline Readiness:** Creación de `manifest.json` y `sw.js` (Service Worker) para instalación como App nativa en pantalla de inicio de iOS y Android.
+- **Protocolo Autónomo de Creación de Casos (`PROTOCOLO_CREACION_CASOS.md`):** Guía maestra y sistema de ejecución para generar nuevos casos con rigor forense, 6 dossiers (31 págs), 9 activos fotográficos, terminal, vídeo briefing y auto-inyección en la app.
 - **Integración con Repositorio GitHub:** Vinculación al repositorio remoto oficial `https://github.com/mgesm/vestigo.git` y configuración de `.gitignore`.
 
 ---
