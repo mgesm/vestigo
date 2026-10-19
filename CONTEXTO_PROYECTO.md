@@ -1,6 +1,6 @@
 # 📁 VESTIGO™ — EXPEDIENTE DE CONTEXTO Y REGISTRO DE CAMBIOS (CHANGELOG)
 > **Documento Maestro de Arquitectura, Intención de Producto y Registro Vivo de Evolución**  
-> **Última Actualización:** 19 de Octubre de 2026 | **Versión Actual:** v1.3.0  
+> **Última Actualización:** 19 de Octubre de 2026 | **Versión Actual:** v2.0.0  
 > **Ubicación del Proyecto:** `C:\Users\migue\.gemini\antigravity\scratch\crimenes-imperfectos-valdeluna\`
 > **Repositorio Oficial en GitHub:** [https://github.com/mgesm/vestigo](https://github.com/mgesm/vestigo)
 
@@ -77,6 +77,24 @@ flowchart TD
 ---
 
 ## 📝 4. REGISTRO HISTÓRICO DE CAMBIOS (CHANGELOG)
+
+### [v2.0.0] — 2026-10-19
+#### Lanzamiento del Caso 02: «Marea Negra en Ría de Arousa» y Arquitectura Universal Multi-Caso
+- **Lanzamiento Oficial del Caso 02 («Marea Negra en Ría de Arousa»):**
+  - Ambientación marítima en Cambados y Ría de Arousa (Sumario Ordinario Nº 118/2025). Víctima: Xurxo Otero Barral (Patrón Mayor de Cambados).
+  - Integración de pruebas forenses marinas singulares: análisis microscópico de diatomeas en médula ósea (fémur), modelo numérico de deriva y corrientes (MeteoGalicia/Puertos del Estado), auditoría de tramas NMEA 0183 Furuno GPS adulteradas, trazas del radar costero militar SIVE y espectrometría FTIR de transferencia de pintura antifouling *Intersmooth 7460HS*.
+  - Protocolo estricto de **Cero Spoilers**: Solución confidencial precintada en `casos/caso-02-arousa/SOLUCION_CONFIDENCIAL.md`.
+  - Generación de 9 retratos biométricos y escenas del crimen periciales en alta resolución en `casos/caso-02-arousa/imagenes/`.
+  - Producción y compilación de 6 dossiers oficiales en HTML y PDF A4 listos para impresión (30 páginas en total).
+  - Terminal policial interactiva SITRA-JUD Náutica con radar costero SIVE, AIS, audio VHF Canal 16 en Web Audio API y validador de autos judiciales.
+  - Vídeo briefing cinematográfico 16:9 con dron acústico marítimo a 55Hz, subtítulos y narración por síntesis de voz en castellano.
+- **Arquitectura Universal Multi-Caso en `index.html`:**
+  - Creación del diccionario dinámico `CASES_DATA` (`valdeluna` y `arousa`) y función `renderCaseWorkspace(caseId)`.
+  - Inyección reactiva de expedientes, dossiers, retratos de sospechosos, fototeca pericial, iframes y sidecar.
+  - Bloc de notas con particionado independiente por caso en `localStorage` (`vestigo_notes_case_{caseId}`).
+  - Buscador pericial global (`Ctrl+K` o `/`) adaptado para buscar personas, vehículos, atestados y pruebas de ambos casos.
+  - Actualización del catálogo principal con tarjeta activa del Caso 02 e indicador de 2 casos activos.
+  - Actualización de versión del Service Worker (`vestigo-cache-v2.0.0`) para invalidación limpia de caché.
 
 ### [v1.5.0] — 2026-10-19
 #### Overhaul Móvil: Reproductor Responsivo, Navegación Segura frente a Notch y Visor Documental Táctil con Zoom

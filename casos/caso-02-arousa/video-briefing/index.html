@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VESTIGO // BRIEFING AUDIOVISUAL - CASO 02: RÍA DE AROUSA</title>
+  <link rel="icon" type="image/svg+xml" href="../../../branding/vestigo_icon.svg">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Inter:wght@400;600;800;900&family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #03070d;
+      --card-bg: #09111c;
+      --border: #1e293b;
+      --accent: #00e5ff;
+      --red: #ef4444;
+      --green: #22c55e;
+      --yellow: #facc15;
+      --font-mono: 'Fira Code', monospace;
+      --font-sans: 'Inter', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: #e2e8f0;
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* TOP BAR TÁCTICA */
+    .top-header {
+      background: #050a12;
+      border-bottom: 1px solid var(--border);
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .hud-tag {
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .rec-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 8px var(--red);
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    /* REPRODUCTOR 16:9 CINEMATOGRÁFICO */
+    .player-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      max-width: 1000px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .screen-frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scanlines {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+      background-size: 100% 4px;
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0.6;
+    }
+
+    .scene-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .scene-slide.active {
+      opacity: 1;
+    }
+
+    .slide-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(3, 7, 13, 0.95) 0%, rgba(3, 7, 13, 0.4) 60%, transparent 100%);
+      z-index: 1;
+    }
+
+    .slide-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+
+    .slide-act {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 4px;
+    }
+
+    .slide-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .slide-text {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #cbd5e1;
+      font-family: var(--font-sans);
+    }
+
+    /* CONTROL SCRUBBER & ACT TABS */
+    .controls-wrapper {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .scrubber-bar {
+      width: 100%;
+      height: 4px;
+      background: #1e293b;
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .scrubber-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      width: 0%;
+      box-shadow: 0 0 8px var(--accent);
+      transition: width 0.1s linear;
+    }
+
+    /* ZERO-HORIZONTAL SWIPE RESPONSIVE 6-COL GRID */
+    .act-tabs {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 3px;
+      width: 100%;
+      overflow-x: hidden !important;
+      margin-bottom: 8px;
+    }
+
+    .act-tab-btn {
+      background: #09111c;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 2px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .act-tab-btn:hover {
+      color: #fff;
+      background: #1e293b;
+    }
+
+    .act-tab-btn.active {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: rgba(0, 229, 255, 0.08);
+      font-weight: 700;
+    }
+
+    .playback-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .ctrl-btn {
+      background: #09111c;
+      border: 1px solid var(--border);
+      color: #e2e8f0;
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .ctrl-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .ctrl-btn.active {
+      background: rgba(0, 229, 255, 0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    @media (max-width: 600px) {
+      .slide-title { font-size: 16px; }
+      .slide-text { font-size: 11.5px; }
+      .act-tab-btn { font-size: 8.5px; padding: 5px 1px; }
+      .ctrl-btn { font-size: 10px; padding: 6px 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top-header">
+    <div class="hud-tag">
+      <span class="rec-dot"></span> VESTIGO BRIEFING // RÍA DE AROUSA
+    </div>
+    <div style="color:var(--text-muted); font-size:10px;">
+      SUMARIO 118/2025 · 6 ACTOS CLASIFICADOS
+    </div>
+  </header>
+
+  <div class="player-container">
+    <div class="screen-frame">
+      <div class="scanlines"></div>
+
+      <!-- ACTO 1 -->
+      <div class="scene-slide active" id="slide-0" style="background-image: url('../imagenes/escena_puerto_tragove.png');">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-act">ACTO I · LA NOCHE DEL TEMPORAL</div>
+          <h2 class="slide-title">Madrugada en la Ría de Arousa</h2>
+          <p class="slide-text">
+            14 de marzo de 2025. Un temporal del suroeste azota los muelles de Cambados con vientos de 45 nudos y mareas vivas. A las 21:30 h, el Patrón Mayor Xurxo Otero cena en la cantina de la lonja tras un día de enfrentamientos por las cuotas de marisqueo. A medianoche, su pesquero abandona el amarre.
+          </p>
+        </div>
+      </div>
+
+      <!-- ACTO 2 -->
+      <div class="scene-slide" id="slide-1" style="background-image: url('../imagenes/escena_barco_batea.png');">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-act">ACTO II · EL HALLAZGO</div>
+          <h2 class="slide-title">El Pesquero a la Deriva</h2>
+          <p class="slide-text">
+            07:18 horas. Un barco bateeiro descubre al «Novo Alborada» embestido suavemente contra la Batea B-12. El motor diésel continúa al ralentí y el piloto automático está enganchado a rumbo 240º. A escasos metros, el cuerpo de Xurxo flota entre los cabos con el traje de aguas puesto.
+          </p>
+        </div>
+      </div>
+
+      <!-- ACTO 3 -->
+      <div class="scene-slide" id="slide-2" style="background-image: url('../imagenes/escena_laboratorio_diatomeas.png');">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-act">ACTO III · LA FALSA SUMERSIÓN</div>
+          <h2 class="slide-title">El Test de Diatomeas Demuele el Accidente</h2>
+          <p class="slide-text">
+            Lo que parecía una caída fortuita queda pulverizado en el laboratorio del INTCF: 0 diatomeas en médula ósea. La víctima no respiró bajo el agua. Además, presenta una fractura craneal producida por una herramienta metálica y livideces dorsales fijas que prueban que murió horas antes sobre suelo rígido.
+          </p>
+        </div>
+      </div>
+
+      <!-- ACTO 4 -->
+      <div class="scene-slide" id="slide-3" style="background-image: url('../imagenes/escena_puerto_tragove.png');">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-act">ACTO IV · LOS 4 INVESTIGADOS</div>
+          <h2 class="slide-title">Conflictos, Deudas y Electrónica</h2>
+          <p class="slide-text">
+            Cuatro sospechosos en el punto de mira: Suso Trigo, empresario bateeiro con sanciones; Manuel Otero, el sobrino con deudas de juego; Carla Souto, la bióloga del INTECMAR con discrepancias técnicas; y Brais Lema, el ingeniero naval con acceso informático total al GPS del buque.
+          </p>
+        </div>
+      </div>
+
+      <!-- ACTO 5 -->
+      <div class="scene-slide" id="slide-4" style="background-image: url('../imagenes/evidencia_antifouling_casco.png');">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-act">ACTO V · EL PRINCIPIO DE LOCARD MARÍTIMO</div>
+          <h2 class="slide-title">La Pintura Roja y la Deriva de Marea</h2>
+          <p class="slide-text">
+            La física desmiente la coartada náutica: la marea vaciante impedía físicamente la ruta del falso GPS. Y en la amura de estribor del pesquero, un raspón microscópico oculta transferencia de pintura antifouling roja con fluoropolímero idéntica a una planeadora del puerto.
+          </p>
+        </div>
+      </div>
+
+      <!-- ACTO 6 -->
+      <div class="scene-slide" id="slide-5" style="background-image: url('../imagenes/escena_barco_batea.png');">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-act">ACTO VI · LA MISIÓN DEL INVESTIGADOR</div>
+          <h2 class="slide-title">Abrid el Sobre A: Pieza Principal</h2>
+          <p class="slide-text">
+            Vuestra misión comienza ahora. Abrid el Sobre A para analizar el atestado oficial, la carta náutica y la autopsia preliminar. Cruzad los datos en la Terminal SITRA-JUD para desenmascarar al culpable antes de que el mar borre todas las pruebas.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTROLES -->
+    <div class="controls-wrapper">
+      <div class="scrubber-bar" onclick="seekVideo(event)">
+        <div class="scrubber-fill" id="scrubber-fill"></div>
+      </div>
+
+      <!-- REJILLA DE 6 ACTOS RESPONSIVA SIN SWIPE -->
+      <div class="act-tabs">
+        <button class="act-tab-btn active" onclick="jumpToScene(0)">I · Prólogo</button>
+        <button class="act-tab-btn" onclick="jumpToScene(1)">II · Batea B</button>
+        <button class="act-tab-btn" onclick="jumpToScene(2)">III · Diatomea</button>
+        <button class="act-tab-btn" onclick="jumpToScene(3)">IV · Sujetos</button>
+        <button class="act-tab-btn" onclick="jumpToScene(4)">V · Locard</button>
+        <button class="act-tab-btn" onclick="jumpToScene(5)">VI · Misión</button>
+      </div>
+
+      <div class="playback-toolbar">
+        <div style="display:flex; gap:6px;">
+          <button class="ctrl-btn" id="btn-play" onclick="togglePlay()">
+            <span id="play-text">PLAY / PAUSA</span>
+          </button>
+          <button class="ctrl-btn" id="btn-voice" onclick="toggleVoice()">
+            VOZ: ON
+          </button>
+          <button class="ctrl-btn" id="btn-music" onclick="toggleMusic()">
+            MÚSICA: ON
+          </button>
+        </div>
+
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted);">
+          <span id="time-display">00:00 / 03:00</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Safeguard anti-anidamiento
+    if (window.self !== window.top) {
+      document.querySelectorAll('a[href="../index.html"]').forEach(function(el) { el.remove(); });
+    }
+
+    const SCENES = [
+      { id: 0, title: "Madrugada en la Ría de Arousa", dur: 30, text: "14 de marzo de 2025. Un temporal del suroeste azota los muelles de Cambados con vientos de 45 nudos y mareas vivas. A las 21:30 h, el Patrón Mayor Xurxo Otero cena en la cantina de la lonja tras un día de enfrentamientos por las cuotas de marisqueo. A medianoche, su pesquero abandona el amarre." },
+      { id: 1, title: "El Pesquero a la Deriva", dur: 30, text: "07:18 horas. Un barco bateeiro descubre al Novo Alborada embestido suavemente contra la Batea B-12. El motor diésel continúa al ralentí y el piloto automático está enganchado a rumbo 240º. A escasos metros, el cuerpo de Xurxo flota entre los cabos con el traje de aguas puesto." },
+      { id: 2, title: "El Test de Diatomeas Demuele el Accidente", dur: 30, text: "Lo que parecía una caída fortuita queda pulverizado en el laboratorio del INTCF: 0 diatomeas en médula ósea. La víctima no respiró bajo el agua. Además, presenta una fractura craneal producida por una herramienta metálica y livideces dorsales fijas que prueban que murió horas antes sobre suelo rígido." },
+      { id: 3, title: "Conflictos, Deudas y Electrónica", dur: 30, text: "Cuatro sospechosos en el punto de mira: Suso Trigo, empresario bateeiro con sanciones; Manuel Otero, el sobrino con deudas de juego; Carla Souto, la bióloga del INTECMAR con discrepancias técnicas; y Brais Lema, el ingeniero naval con acceso informático total al GPS del buque." },
+      { id: 4, title: "La Pintura Roja y la Deriva de Marea", dur: 30, text: "La física desmiente la coartada náutica: la marea vaciante impedía físicamente la ruta del falso GPS. Y en la amura de estribor del pesquero, un raspón microscópico oculta transferencia de pintura antifouling roja con fluoropolímero idéntica a una planeadora del puerto." },
+      { id: 5, title: "Abrid el Sobre A: Pieza Principal", dur: 30, text: "Vuestra misión comienza ahora. Abrid el Sobre A para analizar el atestado oficial, la carta náutica y la autopsia preliminar. Cruzad los datos en la Terminal SITRA-JUD para desenmascarar al culpable antes de que el mar borre todas las pruebas." }
+    ];
+
+    let currentScene = 0;
+    let isPlaying = false;
+    let playTimer = null;
+    let sceneTime = 0;
+    let voiceEnabled = true;
+    let musicEnabled = true;
+    let audioCtx = null;
+    let droneOsc = null;
+
+    function jumpToScene(idx) {
+      document.querySelectorAll('.scene-slide').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.act-tab-btn').forEach(b => b.classList.remove('active'));
+
+      currentScene = idx;
+      sceneTime = 0;
+      const targetSlide = document.getElementById('slide-' + idx);
+      const targetBtn = document.querySelectorAll('.act-tab-btn')[idx];
+
+      if (targetSlide) targetSlide.classList.add('active');
+      if (targetBtn) targetBtn.classList.add('active');
+
+      updateScrubber();
+      if (voiceEnabled && isPlaying) speakScene(idx);
+    }
+
+    function togglePlay() {
+      isPlaying = !isPlaying;
+      const btn = document.getElementById('btn-play');
+      if (btn) btn.classList.toggle('active', isPlaying);
+
+      if (isPlaying) {
+        startAudioDrone();
+        speakScene(currentScene);
+        playTimer = setInterval(tick, 1000);
+      } else {
+        stopAudioDrone();
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        if (playTimer) clearInterval(playTimer);
+      }
+    }
+
+    function tick() {
+      sceneTime++;
+      if (sceneTime >= SCENES[currentScene].dur) {
+        if (currentScene < SCENES.length - 1) {
+          jumpToScene(currentScene + 1);
+        } else {
+          togglePlay();
+          jumpToScene(0);
+        }
+      }
+      updateScrubber();
+    }
+
+    function updateScrubber() {
+      const totalDur = SCENES.reduce((acc, s) => acc + s.dur, 0);
+      let elapsed = 0;
+      for (let i = 0; i < currentScene; i++) elapsed += SCENES[i].dur;
+      elapsed += sceneTime;
+
+      const pct = (elapsed / totalDur) * 100;
+      const fill = document.getElementById('scrubber-fill');
+      if (fill) fill.style.width = pct + '%';
+
+      const disp = document.getElementById('time-display');
+      if (disp) {
+        const m = Math.floor(elapsed / 60);
+        const s = elapsed % 60;
+        disp.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s + ' / 03:00';
+      }
+    }
+
+    function seekVideo(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      const targetIdx = Math.min(5, Math.floor(pos * 6));
+      jumpToScene(targetIdx);
+    }
+
+    function speakScene(idx) {
+      if (!voiceEnabled || !('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(SCENES[idx].title + '. ' + SCENES[idx].text);
+      u.lang = 'es-ES';
+      u.rate = 0.95;
+      window.speechSynthesis.speak(u);
+    }
+
+    function toggleVoice() {
+      voiceEnabled = !voiceEnabled;
+      const btn = document.getElementById('btn-voice');
+      if (btn) btn.textContent = 'VOZ: ' + (voiceEnabled ? 'ON' : 'OFF');
+      if (!voiceEnabled && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+    }
+
+    function toggleMusic() {
+      musicEnabled = !musicEnabled;
+      const btn = document.getElementById('btn-music');
+      if (btn) btn.textContent = 'MÚSICA: ' + (musicEnabled ? 'ON' : 'OFF');
+      if (!musicEnabled) stopAudioDrone();
+      else if (isPlaying) startAudioDrone();
+    }
+
+    function startAudioDrone() {
+      if (!musicEnabled) return;
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      if (!droneOsc) {
+        droneOsc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        droneOsc.type = 'sawtooth';
+        droneOsc.frequency.value = 55; // Tono marítimo grave (La1)
+        gain.gain.value = 0.03;
+
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 180;
+
+        droneOsc.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+        droneOsc.start();
+      }
+    }
+
+    function stopAudioDrone() {
+      if (droneOsc) {
+        try { droneOsc.stop(); } catch(e) {}
+        droneOsc = null;
+      }
+    }
+  </script>
+</body>
+</html>

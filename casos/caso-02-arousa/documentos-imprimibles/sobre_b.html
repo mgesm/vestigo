@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOSSIER JUDICIAL - SOBRE B: PIEZA SEPARADA 1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700;800;900&family=Special+Elite&family=Libre+Barcode+39+Text&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 10mm 14mm 10mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #525659;
+      font-family: 'Courier Prime', monospace;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .no-print-bar {
+      background: #0f172a;
+      color: #fff;
+      width: 210mm;
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .print-btn {
+      background: #00e5ff;
+      color: #000;
+      border: none;
+      padding: 9px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .sheet {
+      background-color: #fcfbf7;
+      width: 210mm;
+      box-sizing: border-box;
+      padding: 13mm 16mm;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    @media print {
+      html, body {
+        background: transparent !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .no-print-bar {
+        display: none !important;
+      }
+      .sheet {
+        background-color: transparent !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+    }
+
+    .official-header {
+      border-bottom: 2px solid #000;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .official-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      line-height: 1.3;
+    }
+
+    .case-number {
+      font-family: 'Courier Prime', monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      border: 1.5px solid #000;
+      padding: 4px 8px;
+      background: #f0eee6;
+      text-align: right;
+      line-height: 1.2;
+    }
+
+    .stamp-confidential {
+      position: absolute;
+      top: 30px;
+      right: 35px;
+      border: 2.5px solid #ca8a04;
+      color: #ca8a04;
+      font-family: 'Special Elite', cursive;
+      font-size: 15px;
+      font-weight: bold;
+      padding: 4px 10px;
+      text-transform: uppercase;
+      transform: rotate(-7deg);
+      opacity: 0.85;
+      letter-spacing: 2px;
+      pointer-events: none;
+    }
+
+    h1.doc-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 6px 0 12px 0;
+      text-decoration: underline;
+    }
+
+    p.legal-text {
+      font-size: 10px;
+      line-height: 1.55;
+      text-align: justify;
+      margin-bottom: 8px;
+    }
+
+    .info-box {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 10px 12px;
+      margin: 8px 0;
+      font-size: 9.5px;
+      line-height: 1.45;
+    }
+
+    .highlight-card {
+      border: 1.5px solid #ca8a04;
+      background: #fefce8;
+      padding: 10px;
+      margin: 8px 0;
+      font-size: 9.5px;
+      line-height: 1.45;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0;
+      font-size: 9.5px;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid #71717a;
+      padding: 5px 7px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background-color: #e4e4e7;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 9px;
+    }
+
+    .signature-area {
+      margin-top: 10px;
+      padding-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 9.5px;
+      line-height: 1.3;
+    }
+
+    .signature-box {
+      width: 175px;
+      border-top: 1px dotted #000;
+      padding-top: 5px;
+      text-align: center;
+    }
+
+    .qa-block {
+      margin-bottom: 8px;
+      font-size: 9.5px;
+      line-height: 1.5;
+    }
+
+    .qa-q {
+      font-weight: bold;
+      color: #0f172a;
+    }
+
+    .qa-a {
+      margin-left: 10px;
+      color: #334155;
+    }
+
+    @media screen and (max-width: 820px) {
+      body {
+        padding: 8px 6px 40px 6px;
+        background-color: #0b0f19;
+      }
+      .no-print-bar {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 10px 14px;
+        margin-bottom: 12px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        border-radius: 8px;
+      }
+      .sheet {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: auto !important;
+        padding: 18px 14px !important;
+        margin-bottom: 16px !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+        border-radius: 10px !important;
+        overflow-x: hidden;
+      }
+      .official-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+      }
+      .signature-area {
+        flex-direction: column !important;
+        gap: 15px !important;
+      }
+      .signature-box {
+        width: 100% !important;
+      }
+      .data-table {
+        table-layout: fixed !important;
+        width: 100% !important;
+        word-break: break-word !important;
+        font-size: 8px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print-bar">
+    <div>
+      <strong>EXPEDIENTE JUDICIAL // CASO 02 · AROUSA</strong> — Sobre B: Pieza Separada 1 (Interrogatorios y Mareas)
+    </div>
+    <button class="print-btn" onclick="window.print()">IMPRIMIR EN A4 (PDF)</button>
+  </div>
+
+  <!-- HOJA 1: PROVIDENCIA PIEZA SEPARADA -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">SOBRE B</div>
+      <div class="official-header">
+        <div class="official-title">
+          JUZGADO DE 1ª INSTANCIA E INSTRUCCIÓN Nº 1 DE CAMBADOS<br>
+          SECRETARÍA JUDICIAL // PIEZA SEPARADA DE INTERROGATORIOS<br>
+          <span style="font-size: 9px; font-weight: normal;">Diligencias Previas 118/2025 - Pieza Secreta I</span>
+        </div>
+        <div class="case-number">
+          SUMARIO 118/2025<br>
+          HOJA 1 DE 6
+        </div>
+      </div>
+
+      <h1 class="doc-title">AUTO DE APERTURA DE PIEZA DE TESTIGOS E INVESTIGADOS</h1>
+
+      <p class="legal-text">
+        <strong>En Cambados, a 16 de marzo de 2025.</strong>
+      </p>
+
+      <p class="legal-text">
+        Resultando acreditado por los dictámenes del IMELGA y del INTCF que la muerte de D. Xurxo Otero Barral no se produjo por ahogamiento fortuito sino por traumatismo craneal violento perimortem con descarte de sumersión activa en el mar, procede incoar la presente Pieza Separada al objeto de tomar declaración testifical e indagar la relación y coartadas de las personas del entorno directo de la víctima que mantenían litigios o contactos durante la noche de los hechos.
+      </p>
+
+      <div class="highlight-card">
+        <strong>PERSONAS LLAMADAS A DECLARACIÓN EN CALIDAD DE INVESTIGADOS:</strong>
+        <ul style="margin-left: 18px; margin-top: 4px; line-height: 1.5;">
+          <li><strong>D. Jesús «Suso O Rubio» Trigo Vidal:</strong> Bateeiro y socio de depuradoras, enfrentado con la víctima por expedientes de zonas de marisqueo.</li>
+          <li><strong>D. Manuel Otero Freire:</strong> Sobrino del fallecido y tripulante del pesquero, con antecedentes de deudas y amenazas previas.</li>
+          <li><strong>Dña. Carla Souto Méndez:</strong> Bióloga técnica del INTECMAR, investigada por discrepancias en informes de biotoxinas marinas.</li>
+          <li><strong>D. Brais Lema Castro:</strong> Ingeniero naval responsable del mantenimiento técnico de la electrónica y del GPS del buque siniestrado.</li>
+        </ul>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Investigado</th>
+            <th>Vínculo con la Víctima</th>
+            <th>Móvil Aparente</th>
+            <th>Coartada Declarada</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Suso Trigo</strong></td>
+            <td>Empresario de bateas rival</td>
+            <td>Denuncias por vertidos y marisqueo furtivo</td>
+            <td>Taberna O Peirao hasta 01:15 h; luego durmiendo.</td>
+          </tr>
+          <tr>
+            <td><strong>Manuel Otero</strong></td>
+            <td>Sobrino y segundo a bordo</td>
+            <td>Herencia del barco y deuda de 45.000 €</td>
+            <td>Durmiendo en Vilaxoán en casa de su novia.</td>
+          </tr>
+          <tr>
+            <td><strong>Carla Souto</strong></td>
+            <td>Bióloga técnica de calidad</td>
+            <td>Auditoría por informes de toxinas manipulados</td>
+            <td>Trabajando en el laboratorio hasta las 04:00 h.</td>
+          </tr>
+          <tr>
+            <td><strong>Brais Lema</strong></td>
+            <td>Ingeniero naval de Tragove</td>
+            <td>Acceso técnico total al GPS y varadero</td>
+            <td>En su domicilio de O Grove conectado a WiFi.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">DÑA. MARÍA JOSÉ REBOREDO<br>Magistrada Instructora</div>
+      <div class="signature-box">EL SARGENTO INSTRUCTOR<br>Guardia Civil Pontevedra</div>
+    </div>
+  </div>
+
+  <!-- HOJA 2: INTERROGATORIO SUSO TRIGO -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">DECLARACIÓN</div>
+      <div class="official-header">
+        <div class="official-title">
+          GUARDIA CIVIL // UNIDAD DE POLICÍA JUDICIAL<br>
+          ACTA DE DECLARACIÓN EN CALIDAD DE INVESTIGADO<br>
+          <span style="font-size: 9px; font-weight: normal;">Sujeto 1: D. Jesús Trigo Vidal (52 años)</span>
+        </div>
+        <div class="case-number">
+          SUMARIO 118/2025<br>
+          HOJA 2 DE 6
+        </div>
+      </div>
+
+      <h1 class="doc-title">TRANSCRIPCIÓN DE INTERROGATORIO: JESÚS TRIGO VIDAL</h1>
+
+      <div class="qa-block">
+        <div class="qa-q">PREGUNTADO sobre sus desavenencias con D. Xurxo Otero Barral:</div>
+        <div class="qa-a">RESPONDE que todo Cambados sabe que tenían discusiones en la Cofradía. Xurxo quería cerrarle la concesión del polígono B por supuestos problemas de densidad de cuerdas. Pero de ahí a querer hacerle daño hay un abismo. Xurxo era un hombre terco, pero un patrón respetado.</div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-q">PREGUNTADO sobre su paradero la noche del 14 al 15 de marzo:</div>
+        <div class="qa-a">RESPONDE que sobre las 20:30 h fue a la Taberna O Peirao de Cambados. Estuvo jugando una partida de tute y tomando unas tazas de ribeiro con tres mariscadores hasta la 01:15 h de la madrugada, cuando el dueño cerró el local. Después se fue hacia su casa en Corvillón.</div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-q">PREGUNTADO sobre por qué su furgoneta fue vista en el puerto a las 02:00 h:</div>
+        <div class="qa-a">RESPONDE que soplaba temporal fuerte del sudoeste. Por precaución, antes de acostarse se acercó al muelle a revisar que las amarras de su barco bateeiro estuvieran bien firmes. Estuvo allí apenas diez minutos, apretó un cabo y se marchó a su casa a dormir con su mujer.</div>
+      </div>
+
+      <div class="highlight-card">
+        <strong>DILIGENCIA POLICIAL DE CONTRASTE:</strong><br>
+        El dueño de la Taberna O Peirao y dos testigos confirman su estancia continuada en el local hasta la 01:15 h. Asimismo, la cámara de seguridad de la gasolinera de Tragove capta su furgoneta Peugeot Partner (`4910-KJL`) pasando en dirección a su domicilio a las <strong>02:18 h</strong>. Su barco bateeiro permaneció amarrado al muelle con el precinto térmico del motor en frío verificado por el perito naval.
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL DECLARANTE<br>D. Jesús Trigo Vidal</div>
+      <div class="signature-box">EL INSTRUCTOR DE POLICÍA<br>Guardia Civil Pontevedra</div>
+    </div>
+  </div>
+
+  <!-- HOJA 3: INTERROGATORIO MANUEL OTERO -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">DECLARACIÓN</div>
+      <div class="official-header">
+        <div class="official-title">
+          GUARDIA CIVIL // UNIDAD DE POLICÍA JUDICIAL<br>
+          ACTA DE DECLARACIÓN EN CALIDAD DE INVESTIGADO<br>
+          <span style="font-size: 9px; font-weight: normal;">Sujeto 2: D. Manuel Otero Freire (27 años)</span>
+        </div>
+        <div class="case-number">
+          SUMARIO 118/2025<br>
+          HOJA 3 DE 6
+        </div>
+      </div>
+
+      <h1 class="doc-title">TRANSCRIPCIÓN DE INTERROGATORIO: MANUEL OTERO FREIRE</h1>
+
+      <div class="qa-block">
+        <div class="qa-q">PREGUNTADO sobre su ausencia a bordo del «Novo Alborada» esa madrugada:</div>
+        <div class="qa-a">RESPONDE que su tío le había dicho de salir sobre las 03:00 h para largar las redes de nécora antes de la pleamar. Pero él se había tomado varias cervezas la tarde anterior y se quedó profundamente dormido en el sofá del piso de su novia en Vilaxoán. Se despertó a las 08:30 h con las llamadas de la Guardia Civil.</div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-q">PREGUNTADO sobre su relación económica con su tío y deudas de juego:</div>
+        <div class="qa-a">RESPONDE visiblemente nervioso que su tío le recriminaba gastar dinero en apuestas deportivas. Admite que le debía dinero a un prestamista y que su tío se negó en redondo a avalarle un crédito esa misma semana, diciéndole que o enderezaba su vida o lo echaba del barco.</div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-q">PREGUNTADO por una transferencia bancaria urgente de 4.000 € efectuada a las 04:30 h:</div>
+        <div class="qa-a">RESPONDE que le estaban amenazando por WhatsApp con embargarle el coche y que esa noche transfirió los ahorros que le quedaban en una cuenta a plazo para cancelar la deuda con la plataforma de apuestas antes del vencimiento.</div>
+      </div>
+
+      <div class="highlight-card">
+        <strong>DILIGENCIA POLICIAL DE CONTRASTE:</strong><br>
+        El registro de conexión de la antena de telefonía BTS de Vilaxoán acredita que el teléfono móvil de Manuel Otero permaneció enganchado ininterrumpidamente a la celda del domicilio de su pareja desde las 23:10 h hasta las 08:15 h. La pareja confirma con declaración jurada que permaneció en la cama toda la noche.
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL DECLARANTE<br>D. Manuel Otero Freire</div>
+      <div class="signature-box">EL LETRADO DEFENSOR<br>Col. Abogados Pontevedra</div>
+    </div>
+  </div>
+
+  <!-- HOJA 4: INTERROGATORIO CARLA SOUTO -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">DECLARACIÓN</div>
+      <div class="official-header">
+        <div class="official-title">
+          GUARDIA CIVIL // UNIDAD DE POLICÍA JUDICIAL<br>
+          ACTA DE DECLARACIÓN EN CALIDAD DE INVESTIGADA<br>
+          <span style="font-size: 9px; font-weight: normal;">Sujeto 3: Dña. Carla Souto Méndez (38 años)</span>
+        </div>
+        <div class="case-number">
+          SUMARIO 118/2025<br>
+          HOJA 4 DE 6
+        </div>
+      </div>
+
+      <h1 class="doc-title">TRANSCRIPCIÓN DE INTERROGATORIO: CARLA SOUTO MÉNDEZ</h1>
+
+      <div class="qa-block">
+        <div class="qa-q">PREGUNTADA sobre la discusión técnica mantenida con Xurxo Otero el 13 de marzo:</div>
+        <div class="qa-a">RESPONDE que mantuvieron una reunión tensa por el boletín de cierre del polígono C de bateas por presencia de toxina lipofílica (DSP). Xurxo sostenía que los niveles estaban al límite y que cerrar en viernes arruinaba a los mariscadores. Ella le explicó que la normativa de la UE y de la Xunta era inflexible en materia de salud pública.</div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-q">PREGUNTADA sobre sus movimientos durante la noche de guardia:</div>
+        <div class="qa-a">RESPONDE que entró al laboratorio central del INTECMAR en Vilagarcía a las 23:00 h para procesar la serie de muestras urgentes de la marea roja. Estuvo analizando cromatografías en el espectrómetro del laboratorio hasta pasadas las 04:00 h de la madrugada.</div>
+      </div>
+
+      <div class="highlight-card">
+        <strong>DILIGENCIA POLICIAL DE CONTRASTE:</strong><br>
+        La auditoría del servidor de espectrometría de masas (equipo Agilent 6470) confirma que el usuario de Carla Souto ejecutó 18 secuencias de inyección cromatográfica continuadas cada 12-15 minutos entre las <strong>23:34 h y las 03:52 h</strong> de forma presencial. Queda plenamente descartada su presencia material en Cambados en la ventana temporal del homicidio.
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">LA DECLARANTE<br>Dña. Carla Souto Méndez</div>
+      <div class="signature-box">EL SARGENTO INSTRUCTOR<br>Guardia Civil Pontevedra</div>
+    </div>
+  </div>
+
+  <!-- HOJA 5: INTERROGATORIO BRAIS LEMA -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">DECLARACIÓN</div>
+      <div class="official-header">
+        <div class="official-title">
+          GUARDIA CIVIL // UNIDAD DE POLICÍA JUDICIAL<br>
+          ACTA DE DECLARACIÓN EN CALIDAD DE INVESTIGADO<br>
+          <span style="font-size: 9px; font-weight: normal;">Sujeto 4: D. Brais Lema Castro (46 años)</span>
+        </div>
+        <div class="case-number">
+          SUMARIO 118/2025<br>
+          HOJA 5 DE 6
+        </div>
+      </div>
+
+      <h1 class="doc-title">TRANSCRIPCIÓN DE INTERROGATORIO: BRAIS LEMA CASTRO</h1>
+
+      <div class="qa-block">
+        <div class="qa-q">PREGUNTADO sobre sus servicios prestados al pesquero «Novo Alborada»:</div>
+        <div class="qa-a">RESPONDE que su taller naval en el Muelle de Tragove le lleva toda la electrónica a Xurxo desde hace diez años. Hace dos meses le instaló la pantalla multifunción Furuno NavNet TZT3 y un piloto automático nuevo. El equipo funcionaba de maravilla.</div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-q">PREGUNTADO sobre si vio a Xurxo la tarde-noche del 14 de marzo:</div>
+        <div class="qa-a">RESPONDE que no. Afirma que cerró su taller en el muelle de Tragove a las 20:00 h, recogió sus herramientas y se marchó a su casa en O Grove a cenar con calma y ver una película.</div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-q">PREGUNTADO sobre la lancha semirrígida que guarda en su varadero privado:</div>
+        <div class="qa-a">RESPONDE que tiene una neumática de 7,5 metros para trabajos de asistencia mecánica en el agua. Dice que no la tocó en toda la semana y que estuvo amarrada en su rampa de varada.</div>
+      </div>
+
+      <div class="highlight-card">
+        <strong>CONTRADICCIONES DETECTADAS POR LOS INSTRUCTORES:</strong><br>
+        1. Brais afirma haber cerrado a las 20:00 h, pero el conserje del muelle de Tragove observó luz en su foso de varada a las 22:45 h.<br>
+        2. La cerradura electrónica del taller registró apertura de la puerta principal a las 22:28 h.<br>
+        3. En el suelo de la rampa de varada se localizaron restos frescos de agua marina y cabos desprendidos compatibles con una salida náutica nocturna.
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL DECLARANTE<br>D. Brais Lema Castro</div>
+      <div class="signature-box">EL INSTRUCTOR DE POLICÍA<br>Guardia Civil Pontevedra</div>
+    </div>
+  </div>
+
+  <!-- HOJA 6: ESTUDIO DE DERIVA Y MAREAS -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">OCEANOGRAFÍA</div>
+      <div class="official-header">
+        <div class="official-title">
+          CONSELLERÍA DO MAR // METEOGALICIA & PUERTOS DEL ESTADO<br>
+          INFORME TÉCNICO HIDRODINÁMICO: MAREAS Y VECTORES DE DERIVA<br>
+          <span style="font-size: 9px; font-weight: normal;">Simulación Hidrográfica de Deriva en Ría de Arousa</span>
+        </div>
+        <div class="case-number">
+          EXP-OCEAN-2025-04<br>
+          HOJA 6 DE 6
+        </div>
+      </div>
+
+      <h1 class="doc-title">DICTAMEN OCEANOGRÁFICO DE DERIVA MARINA</h1>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Hora Oficial</th>
+            <th>Fase Marea</th>
+            <th>Altura Marea (m)</th>
+            <th>Dirección Corriente</th>
+            <th>Velocidad (Nudos)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>01:42 h</strong></td>
+            <td>Pleamar</td>
+            <td>3,85 m (Reposo)</td>
+            <td>Estacionaria</td>
+            <td>0,2 nudos</td>
+          </tr>
+          <tr>
+            <td><strong>03:00 h</strong></td>
+            <td>Vaciante (Marea viva)</td>
+            <td>3,10 m</td>
+            <td>225º (Suroeste / Mar abierto)</td>
+            <td>1,4 nudos</td>
+          </tr>
+          <tr>
+            <td><strong>04:30 h</strong></td>
+            <td>Vaciante Máximo</td>
+            <td>2,15 m</td>
+            <td>230º (Suroeste hacia Sálvora)</td>
+            <td>1,8 nudos</td>
+          </tr>
+          <tr>
+            <td><strong>07:54 h</strong></td>
+            <td>Bajamar</td>
+            <td>0,42 m</td>
+            <td>Estacionaria baja</td>
+            <td>0,3 nudos</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-card">
+        <strong>INCOMPATIBILIDAD FÍSICA DE LA RUTA SIMULADA:</strong><br>
+        La ruta falsa grabada en el GPS situaba el supuesto accidente a las 02:45 h en el sector norte de la ría (frente a A Pobra do Caramiñal). El modelo numérico de dispersión hidrodinámica demuestra matemáticamente que cualquier objeto flotante a la deriva en ese punto habría sido arrastrado por la corriente de vaciante (1,8 nudos al SO) directamente hacia el exterior de la ría, pasando al sur de la Isla de Rúa hacia Sálvora.<br><br>
+        <strong>Conclusión:</strong> El <em>Novo Alborada</em> y el cuerpo jamás pudieron desplazarse en dirección este hacia la Batea B-12 de Cambados. El hallazgo solo es físicamente posible si el buque y el cuerpo partieron de las proximidades inmediatas del <strong>Muelle de Tragove</strong>.
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL DR. EN OCEANOGRAFÍA<br>MeteoGalicia / Puertos del Estado</div>
+      <div class="signature-box">EL SARGENTO INSTRUCTOR<br>Guardia Civil Pontevedra</div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.type === 'VESTIGO_ZOOM') {
+        var zoom = e.data.zoom || 1.0;
+        if (typeof document.body.style.zoom !== 'undefined') {
+          document.body.style.zoom = zoom;
+        } else {
+          document.body.style.transform = zoom === 1.0 ? 'none' : 'scale(' + zoom + ')';
+          document.body.style.transformOrigin = 'top center';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

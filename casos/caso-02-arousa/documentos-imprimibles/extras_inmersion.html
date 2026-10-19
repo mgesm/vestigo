@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EXTRAS DE INMERSIÓN - CASO 02: MAREA NEGRA EN RÍA DE AROUSA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700;800;900&family=Special+Elite&family=Libre+Barcode+39+Text&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 10mm 14mm 10mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #525659;
+      font-family: 'Courier Prime', monospace;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .no-print-bar {
+      background: #0f172a;
+      color: #fff;
+      width: 210mm;
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .print-btn {
+      background: #00e5ff;
+      color: #000;
+      border: none;
+      padding: 9px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .sheet {
+      background-color: #fcfbf7;
+      width: 210mm;
+      box-sizing: border-box;
+      padding: 13mm 16mm;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    @media print {
+      html, body {
+        background: transparent !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .no-print-bar {
+        display: none !important;
+      }
+      .sheet {
+        background-color: transparent !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+    }
+
+    .official-header {
+      border-bottom: 2px solid #000;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .official-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      line-height: 1.3;
+    }
+
+    .case-number {
+      font-family: 'Courier Prime', monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      border: 1.5px solid #000;
+      padding: 4px 8px;
+      background: #f0eee6;
+      text-align: right;
+      line-height: 1.2;
+    }
+
+    .stamp-confidential {
+      position: absolute;
+      top: 30px;
+      right: 35px;
+      border: 2.5px solid #8b5cf6;
+      color: #8b5cf6;
+      font-family: 'Special Elite', cursive;
+      font-size: 15px;
+      font-weight: bold;
+      padding: 4px 10px;
+      text-transform: uppercase;
+      transform: rotate(-7deg);
+      opacity: 0.85;
+      letter-spacing: 2px;
+      pointer-events: none;
+    }
+
+    h1.doc-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 6px 0 12px 0;
+      text-decoration: underline;
+    }
+
+    p.legal-text {
+      font-size: 10px;
+      line-height: 1.55;
+      text-align: justify;
+      margin-bottom: 8px;
+    }
+
+    .info-box {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 10px 12px;
+      margin: 8px 0;
+      font-size: 9.5px;
+      line-height: 1.45;
+    }
+
+    .highlight-card {
+      border: 1.5px solid #8b5cf6;
+      background: #f5f3ff;
+      padding: 10px;
+      margin: 8px 0;
+      font-size: 9.5px;
+      line-height: 1.45;
+    }
+
+    .filiacion-card {
+      display: flex;
+      gap: 16px;
+      border: 1.5px solid #334155;
+      background: #fff;
+      padding: 12px;
+      margin-bottom: 12px;
+      border-radius: 4px;
+    }
+
+    .filiacion-photo {
+      width: 120px;
+      height: 140px;
+      object-fit: cover;
+      border: 1px solid #000;
+      background: #e2e8f0;
+    }
+
+    .filiacion-meta {
+      flex: 1;
+      font-size: 9.5px;
+      line-height: 1.5;
+    }
+
+    .filiacion-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      color: #0f172a;
+      border-bottom: 1.5px solid #0f172a;
+      padding-bottom: 2px;
+      margin-bottom: 4px;
+    }
+
+    .signature-area {
+      margin-top: 10px;
+      padding-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 9.5px;
+      line-height: 1.3;
+    }
+
+    .signature-box {
+      width: 175px;
+      border-top: 1px dotted #000;
+      padding-top: 5px;
+      text-align: center;
+    }
+
+    /* ESTILO PERIÓDICO HISTÓRICO */
+    .news-header {
+      text-align: center;
+      border-bottom: 3px double #000;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }
+
+    .news-paper-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .news-subbar {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Inter', sans-serif;
+      font-size: 8.5px;
+      border-top: 1px solid #000;
+      border-bottom: 1px solid #000;
+      padding: 3px 6px;
+      margin-top: 5px;
+      font-weight: 600;
+    }
+
+    .news-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      font-weight: 900;
+      line-height: 1.15;
+      text-transform: uppercase;
+      margin: 8px 0;
+      text-align: center;
+    }
+
+    .news-deck {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 10px;
+      text-align: center;
+      color: #334155;
+    }
+
+    .news-columns {
+      display: flex;
+      gap: 14px;
+      font-family: 'Courier Prime', monospace;
+      font-size: 9px;
+      line-height: 1.45;
+      text-align: justify;
+    }
+
+    .news-col {
+      flex: 1;
+    }
+
+    @media screen and (max-width: 820px) {
+      body {
+        padding: 8px 6px 40px 6px;
+        background-color: #0b0f19;
+      }
+      .no-print-bar {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 10px 14px;
+        margin-bottom: 12px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        border-radius: 8px;
+      }
+      .sheet {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: auto !important;
+        padding: 18px 14px !important;
+        margin-bottom: 16px !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+        border-radius: 10px !important;
+        overflow-x: hidden;
+      }
+      .filiacion-card {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: left !important;
+      }
+      .filiacion-photo {
+        width: 140px !important;
+        height: 160px !important;
+      }
+      .news-columns {
+        flex-direction: column !important;
+        gap: 10px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print-bar">
+    <div>
+      <strong>EXPEDIENTE JUDICIAL // CASO 02 · AROUSA</strong> — Extras de Inmersión (Prensa, Filiaciones y Escenas)
+    </div>
+    <button class="print-btn" onclick="window.print()">IMPRIMIR EN A4 (PDF)</button>
+  </div>
+
+  <!-- HOJA 1: PRENSA REGIONAL -->
+  <div class="sheet">
+    <div>
+      <div class="news-header">
+        <div class="news-paper-name">LA VOZ DE GALICIA</div>
+        <div class="news-subbar">
+          <span>EDICIÓN AROUSA // CAMBADOS - VILAGARCÍA</span>
+          <span>SÁBADO, 15 DE MARZO DE 2025</span>
+          <span>AÑO CXLIII · NÚMERO 48.912</span>
+          <span>1,60 €</span>
+        </div>
+      </div>
+
+      <div class="news-headline">
+        HALLADO MUERTO EN LA RÍA EL PATRÓN MAYOR DE CAMBADOS JUNTO A UNA BATEA
+      </div>
+
+      <div class="news-deck">
+        El pesquero «Novo Alborada» fue avistado a la deriva al amanecer con el motor encendido frente a Tragove. La Guardia Civil investiga las causas mientras el sector marisquero de O Salnés suspende las faenas en señal de duelo.
+      </div>
+
+      <div class="news-columns">
+        <div class="news-col">
+          <p><strong>CAMBADOS / REDACCIÓN.</strong>— Conmoción absoluta en el muelle de Cambados y en el conjunto de las rías gallegas. D. Xurxo Otero Barral, de 56 años, histórico armador y Patrón Mayor de la Cofradía de San Antonio desde 2018, fue hallado sin vida a primera hora de esta mañana flotando entre las cuerdas de una batea de mejillón en el polígono Cambados B.</p>
+          <p style="margin-top:6px;">Fue la tripulación de un barco bateeiro la que dio la voz de alarma a las 07:18 horas tras percatarse de que el pesquero de Otero, el <em>Novo Alborada</em>, se encontraba al ralentí rozando contra la estructura de madera. Al aproximarse comprobaron que no había nadie en el timón y localizaron el cuerpo en el agua.</p>
+        </div>
+        <div class="news-col">
+          <p>Hasta el lugar se desplazaron efectivos de Salvamento Marítimo, la patrullera <em>Río Guadalete</em> de la Guardia Civil y buzos del GEAS, que procedieron al rescate del cadáver y al remolque del pesquero a puerto. La autoridad judicial ordenó el traslado del cuerpo al Instituto de Medicina Legal de Santiago para la autopsia.</p>
+          <p style="margin-top:6px;">Aunque las primeras hipótesis apuntaban a una caída fortuita durante un golpe de mar nocturno, fuentes portuarias confirmaron que Xurxo Otero había mantenido en los últimos días tensas reuniones sobre las cuotas de marisqueo y las inspecciones de toxinas marinas.</p>
+        </div>
+      </div>
+
+      <div class="info-box" style="margin-top:14px;">
+        <strong>DECLARACIONES DE LA ALCALDESA DE CAMBADOS:</strong><br>
+        <em>«Xurxo era un hombre que llevaba el mar en las venas. Su pérdida deja un vacío inmenso en nuestras familias mariscadoras. Confiamos plenamente en la investigación de la Guardia Civil para que se esclarezca con exactitud todo lo ocurrido en la ría».</em>
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">ARCHIVO DE PRENSA JUDICIAL<br>Juzgado Nº 1 de Cambados</div>
+      <div class="signature-box">SECCIÓN DOCUMENTAL<br>Policía Judicial Pontevedra</div>
+    </div>
+  </div>
+
+  <!-- HOJA 2: FICHAS FILIACIÓN (VÍCTIMA Y SUSO TRIGO) -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">FILIACIÓN</div>
+      <div class="official-header">
+        <div class="official-title">
+          DIRECCIÓN GENERAL DE LA GUARDIA CIVIL // POLICÍA JUDICIAL<br>
+          FICHAS BIOMÉTRICAS DE FILIACIÓN // EXPEDIENTE SUMARIAL 118/2025<br>
+          <span style="font-size: 9px; font-weight: normal;">Registro de Filiación de Víctima y Sospechoso 1</span>
+        </div>
+        <div class="case-number">
+          SUMARIO 118/2025<br>
+          HOJA 2 DE 5
+        </div>
+      </div>
+
+      <!-- VÍCTIMA -->
+      <div class="filiacion-card">
+        <img src="../imagenes/xurxo_otero.png" alt="Xurxo Otero" class="filiacion-photo">
+        <div class="filiacion-meta">
+          <div class="filiacion-name">XURXO OTERO BARRAL (VÍCTIMA)</div>
+          <div><strong>DNI:</strong> 35.419.882-K · 56 años · Natural de Cambados (Pontevedra).</div>
+          <div><strong>Cargo:</strong> Patrón Mayor Cofradía de San Antonio y armador del <em>Novo Alborada</em>.</div>
+          <div><strong>Perfil:</strong> Marinero veterano con más de 35 años de experiencia náutica. Hombre de carácter recto, implacable contra el furtivismo y el marisqueo ilegal.</div>
+          <div><strong>Hallazgo:</strong> Flotando en el Polígono Cambados B-12. Livideces dorsales fijas y 0 diatomeas en médula ósea. Muerte por traumatismo craneal violento.</div>
+        </div>
+      </div>
+
+      <!-- SUSO TRIGO -->
+      <div class="filiacion-card">
+        <img src="../imagenes/suso_trigo.png" alt="Suso Trigo" class="filiacion-photo">
+        <div class="filiacion-meta">
+          <div class="filiacion-name">JESÚS «SUSO O RUBIO» TRIGO VIDAL (INVESTIGADO 1)</div>
+          <div><strong>DNI:</strong> 35.302.119-L · 52 años · Residente en Corvillón, Cambados.</div>
+          <div><strong>Ocupación:</strong> Empresario de bateas de mejillón y socio de <em>Depuradoras Ría Mar</em>.</div>
+          <div><strong>Antecedentes:</strong> Diligencias archivadas en 2012 por presunto contrabando en la ría.</div>
+          <div><strong>Móvil y Coartada:</strong> Litigio por sanciones administrativas de vertidos y concesiones. Coartada confirmada por testigos en Taberna O Peirao hasta las 01:15 h y cámara a las 02:18 h.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL SARGENTO INSTRUCTOR<br>Guardia Civil Pontevedra</div>
+      <div class="signature-box">EL ENCARGADO DE FILIACIÓN<br>Gabinete Criminalística</div>
+    </div>
+  </div>
+
+  <!-- HOJA 3: FICHAS FILIACIÓN (CARLA SOUTO Y MANUEL OTERO) -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">FILIACIÓN</div>
+      <div class="official-header">
+        <div class="official-title">
+          DIRECCIÓN GENERAL DE LA GUARDIA CIVIL // POLICÍA JUDICIAL<br>
+          FICHAS BIOMÉTRICAS DE FILIACIÓN // EXPEDIENTE SUMARIAL 118/2025<br>
+          <span style="font-size: 9px; font-weight: normal;">Registro de Filiación de Sospechosos 2 y 3</span>
+        </div>
+        <div class="case-number">
+          SUMARIO 118/2025<br>
+          HOJA 3 DE 5
+        </div>
+      </div>
+
+      <!-- CARLA SOUTO -->
+      <div class="filiacion-card">
+        <img src="../imagenes/carla_souto.png" alt="Carla Souto" class="filiacion-photo">
+        <div class="filiacion-meta">
+          <div class="filiacion-name">CARLA SOUTO MÉNDEZ (INVESTIGADA 2)</div>
+          <div><strong>DNI:</strong> 36.190.443-P · 38 años · Natural de Vilagarcía de Arousa.</div>
+          <div><strong>Ocupación:</strong> Bióloga marina jefa de laboratorio en el INTECMAR.</div>
+          <div><strong>Perfil:</strong> Científica rigurosa con amplia trayectoria técnica en toxicología acuática.</div>
+          <div><strong>Móvil y Coartada:</strong> Disputa con Xurxo por órdenes de cierre marisquero por marea roja. Coartada plenamente validada por las 18 inyecciones cromatográficas continuas en el laboratorio.</div>
+        </div>
+      </div>
+
+      <!-- MANUEL OTERO -->
+      <div class="filiacion-card">
+        <img src="../imagenes/manuel_otero.png" alt="Manuel Otero" class="filiacion-photo">
+        <div class="filiacion-meta">
+          <div class="filiacion-name">MANUEL OTERO FREIRE (INVESTIGADO 3)</div>
+          <div><strong>DNI:</strong> 39.488.221-M · 27 años · Residente en Vilaxoán.</div>
+          <div><strong>Ocupación:</strong> Marinero de cubierta en el <em>Novo Alborada</em> y sobrino de la víctima.</div>
+          <div><strong>Perfil:</strong> Joven con ludopatía activa y deudas de 45.000 € con prestamistas locales.</div>
+          <div><strong>Móvil y Coartada:</strong> Amenaza inminente de desheredación y despido. Coartada verificada por antena BTS de telefonía móvil en el piso de su pareja toda la noche.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL SARGENTO INSTRUCTOR<br>Guardia Civil Pontevedra</div>
+      <div class="signature-box">EL ENCARGADO DE FILIACIÓN<br>Gabinete Criminalística</div>
+    </div>
+  </div>
+
+  <!-- HOJA 4: FICHA FILIACIÓN (BRAIS LEMA) Y FOTOS ESCENA -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">FILIACIÓN</div>
+      <div class="official-header">
+        <div class="official-title">
+          DIRECCIÓN GENERAL DE LA GUARDIA CIVIL // POLICÍA JUDICIAL<br>
+          FICHA BIOMÉTRICA DE FILIACIÓN // AUTOR MATERIAL INVESTIGADO<br>
+          <span style="font-size: 9px; font-weight: normal;">Sujeto 4 y Catálogo Fotográfico Pericial de Evidencias</span>
+        </div>
+        <div class="case-number">
+          SUMARIO 118/2025<br>
+          HOJA 4 DE 5
+        </div>
+      </div>
+
+      <!-- BRAIS LEMA -->
+      <div class="filiacion-card" style="border-color:#b91c1c;">
+        <img src="../imagenes/brais_lema.png" alt="Brais Lema" class="filiacion-photo">
+        <div class="filiacion-meta">
+          <div class="filiacion-name" style="color:#b91c1c;">BRAIS LEMA CASTRO (INVESTIGADO 4 - AUTOR MATERIAL)</div>
+          <div><strong>DNI:</strong> 35.491.708-R · 46 años · Natural de O Grove.</div>
+          <div><strong>Ocupación:</strong> Ingeniero naval, dueño de <em>Electrónica & Varaderos Lema</em> en Tragove.</div>
+          <div><strong>Móvil Real:</strong> Iba a ser denunciado por Xurxo por reprogramación ilegal de plotters GPS para encubrir descargas ilegales. Mató a Xurxo en su taller y simuló un accidente marino.</div>
+          <div><strong>Prueba Irrefutable:</strong> Transferencia de pintura antifouling *Intersmooth 7460HS Rojo* en el casco del pesquero, eco SIVE a 28 nudos y registros del emulador NMEA en su PC.</div>
+        </div>
+      </div>
+
+      <!-- ÁLBUM PERICIAL MINIATURA -->
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Evidencia</th>
+            <th>Ubicación</th>
+            <th>Descripción Pericial</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Foto 1</strong></td>
+            <td>Batea B-12</td>
+            <td><em>Novo Alborada</em> al ralentí abarloado a la madera con testigo métrico #1.</td>
+          </tr>
+          <tr>
+            <td><strong>Foto 2</strong></td>
+            <td>Laboratorio INTCF</td>
+            <td>Microscopía de médula ósea con ausencia total de diatomeas marinas.</td>
+          </tr>
+          <tr>
+            <td><strong>Foto 3</strong></td>
+            <td>Amura de Estribor</td>
+            <td>Raspadura con transferencia de pintura roja antifouling y regla ABFO #3.</td>
+          </tr>
+          <tr>
+            <td><strong>Foto 4</strong></td>
+            <td>Muelle de Tragove</td>
+            <td>Vista nocturna del varadero y taller mecánico con cámara CCTV.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL SARGENTO INSTRUCTOR<br>Guardia Civil Pontevedra</div>
+      <div class="signature-box">EL PERITO FOTÓGRAFO<br>Policía Judicial SECRIM</div>
+    </div>
+  </div>
+
+  <!-- HOJA 5: NOTAS DEL INSTRUCTOR Y ETIQUETAS DE CUSTODIA -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">NOTAS</div>
+      <div class="official-header">
+        <div class="official-title">
+          GUARDIA CIVIL // SERVICIO MARÍTIMO DE PONTEVEDRA<br>
+          CUADERNO DE CAMPO DEL SARGENTO INSTRUCTOR Y CADENA DE CUSTODIA<br>
+          <span style="font-size: 9px; font-weight: normal;">Anotaciones Cronológicas del Investigador Principal</span>
+        </div>
+        <div class="case-number">
+          CUADERNO-SGT-02<br>
+          HOJA 5 DE 5
+        </div>
+      </div>
+
+      <h1 class="doc-title">ANOTACIONES DE CAMPO DEL SARGENTO CARBALLO</h1>
+
+      <div style="background:#fffbeb; border:1px solid #d97706; padding:12px; font-family:'Courier Prime', monospace; font-size:9.5px; line-height:1.45; margin-bottom:12px;">
+        <p><em>15/03/2025 - 08:45 h:</em> El barco no tiene signos de vía de agua ni avería de motor. El ralentí suena redondo. ¿Por qué alguien se caería por la borda sin accionar el chaleco autohinchable y con las luces apagadas? No tiene sentido.</p>
+        <p style="margin-top:6px;"><em>15/03/2025 - 12:15 h:</em> Llamada del Dr. Seoane desde el IMELGA: «Xabier, este hombre no murió en el agua. El fémur está limpio de diatomeas y el golpe en la cabeza fue con una llave de tuercas, no con una madera». Aquí hay gato encerrado.</p>
+        <p style="margin-top:6px;"><em>16/03/2025 - 10:30 h:</em> El plotter Furuno marca una ruta imposible hacia mar abierto. Pero el informe de corrientes de MeteoGalicia dice que la marea lo habría echado fuera de la ría. Alguien puso el barco ahí aposta.</p>
+        <p style="margin-top:6px;"><em>16/03/2025 - 19:40 h:</em> El raspón de estribor tiene pintura roja con fluoropolímero. La misma que usa Brais en su taller para las planeadoras de asistencia rápida.</p>
+      </div>
+
+      <!-- ETIQUETAS DE CUSTODIA RECORTABLES -->
+      <div style="display:flex; gap:10px;">
+        <div style="flex:1; border:1.5px dashed #000; padding:8px; font-size:8.5px; line-height:1.3; background:#fff;">
+          <strong>ETIQUETA CADENA DE CUSTODIA // GC-01</strong><br>
+          <strong>Efecto:</strong> Memoria Flash Plotter Furuno TZT3.<br>
+          <strong>Extracción:</strong> 15/03/2025 - 09:15 h (Puente de mando).<br>
+          <strong>Custodia:</strong> Capitán SECRIM Telemático.<br>
+          <strong>Sello:</strong> <em>Juzgado Cambados Nº 1</em>
+        </div>
+        <div style="flex:1; border:1.5px dashed #000; padding:8px; font-size:8.5px; line-height:1.3; background:#fff;">
+          <strong>ETIQUETA CADENA DE CUSTODIA // GC-02</strong><br>
+          <strong>Efecto:</strong> Muestra M-03 Pintura Antifouling Roja.<br>
+          <strong>Extracción:</strong> 15/03/2025 - 10:40 h (Amura Estribor).<br>
+          <strong>Custodia:</strong> Tte. Químico Laboratorio SECRIM.<br>
+          <strong>Sello:</strong> <em>Policía Judicial Pontevedra</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL SARGENTO XABIER CARBALLO<br>Instructor de Atestados</div>
+      <div class="signature-box">EL CABO 1º ANXO MOURIÑO<br>Secretario de Diligencias</div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.type === 'VESTIGO_ZOOM') {
+        var zoom = e.data.zoom || 1.0;
+        if (typeof document.body.style.zoom !== 'undefined') {
+          document.body.style.zoom = zoom;
+        } else {
+          document.body.style.transform = zoom === 1.0 ? 'none' : 'scale(' + zoom + ')';
+          document.body.style.transformOrigin = 'top center';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
