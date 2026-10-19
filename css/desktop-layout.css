@@ -422,8 +422,9 @@ body.vg-desktop-optimized {
   border-radius: 14px;
   padding: 6px;
   margin-bottom: 24px;
-  overflow-x: auto;
-  scrollbar-width: none;
+  overflow-x: hidden;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
 .vg-desktop-tabs-bar::-webkit-scrollbar {

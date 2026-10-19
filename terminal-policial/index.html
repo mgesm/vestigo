@@ -621,7 +621,7 @@
       </div>
     </div>
     <div class="terminal-status">
-      <a href="../index.html" style="background: rgba(15, 23, 42, 0.85); color: var(--accent-cyan); padding: 6px 12px; border-radius: 4px; text-decoration: none; font-weight: 700; font-size: 11px; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--accent-cyan); transition: all 0.2s;">
+      <a href="../index.html" class="terminal-header-back-link" target="_top" style="background: rgba(15, 23, 42, 0.85); color: var(--accent-cyan); padding: 6px 12px; border-radius: 4px; text-decoration: none; font-weight: 700; font-size: 11px; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--accent-cyan); transition: all 0.2s;">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         <span>VOLVER AL EXPEDIENTE</span>
       </a>
@@ -1754,6 +1754,13 @@
         };
         window.speechSynthesis.speak(utter);
       }
+    }
+
+    // Prevención de bucles si la terminal se ejecuta dentro de un iframe
+    if (window.self !== window.top) {
+      const headerBack = document.querySelector('.terminal-header-back-link');
+      if (headerBack) headerBack.style.display = 'none';
+      document.querySelectorAll('a[href="../index.html"]').forEach(a => a.setAttribute('target', '_top'));
     }
   </script>
 </body>

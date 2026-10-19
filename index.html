@@ -27,6 +27,38 @@
   <link rel="stylesheet" href="css/mobile-ux.css">
 
   <style>
+    /* ========================================================
+       REGLAS CRÍTICAS ANTI-FOUC (CERO PARPADEO EN ARRANQUE)
+       ======================================================== */
+    .view-section { display: none !important; }
+    .view-section.active { display: block !important; }
+    .vg-search-results-popover { display: none !important; }
+    .vg-search-results-popover.open { display: block !important; }
+    .vg-native-reader { display: none !important; }
+    .vg-native-reader.active { display: flex !important; }
+    .vg-shortcuts-modal-backdrop { display: none !important; }
+    .vg-shortcuts-modal-backdrop.open { display: flex !important; }
+    .modal-backdrop { display: none !important; }
+    .modal-backdrop.open { display: flex !important; }
+
+    /* En móvil (< 768px), ocultar inmediatamente cabecera y barra inferior en catálogo */
+    @media screen and (max-width: 768px) {
+      .vg-desktop-header,
+      .topbar,
+      .vg-header-floating {
+        display: none !important;
+      }
+      .mobile-bottom-nav {
+        display: none !important;
+      }
+      body.in-case-view .mobile-bottom-nav {
+        display: flex !important;
+      }
+      body:not(.in-case-view) {
+        padding-bottom: 24px !important;
+      }
+    }
+
     :root {
       --bg-base: #070b12;
       --bg-surface: #0f172a;
@@ -499,7 +531,8 @@
       gap: 8px;
       border-bottom: 1px solid var(--border-subtle);
       margin-bottom: 24px;
-      overflow-x: auto;
+      overflow-x: hidden;
+      flex-wrap: wrap;
       padding-bottom: 4px;
       scrollbar-width: none;
     }
@@ -836,16 +869,21 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-top: 1px solid var(--border-subtle);
-      display: flex;
+      display: none; /* Oculto en catálogo por defecto */
       justify-content: space-around;
       align-items: center;
       z-index: 1000;
       padding-bottom: env(safe-area-inset-bottom);
     }
 
+    body.in-case-view .mobile-bottom-nav {
+      display: flex;
+    }
+
     @media (min-width: 800px) {
-      .mobile-bottom-nav {
-        display: none;
+      .mobile-bottom-nav,
+      body.in-case-view .mobile-bottom-nav {
+        display: none !important;
       }
     }
 
@@ -959,9 +997,9 @@
         <span class="vg-breadcrumb-sep">/</span>
         <a class="vg-breadcrumb-item" onclick="switchView('catalog')">Expedientes</a>
         <span class="vg-breadcrumb-sep">/</span>
-        <span class="vg-breadcrumb-item" id="crumb-case-name">Caso 01 · Valdeluna</span>
+        <span class="vg-breadcrumb-item" id="crumb-case-name" style="display:none;">Caso 01 · Valdeluna</span>
         <span class="vg-breadcrumb-sep">/</span>
-        <span class="vg-breadcrumb-current" id="crumb-active-tab">
+        <span class="vg-breadcrumb-current" id="crumb-active-tab" style="display:none;">
           <span style="width:6px; height:6px; border-radius:50%; background:#00E5FF; box-shadow:0 0 8px #00E5FF;"></span>
           <span id="crumb-tab-text">Vídeo Briefing</span>
         </span>
@@ -979,7 +1017,7 @@
       </div>
 
       <!-- Live Search Results Dropdown -->
-      <div id="vg-search-results" class="vg-search-results-popover">
+      <div id="vg-search-results" class="vg-search-results-popover" style="display:none;">
         <div style="font-family:var(--vg-font-mono, monospace); font-size:0.68rem; color:#64748B; padding:4px 8px; text-transform:uppercase;">
           Acceso Rápido al Expediente
         </div>
@@ -1185,7 +1223,7 @@
     <!-- ======================================================== -->
     <!-- VISTA 2: ESPACIO DE TRABAJO DEL CASO VALDELUNA           -->
     <!-- ======================================================== -->
-    <section id="view-case" class="view-section">
+    <section id="view-case" class="view-section" style="display:none;">
       
       <!-- CABECERA SUPERIOR DEL CASO -->
       <div class="case-header-nav">
@@ -1681,7 +1719,7 @@
   </nav>
 
   <!-- MODAL DE IMÁGENES / PERFILES EN ALTA DEFINICIÓN (NATIVE iOS BOTTOM SHEET) -->
-  <div id="photo-modal" class="modal-backdrop" onclick="closePhotoModal(event)">
+  <div id="photo-modal" class="modal-backdrop" style="display:none;" onclick="closePhotoModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
       <!-- Handle bar for iOS pull-to-dismiss gesture -->
       <div class="vg-sheet-handle-wrap" onclick="closePhotoModal()">
@@ -1704,7 +1742,7 @@
   <!-- ===================================================================== -->
   <!-- IN-APP NATIVE FORENSIC DOCUMENT READER (FULLSCREEN MODAL)             -->
   <!-- ===================================================================== -->
-  <div id="vg-doc-reader-modal" class="vg-native-reader" role="dialog" aria-modal="true" aria-labelledby="vg-reader-doc-name">
+  <div id="vg-doc-reader-modal" class="vg-native-reader" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="vg-reader-doc-name">
     <!-- Top Glass Toolbar -->
     <div class="vg-reader-topbar">
       <!-- Left: Prominent Touchable Close / Exit Button (Mobile Accessible) -->
@@ -1776,7 +1814,7 @@
   <!-- ===================================================================== -->
   <!-- KEYBOARD SHORTCUTS CHEATSHEET MODAL                                   -->
   <!-- ===================================================================== -->
-  <div id="vg-shortcuts-modal" class="vg-shortcuts-modal-backdrop" onclick="closeShortcutsModal(event)">
+  <div id="vg-shortcuts-modal" class="vg-shortcuts-modal-backdrop" style="display:none;" onclick="closeShortcutsModal(event)">
     <div class="vg-shortcuts-modal-card" onclick="event.stopPropagation()">
       <div class="vg-shortcuts-header">
         <div style="display:flex; align-items:center; gap:8px;">
@@ -1857,10 +1895,14 @@
     // CONTROL DE VISTAS PRINCIPALES
     function switchView(viewName) {
       currentView = viewName;
-      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.view-section').forEach(el => {
+        el.classList.remove('active');
+        el.style.display = 'none';
+      });
       const target = document.getElementById('view-' + viewName);
       if (target) {
         target.classList.add('active');
+        target.style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
@@ -2044,7 +2086,10 @@
       docReaderZoom = 1.0;
       applyReaderZoom();
 
-      if (modal) modal.classList.add('active');
+      if (modal) {
+        modal.style.display = 'flex';
+        modal.classList.add('active');
+      }
       document.body.style.overflow = 'hidden';
       if (window.VestigoTouch) window.VestigoTouch.triggerHaptic('light');
     }
@@ -2052,7 +2097,10 @@
     function closeDocReader() {
       const modal = document.getElementById('vg-doc-reader-modal');
       const iframe = document.getElementById('vg-reader-iframe');
-      if (modal) modal.classList.remove('active');
+      if (modal) {
+        modal.classList.remove('active');
+        modal.style.display = 'none';
+      }
       if (iframe) iframe.src = 'about:blank';
       document.body.style.overflow = '';
       if (window.VestigoTouch) window.VestigoTouch.triggerHaptic('light');
@@ -2154,7 +2202,10 @@
 
     if (searchInput) {
       searchInput.addEventListener('focus', () => {
-        if (searchPop) searchPop.classList.add('open');
+        if (searchPop) {
+          searchPop.style.display = 'block';
+          searchPop.classList.add('open');
+        }
       });
 
       searchInput.addEventListener('input', (e) => {
@@ -2164,18 +2215,25 @@
           const text = item.textContent.toLowerCase();
           item.style.display = text.includes(query) ? 'flex' : 'none';
         });
-        if (searchPop) searchPop.classList.add('open');
+        if (searchPop) {
+          searchPop.style.display = 'block';
+          searchPop.classList.add('open');
+        }
       });
     }
 
     document.addEventListener('click', (e) => {
       if (searchInput && searchPop && !searchInput.contains(e.target) && !searchPop.contains(e.target)) {
         searchPop.classList.remove('open');
+        searchPop.style.display = 'none';
       }
     });
 
     function selectSearchResult(type) {
-      if (searchPop) searchPop.classList.remove('open');
+      if (searchPop) {
+        searchPop.classList.remove('open');
+        searchPop.style.display = 'none';
+      }
       if (searchInput) searchInput.value = '';
 
       switchView('case');
@@ -2224,12 +2282,18 @@
     // MODAL DE ATAJOS DE TECLADO
     function openShortcutsModal() {
       const modal = document.getElementById('vg-shortcuts-modal');
-      if (modal) modal.classList.add('open');
+      if (modal) {
+        modal.style.display = 'flex';
+        modal.classList.add('open');
+      }
     }
 
     function closeShortcutsModal(e) {
       const modal = document.getElementById('vg-shortcuts-modal');
-      if (modal) modal.classList.remove('open');
+      if (modal) {
+        modal.classList.remove('open');
+        modal.style.display = 'none';
+      }
     }
 
     // MODAL DE IMÁGENES / NATIVE iOS BOTTOM SHEET
@@ -2238,13 +2302,21 @@
       document.getElementById('modal-title').textContent = title;
       document.getElementById('modal-sub').textContent = 'REGISTRO POLICIAL // PERITAJE JUDICIAL';
       document.getElementById('modal-desc').textContent = desc;
-      document.getElementById('photo-modal').classList.add('open');
+      const modal = document.getElementById('photo-modal');
+      if (modal) {
+        modal.style.display = 'flex';
+        modal.classList.add('open');
+      }
       document.body.style.overflow = 'hidden';
       if (window.VestigoTouch) window.VestigoTouch.triggerHaptic('light');
     }
 
     function closePhotoModal(e) {
-      document.getElementById('photo-modal').classList.remove('open');
+      const modal = document.getElementById('photo-modal');
+      if (modal) {
+        modal.classList.remove('open');
+        modal.style.display = 'none';
+      }
       document.body.style.overflow = '';
       if (window.VestigoTouch) window.VestigoTouch.triggerHaptic('light');
     }

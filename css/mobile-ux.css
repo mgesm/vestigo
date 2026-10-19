@@ -216,30 +216,37 @@
   /* --- MINIMALIST CATALOG HEADER (NOTCH PROTECTED) --- */
   .catalog-clean-header {
     display: flex !important;
+    flex-wrap: wrap !important;
     justify-content: space-between !important;
-    align-items: flex-end !important;
-    margin-bottom: 24px !important;
-    padding: 0 4px 12px 4px !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    margin-bottom: 20px !important;
+    padding: 0 0 12px 0 !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-sizing: border-box !important;
   }
 
   .catalog-kicker {
     font-family: var(--vg-font-mono, monospace) !important;
-    font-size: 10px !important;
+    font-size: 9.5px !important;
     color: var(--vg-cyan, #00E5FF) !important;
     letter-spacing: 1.5px !important;
     text-transform: uppercase !important;
     display: block !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 4px !important;
   }
 
   .catalog-main-title {
-    font-size: 26px !important;
+    font-size: 22px !important;
     font-weight: 800 !important;
     color: #FFFFFF !important;
     letter-spacing: -0.025em !important;
     margin: 0 !important;
     line-height: 1.2 !important;
+    word-break: break-word !important;
   }
 
   .catalog-header-badge {
@@ -690,6 +697,25 @@
    6. EMBED VIEWPORT & IFRAME TRAPPING ELIMINATION
    ============================================================================ */
 @media screen and (max-width: 768px) {
+  /* Workspace and Split Layout Mobile Protection (Zero Overflow) */
+  .vg-split-workspace {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  .vg-split-primary {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .vg-split-sidecar {
+    display: none !important;
+  }
+
   /* Replace rigid 78vh with dynamic viewport sizing */
   .embed-viewport {
     width: 100% !important;
@@ -972,7 +998,7 @@
   .vg-reader-viewport {
     padding: 12px 8px 96px 8px !important;
     -webkit-overflow-scrolling: touch !important;
-    overflow-x: auto !important;
+    overflow-x: hidden !important;
     overflow-y: auto !important;
     display: flex !important;
     justify-content: center !important;

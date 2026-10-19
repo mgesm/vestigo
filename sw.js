@@ -1,5 +1,5 @@
-// VESTIGO Service Worker v1.6.0 — High Performance Forensic Offline Engine
-const CACHE_NAME = 'vestigo-cache-v1.6.0';
+// VESTIGO Service Worker v1.7.0 — Anti-FOUC & Zero-Swipe Performance Engine
+const CACHE_NAME = 'vestigo-cache-v1.7.0';
 
 const PRECACHE_ASSETS = [
   './',

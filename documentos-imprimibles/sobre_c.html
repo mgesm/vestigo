@@ -367,18 +367,22 @@
 
       .table-responsive {
         width: 100% !important;
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
         margin: 8px 0 !important;
       }
 
       .data-table {
-        min-width: 100% !important;
-        font-size: 9px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        table-layout: fixed !important;
+        word-break: break-word !important;
+        font-size: 8px !important;
       }
 
       .data-table th, .data-table td {
-        padding: 4px 6px !important;
+        padding: 4px 3px !important;
+        word-break: break-word !important;
       }
 
       .signature-area {

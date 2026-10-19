@@ -288,7 +288,7 @@
     .act-tabs {
       display: flex;
       gap: 6px;
-      overflow-x: auto;
+      overflow-x: hidden;
       padding-bottom: 2px;
     }
 
@@ -297,18 +297,30 @@
       border: 1px solid #1f2937;
       color: #94a3b8;
       padding: 5px 10px;
-      border-radius: 3px;
-      font-size: 10px;
+      border-radius: 4px;
+      font-size: 11px;
       font-family: 'Courier Prime', monospace;
       cursor: pointer;
       white-space: nowrap;
       transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .act-tab .act-num {
+      color: #00e5ff;
+      font-weight: 700;
     }
 
     .act-tab:hover, .act-tab.active {
       color: #00e5ff;
       border-color: #0284c7;
       background: #0f172a;
+    }
+
+    .act-tab.active .act-num {
+      color: #fff;
     }
 
     .timer-display {
@@ -437,27 +449,58 @@
 
       .act-tabs {
         width: 100% !important;
-        display: flex !important;
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch !important;
-        scrollbar-width: none !important;
-        gap: 6px !important;
-        padding: 2px 0 4px 0 !important;
-      }
-
-      .act-tabs::-webkit-scrollbar {
-        display: none !important;
+        display: grid !important;
+        grid-template-columns: repeat(6, 1fr) !important;
+        gap: 3px !important;
+        padding: 4px 0 2px 0 !important;
+        overflow-x: hidden !important;
       }
 
       .act-tab {
-        flex-shrink: 0 !important;
-        padding: 6px 10px !important;
-        font-size: 10px !important;
+        flex: 1 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        padding: 5px 1px !important;
+        font-size: 8px !important;
         white-space: nowrap !important;
         border-radius: 6px !important;
-        min-height: 32px !important;
-        display: inline-flex !important;
+        min-height: 34px !important;
+        display: flex !important;
+        flex-direction: column !important;
         align-items: center !important;
+        justify-content: center !important;
+        gap: 1px !important;
+        box-sizing: border-box !important;
+      }
+
+      .act-tab .act-num {
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        line-height: 1 !important;
+        color: #00e5ff !important;
+      }
+
+      .act-tab .act-title {
+        font-size: 7.5px !important;
+        letter-spacing: -0.2px !important;
+        line-height: 1 !important;
+        text-transform: uppercase !important;
+        color: #94a3b8 !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+      }
+
+      .act-tab.active {
+        background: #00e5ff !important;
+        border-color: #00e5ff !important;
+      }
+
+      .act-tab.active .act-num,
+      .act-tab.active .act-title {
+        color: #04070d !important;
+        font-weight: 800 !important;
       }
 
       .export-banner {
@@ -471,12 +514,8 @@
   <div class="video-wrapper">
     <!-- CABECERA DE EXPEDIENTE POLICIAL -->
     <div class="top-header">
-      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-        <a href="../index.html" class="ctrl-btn" style="padding: 3px 8px; font-size: 10px; text-decoration: none; border-color: #00e5ff; color: #00e5ff; background: rgba(0, 229, 255, 0.1); display: inline-flex; align-items: center; gap: 4px;">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-          <span>VOLVER A LA APP</span>
-        </a>
-        <span style="color:#00e5ff; font-weight:700;">SISTEMA SITRA-JUD // BRIEFING MULTIMEDIA</span>
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+        <span style="color:#00e5ff; font-weight:700; letter-spacing:0.05em;">SISTEMA SITRA-JUD // BRIEFING MULTIMEDIA</span>
         <span style="color:#64748b;">|</span>
         <span style="color:#cbd5e1;">CASO: D.P. 402/2024 (BODEGAS VALDELUNA)</span>
       </div>
@@ -544,11 +583,11 @@
             <span id="play-icon" style="display:inline-flex; align-items:center; margin-right:4px;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
             </span>
-            <span id="play-label">REPRODUCIR</span>
+            <span id="play-label">PLAY</span>
           </button>
           <button class="ctrl-btn" id="voice-btn" onclick="toggleVoice()">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
-            <span id="voice-label">VOZ: ACTIVADA</span>
+            <span id="voice-label">VOZ: ON</span>
           </button>
           <button class="ctrl-btn" id="music-btn" onclick="toggleMusic()">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
@@ -559,14 +598,32 @@
           </div>
         </div>
 
-        <!-- SELECTOR RÁPIDO DE ESCENAS -->
+        <!-- SELECTOR RÁPIDO DE ESCENAS (ZERO HORIZONTAL SWIPE) -->
         <div class="act-tabs">
-          <div class="act-tab active" onclick="jumpToScene(0)">1. PRÓLOGO</div>
-          <div class="act-tab" onclick="jumpToScene(1)">2. HALLAZGO</div>
-          <div class="act-tab" onclick="jumpToScene(2)">3. LA VÍCTIMA</div>
-          <div class="act-tab" onclick="jumpToScene(3)">4. SOSPECHOSOS</div>
-          <div class="act-tab" onclick="jumpToScene(7)">5. EL ESCENARIO</div>
-          <div class="act-tab" onclick="jumpToScene(9)">6. CÓMO JUGAR</div>
+          <div class="act-tab active" onclick="jumpToScene(0)">
+            <span class="act-num">I</span>
+            <span class="act-title">Prólogo</span>
+          </div>
+          <div class="act-tab" onclick="jumpToScene(1)">
+            <span class="act-num">II</span>
+            <span class="act-title">Tina 4</span>
+          </div>
+          <div class="act-tab" onclick="jumpToScene(2)">
+            <span class="act-num">III</span>
+            <span class="act-title">Víctima</span>
+          </div>
+          <div class="act-tab" onclick="jumpToScene(3)">
+            <span class="act-num">IV</span>
+            <span class="act-title">Sujetos</span>
+          </div>
+          <div class="act-tab" onclick="jumpToScene(7)">
+            <span class="act-num">V</span>
+            <span class="act-title">Escena</span>
+          </div>
+          <div class="act-tab" onclick="jumpToScene(9)">
+            <span class="act-num">VI</span>
+            <span class="act-title">Reglas</span>
+          </div>
         </div>
       </div>
     </div>
@@ -579,10 +636,10 @@
       <span style="color:#94a3b8; margin-left:8px;">Tenéis listos los expedientes oficiales en PDF y la terminal web interactiva:</span>
     </div>
     <div style="display:flex; gap:10px; flex-wrap:wrap;">
-      <a href="../index.html" class="ctrl-btn" style="background:#0f172a; border-color:#00e5ff; color:#00e5ff; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-        <span>EXPEDIENTE PRINCIPAL</span>
-      </a>
+      <button class="ctrl-btn" onclick="jumpToScene(0); playVideo();" style="background:#0f172a; border-color:#00e5ff; color:#00e5ff; text-decoration:none; display:inline-flex; align-items:center; gap:6px; cursor:pointer;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+        <span>REPETIR BRIEFING</span>
+      </button>
       <a href="../documentos-imprimibles/index.html" target="_blank" class="ctrl-btn" style="background:#1e3a8a; border-color:#38bdf8; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
         <span>DESCARGAR DOSSIERS PDF</span>
@@ -595,6 +652,11 @@
   </div>
 
   <script>
+    // Salvaguarda anti-bucle: eliminar cualquier enlace de retorno si se ejecuta dentro de un iframe
+    if (window.self !== window.top) {
+      document.querySelectorAll('a[href="../index.html"], a[href="./index.html"]').forEach(el => el.remove());
+    }
+
     // ========================================================
     // GUION TÉCNICO Y ESCENAS DEL VÍDEO (SIN SPOILERS)
     // ========================================================
@@ -833,7 +895,7 @@
       isPlaying = true;
       const playIcon = document.getElementById('play-icon');
       if (playIcon) playIcon.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
-      document.getElementById('play-label').innerText = 'PAUSAR';
+      document.getElementById('play-label').innerText = 'PAUSA';
       startDrone();
       renderScene(currentSceneIdx);
 
@@ -853,7 +915,7 @@
       isPlaying = false;
       const playIcon = document.getElementById('play-icon');
       if (playIcon) playIcon.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
-      document.getElementById('play-label').innerText = 'REANUDAR';
+      document.getElementById('play-label').innerText = 'PLAY';
       stopDrone();
       if ('speechSynthesis' in window) window.speechSynthesis.cancel();
       clearTimeout(sceneTimer);
@@ -943,11 +1005,11 @@
       const btn = document.getElementById('voice-btn');
       const label = document.getElementById('voice-label');
       if (voiceEnabled) {
-        label.innerText = 'VOZ: ACTIVADA';
+        label.innerText = 'VOZ: ON';
         btn.classList.add('active');
         if (isPlaying) speakText(SCENES[currentSceneIdx].text);
       } else {
-        label.innerText = 'VOZ: MUTED';
+        label.innerText = 'VOZ: OFF';
         btn.classList.remove('active');
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
       }
