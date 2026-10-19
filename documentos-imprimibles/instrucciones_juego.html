@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>MANUAL DE OPERACIONES E INSTRUCCIONES DE JUEGO - BODEGAS VALDELUNA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700;800;900&family=Special+Elite&family=Libre+Barcode+39+Text&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 10mm 14mm 10mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #525659;
+      font-family: 'Courier Prime', monospace;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .no-print-bar {
+      background: #1e293b;
+      color: #fff;
+      width: 210mm;
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .print-btn {
+      background: #00e5ff;
+      color: #000;
+      border: none;
+      padding: 9px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .sheet {
+      background-color: #fcfbf7;
+      width: 210mm;
+      box-sizing: border-box;
+      padding: 13mm 16mm;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    @media print {
+      html, body {
+        background: transparent !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .no-print-bar {
+        display: none !important;
+      }
+      .sheet {
+        background-color: transparent !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+    }
+
+    .official-header {
+      border-bottom: 2px solid #000;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .official-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      line-height: 1.3;
+    }
+
+    .case-number {
+      font-family: 'Courier Prime', monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      border: 1.5px solid #000;
+      padding: 4px 8px;
+      background: #f0eee6;
+      text-align: right;
+      line-height: 1.2;
+    }
+
+    .stamp-confidential {
+      position: absolute;
+      top: 30px;
+      right: 35px;
+      border: 2.5px solid #b91c1c;
+      color: #b91c1c;
+      font-family: 'Special Elite', cursive;
+      font-size: 15px;
+      font-weight: bold;
+      padding: 4px 10px;
+      text-transform: uppercase;
+      transform: rotate(-7deg);
+      opacity: 0.85;
+      letter-spacing: 2px;
+      pointer-events: none;
+    }
+
+    h1.doc-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 6px 0 12px 0;
+      text-decoration: underline;
+    }
+
+    p.legal-text {
+      font-size: 10px;
+      line-height: 1.55;
+      text-align: justify;
+      margin-bottom: 8px;
+    }
+
+    .info-box {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 10px 12px;
+      margin: 8px 0;
+      font-size: 9.5px;
+      line-height: 1.45;
+    }
+
+    .highlight-card {
+      border: 1.5px solid #0284c7;
+      background: #f0f9ff;
+      padding: 10px;
+      margin: 8px 0;
+      font-size: 9.5px;
+      line-height: 1.45;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0;
+      font-size: 9.5px;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid #71717a;
+      padding: 5px 7px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background-color: #e4e4e7;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 9px;
+    }
+
+    .step-badge {
+      display: inline-block;
+      background: #0f172a;
+      color: #00e5ff;
+      font-family: 'Inter', sans-serif;
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 3px;
+      margin-right: 5px;
+      letter-spacing: 0.5px;
+    }
+
+    .signature-area {
+      margin-top: 10px;
+      padding-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 9.5px;
+      line-height: 1.3;
+    }
+
+    .signature-box {
+      width: 175px;
+      border-top: 1px dotted #000;
+      padding-top: 5px;
+      text-align: center;
+    }
+
+    .warning-box {
+      background: #fef2f2;
+      border: 1.5px solid #ef4444;
+      padding: 10px;
+      color: #991b1b;
+      font-size: 9.5px;
+      line-height: 1.45;
+      margin: 8px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print-bar">
+    <div>
+      <strong>MANUAL DE INSTRUCCIONES Y REGLAS DE JUEGO</strong>
+      <div style="font-size: 11px; color: #94a3b8;">Guía completa para el jugador / investigadores (4 páginas A4).</div>
+    </div>
+    <button class="print-btn" onclick="window.print()">🖨️ IMPRIMIR INSTRUCCIONES (PDF)</button>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 1: FICHA TÉCNICA Y MONTAJE DE LA MESA               -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">USO INTERNO</div>
+      <div class="official-header">
+        <div class="official-title">
+          MINISTERIO DEL INTERIOR // DIRECCIÓN GENERAL DE LA GUARDIA CIVIL<br>
+          JEFATURA DE POLICÍA JUDICIAL — PROTOCOLO DE INVESTIGACIÓN<br>
+          <span style="font-size: 9px; font-weight: normal;">Procedimiento Operativo de Actuación en Escena de Delito Violento</span>
+        </div>
+        <div class="case-number">
+          GUÍA DEL CASO: DP-402/2024<br>
+          EXPEDIENTE: BODEGAS VALDELUNA
+        </div>
+      </div>
+
+      <h1 class="doc-title">MANUAL DEL INVESTIGADOR: GUÍA DE OPERACIONES Y REGLAS DE JUEGO</h1>
+
+      <div class="info-box">
+        <table style="width: 100%; border-collapse: collapse; font-size: 9.5px;">
+          <tr>
+            <td style="width: 50%;"><strong>🎮 TIPO DE JUEGO:</strong> Investigación deductiva forense e interactiva</td>
+            <td style="width: 50%;"><strong>👥 JUGADORES:</strong> 1 a 4 (Óptimo: 2 jugadores en pareja)</td>
+          </tr>
+          <tr>
+            <td><strong>⏱️ DURACIÓN:</strong> 120 - 180 minutos</td>
+            <td><strong>🧠 DIFICULTAD:</strong> Moderada (Lógica pura, sin telepatía ni azar)</td>
+          </tr>
+          <tr>
+            <td><strong>📍 ESCENARIO:</strong> Bodegas Valdeluna, Peñafiel (Valladolid)</td>
+            <td><strong>📅 FECHA DE LOS HECHOS:</strong> Viernes 04 a Sábado 05 de Octubre de 2024</td>
+          </tr>
+        </table>
+      </div>
+
+      <h2 style="font-size: 11px; font-family: 'Inter', sans-serif; text-transform: uppercase; margin: 10px 0 4px 0; color: #0f172a;">
+        1. SINOPSIS DEL CASO Y MISIÓN JUDICIAL
+      </h2>
+      <p class="legal-text">
+        El sábado 5 de octubre de 2024 a las 07:15 h, durante la vendimia en Peñafiel, aparece el cadáver del reputado viticultor <strong>D. Gonzalo de la Serna</strong> tendido en la nave subterránea de cubas. La versión oficial apunta a un accidente laboral por inhalación de dióxido de carbono ($\text{CO}_2$), el temido <em>"tufo del vino"</em>.
+      </p>
+      <p class="legal-text">
+        Sin embargo, la autopsia preliminar esconde anomalías médicas irreconciliables con un accidente fortuito. Como inspectores de la <strong>Unidad Orgánica de Policía Judicial (UOPJ)</strong>, vuestro objetivo es tomar el mando del sumario, desmontar las mentiras de los investigados, triangular sus coartadas y fundamentar el <strong>Auto de Prisión</strong> con pruebas forenses irrefutables.
+      </p>
+
+      <h2 style="font-size: 11px; font-family: 'Inter', sans-serif; text-transform: uppercase; margin: 10px 0 4px 0; color: #0f172a;">
+        2. PREPARACIÓN FÍSICA DE LA MESA DE INVESTIGACIÓN
+      </h2>
+      <p class="legal-text">
+        Para disfrutar al máximo de la experiencia inmersiva, preparad el material siguiendo estas instrucciones de comisaría:
+      </p>
+
+      <div class="highlight-card">
+        <p><strong><span class="step-badge">PASO 1</span> IMPRESIÓN Y REPARTO DE SOBRES:</strong></p>
+        <ul style="margin-left: 18px; margin-top: 4px; line-height: 1.5;">
+          <li><strong>SOBRE A (Pieza Principal - 6 págs):</strong> Colocadlo <u>ABIERTO</u> sobre la mesa al iniciar la partida.</li>
+          <li><strong>EXTRAS DE INMERSIÓN (5 págs):</strong> Colocadlo <u>ABIERTO</u> sobre la mesa (fichas policiales, prensa y libreta).</li>
+          <li><strong>DOSSIER NOTARIAL Y FORENSE (6 págs):</strong> Colocadlo <u>ABIERTO</u> sobre la mesa (testamento, banco y fotos).</li>
+          <li><strong>SOBRE B (Pieza Separada I - 6 págs):</strong> Guardadlo en un sobre o carpeta <u>PRECINTADO</u>. ¡Prohibido abrirlo!</li>
+          <li><strong>SOBRE C (Pieza Separada II - 4 págs):</strong> Guardadlo en un sobre o carpeta <u>PRECINTADO</u>. ¡Prohibido abrirlo!</li>
+        </ul>
+      </div>
+
+      <div class="highlight-card" style="border-color: #059669; background: #ecfdf5;">
+        <p><strong style="color: #065f46;"><span class="step-badge" style="background: #065f46;">PASO 2</span> DISPOSITIVO DIGITAL Y HERRAMIENTAS DE ESCRITORIO:</strong></p>
+        <p style="margin-top: 4px; color: #064e3b;">
+          • Situad un ordenador portátil o tablet en un extremo de la mesa y abrid la <strong>Terminal Policial Digital</strong> (<code>terminal-policial/index.html</code>).<br>
+          • Disponed de folios en blanco, bolígrafos (azul y rojo) y un marcador fluorescente para anotar contradicciones horarias en los márgenes de los documentos impresos.
+        </p>
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL INSTRUCTOR DEL PROTOCOLO<br>Comandante UOPJ</div>
+      <div class="signature-box">EL SECRETARIO JUDICIAL<br>Juzgado de Instrucción Nº 2</div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 2: MECÁNICA DEL JUEGO HÍBRIDO (3 FASES Y OBJETIVOS) -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">DILIGENCIAS</div>
+      <div class="official-header">
+        <div class="official-title">
+          SISTEMA JUDICIAL PENAL // TRAMITACIÓN DE DILIGENCIAS PREVIAS<br>
+          METODOLOGÍA DE RESOLUCIÓN POR PIEZAS PROCESALES SEPARADAS<br>
+          <span style="font-size: 9px; font-weight: normal;">Interacción Dinámica: Dossier Papel & Terminal Informática SITRA-JUD</span>
+        </div>
+        <div class="case-number">
+          METODOLOGÍA OPERATIVA<br>
+          HOJA 2 DE 4
+        </div>
+      </div>
+
+      <h1 class="doc-title">MECÁNICA DEL JUEGO HÍBRIDO: LOS 3 OBJETIVOS JUDICIALES</h1>
+
+      <p class="legal-text">
+        El caso se estructura en <strong>tres fases correlativas y cerradas</strong>. El sistema judicial no autoriza la práctica de nuevas diligencias ni la apertura del siguiente sobre hasta que los investigadores hayáis formulado una hipótesis probada en la terminal web.
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>FASE / SOBRE</th>
+            <th>OBJETIVO JUDICIAL OBLIGATORIO</th>
+            <th>DOCUMENTOS CLAVE A CONSULTAR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>FASE 1<br>(Sobre A)</strong><br><span style="color:#0284c7; font-size:8px;">ABIERTO</span></td>
+            <td>
+              <strong>1. Desmontar la hipótesis del accidente laboral:</strong> Demostrar la agresión física intencionada.<br>
+              <strong>2. Demostrar el movimiento del cadáver:</strong> Indicio de posición anatómica manipulada.<br>
+              <strong>3. Fijar la ventana horaria de la muerte:</strong> Cruzar digestión gástrica con el albarán de la cena.
+            </td>
+            <td>
+              • Atestado inicial de levantamiento.<br>
+              • Informe médico-forense de autopsia (tanatología y digestión).<br>
+              • Albarán fiscal del catering de cena.<br>
+              • Plano arquitectónico de la bodega.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>FASE 2<br>(Sobre B)</strong><br><span style="color:#b45309; font-size:8px;">PRECINTADO</span></td>
+            <td>
+              <strong>1. Localizar el Escenario Primario Real:</strong> Determinar dónde se consumó el ataque mortal.<br>
+              <strong>2. Exonerar a dos sospechosos:</strong> Acreditar una coartada cruzada ininterrumpida.<br>
+              <strong>3. Descubrir el móvil secundario:</strong> Aclarar el delito menor o secreto inconfesable que ocultaba el capataz.
+            </td>
+            <td>
+              • Dictamen pericial de luminol (BlueStar).<br>
+              • Las 4 actas de interrogatorio policial.<br>
+              • Vaciado de WhatsApp y telecomunicaciones.<br>
+              • Triangulación de antenas repetidoras BTS.<br>
+              • Acta de incautación de botellas de vino.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>FASE 3<br>(Sobre C)</strong><br><span style="color:#b91c1c; font-size:8px;">PRECINTADO</span></td>
+            <td>
+              <strong>1. Verificar la coartada de Valladolid:</strong> Exonerar documentalmente al Director Financiero.<br>
+              <strong>2. Hallar la falla crítica del asesino:</strong> Contradicción horaria en cámaras LPR de tráfico.<br>
+              <strong>3. La "Pistola Humeante":</strong> Identificar el reactivo químico transferido al vehículo y calzado.
+            </td>
+            <td>
+              • Informe pericial de documentoscopia e IR.<br>
+              • Capturas cinemométricas y pórticos LPR DGT.<br>
+              • Auditoría financiera UDEF de Vitis Capital.<br>
+              • Análisis químico espectrométrico de SECRIM.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 style="font-size: 11px; font-family: 'Inter', sans-serif; text-transform: uppercase; margin: 12px 0 4px 0; color: #0f172a;">
+        CÓMO VALIDAR TUS DILIGENCIAS EN LA TERMINAL DIGITAL
+      </h2>
+      <div class="info-box">
+        <p>1. Ingresad en la <strong>Terminal Policial</strong> (<code>terminal-policial/index.html</code>).</p>
+        <p style="margin-top: 3px;">2. En la sección de la fase correspondiente, resolved las preguntas técnicas marcando las opciones o escribiendo los términos clave que habéis descubierto en el expediente impreso.</p>
+        <p style="margin-top: 3px;">3. Pulsad en <strong>«CONFIRMAR DILIGENCIAS Y SOLICITAR AUTORIZACIÓN»</strong>.</p>
+        <p style="margin-top: 3px;">
+          • <em>Si vuestras conclusiones son correctas:</em> Sonará una confirmación acústica, la pantalla emitirá el Auto Judicial aprobatorio y os facilitará la <strong>CLAVE DE DESPRECINTO</strong> oficial para abrir el siguiente sobre físico.<br>
+          • <em>Si vuestra teoría contiene errores:</em> La terminal señalará la contradicción detectada para que reviséis los documentos sin desvelar la solución.
+        </p>
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL FISCAL DE LA CAUSA</div>
+      <div class="signature-box">EL MAGISTRADO JUEZ DE INSTRUCCIÓN</div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 3: GUÍA DE HERRAMIENTAS TÁCTICAS DIGITALES          -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">SITRA-JUD</div>
+      <div class="official-header">
+        <div class="official-title">
+          MINISTERIO DEL INTERIOR // SISTEMA INTEGRADO DE TRÁFICO Y JUSTICIA<br>
+          MANUAL TÉCNICO DE APLICACIONES DE LA TERMINAL DIGITAL SITRA-JUD<br>
+          <span style="font-size: 9px; font-weight: normal;">Módulos Telemáticos Disponibles en Pantalla para los Investigadores</span>
+        </div>
+        <div class="case-number">
+          GUÍA TELEMÁTICA<br>
+          HOJA 3 DE 4
+        </div>
+      </div>
+
+      <h1 class="doc-title">HERRAMIENTAS TÁCTICAS DE LA TERMINAL DIGITAL</h1>
+
+      <p class="legal-text">
+        La terminal policial no es solo un validador de respuestas: es un sistema informático de investigación activa que simula las bases de datos de la Guardia Civil y la DGT. En la barra lateral tenéis acceso a:
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+        <!-- LECTOR MATRÍCULAS -->
+        <div style="border: 1px solid #334155; background: #0f172a; color: #fff; padding: 10px; border-radius: 4px;">
+          <div style="font-family:'Inter', sans-serif; font-size: 11px; font-weight: 800; color: #00e5ff; margin-bottom: 4px;">
+            🚗 LECTOR DE MATRÍCULAS DGT
+          </div>
+          <p style="font-size: 9px; color: #cbd5e1; line-height: 1.45;">
+            Permite teclear la matrícula de cualquier vehículo sospechoso (ej. <code>4188KLT</code>, <code>5512LMN</code>, <code>8209FDC</code>). El sistema rastrea las cámaras de reconocimiento de matrículas (LPR) y cinemómetros de la carretera N-122 para devolver los puntos kilométricos, velocidades y horas exactas de paso.
+          </p>
+        </div>
+
+        <!-- FOTOTECA FORENSE -->
+        <div style="border: 1px solid #334155; background: #0f172a; color: #fff; padding: 10px; border-radius: 4px;">
+          <div style="font-family:'Inter', sans-serif; font-size: 11px; font-weight: 800; color: #38bdf8; margin-bottom: 4px;">
+            📸 FOTOTECA FORENSE ESCENA
+          </div>
+          <p style="font-size: 9px; color: #cbd5e1; line-height: 1.45;">
+            Visor en alta definición de las fotografías periciales tomadas por la Policía Científica: la silueta con tiza en la Nave 2, el charco de reactivo azul y manómetro del laboratorio, la macrofotografía de las suelas y alfombrillas, y la panorámica del mirador.
+          </p>
+        </div>
+
+        <!-- MAPA TÁCTICO SIG -->
+        <div style="border: 1px solid #334155; background: #0f172a; color: #fff; padding: 10px; border-radius: 4px;">
+          <div style="font-family:'Inter', sans-serif; font-size: 11px; font-weight: 800; color: #2dd4bf; margin-bottom: 4px;">
+            🗺️ MAPA TÁCTICO SIG Y RUTAS
+          </div>
+          <p style="font-size: 9px; color: #cbd5e1; line-height: 1.45;">
+            Muestra la geolocalización de la comarca: la bodega, el hotel, el mirador del castillo, el río Duero y las celdas de cobertura de las antenas BTS de telefonía móvil. Incluye una <strong>calculadora interactiva de distancias y tiempos de conducción</strong> según el estado del tráfico.
+          </p>
+        </div>
+
+        <!-- CIRCUITO CERRADO CCTV -->
+        <div style="border: 1px solid #334155; background: #0f172a; color: #fff; padding: 10px; border-radius: 4px;">
+          <div style="font-family:'Inter', sans-serif; font-size: 11px; font-weight: 800; color: #34d399; margin-bottom: 4px;">
+            📹 CIRCUITO CERRADO CCTV
+          </div>
+          <p style="font-size: 9px; color: #cbd5e1; line-height: 1.45;">
+            Permite alternar entre los canales de las cámaras de seguridad perimetrales de la finca (CAM-01 Verja Norte, CAM-02 Báscula de Pesaje y CAM-03 Portón Trasero Nave 2) con sellos de tiempo nocturnos y registros de sensores de movimiento.
+          </p>
+        </div>
+      </div>
+
+      <div style="background: #fffbeb; border: 1.5px solid #f59e0b; padding: 10px; margin-top: 10px; font-size: 9.5px; line-height: 1.45;">
+        <strong style="color: #b45309;">💡 SISTEMA DE PISTAS ASISTIDAS ("CENTRAL DE MANDO"):</strong><br>
+        En la barra lateral disponéis del botón <strong>«PISTAS / CENTRAL DE MANDO»</strong>. Si en algún momento os sentís atascados o necesitáis confirmar el rumbo, podéis desplegar pistas progresivas divididas en tres niveles por fase:
+        <br>
+        • <strong>Nivel 1 (Orientación sutil):</strong> Indica qué documento o apartado médico/técnico debéis volver a examinar.<br>
+        • <strong>Nivel 2 (Pista forense):</strong> Señala el tipo de contradicción biológica, horaria o física oculta.<br>
+        • <strong>Nivel 3 (Fórmula de resolución):</strong> Os explica la deducción exacta para continuar adelante sin frustración.
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL JEFE DE TELECOMUNICACIONES<br>Servicio Informático Judicial</div>
+      <div class="signature-box">EL RESPONSABLE DE SALA 062<br>Centro Operativo de Servicios</div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 4: DECÁLOGO DEL INVESTIGADOR Y CONSEJOS FORENSES    -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">PROTOCOLO</div>
+      <div class="official-header">
+        <div class="official-title">
+          DIRECCIÓN GENERAL DE LA GUARDIA CIVIL // POLICÍA JUDICIAL<br>
+          CÓDIGO DEONTOLÓGICO Y METODOLOGÍA DEDUCTIVA CRIMINALÍSTICA<br>
+          <span style="font-size: 9px; font-weight: normal;">Reglas de Oro para la Resolución de Homicidios y Delitos Graves</span>
+        </div>
+        <div class="case-number">
+          CÓDIGO OPERATIVO<br>
+          HOJA 4 DE 4
+        </div>
+      </div>
+
+      <h1 class="doc-title">EL DECÁLOGO DEL INVESTIGADOR FORENSE</h1>
+
+      <p class="legal-text">
+        El caso de Bodegas Valdeluna ha sido diseñado con rigor pericial absoluto. No depende de intuiciones esotéricas ni adivinación. Para culminar con éxito la investigación, aplicad estos principios fundamentales de la criminalística real:
+      </p>
+
+      <div style="font-size: 9.5px; line-height: 1.5; color: #1e293b; background: #fff; border: 1px solid #94a3b8; padding: 12px; margin-bottom: 10px;">
+        <p><strong>1. LA CRONOMETRÍA ES LA REINA DE LAS PRUEBAS:</strong> La verdad se esconde en los cruces de minutos. Comparad siempre la hora de un mensaje, el ticket del aparcamiento, la llamada al 112 y el fotograma de tráfico. Si alguien afirma estar en un sitio a una hora, comprobad si la velocidad física de su coche lo permite.</p>
+        
+        <p style="margin-top: 6px;"><strong>2. DISTINGUIR EL HOMICIDIO DE LOS DELITOS MENORES:</strong> En los crímenes reales, los sospechosos inocentes del asesinato a menudo mienten a la policía para tapar infidelidades, robos menores, estafas societarias o consumo de drogas. Que alguien mienta en su declaración no significa necesariamente que sea el homicida; descubrid qué intentaba esconder.</p>
+
+        <p style="margin-top: 6px;"><strong>3. LA BIOLOGÍA CADAVÉRICA NO ENGAÑA:</strong> Los cuerpos cuentan la verdad que los vivos callan. Las livideces fijas demuestran la posición en la que permaneció el cuerpo durante las primeras 6 a 8 horas. La digestión en el estómago señala matemáticamente el intervalo transcurrido desde la última ingesta.</p>
+
+        <p style="margin-top: 6px;"><strong>4. EL PRINCIPIO DE INTERCAMBIO DE LOCARD:</strong> <em>«Todo contacto deja un rastro»</em>. Quien comete un delito violento deja partículas del escenario en sus prendas o se lleva elementos del lugar consigo. El dictamen pericial químico de SECRIM es vuestra brújula definitiva.</p>
+
+        <p style="margin-top: 6px;"><strong>5. DEBATID EN PAREJA EN VOZ ALTA:</strong> Leed los interrogatorios dramatizando las respuestas, contrastad los planos y formulad hipótesis contradictorias. Dos cabezas pensando juntas detectan vacíos lógicos que a una sola persona le pasan desapercibidos.</p>
+
+        <p style="margin-top: 6px;"><strong>6. NADA EN ESTE DOSSIER ES DECORATIVO:</strong> Cada número de DNI, cada matrícula, cada sello notarial, cada grado de azúcar de la uva y cada línea del extracto bancario ha sido calculada para encajar en el engranaje del caso.</p>
+      </div>
+
+      <div class="warning-box">
+        <strong>⚠️ AVISO CONFIDENCIAL SOBRE LA SOLUCIÓN:</strong><br>
+        En la carpeta del juego existe un archivo denominado <code>SOLUCION_CONFIDENCIAL.md</code>. Dicho documento contiene la confesión íntegra, el móvil y la identidad del asesino. Está terminantemente prohibido abrirlo o consultarlo durante la partida. Solo debe ser abierto una vez que hayáis emitido el Auto de Procesamiento Judicial en la Terminal Digital para comprobar si vuestra teoría fue perfecta.
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL CORONEL JEFE DE ZONA<br>Guardia Civil de Castilla y León</div>
+      <div class="signature-box">LOS AGENTES INVESTIGADORES<br>(Firmad aquí antes de comenzar)</div>
+    </div>
+  </div>
+
+</body>
+</html>

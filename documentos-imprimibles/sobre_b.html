@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>DOSSIER JUDICIAL - SOBRE B: PIEZA SEPARADA I (ESCENARIO Y TESTIFICALES)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700;800&family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 10mm 14mm 10mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #525659;
+      font-family: 'Courier Prime', monospace;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .no-print-bar {
+      background: #1e293b;
+      color: #fff;
+      width: 210mm;
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .print-btn {
+      background: #00e5ff;
+      color: #000;
+      border: none;
+      padding: 9px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .sheet {
+      background-color: #fcfbf7;
+      width: 210mm;
+      box-sizing: border-box;
+      padding: 14mm 16mm;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    @media print {
+      html, body {
+        background: transparent !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .no-print-bar {
+        display: none !important;
+      }
+      .sheet {
+        background-color: transparent !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+    }
+
+    .official-header {
+      border-bottom: 2px solid #000;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .official-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      line-height: 1.3;
+    }
+
+    .case-number {
+      font-family: 'Courier Prime', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1.5px solid #000;
+      padding: 4px 8px;
+      background: #f0eee6;
+      text-align: right;
+      line-height: 1.2;
+    }
+
+    .stamp-confidential {
+      position: absolute;
+      top: 35px;
+      right: 35px;
+      border: 2.5px solid #b91c1c;
+      color: #b91c1c;
+      font-family: 'Special Elite', cursive;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 4px 10px;
+      text-transform: uppercase;
+      transform: rotate(-10deg);
+      opacity: 0.85;
+      letter-spacing: 2px;
+      pointer-events: none;
+    }
+
+    h1.doc-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 8px 0 14px 0;
+      text-decoration: underline;
+    }
+
+    p.legal-text {
+      font-size: 10.5px;
+      line-height: 1.6;
+      text-align: justify;
+      margin-bottom: 10px;
+    }
+
+    .interrogation-box {
+      border: 1.5px solid #27272a;
+      background: #fff;
+      padding: 12px;
+      margin-bottom: 12px;
+      font-size: 10px;
+      line-height: 1.55;
+    }
+
+    .interrogation-speaker {
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      color: #09090b;
+    }
+
+    .interrogation-qa {
+      margin-bottom: 10px;
+    }
+
+    .investigator-note {
+      background: #fef08a;
+      border-left: 3px solid #ca8a04;
+      padding: 8px 10px;
+      font-size: 9.5px;
+      font-family: 'Inter', sans-serif;
+      margin-top: 10px;
+      color: #713f12;
+      line-height: 1.4;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 10px;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid #71717a;
+      padding: 5px 8px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background-color: #e4e4e7;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .chat-container {
+      background: #e5ddd5;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 10px 0;
+    }
+
+    .chat-bubble {
+      max-width: 80%;
+      padding: 7px 10px;
+      border-radius: 8px;
+      line-height: 1.35;
+      position: relative;
+    }
+
+    .chat-in {
+      background: #fff;
+      align-self: flex-start;
+      border-top-left-radius: 0;
+    }
+
+    .chat-out {
+      background: #dcf8c6;
+      align-self: flex-end;
+      border-top-right-radius: 0;
+    }
+
+    .chat-time {
+      font-size: 8px;
+      color: #64748b;
+      text-align: right;
+      margin-top: 3px;
+    }
+
+    .signature-area {
+      margin-top: 14px;
+      padding-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      line-height: 1.3;
+    }
+
+    .signature-box {
+      width: 180px;
+      border-top: 1px dotted #000;
+      padding-top: 6px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print-bar">
+    <div>
+      <strong>MATERIAL PARA EL JUGADOR: SOBRE B (PIEZA SEPARADA I)</strong>
+      <div style="font-size: 11px; color: #94a3b8;">
+        Este sobre debe permanecer PRECINTADO hasta que los jugadores introduzcan el código <code>VALDELUNA-ROMPE-B77</code> en la web.
+      </div>
+    </div>
+    <button class="print-btn" onclick="window.print()">🖨️ IMPRIMIR SOBRE B (PDF / PAPEL)</button>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 1: INFORME POLICÍA CIENTÍFICA (LUMINOL)             -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">CRIMINALÍSTICA</div>
+      <div class="official-header">
+        <div class="official-title">
+          DIRECCIÓN GENERAL DE LA GUARDIA CIVIL<br>
+          SERVICIO DE CRIMINALÍSTICA (SECRIM) — UOPJ VALLADOLID<br>
+          <span style="font-size: 9px; font-weight: normal;">Laboratorio de Química y Huellas Oculares</span>
+        </div>
+        <div class="case-number">
+          DICTAMEN PERICIAL Nº: 2024-Q-411<br>
+          DILIGENCIAS: 402/2024
+        </div>
+      </div>
+
+      <h1 class="doc-title">INFORME DE INSPECCIÓN TÉCNICO OCULAR Y QUÍMICA REAGENTE</h1>
+
+      <p class="legal-text">
+        A requerimiento del Instructor de la causa, los Peritos Judiciales del Laboratorio de Criminalística procedieron entre las 14:00 y las 19:30 horas del 05/10/2024 a la realización de un barrido quimioluminiscente mediante dispersión del reactivo <strong>BlueStar Forensic Magnum</strong> en las distintas áreas de la bodega:
+      </p>
+
+      <p class="legal-text"><strong>1. BARRIDO EN ESCENARIO DEL HALLAZGO (NAVE 2 - CUBAS):</strong></p>
+      <p class="legal-text">
+        La reacción luminiscente en el suelo de la Nave 2 resulta <strong>NEGATIVA</strong> en toda la superficie, con la única excepción del charco hemático situado en torno al cráneo del cadáver. No se aprecian huellas de arrastre, salpicaduras de proyección (*spatters*) ni patrones de goteo dinámico compatibles con una agresión violenta en dicho recinto.
+      </p>
+
+      <p class="legal-text"><strong>2. BARRIDO EN ESCENARIO ALTERNATIVO (EDIFICIO NOBLE / LABORATORIO ENOLÓGICO):</strong></p>
+      <p class="legal-text">
+        En el <strong>Laboratorio Enológico y Despacho privado de D. Gonzalo de la Serna</strong> (1ª Planta), la pulverización de BlueStar revela una intensa quimioluminiscencia azul brillante en los siguientes puntos críticos:
+      </p>
+      <ul style="font-size: 10px; line-height: 1.5; margin-left: 20px; margin-bottom: 10px;">
+        <li><strong>Punto L-1:</strong> Rodapié y suelo de linóleo bajo la mesa central de análisis instrumental: intensa fosforescencia de aspecto barrido/limpiado. Se confirma uso de hipoclorito sódico (lejía) en maniobra de lavado.</li>
+        <li><strong>Punto L-2:</strong> Botonera de llamada y marco del montacargas industrial que conecta el laboratorio con la Nave 2.</li>
+        <li><strong>Punto L-3:</strong> Fragmentos microscópicos de vidrio fracturado y restos desecados de una solución acuosa azul turquesa. Recogida como <strong>Muestra Testigo M-14</strong>.</li>
+      </ul>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Muestra</th>
+            <th>Ubicación</th>
+            <th>Reactivo</th>
+            <th>Resultado Laboratorio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>M-12</td>
+            <td>Rodapié Laboratorio</td>
+            <td>Test Bencidina / DNA</td>
+            <td><strong>POSITIVO</strong> (Sangre humana perfil Gonzalo de la Serna)</td>
+          </tr>
+          <tr>
+            <td>M-14</td>
+            <td>Suelo junto a gradilla</td>
+            <td>Espectrometría FTIR</td>
+            <td><strong>Sulfato de Cobre pentahidratado al 10% (CuSO4)</strong> con estabilizante enológico *Enartis*</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="legal-text">
+        <strong>CONCLUSIÓN TÉCNICA:</strong><br>
+        El <strong>ESCENARIO PRIMARIO DE LA AGRESIÓN</strong> es el Laboratorio Enológico de la 1ª Planta. La víctima fue golpeada en dicho habitáculo junto a la mesa de pruebas (rompiéndose accidentalmente un vial de reactivo químico de Sulfato de Cobre) y, tras fallecer, fue transportada en el montacargas hasta la Nave 2.
+      </p>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL PERITO QUÍMICO (TIP 19.802)</div>
+      <div class="signature-box">EL FACULTATIVO OCULAR (TIP 22.415)</div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 2: INTERROGATORIO — LUCÍA DE LA SERNA               -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="official-header">
+        <div class="official-title">
+          POLICÍA JUDICIAL — EQUIPO DE PERSONAS<br>
+          DILIGENCIAS PREVIAS Nº 402/2024
+        </div>
+        <div class="case-number">
+          ACTA DECLARACIÓN S-1<br>
+          FECHA: 05/10/2024 - 12:15 H
+        </div>
+      </div>
+
+      <h1 class="doc-title">ACTA DE DECLARACIÓN TESTIFICAL BAJO PREVENCIÓN</h1>
+
+      <div class="interrogation-box">
+        <p style="font-size: 10.5px; margin-bottom: 8px;"><strong>DECLARANTE: DÑA. LUCÍA DE LA SERNA MONTES</strong><br>
+        Edad: 29 años. Profesión: Enóloga adjunta de Bodegas Valdeluna. Domicilio: Peñafiel (Valladolid). Relación con la víctima: Hija única.</p>
+        
+        <div class="interrogation-qa">
+          <span class="interrogation-speaker">PREGUNTADA:</span> Por la acalorada discusión mantenida con su padre a las 18:30 h en presencia de los operarios de vendimia.<br>
+          <span class="interrogation-speaker">RESPONDE:</span> Estaba furiosa. Mi padre quería vender la bodega a un fondo carroñero catalán (Vitis Capital). Es el legado de mis abuelos y de mi madre. Le dije barbaridades de las que me arrepiento con toda mi alma, pero jamás le habría puesto una mano encima a mi padre.
+        </div>
+        <div class="interrogation-qa">
+          <span class="interrogation-speaker">PREGUNTADA:</span> Por su paradero y actividades entre las 20:00 h y las 23:00 h del viernes 4 de octubre.<br>
+          <span class="interrogation-speaker">RESPONDE:</span> Salí de la bodega a las 19:45 h en mi coche. Me fui directa a Peñafiel pueblo. Estuve desde las 20:15 h hasta medianoche en el bar <em>La Barrica</em> con dos amigas del pueblo, Sara y Cristina. No me moví de allí en toda la noche.
+        </div>
+        <div class="interrogation-qa">
+          <span class="interrogation-speaker">PREGUNTADA:</span> Si conoce que el camarero del bar testifica que usted se ausentó del local entre las 20:35 h y las 21:15 h.<br>
+          <span class="interrogation-speaker">RESPONDE:</span> (Muestra signos intensos de ansiedad y titubeo). Salí un momento a tomar el aire... a hacer unas llamadas privadas. Eso es todo. Estaba muy angustiada por la discusión.
+        </div>
+        <div class="investigator-note">
+          <strong>NOTA DE LOS INSTRUCTORES:</strong> La declarante incurre en una evidente contradicción horaria. Su desaparición del bar coincide exactamente con la ventana de muerte de su padre (20:45 - 21:05 h). Se solicita rastreo de antenas de su teléfono móvil.
+        </div>
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">LA DECLARANTE<br><br><em>Lucía de la Serna Montes</em></div>
+      <div class="signature-box">EL INSTRUCTOR POLICIAL<br><br><em>Agente TIP GC-84.920</em></div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 3: INTERROGATORIO — JAVIER BELTRÁN                  -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="official-header">
+        <div class="official-title">
+          POLICÍA JUDICIAL — EQUIPO DE PERSONAS<br>
+          DILIGENCIAS PREVIAS Nº 402/2024
+        </div>
+        <div class="case-number">
+          ACTA DECLARACIÓN S-2<br>
+          FECHA: 05/10/2024 - 13:30 H
+        </div>
+      </div>
+
+      <h1 class="doc-title">ACTA DE DECLARACIÓN TESTIFICAL BAJO PREVENCIÓN</h1>
+
+      <div class="interrogation-box">
+        <p style="font-size: 10.5px; margin-bottom: 8px;"><strong>DECLARANTE: D. JAVIER BELTRÁN GÓMEZ</strong><br>
+        Edad: 53 años. Profesión: Capataz general de finca. Antigüedad: 28 años en Bodegas Valdeluna. Domicilio: Peñafiel (afueras).</p>
+
+        <div class="interrogation-qa">
+          <span class="interrogation-speaker">PREGUNTADA:</span> Por su horario de salida de las instalaciones el viernes 4 de octubre.<br>
+          <span class="interrogation-speaker">RESPONDE:</span> Terminé a las 19:30 h. Dejé las tolvas vacías, cogí mi furgoneta Nissan Navara blanca y me fui a mi casa con mi mujer y mi hijo dependiente. Cené, vi el telediario y me acosté a las 22:00 h. No volví a la bodega hasta las 06:45 h del sábado, cuando entré para el turno matinal y vi a Don Gonzalo en el suelo de la Nave 2.
+        </div>
+        <div class="interrogation-qa">
+          <span class="interrogation-speaker">PREGUNTADA:</span> Si es cierto que Don Gonzalo le comunicó que con la entrada del nuevo fondo inversor sería despedido sin indemnización especial.<br>
+          <span class="interrogation-speaker">RESPONDE:</span> Es verdad que la situación era angustiosa para mí. Tengo un chaval enfermo que necesita cuidados constantes. Pero Don Gonzalo era como un hermano mayor para mí... jamás le habría hecho daño.
+        </div>
+        <div class="interrogation-qa">
+          <span class="interrogation-speaker">PREGUNTADA:</span> Si conoce que las cámaras del camino perimetral captaron las luces y rodadas de su furgoneta en la finca sobre las 22:30 h.<br>
+          <span class="interrogation-speaker">RESPONDE:</span> (Palidece ostensiblemente y guarda silencio prolongado). Eso es imposible... debe de ser una furgoneta idéntica de algún viticultor vecino. Yo estaba en mi cama durmiendo.
+        </div>
+        <div class="investigator-note">
+          <strong>NOTA DE LOS INSTRUCTORES:</strong> El declarante miente con total seguridad respecto a sus movimientos nocturnos. Se acuerda inspección y registro voluntario de su domicilio y furgoneta.
+        </div>
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL DECLARANTE<br><br><em>Javier Beltrán Gómez</em></div>
+      <div class="signature-box">EL INSTRUCTOR POLICIAL<br><br><em>Agente TIP GC-84.920</em></div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 4: INTERROGATORIO — MARCOS VARELA                   -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="official-header">
+        <div class="official-title">
+          POLICÍA JUDICIAL — EQUIPO DE PERSONAS<br>
+          DILIGENCIAS PREVIAS Nº 402/2024
+        </div>
+        <div class="case-number">
+          ACTA DECLARACIÓN S-3<br>
+          FECHA: 05/10/2024 - 15:45 H
+        </div>
+      </div>
+
+      <h1 class="doc-title">ACTA DE DECLARACIÓN TESTIFICAL BAJO PREVENCIÓN</h1>
+
+      <div class="interrogation-box">
+        <p style="font-size: 10.5px; margin-bottom: 8px;"><strong>DECLARANTE: D. MARCOS VARELA RÍOS</strong><br>
+        Edad: 44 años. Profesión: Director Financiero (CFO) y socio menor. Domicilio: Valladolid capital. Vehículo: Volvo XC60 matrícula 4188-KLT.</p>
+        
+        <div class="interrogation-qa">
+          <span class="interrogation-speaker">PREGUNTADA:</span> Por el estado de ánimo de la víctima y sus últimas conversaciones con él el viernes por la tarde.<br>
+          <span class="interrogation-speaker">RESPONDE:</span> Gonzalo estaba muy presionado por las deudas bancarias y la vendimia. A las 19:40 h estuve con él en su despacho; revisamos unas cifras rutinarias de tesorería y arqueo. Estaba tranquilo, cenando la ensalada que pidió al catering. Nos dimos las buenas noches de forma cordial y yo me marché.
+        </div>
+        <div class="interrogation-qa">
+          <span class="interrogation-speaker">PREGUNTADA:</span> Por su itinerario exacto y coartada tras abandonar la bodega.<br>
+          <span class="interrogation-speaker">RESPONDE:</span> Salí de la bodega en mi Volvo a las <strong>20:10 horas en punto</strong>. Conduje por la N-122 hasta Valladolid. Llegué al centro sobre las 21:00 h, aparqué en el Parking subterráneo de la Plaza Mayor a las 21:02 h —aquí tienen el resguardo del ticket para comprobarlo— y me fui caminando al restaurante <em>La Tahona</em>, donde me esperaba mi mujer y unos amigos para cenar. Estuve con ellos hasta medianoche.
+        </div>
+        <div class="interrogation-qa">
+          <span class="interrogation-speaker">PREGUNTADA:</span> Por la existencia de posibles irregularidades contables o desvíos patrimoniales en la sociedad.<br>
+          <span class="interrogation-speaker">RESPONDE:</span> La contabilidad de Valdeluna está auditada al céntimo. Las tensiones de tesorería se deben exclusivamente a las heladas tardías de la campaña pasada y la subida de tipos de interés.
+        </div>
+        <div class="investigator-note">
+          <strong>NOTA DE LOS INSTRUCTORES:</strong> El declarante muestra una tranquilidad ensayada. Entrega el ticket del Parking Plaza Mayor con entrada a las "21:02 h". Se remite al Laboratorio de Documentoscopia para comprobación de fecha térmica y trazabilidad.
+        </div>
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL DECLARANTE<br><br><em>Marcos Varela Ríos</em></div>
+      <div class="signature-box">EL INSTRUCTOR POLICIAL<br><br><em>Agente TIP GC-84.920</em></div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 5: INTERROGATORIO — ELENA FONTANALS                 -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="official-header">
+        <div class="official-title">
+          POLICÍA JUDICIAL — EQUIPO DE PERSONAS<br>
+          DILIGENCIAS PREVIAS Nº 402/2024
+        </div>
+        <div class="case-number">
+          ACTA DECLARACIÓN S-4<br>
+          FECHA: 05/10/2024 - 17:00 H
+        </div>
+      </div>
+
+      <h1 class="doc-title">ACTA DE DECLARACIÓN TESTIFICAL BAJO PREVENCIÓN</h1>
+
+      <div class="interrogation-box">
+        <p style="font-size: 10.5px; margin-bottom: 8px;"><strong>DECLARANTE: DÑA. ELENA FONTANALS PUIG</strong><br>
+        Edad: 47 años. Profesión: Abogada y Socia Directora de Vitis Capital Partners. Alojamiento: Hotel Convento Las Claras (Peñafiel). Vehículo: Audi A5 matrícula 5512-LMN.</p>
+
+        <div class="interrogation-qa">
+          <span class="interrogation-speaker">PREGUNTADA:</span> Si es cierto que Gonzalo amenazó el jueves con romper las negociaciones y acudir a un grupo competidor francés.<br>
+          <span class="interrogation-speaker">RESPONDE:</span> Son tácticas habituales de farol en el sector bodeguero. Teníamos un preacuerdo vinculante con penalización de 600.000 euros. Yo tenía redactado el anexo contractual definitivo para blindar la operación.
+        </div>
+        <div class="interrogation-qa">
+          <span class="interrogation-speaker">PREGUNTADA:</span> Por qué las cámaras del Hotel Convento Las Claras registraron la salida de su Audi a las 20:20 h y su regreso a las 20:54 h.<br>
+          <span class="interrogation-speaker">RESPONDE:</span> (Titubea). Fui en coche hasta la cancela exterior de Valdeluna para entregarle el anexo contractual en mano a Gonzalo. Pero al llegar a la verja, vi luces en los despachos y escuché voces airadas. Pensé que estaba con su familia y preferí no entrometerme. Me volví directamente al hotel. A las 21:12 h tenía una videoconferencia de Teams crucial con mis socios de Londres y Barcelona y no podía llegar tarde.
+        </div>
+        <div class="interrogation-qa">
+          <span class="interrogation-speaker">PREGUNTADA:</span> Si llegó a descender del vehículo o a acceder al interior del recinto.<br>
+          <span class="interrogation-speaker">RESPONDE:</span> En absoluto. No pasé de la verja metálica exterior. Di la vuelta inmediatamente.
+        </div>
+        <div class="investigator-note">
+          <strong>NOTA DE LOS INSTRUCTORES:</strong> Se requiere a la dirección del Hotel Convento Las Claras el volcado pericial de conexiones del router Wi-Fi para comprobar la efectividad de la reunión por Teams.
+        </div>
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">LA DECLARANTE<br><br><em>Elena Fontanals Puig</em></div>
+      <div class="signature-box">EL INSTRUCTOR POLICIAL<br><br><em>Agente TIP GC-84.920</em></div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 6: VACIADO TELEMÁTICO Y WHATSAPP                    -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">TELECOMUNICACIONES</div>
+      <div class="official-header">
+        <div class="official-title">
+          DIRECCIÓN GENERAL DE LA GUARDIA CIVIL<br>
+          UNIDAD TÉCNICA DE POLICÍA JUDICIAL — GRUPO CIBERDELINCUENCIA<br>
+          <span style="font-size: 9px; font-weight: normal;">Mandamiento Judicial D.P. 402/2024</span>
+        </div>
+        <div class="case-number">
+          INFORME TELEMÁTICO Nº: 89/24<br>
+          TERMINALES: 649-XX-XX-12 / 622-XX-XX-98
+        </div>
+      </div>
+
+      <h1 class="doc-title">INFORME DE VACIADO DE WHATSAPP Y TRIANGULACIÓN BTS</h1>
+
+      <p class="legal-text">
+        Comunicaciones intervenidas entre <strong>Dña. Lucía de la Serna</strong> y <strong>D. Javier Beltrán</strong> durante la tarde-noche del 04/10/2024:
+      </p>
+
+      <div class="chat-container">
+        <div style="text-align: center; font-size: 8.5px; color: #64748b; margin-bottom: 2px;">
+          VIERNES, 04 DE OCTUBRE DE 2024 — CHAT CIFRADO
+        </div>
+        
+        <div class="chat-bubble chat-out">
+          Javier, no aguanto más. Mi padre se ha cerrado en banda. Dice que el lunes se firma con los de Barcelona y que tú estás en la calle sin un duro.
+          <div class="chat-time">20:04 ✓✓</div>
+        </div>
+
+        <div class="chat-bubble chat-in">
+          Lucía, cálmate por favor. No podemos montar otro pollo como el de la tolva. Hablamos en persona. ¿Dónde estás?
+          <div class="chat-time">20:12</div>
+        </div>
+
+        <div class="chat-bubble chat-out">
+          Estoy en el bar La Barrica con las chicas para disimular. Pero me salgo ahora mismo. ¿Dónde nos vemos?
+          <div class="chat-time">20:31 ✓✓</div>
+        </div>
+
+        <div class="chat-bubble chat-in">
+          <strong>Subo al mirador del castillo. Aparca el coche detrás de los pinos altos para que no se vea la matrícula. Estoy llegando.</strong>
+          <div class="chat-time">20:35</div>
+        </div>
+
+        <div class="chat-bubble chat-out">
+          Ya te veo. Voy para tu furgoneta.
+          <div class="chat-time">20:44 ✓✓</div>
+        </div>
+
+        <div class="chat-bubble chat-in">
+          Ten cuidado al volver al bar. Nos vemos mañana en el turno de las siete. Te quiero.
+          <div class="chat-time">21:14</div>
+        </div>
+      </div>
+
+      <h2 style="font-size: 10px; font-family: 'Inter', sans-serif; text-transform: uppercase; margin-top: 10px; margin-bottom: 4px;">
+        REGISTRO DE POSICIONAMIENTO EN ANTENAS DE TELEFONÍA (BTS)
+      </h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Franja Horaria</th>
+            <th>Celda / Antena Telefónica</th>
+            <th>Terminales Detectados</th>
+            <th>Localización Física Asociada</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>20:00 - 20:30 h</td>
+            <td>BTS-Peñafiel Centro (Plaza)</td>
+            <td>Lucía de la Serna</td>
+            <td>Bar La Barrica</td>
+          </tr>
+          <tr>
+            <td style="color:#b91c1c; font-weight: bold;">20:38 - 21:12 h</td>
+            <td style="color:#b91c1c; font-weight: bold;">BTS-Castillo Mirador (Sector 2)</td>
+            <td style="color:#b91c1c; font-weight: bold;">Lucía de la Serna Y Javier Beltrán</td>
+            <td style="color:#b91c1c; font-weight: bold;">Mirador del Castillo (a 4,2 km de la bodega)</td>
+          </tr>
+          <tr>
+            <td>21:18 - 23:30 h</td>
+            <td>BTS-Peñafiel Centro (Plaza)</td>
+            <td>Lucía de la Serna</td>
+            <td>Reincorporada a Bar La Barrica</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="legal-text" style="font-size: 9.5px; margin-top: 8px;">
+        <strong>DILIGENCIA POLICIAL ADICIONAL:</strong> En el registro voluntario practicado en el garaje de D. Javier Beltrán se intervinieron tres cajas de vino <em>Valdeluna Gran Reserva 1999</em>. Interrogado al respecto, rompió a llorar y confesó: <em>"A las 22:30 h volví a la bodega a robar esas botellas para sacar algo de dinero porque me iban a despedir. El despacho de Don Gonzalo estaba a oscuras. No le vi ni hablé con él. El robo lo cometí yo solo, pero a Gonzalo yo no le toqué un pelo"</em>.
+      </p>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL OFICIAL ANALISTA CIBER (TIP 30.119)</div>
+      <div class="signature-box">EL INSTRUCTOR DEL CASO (TIP 84.920)</div>
+    </div>
+  </div>
+
+</body>
+</html>

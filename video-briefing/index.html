@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>VÍDEO BRIEFING JUDICIAL — EL ÚLTIMO MOSTO DE BODEGAS VALDELUNA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700;800;900&family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #06090e;
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .video-wrapper {
+      max-width: 1050px;
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 229, 255, 0.1);
+    }
+
+    /* BARRA SUPERIOR DE EXPEDIENTE */
+    .top-header {
+      background: #090d16;
+      border-bottom: 1px solid #1e293b;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Courier Prime', monospace;
+      font-size: 11px;
+    }
+
+    .rec-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #ef4444;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .rec-dot {
+      width: 10px;
+      height: 10px;
+      background: #ef4444;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #ef4444;
+      animation: pulse 1s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.3; transform: scale(0.85); }
+      100% { opacity: 1; transform: scale(1.1); }
+    }
+
+    /* PANTALLA DE VÍDEO 16:9 */
+    .video-viewport {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    /* CAPAS CINEMATOGRÁFICAS */
+    .film-grain {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.85) 100%);
+      z-index: 10;
+    }
+
+    .scanlines {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+      background-size: 100% 4px;
+      pointer-events: none;
+      z-index: 11;
+      opacity: 0.6;
+    }
+
+    /* IMAGEN DE FONDO CON ANIMACIÓN KEN BURNS */
+    .slide-image {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1);
+      transition: opacity 1.2s ease-in-out, transform 12s cubic-bezier(0.25, 1, 0.5, 1);
+      z-index: 1;
+    }
+
+    .slide-image.active {
+      opacity: 0.85;
+      transform: scale(1.08);
+    }
+
+    /* OVERLAY DE DATOS POLICIALES */
+    .hud-overlay {
+      position: absolute;
+      top: 20px;
+      left: 24px;
+      right: 24px;
+      z-index: 15;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+      font-family: 'Courier Prime', monospace;
+      font-size: 11px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+    }
+
+    .hud-tag {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(0, 229, 255, 0.4);
+      padding: 4px 10px;
+      border-radius: 4px;
+      color: #00e5ff;
+      letter-spacing: 1px;
+    }
+
+    /* CONTENEDOR DE SUBTÍTULOS Y TEXTO PRINCIPAL */
+    .caption-box {
+      position: absolute;
+      bottom: 24px;
+      left: 30px;
+      right: 30px;
+      z-index: 20;
+      background: rgba(9, 13, 22, 0.88);
+      border-left: 4px solid #00e5ff;
+      padding: 16px 20px;
+      border-radius: 0 6px 6px 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      backdrop-filter: blur(4px);
+    }
+
+    .caption-act {
+      font-family: 'Courier Prime', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: #facc15;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .caption-text {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #f8fafc;
+      font-weight: 500;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+      min-height: 42px;
+    }
+
+    /* PANTALLA DE INICIO (OVERLAY DE PLAY GIGANTE) */
+    .start-screen {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(6, 9, 14, 0.92);
+      z-index: 30;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .start-screen.hidden {
+      display: none;
+    }
+
+    .play-giant-btn {
+      width: 80px;
+      height: 80px;
+      background: #00e5ff;
+      color: #000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 40px rgba(0, 229, 255, 0.5);
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .start-screen:hover .play-giant-btn {
+      transform: scale(1.1);
+      background: #38bdf8;
+    }
+
+    /* BARRA DE CONTROLES INFERIOR */
+    .controls-bar {
+      background: #0b101b;
+      border-top: 1px solid #1e293b;
+      padding: 12px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .progress-bar-wrap {
+      width: 100%;
+      height: 6px;
+      background: #1e293b;
+      border-radius: 3px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0284c7, #00e5ff);
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    .controls-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .ctrl-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .ctrl-btn {
+      background: #1e293b;
+      color: #fff;
+      border: 1px solid #334155;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-family: 'Courier Prime', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .ctrl-btn:hover {
+      background: #334155;
+      border-color: #00e5ff;
+      color: #00e5ff;
+    }
+
+    .ctrl-btn.active {
+      background: #00e5ff;
+      color: #000;
+      border-color: #00e5ff;
+    }
+
+    /* SELECTOR DE ACTOS */
+    .act-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .act-tab {
+      background: #111827;
+      border: 1px solid #1f2937;
+      color: #94a3b8;
+      padding: 5px 10px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-family: 'Courier Prime', monospace;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .act-tab:hover, .act-tab.active {
+      color: #00e5ff;
+      border-color: #0284c7;
+      background: #0f172a;
+    }
+
+    .timer-display {
+      font-family: 'Courier Prime', monospace;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    .export-banner {
+      margin-top: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0d121c;
+      border: 1px dashed #334155;
+      padding: 12px 18px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="video-wrapper">
+    <!-- CABECERA DE EXPEDIENTE POLICIAL -->
+    <div class="top-header">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="color:#00e5ff; font-weight:700;">SISTEMA SITRA-JUD // BRIEFING MULTIMEDIA</span>
+        <span style="color:#64748b;">|</span>
+        <span style="color:#cbd5e1;">CASO: D.P. 402/2024 (BODEGAS VALDELUNA)</span>
+      </div>
+      <div class="rec-badge">
+        <div class="rec-dot"></div>
+        <span>AUDIO &amp; VISUAL FEED ON</span>
+      </div>
+    </div>
+
+    <!-- PANTALLA REPRODUCTORA DE VÍDEO -->
+    <div class="video-viewport" id="viewport" onclick="togglePlay()">
+      <div class="film-grain"></div>
+      <div class="scanlines"></div>
+
+      <!-- IMÁGENES DE LAS ESCENAS (SLIDESHOW SINCRONIZADO) -->
+      <img id="slide-1" class="slide-image active" src="../imagenes/mirador_castillo_penafiel.png" alt="Peñafiel de Noche">
+      <img id="slide-2" class="slide-image" src="../imagenes/escena_tina4_bodega.png" alt="Hallazgo Tina 4">
+      <img id="slide-3" class="slide-image" src="../imagenes/gonzalo_de_la_serna.png" alt="Víctima Gonzalo">
+      <img id="slide-4" class="slide-image" src="../imagenes/marcos_varela.png" alt="Sospechoso Marcos">
+      <img id="slide-5" class="slide-image" src="../imagenes/lucia_de_la_serna.png" alt="Sospechosa Lucía">
+      <img id="slide-6" class="slide-image" src="../imagenes/javier_beltran.png" alt="Sospechoso Javier">
+      <img id="slide-7" class="slide-image" src="../imagenes/elena_fontanals.png" alt="Sospechosa Elena">
+      <img id="slide-8" class="slide-image" src="../imagenes/escena_laboratorio_reactivo.png" alt="Laboratorio Escenario">
+      <img id="slide-9" class="slide-image" src="../imagenes/evidencia_calzado_alfombrilla.png" alt="Evidencia Química">
+
+      <!-- HUD OVERLAY CON DATOS TÁCTICOS -->
+      <div class="hud-overlay">
+        <div class="hud-tag" id="hud-cam">CAM: SAT-01 // COMARCA PEÑAFIEL</div>
+        <div class="hud-tag" id="hud-time">04/10/2024 · 20:45:00 H</div>
+      </div>
+
+      <!-- CAJA DE SUBTÍTULOS Y NARRACIÓN -->
+      <div class="caption-box">
+        <div class="caption-act" id="caption-act">ACTO 1: LA NOCHE DE LA VENDIMIA</div>
+        <div class="caption-text" id="caption-text">
+          Peñafiel, cuatro de octubre de 2024. En pleno corazón de la Ribera del Duero, la noche cae gélida sobre los viñedos centenarios de Bodegas Valdeluna...
+        </div>
+      </div>
+
+      <!-- PANTALLA INICIAL DE REPRODUCCIÓN (CLICK TO PLAY) -->
+      <div class="start-screen" id="start-screen" onclick="startVideo(event)">
+        <div class="play-giant-btn">▶</div>
+        <h2 style="font-family:'Courier Prime', monospace; font-size:22px; color:#00e5ff; letter-spacing:2px; margin-bottom:8px;">
+          INICIAR VÍDEO BRIEFING DEL CASO
+        </h2>
+        <p style="font-size:13px; color:#94a3b8; max-width:550px; line-height:1.5;">
+          Presentación audiovisual oficial del sumario D.P. 402/2024: recreación del crimen, análisis preliminar de la autopsia, perfil de sospechosos e instrucciones de investigación.
+        </p>
+        <span style="margin-top:14px; font-size:11px; color:#facc15; font-family:'Courier Prime', monospace;">
+          [PULSA EN CUALQUIER LUGAR PARA ACTIVAR LA NARRACIÓN Y EL SONIDO]
+        </span>
+      </div>
+    </div>
+
+    <!-- CONTROLES Y NAVEGACIÓN DE ACTOS -->
+    <div class="controls-bar">
+      <!-- LÍNEA DE PROGRESO INTERACTIVA -->
+      <div class="progress-bar-wrap" onclick="seek(event)">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+
+      <div class="controls-row">
+        <div class="ctrl-left">
+          <button class="ctrl-btn" id="play-btn" onclick="togglePlay()">
+            <span id="play-icon">▶</span> <span id="play-label">REPRODUCIR</span>
+          </button>
+          <button class="ctrl-btn" id="voice-btn" onclick="toggleVoice()">
+            🎙️ <span id="voice-label">VOZ: ACTIVADA</span>
+          </button>
+          <button class="ctrl-btn" id="music-btn" onclick="toggleMusic()">
+            🎵 <span id="music-label">MÚSICA: ON</span>
+          </button>
+          <div class="timer-display">
+            <span id="cur-time">00:00</span> / <span id="tot-time">03:40</span>
+          </div>
+        </div>
+
+        <!-- SELECTOR RÁPIDO DE ESCENAS -->
+        <div class="act-tabs">
+          <div class="act-tab active" onclick="jumpToScene(0)">1. PRÓLOGO</div>
+          <div class="act-tab" onclick="jumpToScene(1)">2. HALLAZGO</div>
+          <div class="act-tab" onclick="jumpToScene(2)">3. LA VÍCTIMA</div>
+          <div class="act-tab" onclick="jumpToScene(3)">4. SOSPECHOSOS</div>
+          <div class="act-tab" onclick="jumpToScene(7)">5. EL ESCENARIO</div>
+          <div class="act-tab" onclick="jumpToScene(9)">6. CÓMO JUGAR</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BANNER INFORMATIVO INFERIOR CON ENLACES RÁPIDOS -->
+  <div class="export-banner" style="max-width: 1050px; width: 100%;">
+    <div>
+      <strong style="color:#00e5ff;">¿LISTOS PARA INVESTIGAR EN MESA?</strong>
+      <span style="color:#94a3b8; margin-left:8px;">Tenéis listos los expedientes oficiales en PDF y la terminal web interactiva:</span>
+    </div>
+    <div style="display:flex; gap:10px;">
+      <a href="../documentos-imprimibles/index.html" target="_blank" class="ctrl-btn" style="background:#1e3a8a; border-color:#38bdf8; text-decoration:none;">
+        📑 DESCARGAR DOSSIERS PDF
+      </a>
+      <a href="../terminal-policial/index.html" target="_blank" class="ctrl-btn" style="background:#065f46; border-color:#34d399; text-decoration:none;">
+        💻 TERMINAL SITRA-JUD
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // ========================================================
+    // GUION TÉCNICO Y ESCENAS DEL VÍDEO (SIN SPOILERS)
+    // ========================================================
+    const SCENES = [
+      {
+        act: "ACTO 1: LA NOCHE DE LA VENDIMIA",
+        image: "slide-1",
+        hudCam: "SAT-01 // COMARCA DE PEÑAFIEL",
+        hudTime: "04/10/2024 · 20:30 H",
+        duration: 18,
+        text: "Peñafiel, cuatro de octubre de dos mil veinticuatro. En pleno corazón de la Ribera del Duero, la noche cae gélida sobre los viñedos centenarios de Bodegas Valdeluna. Es la semana cumbre de la vendimia: se juegan cosechas millonarias, pero también odios soterrados y tensiones familiares al límite."
+      },
+      {
+        act: "ACTO 2: EL HALLAZGO EN EL SÓTANO",
+        image: "slide-2",
+        hudCam: "INSPECCIÓN OCULAR // NAVE 2 DE CUBAS",
+        hudTime: "05/10/2024 · 07:15 H",
+        duration: 22,
+        text: "A las siete y cuarto de la mañana siguiente, el capataz Javier Beltrán hace un descubrimiento macabro en la nave subterránea de fermentación. A los pies de la Tina cuatro, tendido boca abajo sobre el hormigón húmedo, yace el cuerpo sin vida de Gonzalo de la Serna y Mendieta, propietario y alma máter de la bodega."
+      },
+      {
+        act: "ACTO 3: LA FALSA ASFIXIA Y LA VÍCTIMA",
+        image: "slide-3",
+        hudCam: "FILIACIÓN // DON GONZALO DE LA SERNA",
+        hudTime: "EXPEDIENTE VÍCTIMA · DNI 12.384.901-K",
+        duration: 24,
+        text: "La primera versión oficial intenta archivar el suceso como un accidente laboral fortuito: asfixia por el tufo del vino, el gas carbónico letal de las cubas. Pero la autopsia preliminar revela un demoledor traumatismo craneal occipital y livideces dorsales fijas en un cuerpo hallado boca abajo. Alguien lo asesinó en otra parte y trasladó su cadáver para simular un accidente."
+      },
+      {
+        act: "ACTO 4: EL CÍRCULO DE SOSPECHOSOS (1/4)",
+        image: "slide-4",
+        hudCam: "INVESTIGADO 1 // MARCOS VARELA RÍOS",
+        hudTime: "CFO BODEGA · VOLVO XC60 4188-KLT",
+        duration: 20,
+        text: "Primer sospechoso: Marcos Varela, director financiero y primo de la víctima. Gonzalo descubrió esa misma tarde un presunto desvío de fondos a una sociedad instrumental. Afirma haber salido hacia Valladolid a las ocho y diez de la tarde, presentando un ticket de aparcamiento como coartada."
+      },
+      {
+        act: "ACTO 4: EL CÍRCULO DE SOSPECHOSOS (2/4)",
+        image: "slide-5",
+        hudCam: "INVESTIGADA 2 // LUCÍA DE LA SERNA",
+        hudTime: "ENÓLOGA · VW GOLF 9012-GTV",
+        duration: 20,
+        text: "Segunda sospechosa: Lucía de la Serna, enóloga adjunta e hija única de Gonzalo. Ofertó resistencia frontal contra la venta de los viñedos familiares a un fondo de inversión. Declaró haber estado en un bar del pueblo, pero varios testigos afirman que se ausentó durante la ventana crítica del crimen."
+      },
+      {
+        act: "ACTO 4: EL CÍRCULO DE SOSPECHOSOS (3/4)",
+        image: "slide-6",
+        hudCam: "INVESTIGADO 3 // JAVIER BELTRÁN GÓMEZ",
+        hudTime: "CAPATAZ · NISSAN NAVARA 8209-FDC",
+        duration: 20,
+        text: "Tercer sospechoso: Javier Beltrán, capataz de la finca desde hace casi tres décadas. Enfrentado al despido inminente tras la absorción. Afirmó estar durmiendo plácidamente en su cama, pero las cámaras rurales detectaron su furgoneta merodeando la bodega entrada la noche."
+      },
+      {
+        act: "ACTO 4: EL CÍRCULO DE SOSPECHOSOS (4/4)",
+        image: "slide-7",
+        hudCam: "INVESTIGADA 4 // ELENA FONTANALS PUIG",
+        hudTime: "VITIS CAPITAL · AUDI A5 5512-LMN",
+        duration: 20,
+        text: "Cuarta sospechosa: Elena Fontanals, representante del fondo inversor Vitis Capital. Alojada en un hotel de Peñafiel. Negociaciones al límite marcadas por la aparición de un polémico aval bancario. Alega haber participado en una videollamada de negocios a la hora del homicidio."
+      },
+      {
+        act: "ACTO 5: EL ESCENARIO PRIMARIO OCULTO",
+        image: "slide-8",
+        hudCam: "POLICÍA CIENTÍFICA // PRUEBA BLUESTAR",
+        hudTime: "LABORATORIO ENOLÓGICO · 1ª PLANTA",
+        duration: 22,
+        text: "La inspección con luminol de la Policía Judicial localiza el escenario real de la agresión: el Laboratorio Enológico de la primera planta. Allí se derramó un reactivo químico azul turquesa durante el forcejeo mortal, antes de que el cuerpo fuera bajado en el montacargas de servicio."
+      },
+      {
+        act: "ACTO 5: LA PISTOLA HUMEANTE QUÍMICA",
+        image: "slide-9",
+        hudCam: "MACROFOTOGRAFÍA // VESTIGIO QUÍMICO",
+        hudTime: "SECRIM · COTEJO ESPECTROMÉTRICO",
+        duration: 20,
+        text: "El principio de transferencia de Locard nunca falla: quien cometió el crimen pisó ese charco reactivo y transportó trazas microscópicas en su calzado y en las alfombrillas de su vehículo. El análisis de espectrometría de SECRIM será la prueba irrefutable para la condena."
+      },
+      {
+        act: "ACTO 6: LA MISIÓN DEL INVESTIGADOR",
+        image: "slide-1",
+        hudCam: "SISTEMA JUDICIAL // INSTRUCCIONES DE JUEGO",
+        hudTime: "SOBRES A, B Y C · TERMINAL SITRA-JUD",
+        duration: 26,
+        text: "Inspectores, vuestra misión comienza ahora. Sobre la mesa disponéis del Sobre A abierto con el atestado y la autopsia. Los Sobres B y C deben permanecer precintados hasta que introduzcáis las deducciones correctas en la Terminal Web SITRA-JUD. Utilizad el radar de tráfico de la DGT, cruzad los horarios y llevad al culpable ante la justicia. Que comience la investigación."
+      }
+    ];
+
+    // ========================================================
+    // MOTOR DE AUDIO PROCEDIMENTAL (WEB AUDIO API)
+    // ========================================================
+    let audioCtx = null;
+    let isPlaying = false;
+    let voiceEnabled = true;
+    let musicEnabled = true;
+    let currentSceneIdx = 0;
+    let sceneTimer = null;
+    let totalDuration = SCENES.reduce((acc, s) => acc + s.duration, 0);
+    let elapsedTime = 0;
+    let globalInterval = null;
+
+    // Generadores de sonido cinematográfico
+    let droneOsc1, droneOsc2, droneGain, masterGain;
+
+    function initAudioEngine() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        masterGain = audioCtx.createGain();
+        masterGain.gain.setValueAtTime(0.35, audioCtx.currentTime);
+        masterGain.connect(audioCtx.destination);
+      }
+    }
+
+    function startDrone() {
+      if (!audioCtx || !musicEnabled) return;
+      try {
+        droneOsc1 = audioCtx.createOscillator();
+        droneOsc2 = audioCtx.createOscillator();
+        droneGain = audioCtx.createGain();
+
+        droneOsc1.type = 'sawtooth';
+        droneOsc1.frequency.setValueAtTime(55, audioCtx.currentTime); // La1 (55Hz sub-bass)
+
+        droneOsc2.type = 'sine';
+        droneOsc2.frequency.setValueAtTime(82.4, audioCtx.currentTime); // Mi2 (82.4Hz quinta misteriosa)
+
+        // Filtro pasa bajos para oscuridad
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(220, audioCtx.currentTime);
+
+        droneGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+        droneGain.gain.exponentialRampToValueAtTime(0.18, audioCtx.currentTime + 3);
+
+        droneOsc1.connect(filter);
+        droneOsc2.connect(filter);
+        filter.connect(droneGain);
+        droneGain.connect(masterGain);
+
+        droneOsc1.start();
+        droneOsc2.start();
+      } catch(e) {}
+    }
+
+    function stopDrone() {
+      try {
+        if (droneGain) {
+          droneGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
+          setTimeout(() => {
+            if (droneOsc1) droneOsc1.stop();
+            if (droneOsc2) droneOsc2.stop();
+          }, 500);
+        }
+      } catch(e) {}
+    }
+
+    function playDramaticHit() {
+      if (!audioCtx || !musicEnabled) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const hitGain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(120, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(35, audioCtx.currentTime + 0.8);
+
+        hitGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        hitGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+
+        osc.connect(hitGain);
+        hitGain.connect(masterGain);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.8);
+      } catch(e) {}
+    }
+
+    // ========================================================
+    // SÍNTESIS DE VOZ EN CASTELLANO (SPEECH SYNTHESIS API)
+    // ========================================================
+    let activeUtterance = null;
+
+    function speakText(text) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      if (!voiceEnabled || !isPlaying) return;
+
+      activeUtterance = new SpeechSynthesisUtterance(text);
+      activeUtterance.lang = 'es-ES';
+      activeUtterance.rate = 0.96; // Pausa solemne policial
+      activeUtterance.pitch = 0.88; // Voz grave y autoritaria
+
+      // Intentar seleccionar voz en castellano
+      const voices = window.speechSynthesis.getVoices();
+      const esVoice = voices.find(v => v.lang.startsWith('es') && (v.name.includes('Castilian') || v.name.includes('Spain') || v.name.includes('Pablo') || v.name.includes('Jorge') || v.name.includes('Google español')));
+      if (esVoice) activeUtterance.voice = esVoice;
+
+      window.speechSynthesis.speak(activeUtterance);
+    }
+
+    // ========================================================
+    // CONTROL DEL VÍDEO Y TRANSICIÓN DE ESCENAS
+    // ========================================================
+    function startVideo(e) {
+      if (e) e.stopPropagation();
+      document.getElementById('start-screen').classList.add('hidden');
+      initAudioEngine();
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      playVideo();
+    }
+
+    function togglePlay() {
+      if (document.getElementById('start-screen') && !document.getElementById('start-screen').classList.contains('hidden')) {
+        startVideo();
+        return;
+      }
+      if (isPlaying) pauseVideo();
+      else playVideo();
+    }
+
+    function playVideo() {
+      isPlaying = true;
+      document.getElementById('play-icon').innerText = '⏸';
+      document.getElementById('play-label').innerText = 'PAUSAR';
+      startDrone();
+      renderScene(currentSceneIdx);
+
+      if (!globalInterval) {
+        globalInterval = setInterval(() => {
+          if (isPlaying && elapsedTime < totalDuration) {
+            elapsedTime += 0.5;
+            updateProgress();
+          } else if (elapsedTime >= totalDuration) {
+            pauseVideo();
+          }
+        }, 500);
+      }
+    }
+
+    function pauseVideo() {
+      isPlaying = false;
+      document.getElementById('play-icon').innerText = '▶';
+      document.getElementById('play-label').innerText = 'REANUDAR';
+      stopDrone();
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      clearTimeout(sceneTimer);
+    }
+
+    function renderScene(idx) {
+      if (idx >= SCENES.length) {
+        pauseVideo();
+        return;
+      }
+
+      currentSceneIdx = idx;
+      const s = SCENES[idx];
+
+      // Cambiar imagen activa
+      document.querySelectorAll('.slide-image').forEach(img => img.classList.remove('active'));
+      const targetImg = document.getElementById(s.image);
+      if (targetImg) targetImg.classList.add('active');
+
+      // Actualizar HUD y subtítulos
+      document.getElementById('hud-cam').innerText = s.hudCam;
+      document.getElementById('hud-time').innerText = s.hudTime;
+      document.getElementById('caption-act').innerText = s.act;
+      document.getElementById('caption-text').innerText = s.text;
+
+      // Actualizar pestañas activas
+      document.querySelectorAll('.act-tab').forEach((tab, i) => {
+        tab.classList.toggle('active', (i === 0 && idx === 0) || (i === 1 && idx === 1) || (i === 2 && idx === 2) || (i === 3 && idx >= 3 && idx <= 6) || (i === 4 && idx >= 7 && idx <= 8) || (i === 5 && idx >= 9));
+      });
+
+      playDramaticHit();
+      speakText(s.text);
+
+      clearTimeout(sceneTimer);
+      if (isPlaying) {
+        sceneTimer = setTimeout(() => {
+          if (isPlaying) {
+            renderScene(idx + 1);
+          }
+        }, s.duration * 1000);
+      }
+    }
+
+    function jumpToScene(idx) {
+      elapsedTime = 0;
+      for (let i = 0; i < idx; i++) elapsedTime += SCENES[i].duration;
+      updateProgress();
+      renderScene(idx);
+      if (!isPlaying) playVideo();
+    }
+
+    function updateProgress() {
+      const pct = (elapsedTime / totalDuration) * 100;
+      document.getElementById('progress-fill').style.width = pct + '%';
+
+      const curM = Math.floor(elapsedTime / 60).toString().padStart(2, '0');
+      const curS = Math.floor(elapsedTime % 60).toString().padStart(2, '0');
+      document.getElementById('cur-time').innerText = `${curM}:${curS}`;
+    }
+
+    function seek(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const pct = clickX / rect.width;
+      elapsedTime = pct * totalDuration;
+
+      // Encontrar a qué escena corresponde
+      let acc = 0;
+      let targetIdx = 0;
+      for (let i = 0; i < SCENES.length; i++) {
+        if (elapsedTime >= acc && elapsedTime < acc + SCENES[i].duration) {
+          targetIdx = i;
+          break;
+        }
+        acc += SCENES[i].duration;
+      }
+      renderScene(targetIdx);
+    }
+
+    function toggleVoice() {
+      voiceEnabled = !voiceEnabled;
+      const btn = document.getElementById('voice-btn');
+      const label = document.getElementById('voice-label');
+      if (voiceEnabled) {
+        label.innerText = 'VOZ: ACTIVADA';
+        btn.classList.add('active');
+        if (isPlaying) speakText(SCENES[currentSceneIdx].text);
+      } else {
+        label.innerText = 'VOZ: MUTED';
+        btn.classList.remove('active');
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      }
+    }
+
+    function toggleMusic() {
+      musicEnabled = !musicEnabled;
+      const btn = document.getElementById('music-btn');
+      const label = document.getElementById('music-label');
+      if (musicEnabled) {
+        label.innerText = 'MÚSICA: ON';
+        btn.classList.add('active');
+        if (isPlaying) startDrone();
+      } else {
+        label.innerText = 'MÚSICA: OFF';
+        btn.classList.remove('active');
+        stopDrone();
+      }
+    }
+
+    // Pre-cargar voces al cargar página
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.getVoices();
+      };
+    }
+  </script>
+</body>
+</html>

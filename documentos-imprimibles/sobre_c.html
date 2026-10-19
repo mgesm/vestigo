@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>DOSSIER JUDICIAL - SOBRE C: PIEZA DE CONVICCIÓN Y PRUEBAS FINALES</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700;800&family=Special+Elite&family=Libre+Barcode+39+Text&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 10mm 14mm 10mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #525659;
+      font-family: 'Courier Prime', monospace;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .no-print-bar {
+      background: #1e293b;
+      color: #fff;
+      width: 210mm;
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .print-btn {
+      background: #00e5ff;
+      color: #000;
+      border: none;
+      padding: 9px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .sheet {
+      background-color: #fcfbf7;
+      width: 210mm;
+      box-sizing: border-box;
+      padding: 14mm 16mm;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    @media print {
+      html, body {
+        background: transparent !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .no-print-bar {
+        display: none !important;
+      }
+      .sheet {
+        background-color: transparent !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+    }
+
+    .official-header {
+      border-bottom: 2px solid #000;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .official-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      line-height: 1.3;
+    }
+
+    .case-number {
+      font-family: 'Courier Prime', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1.5px solid #000;
+      padding: 4px 8px;
+      background: #f0eee6;
+      text-align: right;
+      line-height: 1.2;
+    }
+
+    .stamp-confidential {
+      position: absolute;
+      top: 35px;
+      right: 35px;
+      border: 2.5px solid #b91c1c;
+      color: #b91c1c;
+      font-family: 'Special Elite', cursive;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 4px 10px;
+      text-transform: uppercase;
+      transform: rotate(-10deg);
+      opacity: 0.85;
+      letter-spacing: 2px;
+      pointer-events: none;
+    }
+
+    h1.doc-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 8px 0 14px 0;
+      text-decoration: underline;
+    }
+
+    p.legal-text {
+      font-size: 10.5px;
+      line-height: 1.6;
+      text-align: justify;
+      margin-bottom: 10px;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 10px;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid #71717a;
+      padding: 5px 8px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background-color: #e4e4e7;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .signature-area {
+      margin-top: 14px;
+      padding-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      line-height: 1.3;
+    }
+
+    .signature-box {
+      width: 180px;
+      border-top: 1px dotted #000;
+      padding-top: 6px;
+      text-align: center;
+    }
+
+    .radar-frame {
+      border: 2px solid #1e293b;
+      background: #090d16;
+      color: #00e5ff;
+      padding: 12px;
+      font-family: 'Courier Prime', monospace;
+      margin: 10px 0;
+      position: relative;
+    }
+
+    .radar-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9.5px;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 5px;
+      margin-bottom: 8px;
+    }
+
+    .radar-visual {
+      background: #020617;
+      border: 1px dashed #38bdf8;
+      height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .radar-plate-box {
+      background: #fff;
+      color: #000;
+      border: 2px solid #000;
+      padding: 3px 12px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .radar-plate-box .eu-flag {
+      background: #1d4ed8;
+      color: #facc15;
+      font-size: 8px;
+      padding: 2px 4px;
+      border-radius: 2px;
+    }
+
+    .ticket-forensic-box {
+      background: #fff;
+      border: 1px solid #a1a1aa;
+      padding: 12px;
+      margin: 10px 0;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .ticket-sample {
+      border: 1px dashed #000;
+      padding: 8px;
+      font-size: 9px;
+      line-height: 1.35;
+      background: #fafafa;
+      width: 160px;
+      flex-shrink: 0;
+    }
+
+    .forensic-magnifier {
+      flex: 1;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 10px;
+      font-size: 10px;
+      line-height: 1.45;
+      color: #1e3a8a;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print-bar">
+    <div>
+      <strong>MATERIAL PARA EL JUGADOR: SOBRE C (PIEZA DE CONVICCIÓN FINAL)</strong>
+      <div style="font-size: 11px; color: #94a3b8;">
+        Este sobre debe permanecer PRECINTADO hasta que los jugadores introduzcan el código <code>JUSTICIA-C99-VALDELUNA</code> en la web.
+      </div>
+    </div>
+    <button class="print-btn" onclick="window.print()">🖨️ IMPRIMIR SOBRE C (PDF / PAPEL)</button>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 1: PERITAJE DOCUMENTAL DEL TICKET PARKING           -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">DOCUMENTOSCOPIA</div>
+      <div class="official-header">
+        <div class="official-title">
+          DIRECCIÓN GENERAL DE LA GUARDIA CIVIL<br>
+          SECCIÓN DE DOCUMENTOSCOPIA — UOPJ VALLADOLID<br>
+          <span style="font-size: 9px; font-weight: normal;">Laboratorio de Análisis de Tinta y Grafística</span>
+        </div>
+        <div class="case-number">
+          DICTAMEN GRAFOCRÍTICO: 2024-DOC-89<br>
+          PIEZA: EVIDENCIA APORTADA POR M. VARELA
+        </div>
+      </div>
+
+      <h1 class="doc-title">INFORME PERICIAL DE AUTENTICIDAD DOCUMENTAL</h1>
+
+      <p class="legal-text">
+        A solicitud del Instructor del Atestado 118/2024, se ha practicado examen analítico mediante microscopía óptica estereoscópica Leica MZ16 y radiación infrarroja/ultravioleta (Video Espectral Comparador VSC-6000) sobre el resguardo de estacionamiento aportado por D. Marcos Varela Ríos para acreditar su paradero:
+      </p>
+
+      <div class="ticket-forensic-box">
+        <div class="ticket-sample">
+          <strong>PARKING PLAZA MAYOR</strong><br>
+          APARC. SUBTERRÁNEO VALLADOLID<br>
+          NIF: A-47029102<br>
+          -----------------------------<br>
+          TICKET ABONADO OCASIONAL<br>
+          <span style="background: #bbf7d0; padding: 1px 4px; font-weight: bold;">FECHA: 04/10/2024</span><br>
+          HORA ENTRADA: <strong>21:02:14</strong><br>
+          CAJERO: P-02<br>
+          MATRÍCULA: 4188-KLT<br>
+          -----------------------------<br>
+          AUTENTICIDAD CONFIRMADA
+        </div>
+        <div class="forensic-magnifier">
+          <strong>RESULTADO DEL EXAMEN MACROSCÓPICO Y FOTOMÉTRICO:</strong><br><br>
+          1. El soporte es papel térmico termosensible original sin raspaduras ni abrasiones mecánicas.<br>
+          2. La fecha registrada en la memoria fiscal del cajero automático P-02 coincide con la impresión térmica:<br>
+          <strong style="color: #166534; font-size: 11px;">FECHA Y HORA CERTIFICADAS: VIERNES 04/10/2024 A LAS 21:02:14 H.</strong><br>
+          3. Las cámaras de control de acceso del parking confirman la entrada física del vehículo Volvo XC60 conducido por Marcos Varela.<br>
+          4. <strong>CONCLUSIÓN DE COARTADA:</strong> Estando acreditada la presencia del investigado en Valladolid a las 21:02 h, resulta físicamente imposible su participación material en el homicidio de Peñafiel (distante a 56 km) acaecido entre las 20:45 y 21:05 h.
+        </div>
+      </div>
+
+      <p class="legal-text">
+        <strong>RESOLUCIÓN FORENSE:</strong><br>
+        La coartada horaria de D. Marcos Varela Ríos en la ciudad de Valladolid queda plenamente confirmada por los sistemas periciales, procediendo su exoneración como autor material de la agresión física.
+      </p>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL FACULTATIVO DOCUMENTÓSCOPO<br>(TIP 41.809)</div>
+      <div class="signature-box">EL JEFE DE LABORATORIO<br>(TIP 12.002)</div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 2: REPORTE CINEMÓMETRO Y FOTOGRAMA DGT              -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">CONTROL TRÁFICO</div>
+      <div class="official-header">
+        <div class="official-title">
+          MINISTERIO DEL INTERIOR — DIRECCIÓN GENERAL DE TRÁFICO<br>
+          CENTRO DE TRATAMIENTO AUTOMATIZADO (ESTRADA)<br>
+          <span style="font-size: 9px; font-weight: normal;">Sector de Tráfico de la Guardia Civil de Castilla y León</span>
+        </div>
+        <div class="case-number">
+          REGISTRO LPR Nº: DGT-VA-2024-9104<br>
+          PÓRTICO: N-122 ACCESO PEÑAFIEL NORTE
+        </div>
+      </div>
+
+      <h1 class="doc-title">INFORME DE CAPTURA LPR Y TELECOMUNICACIONES</h1>
+
+      <div class="radar-frame">
+        <div class="radar-header">
+          <span>PÓRTICO DE CONTROL LPR (CRUCE CAMINO BODEGA)</span>
+          <span>GPS: 41.5912º N, -4.1205º W</span>
+          <span>CÁMARA: C-02 (SALIDA FINCA VALDELUNA)</span>
+        </div>
+
+        <div class="radar-visual">
+          <div style="font-size: 9px; color: #94a3b8;">DISPARO LPR NOCTURNO #99412 — SALIDA DE LA BODEGA</div>
+          <div class="radar-plate-box">
+            <span class="eu-flag">E</span>
+            <span>5512 LMN</span>
+          </div>
+          <div style="font-size: 10px; color: #38bdf8;">VEHÍCULO: AUDI A5 SPORTBACK (COLOR GRIS PLOMO)</div>
+        </div>
+
+        <div style="margin-top: 8px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; font-size: 10px;">
+          <div>FECHA: <strong>04/10/2024</strong></div>
+          <div>HORA CAPTURA: <strong style="color: #facc15;">21:28:44 h</strong></div>
+          <div>VELOCIDAD: <strong>92 km/h</strong></div>
+        </div>
+      </div>
+
+      <h2 style="font-size: 10.5px; font-family: 'Inter', sans-serif; text-transform: uppercase; margin-top: 10px; margin-bottom: 4px;">
+        ESTUDIO CRONOMÉTRICO DE POLICÍA JUDICIAL SOBRE ELENA FONTANALS
+      </h2>
+      <table class="data-table">
+        <tr>
+          <td style="width: 35%;"><strong>Declaración de la sospechosa:</strong></td>
+          <td>Afirmó que solo fue a la verja exterior a las 20:25 h y regresó a su hotel a las <strong>20:54 h</strong>.</td>
+        </tr>
+        <tr>
+          <td><strong>Registro LPR Real:</strong></td>
+          <td>El Audi A5 permaneció dentro de la finca y <strong>salió a gran velocidad a las 21:28:44 h</strong>.</td>
+        </tr>
+        <tr>
+          <td><strong>Auditoría de Teams / Conexión:</strong></td>
+          <td>
+            La videollamada de las 21:12 h se inició mediante <strong>conexión móvil 4G en movimiento</strong> en la celda de la bodega con cámara y micro apagados. La tarjeta de la habitación 204 del hotel no se abrió hasta las <strong>21:48 h</strong>.
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Conclusión Inapelable:</strong></td>
+          <td style="color: #b91c1c; font-weight: bold;">
+            Elena Fontanals mintió sobre su regreso al hotel. Estuvo dentro de la bodega en la ventana del crimen (20:45 - 21:05 h) y durante el traslado del cuerpo al sótano.
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL SUBINSPECTOR DE TRÁFICO</div>
+      <div class="signature-box">EL OFICIAL DE ATESTADOS</div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 3: AUDITORÍA FORENSE - FRAUDE VITIS CAPITAL        -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">UDEF / ECONÓMICOS</div>
+      <div class="official-header">
+        <div class="official-title">
+          DIRECCIÓN GENERAL DE LA GUARDIA CIVIL<br>
+          EQUIPO DE DELINCUENCIA ECONÓMICA Y BLANQUEO (UOPJ)<br>
+          <span style="font-size: 9px; font-weight: normal;">Informe Pericial Mercantil y Bancario</span>
+        </div>
+        <div class="case-number">
+          PIEZA ECONÓMICA: ECO-402/2024<br>
+          SOCIEDAD: VITIS CAPITAL PARTNERS
+        </div>
+      </div>
+
+      <h1 class="doc-title">AUDITORÍA FORENSE DE LA OPERACIÓN DE COMPRAVENTA</h1>
+
+      <p class="legal-text">
+        En cumplimiento del mandamiento de auxilio judicial dictado por el Juzgado de Instrucción nº 2, se procedió al volcado del ordenador de sobremesa y la bandeja de correspondencia de D. Gonzalo de la Serna:
+      </p>
+
+      <p class="legal-text"><strong>1. EL DESCUBRIMIENTO DE LA ESTAFA FINANCIERA:</strong></p>
+      <p class="legal-text">
+        El viernes 04/10/2024 a las <strong>18:40 horas</strong>, D. Gonzalo de la Serna recibió una llamada urgente y posterior correo de D. Fernando Barral, Director de Banca de Empresas de Banco Santander:
+      </p>
+
+      <div style="background: #fff; border: 1px solid #71717a; padding: 10px; font-size: 10px; line-height: 1.45; margin: 8px 0;">
+        <em>"Gonzalo:<br>
+        Nuestro departamento de riesgos acaba de rechazar el aval bancario de <strong>2.400.000 euros</strong> presentado por <strong>Elena Fontanals</strong> en nombre de Vitis Capital Partners. La entidad garante suiza 'Banque Léman' nos confirma formalmente que la carta de crédito es completamente falsa y apócrifa.<br>
+        Vitis Capital está en concurso culpable encubierto. Elena Fontanals pretendía tomar el control de tus viñedos para hipotecarlos de inmediato y fugarse con el capital antes de que estallara la quiebra. No firmes nada. El lunes debemos denunciarla a la Fiscalía de la Audiencia Nacional."</em>
+      </div>
+
+      <p class="legal-text"><strong>2. LA CONFRONTACIÓN EN LA BODEGA:</strong></p>
+      <p class="legal-text">
+        A las 20:15 h, Gonzalo envió un mensaje a Elena: <em>«Sé lo del aval falso de Suiza. Ven ahora mismo a la bodega o llamo al cuartel de la Guardia Civil»</em>. Elena acudió a la cita en el laboratorio a las 20:30 h, enfrentándose a una querella criminal por estafa agravada y falsedad documental que conllevaba penas de hasta 8 años de prisión.
+      </p>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL PERITO CONTABLE JUDICIAL</div>
+      <div class="signature-box">EL INSTRUCTOR JEFE DE EQUIPO</div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 4: INFORME QUÍMICO DEFINITIVO (SECRIM)              -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">PRUEBA DE CONVICCIÓN</div>
+      <div class="official-header">
+        <div class="official-title">
+          INSTITUTO NACIONAL DE TOXICOLOGÍA Y CIENCIAS FORENSES<br>
+          DEPARTAMENTO DE QUÍMICA Y MEDIO AMBIENTE — MADRID<br>
+          <span style="font-size: 9px; font-weight: normal;">En coordinación con SECRIM Guardia Civil</span>
+        </div>
+        <div class="case-number">
+          DICTAMEN TOXICOLÓGICO Nº: 2024-Q-991<br>
+          ASUNTO: COTEJO ESPECTROMÉTRICO
+        </div>
+      </div>
+
+      <h1 class="doc-title">DICTAMEN PERICIAL SOBRE TRANSFERENCIA QUÍMICA</h1>
+
+      <p class="legal-text">
+        Inspeccionados los vehículos e incautados los efectos personales en las diligencias de registro, se procedió a la toma de frotis mediante hisopados estériles y espectrometría infrarroja por transformada de Fourier (FTIR):
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Muestra Objeto de Análisis</th>
+            <th>Elemento Inspeccionado</th>
+            <th>Espectrometría FTIR / ICP-MS</th>
+            <th>Resultado / Veredicto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Muestra M-14 (Testigo)</td>
+            <td>Charco desecado suelo laboratorio</td>
+            <td>CuSO4·5H2O (Sulfato de cobre 10%) + Ácido tartárico estabilizante</td>
+            <td><strong>PATRÓN DE REFERENCIA ESCENARIO PRIMARIO</strong></td>
+          </tr>
+          <tr>
+            <td>H-01 (Nissan Navara)</td>
+            <td>Pedales furgoneta Javier Beltrán</td>
+            <td>Tierra arcillosa y polvo orgánico</td>
+            <td><strong>NEGATIVO</strong> en reactivo CuSO4</td>
+          </tr>
+          <tr>
+            <td>H-03 (Volvo XC60)</td>
+            <td>Pedales vehículo Marcos Varela</td>
+            <td>Asfalto y residuos salinos</td>
+            <td><strong>NEGATIVO</strong> en reactivo CuSO4</td>
+          </tr>
+          <tr>
+            <td style="color: #b91c1c; font-weight: bold;">H-02 (Audi A5)</td>
+            <td style="color: #b91c1c; font-weight: bold;">Alfombrilla conductor Audi A5 y tacón calzado Elena Fontanals</td>
+            <td style="color: #b91c1c; font-weight: bold;">CuSO4·5H2O (Sulfato de cobre 10%) con formulación enológica idéntica</td>
+            <td style="color: #b91c1c; font-weight: bold;"><strong>POSITIVO INEQUÍVOCO (COINCIDENCIA 100%)</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="legal-text">
+        <strong>CONCLUSIÓN CONCLUSIVA Y DEFINITIVA:</strong><br>
+        El compuesto químico hallado adherido a la alfombrilla del vehículo Audi A5 matrícula `5512-LMN` y a la suela de los zapatos de piel marca <em>Lottusse</em> intervenidos a <strong>DÑA. ELENA FONTANALS PUIG</strong> es química y molecularmente idéntico al reactivo del frasco roto en el suelo del Laboratorio Enológico durante la agresión mortal a D. Gonzalo de la Serna.<br><br>
+        Dicho compuesto químico no existe en carreteras ni hoteles. Este hallazgo constituye la <strong>prueba material directa e irrefutable</strong> de que Elena Fontanals estuvo presente sobre el charco del escenario primario tras producirse el vertido, transportándolo en su calzado hasta su automóvil.
+      </p>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL FACULTATIVO QUÍMICO TITULAR</div>
+      <div class="signature-box">EL DIRECTOR DEL DEPARTAMENTO</div>
+    </div>
+  </div>
+
+</body>
+</html>

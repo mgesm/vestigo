@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>VESTIGO — Forensic Crime Engine</title>
+  
+  <!-- METADATOS PWA & MÓVIL -->
+  <meta name="theme-color" content="#070b12">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="VESTIGO">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="imagenes/vestigo_icon_2d.png">
+  <link rel="apple-touch-icon" href="imagenes/vestigo_icon_2d.png">
+
+  <!-- FUENTES DE TIPOGRAFÍA -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-base: #070b12;
+      --bg-surface: #0f172a;
+      --bg-card: #131c31;
+      --border-subtle: #1e293b;
+      --border-accent: #334155;
+      --cyan-neon: #00e5ff;
+      --cyan-glow: rgba(0, 229, 255, 0.4);
+      --uv-flare: #38bdf8;
+      --evidence-red: #ff2d55;
+      --judicial-green: #22c55e;
+      --amber-alert: #f59e0b;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Courier Prime', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      padding-bottom: 70px; /* Espacio para barra de navegación móvil */
+    }
+
+    @media (min-width: 800px) {
+      body {
+        padding-bottom: 0;
+      }
+    }
+
+    /* TOP BAR NAVEGACIÓN GLOBAL */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 11, 18, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .brand-logo-img {
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
+      box-shadow: 0 0 14px var(--cyan-glow);
+      border: 1px solid rgba(0, 229, 255, 0.5);
+      transition: transform 0.2s;
+    }
+
+    .brand-group:hover .brand-logo-img {
+      transform: scale(1.05);
+    }
+
+    .brand-text-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 2.5px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .brand-title span {
+      color: var(--cyan-neon);
+      text-shadow: 0 0 10px var(--cyan-glow);
+    }
+
+    .brand-subtitle {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .status-pill {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--judicial-green);
+    }
+
+    @media (min-width: 640px) {
+      .status-pill {
+        display: inline-flex;
+      }
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--judicial-green);
+      box-shadow: 0 0 8px var(--judicial-green);
+      animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .icon-link-btn {
+      color: var(--text-secondary);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 8px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .icon-link-btn:hover {
+      color: var(--cyan-neon);
+      border-color: var(--cyan-neon);
+      background: rgba(0, 229, 255, 0.08);
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    @media (min-width: 800px) {
+      main {
+        padding: 30px 40px;
+      }
+    }
+
+    /* VISTAS */
+    .view-section {
+      display: none;
+      animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* VISTA 1: CATÁLOGO DE CASOS */
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(7, 11, 18, 0.95)),
+                  radial-gradient(circle at top right, rgba(0, 229, 255, 0.12), transparent 60%);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 30px 24px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 800px) {
+      .hero-banner {
+        padding: 44px 40px;
+      }
+    }
+
+    .hero-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--cyan-neon);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+
+    @media (min-width: 800px) {
+      .hero-title {
+        font-size: 34px;
+      }
+    }
+
+    .hero-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 720px;
+      margin-bottom: 20px;
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .catalog-grid {
+        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      }
+    }
+
+    /* TARJETA DE CASO */
+    .case-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .case-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--cyan-neon);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 24px rgba(0, 229, 255, 0.15);
+    }
+
+    .case-cover-wrap {
+      width: 100%;
+      height: 200px;
+      background: #020617;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .case-cover-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.75;
+      transition: transform 0.4s, opacity 0.4s;
+    }
+
+    .case-card:hover .case-cover-img {
+      transform: scale(1.04);
+      opacity: 0.9;
+    }
+
+    .case-badge-overlay {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .case-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .badge-active { background: #0284c7; color: #fff; }
+    .badge-locked { background: #334155; color: #94a3b8; }
+    .badge-evidence { background: var(--evidence-red); color: #fff; }
+
+    .case-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .case-number {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--cyan-neon);
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+
+    .case-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .case-summary {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 20px;
+    }
+
+    .case-specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 0;
+      margin-bottom: 20px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .spec-label { color: var(--text-muted); font-size: 9px; }
+    .spec-val { color: #fff; font-weight: 700; }
+
+    .btn-enter-case {
+      width: 100%;
+      background: var(--cyan-neon);
+      color: #000;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 13px;
+      font-family: var(--font-mono);
+      letter-spacing: 1px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-enter-case:hover {
+      background: #38bdf8;
+      box-shadow: 0 0 20px var(--cyan-glow);
+    }
+
+    .btn-locked {
+      background: #1e293b;
+      color: #64748b;
+      cursor: not-allowed;
+    }
+
+    .btn-locked:hover {
+      background: #1e293b;
+      box-shadow: none;
+    }
+
+    /* VISTA 2: ESPACIO DE TRABAJO DEL CASO */
+    .case-header-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .back-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      color: #fff;
+      border-color: var(--border-accent);
+      background: #1e293b;
+    }
+
+    .case-meta-header {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .case-meta-left h2 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .case-meta-left p {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* PESTAÑAS DEL CASO (DESKTOP & TABLET) */
+    .case-tabs-bar {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 24px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+
+    .case-tabs-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-secondary);
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .tab-btn.active {
+      color: var(--cyan-neon);
+      background: rgba(0, 229, 255, 0.08);
+      border-color: rgba(0, 229, 255, 0.3);
+    }
+
+    /* CONTENEDOR DE PESTAÑAS */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    /* IFRAMES RESPONSIVOS (BRIEFING & TERMINAL) */
+    .embed-viewport {
+      width: 100%;
+      height: 78vh;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      overflow: hidden;
+      background: #000;
+      position: relative;
+    }
+
+    .embed-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .embed-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    /* GRID DE DOSSIERS IMPRIMIBLES */
+    .dossier-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    @media (min-width: 640px) {
+      .dossier-grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      }
+    }
+
+    .dossier-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color 0.2s;
+    }
+
+    .dossier-card:hover {
+      border-color: var(--cyan-neon);
+    }
+
+    .dossier-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      width: fit-content;
+      margin-bottom: 10px;
+    }
+
+    .dossier-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .dossier-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    .dossier-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-pdf {
+      flex: 1;
+      text-align: center;
+      background: #0284c7;
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 11px;
+      transition: background 0.2s;
+    }
+
+    .btn-pdf:hover { background: #0369a1; }
+
+    .btn-html {
+      background: #1e293b;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      transition: all 0.2s;
+    }
+
+    .btn-html:hover {
+      background: #334155;
+      color: #fff;
+    }
+
+    /* GRID DE SOSPECHOSOS Y FOTOTECA */
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+
+    .profile-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--cyan-neon);
+    }
+
+    .profile-thumb-wrap {
+      width: 100%;
+      height: 240px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .profile-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .profile-card:hover .profile-thumb {
+      transform: scale(1.04);
+    }
+
+    .profile-info {
+      padding: 14px;
+    }
+
+    .profile-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .profile-role {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--cyan-neon);
+    }
+
+    /* BLOC DE NOTAS / SCRATCHPAD */
+    .notepad-wrap {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .notepad-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .notepad-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .notepad-textarea {
+      width: 100%;
+      height: 480px;
+      background: #080d16;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      color: #e2e8f0;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      padding: 16px;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .notepad-textarea:focus {
+      border-color: var(--cyan-neon);
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+    }
+
+    /* BOTTOM NAV MÓVIL (iOS SAFE AREA READY) */
+    .mobile-bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      background: rgba(11, 16, 26, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 1000;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    @media (min-width: 800px) {
+      .mobile-bottom-nav {
+        display: none;
+      }
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .nav-item.active {
+      color: var(--cyan-neon);
+    }
+
+    .nav-icon {
+      font-size: 18px;
+    }
+
+    /* MODAL DE INSPECCIÓN DE IMÁGENES / PERFILES */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-accent);
+      border-radius: 16px;
+      max-width: 600px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      animation: modalPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes modalPop {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 24px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .modal-close:hover { color: #fff; }
+
+    .modal-body {
+      padding: 20px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CABECERA SUPERIOR (TOPBAR) -->
+  <header class="topbar">
+    <div class="brand-group" onclick="switchView('catalog')">
+      <img src="imagenes/vestigo_icon_2d.png" alt="VESTIGO" class="brand-logo-img">
+      <div class="brand-text-wrap">
+        <div class="brand-title">VESTIG<span>O</span></div>
+        <div class="brand-subtitle">FORENSIC CASE ENGINE</div>
+      </div>
+    </div>
+
+    <div class="topbar-actions">
+      <div class="status-pill">
+        <span class="status-dot"></span> SISTEMA ACTIVO
+      </div>
+      <a href="branding/index.html" class="icon-link-btn" title="Identidad de Marca">
+        💎 BRAND
+      </a>
+      <a href="https://github.com/mgesm/vestigo" target="_blank" class="icon-link-btn" title="Repositorio en GitHub">
+        🐙 GITHUB
+      </a>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main>
+
+    <!-- ======================================================== -->
+    <!-- VISTA 1: CATÁLOGO DE CASOS (HOME / CASE DASHBOARD)       -->
+    <!-- ======================================================== -->
+    <section id="view-catalog" class="view-section active">
+      
+      <!-- HERO BANNER -->
+      <div class="hero-banner">
+        <div class="hero-tag">PLATAFORMA DE INVESTIGACIÓN POLICIAL HÍBRIDA</div>
+        <h1 class="hero-title">Expedientes de Instrucción Criminalística</h1>
+        <p class="hero-desc">
+          Resuelve crímenes verosímiles mediante el cruce de atestados físicos periciales, autopsias tanatológicas, lectores de tráfico DGT, circuitos de televisión y deducción científica implacable.
+        </p>
+      </div>
+
+      <!-- REJILLA DE CASOS -->
+      <div class="catalog-grid">
+        
+        <!-- CASO 01: EL ÚLTIMO MOSTO (ACTIVO) -->
+        <div class="case-card">
+          <div class="case-cover-wrap">
+            <img src="imagenes/escena_tina4_bodega.png" alt="Caso 01" class="case-cover-img">
+            <div class="case-badge-overlay">
+              <span class="case-badge badge-active">CASO 01 · ACTIVO</span>
+              <span class="case-badge" style="background:#ca8a04; color:#000;">DIFICULTAD MEDIA</span>
+            </div>
+          </div>
+          <div class="case-body">
+            <div>
+              <div class="case-number">DILIGENCIAS PREVIAS Nº 402/2024</div>
+              <h2 class="case-title">El Último Mosto de Bodegas Valdeluna</h2>
+              <p class="case-summary">
+                Peñafiel, noche gélida de vendimia. El cuerpo del prestigioso bodeguero Gonzalo de la Serna yace a los pies de la Tina 4. Una aparente asfixia por gas carbónico desmentida por livideces dorsales y un reactivo químico azul revelador.
+              </p>
+            </div>
+
+            <div>
+              <div class="case-specs">
+                <div class="spec-item">
+                  <span class="spec-label">JUGADORES</span>
+                  <span class="spec-val">1 - 2</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">DURACIÓN</span>
+                  <span class="spec-val">2 - 3 H</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">MATERIAL</span>
+                  <span class="spec-val">6 PDFs / WEB</span>
+                </div>
+              </div>
+
+              <button class="btn-enter-case" onclick="openCase('valdeluna')">
+                ABRIR EXPEDIENTE Y JUGAR ▶
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CASO 02: PRÓXIMAMENTE -->
+        <div class="case-card" style="opacity: 0.75;">
+          <div class="case-cover-wrap">
+            <div style="width:100%; height:100%; background: linear-gradient(135deg, #091e3a, #030a14); display:flex; align-items:center; justify-content:center;">
+              <span style="font-size: 40px; opacity: 0.3;">⚓</span>
+            </div>
+            <div class="case-badge-overlay">
+              <span class="case-badge badge-locked">CASO 02 · EN DESARROLLO</span>
+            </div>
+          </div>
+          <div class="case-body">
+            <div>
+              <div class="case-number">SUMARIO Nº 118/2025</div>
+              <h2 class="case-title">Marea Negra en Ría de Arousa</h2>
+              <p class="case-summary">
+                Un pesquero a la deriva con el patrón desaparecido y las coordenadas del GPS manipuladas. Toxicología marina, peritajes náuticos y contrabando en la costa gallega.
+              </p>
+            </div>
+
+            <div>
+              <div class="case-specs">
+                <div class="spec-item">
+                  <span class="spec-label">JUGADORES</span>
+                  <span class="spec-val">1 - 4</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">DURACIÓN</span>
+                  <span class="spec-val">3 - 4 H</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">ESTADO</span>
+                  <span class="spec-val">PRÓXIMAMENTE</span>
+                </div>
+              </div>
+
+              <button class="btn-enter-case btn-locked" disabled>
+                🔒 CASO EN INSTRUCCIÓN
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CASO 03: PRÓXIMAMENTE -->
+        <div class="case-card" style="opacity: 0.6;">
+          <div class="case-cover-wrap">
+            <div style="width:100%; height:100%; background: linear-gradient(135deg, #2b112c, #070308); display:flex; align-items:center; justify-content:center;">
+              <span style="font-size: 40px; opacity: 0.3;">🏛️</span>
+            </div>
+            <div class="case-badge-overlay">
+              <span class="case-badge badge-locked">CASO 03 · PLANIFICADO</span>
+            </div>
+          </div>
+          <div class="case-body">
+            <div>
+              <div class="case-number">D.I.P. Nº 590/2025</div>
+              <h2 class="case-title">La Cripta de San Jerónimo</h2>
+              <p class="case-summary">
+                Muerte súbita en el archivo diocesano. Manuscritos iluminados adulterados, venenos históricos y disputas de mecenazgo en Toledo.
+              </p>
+            </div>
+
+            <div>
+              <div class="case-specs">
+                <div class="spec-item">
+                  <span class="spec-label">JUGADORES</span>
+                  <span class="spec-val">2 - 3</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">DURACIÓN</span>
+                  <span class="spec-val">2.5 H</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">ESTADO</span>
+                  <span class="spec-val">PLANIFICADO</span>
+                </div>
+              </div>
+
+              <button class="btn-enter-case btn-locked" disabled>
+                🔒 CASO EN INSTRUCCIÓN
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- VISTA 2: ESPACIO DE TRABAJO DEL CASO VALDELUNA           -->
+    <!-- ======================================================== -->
+    <section id="view-case" class="view-section">
+      
+      <!-- CABECERA SUPERIOR DEL CASO -->
+      <div class="case-header-nav">
+        <button class="back-btn" onclick="switchView('catalog')">
+          ← VOLVER AL CATÁLOGO
+        </button>
+        <div style="display:flex; gap:10px;">
+          <a href="documentos-imprimibles/index.html" target="_blank" class="back-btn">
+            📥 HUB DE DESCARGAS
+          </a>
+        </div>
+      </div>
+
+      <!-- TARJETA META DEL CASO -->
+      <div class="case-meta-header">
+        <div class="case-meta-left">
+          <h2>El Último Mosto de Bodegas Valdeluna</h2>
+          <p>DILIGENCIAS PREVIAS 402/2024 · JUZGADO DE INSTRUCCIÓN Nº 2 DE VALLADOLID</p>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <span class="case-badge" style="background:var(--evidence-red); color:#fff;">HOMICIDIO</span>
+          <span class="case-badge" style="background:#0284c7; color:#fff;">FORMATO HÍBRIDO</span>
+        </div>
+      </div>
+
+      <!-- BARRA DE PESTAÑAS (TABLET / DESKTOP) -->
+      <nav class="case-tabs-bar">
+        <button class="tab-btn active" onclick="switchCaseTab('briefing')">
+          🎬 VÍDEO BRIEFING
+        </button>
+        <button class="tab-btn" onclick="switchCaseTab('dossiers')">
+          📄 DOSSIERS &amp; PDFS (31 PÁGS)
+        </button>
+        <button class="tab-btn" onclick="switchCaseTab('terminal')">
+          💻 TERMINAL SITRA-JUD
+        </button>
+        <button class="tab-btn" onclick="switchCaseTab('evidencias')">
+          👥 SOSPECHOSOS &amp; ESCENA
+        </button>
+        <button class="tab-btn" onclick="switchCaseTab('notas')">
+          📓 BLOC DE NOTAS
+        </button>
+      </nav>
+
+      <!-- PESTAÑA 1: VÍDEO BRIEFING CINEMATOGRÁFICO NARRADO -->
+      <div id="tab-briefing" class="tab-content active">
+        <div class="embed-toolbar">
+          <span style="font-size:12px; color:var(--text-muted); font-family:var(--font-mono);">
+            SESIÓN CLASIFICADA // 6 ACTOS NARRADOS EN CASTELLANO // CERO SPOILERS
+          </span>
+          <a href="video-briefing/index.html" target="_blank" class="back-btn">
+            PANTALLA COMPLETA ↗
+          </a>
+        </div>
+        <div class="embed-viewport">
+          <iframe src="video-briefing/index.html" class="embed-iframe" title="Vídeo Briefing Judicial"></iframe>
+        </div>
+      </div>
+
+      <!-- PESTAÑA 2: DOSSIERS FÍSICOS E IMPRIMIBLES (PDFS) -->
+      <div id="tab-dossiers" class="tab-content">
+        <div style="margin-bottom: 20px;">
+          <h3 style="font-size:18px; margin-bottom:6px;">Expedientes y Diligencias Imprimibles (Formato A4)</h3>
+          <p style="font-size:13px; color:var(--text-secondary);">
+            Puedes descargar e imprimir los documentos organizados en sobres, o consultarlos en pantalla desde los visores HTML oficiales:
+          </p>
+        </div>
+
+        <div class="dossier-grid">
+          
+          <!-- MANUAL DE INSTRUCCIONES -->
+          <div class="dossier-card" style="border-color:#facc15; background: #172033; grid-column: 1 / -1;">
+            <div>
+              <span class="dossier-badge" style="background:#facc15; color:#000;">LEER PRIMERO — GUÍA DE OPERACIONES</span>
+              <div class="dossier-title" style="color:#fde047;">Manual del Investigador y Reglas de Juego (4 páginas)</div>
+              <div class="dossier-desc">
+                Protocolo de montaje de la mesa de investigación, preparación de sobres físicos, uso del sistema híbrido con la terminal digital y el decálogo forense.
+              </div>
+            </div>
+            <div class="dossier-btns">
+              <a href="documentos-imprimibles/INSTRUCCIONES_DE_JUEGO.pdf" target="_blank" class="btn-pdf" style="background:#facc15; color:#000;">DESCARGAR PDF 📥</a>
+              <a href="documentos-imprimibles/instrucciones_juego.html" target="_blank" class="btn-html">VER HTML ➔</a>
+            </div>
+          </div>
+
+          <!-- SOBRE A -->
+          <div class="dossier-card">
+            <div>
+              <span class="dossier-badge" style="background:#0284c7; color:#fff;">SOBRE A — ABIERTO DE INICIO</span>
+              <div class="dossier-title">Pieza Principal: Hallazgo y Autopsia</div>
+              <div class="dossier-desc">
+                Providencia judicial, atestado de la Guardia Civil de Peñafiel, autopsia preliminar completa en 2 hojas (tanatología y digestión), plano SVG de la bodega y extractores.
+              </div>
+            </div>
+            <div class="dossier-btns">
+              <a href="documentos-imprimibles/SOBRE_A_PIEZA_PRINCIPAL.pdf" target="_blank" class="btn-pdf">DESCARGAR PDF 📥</a>
+              <a href="documentos-imprimibles/sobre_a.html" target="_blank" class="btn-html">VER HTML ➔</a>
+            </div>
+          </div>
+
+          <!-- SOBRE B -->
+          <div class="dossier-card">
+            <div>
+              <span class="dossier-badge" style="background:#ca8a04; color:#000;">SOBRE B — PRECINTADO</span>
+              <div class="dossier-title">Pieza I: Escenario y Testigos</div>
+              <div class="dossier-desc">
+                Acta de luminol en el laboratorio, 4 interrogatorios policiales completos, chats de WhatsApp incautados, triangulación de antenas BTS y acta de efectos sustraídos.
+              </div>
+            </div>
+            <div class="dossier-btns">
+              <a href="documentos-imprimibles/SOBRE_B_PIEZA_SEPARADA_1.pdf" target="_blank" class="btn-pdf">DESCARGAR PDF 📥</a>
+              <a href="documentos-imprimibles/sobre_b.html" target="_blank" class="btn-html">VER HTML ➔</a>
+            </div>
+          </div>
+
+          <!-- SOBRE C -->
+          <div class="dossier-card">
+            <div>
+              <span class="dossier-badge" style="background:#dc2626; color:#fff;">SOBRE C — PRECINTADO</span>
+              <div class="dossier-title">Pieza II: Convicción Final</div>
+              <div class="dossier-desc">
+                Dictamen pericial de documentoscopia del ticket aportado, reporte LPR cinemométrico DGT, auditoría de Delitos Económicos (UDEF) y dictamen químico SECRIM.
+              </div>
+            </div>
+            <div class="dossier-btns">
+              <a href="documentos-imprimibles/SOBRE_C_PIEZA_CONVICCION.pdf" target="_blank" class="btn-pdf">DESCARGAR PDF 📥</a>
+              <a href="documentos-imprimibles/sobre_c.html" target="_blank" class="btn-html">VER HTML ➔</a>
+            </div>
+          </div>
+
+          <!-- EXTRAS DE INMERSIÓN -->
+          <div class="dossier-card">
+            <div>
+              <span class="dossier-badge" style="background:#8b5cf6; color:#fff;">EXTRAS DISPONIBLES DESDE EL INICIO</span>
+              <div class="dossier-title">Fichas de Filiación y Prensa Local</div>
+              <div class="dossier-desc">
+                Retratos fotográficos y huellas de los 5 personajes, carátula de *El Norte de Castilla*, cuaderno de campo del agente instructor y etiquetas de custodia.
+              </div>
+            </div>
+            <div class="dossier-btns">
+              <a href="documentos-imprimibles/EXTRAS_INMERSION.pdf" target="_blank" class="btn-pdf">DESCARGAR PDF 📥</a>
+              <a href="documentos-imprimibles/extras_inmersion.html" target="_blank" class="btn-html">VER HTML ➔</a>
+            </div>
+          </div>
+
+          <!-- DOSSIER NOTARIAL Y FORENSE -->
+          <div class="dossier-card">
+            <div>
+              <span class="dossier-badge" style="background:#06b6d4; color:#000;">PIEZA ANEXA DE COLECCIONISTA</span>
+              <div class="dossier-title">Dossier Notarial, Bancario y Fotos</div>
+              <div class="dossier-desc">
+                Copia del testamento con timbres FNMT, extracto oficial de CaixaBank, libro de vendimia D.O. Ribera, auditoría RFID del hotel y fotos con regla ABFO.
+              </div>
+            </div>
+            <div class="dossier-btns">
+              <a href="documentos-imprimibles/DOSSIER_NOTARIAL_Y_FORENSE.pdf" target="_blank" class="btn-pdf">DESCARGAR PDF 📥</a>
+              <a href="documentos-imprimibles/dossier_notarial_y_forense.html" target="_blank" class="btn-html">VER HTML ➔</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PESTAÑA 3: TERMINAL POLICIAL DIGITAL (SITRA-JUD) -->
+      <div id="tab-terminal" class="tab-content">
+        <div class="embed-toolbar">
+          <span style="font-size:12px; color:var(--text-muted); font-family:var(--font-mono);">
+            RADAR DGT LPR // MAPA SIG TÁCTICO // CCTV PERIMETRAL // AUDIO 112 // AUTOS JUDICIALES
+          </span>
+          <a href="terminal-policial/index.html" target="_blank" class="back-btn">
+            ABRIR TERMINAL DEDICADA ↗
+          </a>
+        </div>
+        <div class="embed-viewport">
+          <iframe src="terminal-policial/index.html" class="embed-iframe" title="Terminal Policial SITRA-JUD"></iframe>
+        </div>
+      </div>
+
+      <!-- PESTAÑA 4: SOSPECHOSOS Y FOTOTECA FORENSE -->
+      <div id="tab-evidencias" class="tab-content">
+        <div style="margin-bottom: 20px;">
+          <h3 style="font-size:18px; margin-bottom:6px;">Filiación de Investigados y Fototeca de la Escena</h3>
+          <p style="font-size:13px; color:var(--text-secondary);">
+            Haz clic en cualquier ficha o fotografía pericial para ampliarla en alta definición:
+          </p>
+        </div>
+
+        <!-- SOSPECHOSOS -->
+        <h4 style="font-size:14px; color:var(--cyan-neon); font-family:var(--font-mono); margin-bottom:14px; letter-spacing:1px;">
+          PERSONAS VINCULADAS A LAS DILIGENCIAS
+        </h4>
+        <div class="profiles-grid">
+          
+          <div class="profile-card" onclick="openPhotoModal('imagenes/gonzalo_de_la_serna.png', 'Gonzalo de la Serna y Mendieta', 'Víctima (58 años) · Enólogo y Propietario de Bodegas Valdeluna')">
+            <div class="profile-thumb-wrap">
+              <img src="imagenes/gonzalo_de_la_serna.png" alt="Gonzalo de la Serna" class="profile-thumb">
+            </div>
+            <div class="profile-info">
+              <div class="profile-name">Gonzalo de la Serna</div>
+              <div class="profile-role">VÍCTIMA · PROPIETARIO</div>
+            </div>
+          </div>
+
+          <div class="profile-card" onclick="openPhotoModal('imagenes/marcos_varela.png', 'Marcos Varela Ríos', 'Investigado (44 años) · CFO y Primo de la víctima · Volvo XC60 4188-KLT')">
+            <div class="profile-thumb-wrap">
+              <img src="imagenes/marcos_varela.png" alt="Marcos Varela" class="profile-thumb">
+            </div>
+            <div class="profile-info">
+              <div class="profile-name">Marcos Varela Ríos</div>
+              <div class="profile-role">INVESTIGADO · CFO</div>
+            </div>
+          </div>
+
+          <div class="profile-card" onclick="openPhotoModal('imagenes/lucia_de_la_serna.png', 'Lucía de la Serna Montes', 'Investigada (29 años) · Enóloga Adjunta e Hija única · VW Golf 9012-GTV')">
+            <div class="profile-thumb-wrap">
+              <img src="imagenes/lucia_de_la_serna.png" alt="Lucía de la Serna" class="profile-thumb">
+            </div>
+            <div class="profile-info">
+              <div class="profile-name">Lucía de la Serna</div>
+              <div class="profile-role">INVESTIGADA · ENÓLOGA</div>
+            </div>
+          </div>
+
+          <div class="profile-card" onclick="openPhotoModal('imagenes/javier_beltran.png', 'Javier Beltrán Gómez', 'Investigado (53 años) · Capataz histórico · Nissan Navara 8209-FDC')">
+            <div class="profile-thumb-wrap">
+              <img src="imagenes/javier_beltran.png" alt="Javier Beltrán" class="profile-thumb">
+            </div>
+            <div class="profile-info">
+              <div class="profile-name">Javier Beltrán Gómez</div>
+              <div class="profile-role">INVESTIGADO · CAPATAZ</div>
+            </div>
+          </div>
+
+          <div class="profile-card" onclick="openPhotoModal('imagenes/elena_fontanals.png', 'Elena Fontanals Puig', 'Investigada (47 años) · Socia de Vitis Capital · Audi A5 5512-LMN')">
+            <div class="profile-thumb-wrap">
+              <img src="imagenes/elena_fontanals.png" alt="Elena Fontanals" class="profile-thumb">
+            </div>
+            <div class="profile-info">
+              <div class="profile-name">Elena Fontanals Puig</div>
+              <div class="profile-role">INVESTIGADA · VITIS CAPITAL</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- FOTOGRAFÍAS DE LA ESCENA -->
+        <h4 style="font-size:14px; color:var(--cyan-neon); font-family:var(--font-mono); margin: 30px 0 14px 0; letter-spacing:1px;">
+          FOTOTECA PERICIAL JUDICIAL (TESTIGOS MÉTRICOS ABFO)
+        </h4>
+        <div class="profiles-grid">
+          
+          <div class="profile-card" onclick="openPhotoModal('imagenes/escena_tina4_bodega.png', 'Inspección Ocular Tina 4', 'Nave subterránea 2 de fermentación. Silueta del cadáver y testigo métrico #1.')">
+            <div class="profile-thumb-wrap">
+              <img src="imagenes/escena_tina4_bodega.png" alt="Tina 4" class="profile-thumb">
+            </div>
+            <div class="profile-info">
+              <div class="profile-name">Nave 2 de Cubas (Tina 4)</div>
+              <div class="profile-role">ESCENA DE HALLAZGO</div>
+            </div>
+          </div>
+
+          <div class="profile-card" onclick="openPhotoModal('imagenes/escena_laboratorio_reactivo.png', 'Laboratorio Enológico', 'Pila de reactivo sulfato de cobre derramado y manómetro en la 1ª planta.')">
+            <div class="profile-thumb-wrap">
+              <img src="imagenes/escena_laboratorio_reactivo.png" alt="Laboratorio" class="profile-thumb">
+            </div>
+            <div class="profile-info">
+              <div class="profile-name">Laboratorio Enológico</div>
+              <div class="profile-role">ESCENA PRIMARIA (LUMINOL)</div>
+            </div>
+          </div>
+
+          <div class="profile-card" onclick="openPhotoModal('imagenes/evidencia_calzado_alfombrilla.png', 'Vestigio Químico en Vehículo', 'Macro pericial de calzado y alfombrilla con tinción azul de reactivo.')">
+            <div class="profile-thumb-wrap">
+              <img src="imagenes/evidencia_calzado_alfombrilla.png" alt="Evidencia calzado" class="profile-thumb">
+            </div>
+            <div class="profile-info">
+              <div class="profile-name">Alfombrilla y Tacón</div>
+              <div class="profile-role">TRANSFERENCIA DE LOCARD</div>
+            </div>
+          </div>
+
+          <div class="profile-card" onclick="openPhotoModal('imagenes/mirador_castillo_penafiel.png', 'Mirador del Castillo de Peñafiel', 'Ubicación nocturna captada por cámaras de tráfico y antenas BTS.')">
+            <div class="profile-thumb-wrap">
+              <img src="imagenes/mirador_castillo_penafiel.png" alt="Castillo de Peñafiel" class="profile-thumb">
+            </div>
+            <div class="profile-info">
+              <div class="profile-name">Mirador de Peñafiel</div>
+              <div class="profile-role">COARTADA Y ANTENAS BTS</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PESTAÑA 5: BLOC DE NOTAS CON AUTOGUARDADO -->
+      <div id="tab-notas" class="tab-content">
+        <div class="notepad-wrap">
+          <div class="notepad-header">
+            <div>
+              <div class="notepad-title">📓 Cuaderno de Campo del Investigador</div>
+              <p style="font-size:12px; color:var(--text-muted); font-family:var(--font-mono);">
+                Las notas se guardan automáticamente en tu dispositivo (localStorage).
+              </p>
+            </div>
+            <button class="back-btn" onclick="clearNotepad()">
+              🗑️ BORRAR NOTAS
+            </button>
+          </div>
+          <textarea id="investigator-notes" class="notepad-textarea" placeholder="Escribe aquí tus deducciones, horas de paso por el radar de tráfico, análisis de las coartadas, discordancias de la autopsia..."></textarea>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- BARRA DE NAVEGACIÓN MÓVIL INFERIOR -->
+  <nav class="mobile-bottom-nav">
+    <div class="nav-item active" id="mob-nav-catalog" onclick="switchView('catalog')">
+      <span class="nav-icon">📱</span>
+      <span>Casos</span>
+    </div>
+    <div class="nav-item" id="mob-nav-briefing" onclick="switchView('case'); switchCaseTab('briefing');">
+      <span class="nav-icon">🎬</span>
+      <span>Vídeo</span>
+    </div>
+    <div class="nav-item" id="mob-nav-dossiers" onclick="switchView('case'); switchCaseTab('dossiers');">
+      <span class="nav-icon">📄</span>
+      <span>PDFs</span>
+    </div>
+    <div class="nav-item" id="mob-nav-terminal" onclick="switchView('case'); switchCaseTab('terminal');">
+      <span class="nav-icon">💻</span>
+      <span>Terminal</span>
+    </div>
+    <div class="nav-item" id="mob-nav-notas" onclick="switchView('case'); switchCaseTab('notas');">
+      <span class="nav-icon">📓</span>
+      <span>Notas</span>
+    </div>
+  </nav>
+
+  <!-- MODAL DE IMÁGENES / PERFILES EN ALTA DEFINICIÓN -->
+  <div id="photo-modal" class="modal-backdrop" onclick="closePhotoModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div>
+          <h3 id="modal-title" style="font-size:16px; color:#fff;">Detalle</h3>
+          <p id="modal-sub" style="font-size:11px; font-family:var(--font-mono); color:var(--cyan-neon);"></p>
+        </div>
+        <button class="modal-close" onclick="closePhotoModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <img id="modal-img" src="" alt="Prueba" style="width:100%; border-radius:8px; margin-bottom:12px; box-shadow:0 10px 30px rgba(0,0,0,0.6);">
+        <p id="modal-desc" style="font-size:13px; color:var(--text-secondary); line-height:1.5;"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LÓGICA JAVASCRIPT DEL CLIENTE -->
+  <script>
+    // CONTROL DE VISTAS PRINCIPALES
+    function switchView(viewName) {
+      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById('view-' + viewName);
+      if (target) {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Actualizar bottom nav
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      if (viewName === 'catalog') {
+        const item = document.getElementById('mob-nav-catalog');
+        if (item) item.classList.add('active');
+      }
+    }
+
+    function openCase(caseId) {
+      if (caseId === 'valdeluna') {
+        switchView('case');
+        switchCaseTab('briefing');
+      }
+    }
+
+    // CONTROL DE PESTAÑAS DENTRO DEL CASO
+    function switchCaseTab(tabName) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+      // Activar botón desktop correspondiente
+      const btns = Array.from(document.querySelectorAll('.tab-btn'));
+      const matchingBtn = btns.find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes(tabName));
+      if (matchingBtn) matchingBtn.classList.add('active');
+
+      // Activar contenido
+      const targetTab = document.getElementById('tab-' + tabName);
+      if (targetTab) targetTab.classList.add('active');
+
+      // Actualizar estado en mobile nav
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      const mobNav = document.getElementById('mob-nav-' + tabName);
+      if (mobNav) mobNav.classList.add('active');
+    }
+
+    // BLOC DE NOTAS CON AUTOGUARDADO EN LOCALSTORAGE
+    const notesArea = document.getElementById('investigator-notes');
+    const STORAGE_KEY = 'vestigo_notes_case_valdeluna';
+
+    if (notesArea) {
+      notesArea.value = localStorage.getItem(STORAGE_KEY) || '';
+      notesArea.addEventListener('input', () => {
+        localStorage.setItem(STORAGE_KEY, notesArea.value);
+      });
+    }
+
+    function clearNotepad() {
+      if (confirm('¿Estás seguro de que deseas borrar todas las notas de este caso?')) {
+        notesArea.value = '';
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    }
+
+    // MODAL DE IMÁGENES
+    function openPhotoModal(imgSrc, title, desc) {
+      document.getElementById('modal-img').src = imgSrc;
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-sub').textContent = 'REGISTRO POLICIAL // PERITAJE JUDICIAL';
+      document.getElementById('modal-desc').textContent = desc;
+      document.getElementById('photo-modal').classList.add('open');
+    }
+
+    function closePhotoModal(e) {
+      document.getElementById('photo-modal').classList.remove('open');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closePhotoModal();
+    });
+
+    // REGISTRO DE SERVICE WORKER PARA PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+  </script>
+
+</body>
+</html>

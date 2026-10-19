@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Filtro de resplandor UV / luminol -->
+    <filter id="uvGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur1" />
+      <feGaussianBlur stdDeviation="20" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Gradiente de fondo del squircle -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="40%" stop-color="#080d1a" />
+      <stop offset="100%" stop-color="#020408" />
+    </linearGradient>
+
+    <!-- Gradiente cian neón principal -->
+    <linearGradient id="cyanNeon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#67e8f9" />
+      <stop offset="35%" stop-color="#00e5ff" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+
+    <!-- Gradiente para el ala izquierda del monograma V -->
+    <linearGradient id="vLeftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#0369a1" />
+    </linearGradient>
+
+    <!-- Gradiente para el ala derecha del monograma V -->
+    <linearGradient id="vRightGrad" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00e5ff" />
+      <stop offset="70%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+
+    <!-- Gradiente de brillo de borde -->
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.4" />
+      <stop offset="50%" stop-color="#1e293b" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0.4" />
+    </linearGradient>
+
+    <!-- Patrón de malla táctica milimétrica de fondo -->
+    <pattern id="tacticalGrid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#1e293b" stroke-width="0.75" stroke-opacity="0.3" />
+    </pattern>
+  </defs>
+
+  <!-- SQUIRCLE BASE (Formato estándar iOS / App Icon 1:1) -->
+  <rect x="8" y="8" width="496" height="496" rx="112" fill="url(#bgGrad)" stroke="url(#borderGrad)" stroke-width="3" />
+
+  <!-- REJILLA TÁCTICA FORENSE DE FONDO -->
+  <rect x="8" y="8" width="496" height="496" rx="112" fill="url(#tacticalGrid)" />
+
+  <!-- RADAR / ANILLOS DE HUELLA DACTILAR PERICIAL (BIOMETRIC RIDGES) -->
+  <g opacity="0.4" stroke="#00e5ff" stroke-width="1.5" fill="none">
+    <!-- Crestas concéntricas superiores tipo huella dactilar -->
+    <path d="M 176 170 C 210 135, 302 135, 336 170" stroke-dasharray="6,4" />
+    <path d="M 152 205 C 195 160, 317 160, 360 205" stroke-opacity="0.6" />
+    <path d="M 130 240 C 185 185, 327 185, 382 240" stroke-opacity="0.4" stroke-dasharray="10,5" />
+    <path d="M 112 280 C 180 208, 332 208, 400 280" stroke-opacity="0.25" />
+  </g>
+
+  <!-- MIRA TÁCTICA / RETÍCULA PERICIAL DE PRECISIÓN -->
+  <g stroke="#38bdf8" stroke-width="1.2" opacity="0.5">
+    <!-- Eje vertical -->
+    <line x1="256" y1="64" x2="256" y2="150" stroke-dasharray="4,4" />
+    <line x1="256" y1="380" x2="256" y2="448" stroke-dasharray="4,4" />
+    <!-- Eje horizontal -->
+    <line x1="64" y1="256" x2="160" y2="256" stroke-dasharray="4,4" />
+    <line x1="352" y1="256" x2="448" y2="256" stroke-dasharray="4,4" />
+    <!-- Círculo del colimador central -->
+    <circle cx="256" cy="256" r="70" fill="none" stroke="#00e5ff" stroke-width="1" stroke-dasharray="8,6" opacity="0.6" />
+    <!-- Marcas angulares de enfoque -->
+    <path d="M 230 196 L 206 196 L 206 220" fill="none" stroke="#00e5ff" stroke-width="2" />
+    <path d="M 282 196 L 306 196 L 306 220" fill="none" stroke="#00e5ff" stroke-width="2" />
+    <path d="M 206 292 L 206 316 L 230 316" fill="none" stroke="#00e5ff" stroke-width="2" />
+    <path d="M 306 292 L 306 316 L 282 316" fill="none" stroke="#00e5ff" stroke-width="2" />
+  </g>
+
+  <!-- MONOGRAMA ESCULTÓRICO EN 'V' (VESTIGO // TRACE & REVELATION) -->
+  <!-- Sombra de profundidad proyectada del monograma -->
+  <path d="M 124 136 L 256 384 L 388 136 L 328 136 L 256 288 L 184 136 Z" 
+        fill="#000" opacity="0.6" transform="translate(0, 10)" filter="url(#uvGlow)" />
+
+  <!-- Ala izquierda de la 'V' (Corte biselado en sombra técnica) -->
+  <path d="M 124 136 L 256 394 L 256 304 L 180 136 Z" 
+        fill="url(#vLeftGrad)" />
+
+  <!-- Ala derecha de la 'V' (Facetado luminiscente principal) -->
+  <path d="M 388 136 L 256 394 L 256 304 L 332 136 Z" 
+        fill="url(#vRightGrad)" filter="url(#uvGlow)" />
+
+  <!-- Triángulo negativo interior de tensión pericial -->
+  <polygon points="256,290 200,160 312,160" fill="#070b14" opacity="0.9" />
+
+  <!-- PRISMA / PUNTERO FORENSE ULTRAVIOLETA CENTRAL (EL VESTIGIO DESCUBIERTO) -->
+  <g filter="url(#uvGlow)">
+    <!-- Línea de rayo que desciende por el vértice -->
+    <line x1="256" y1="180" x2="256" y2="394" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
+    <!-- Vértice inferior incandescente de luminol -->
+    <circle cx="256" cy="394" r="7" fill="#ffffff" />
+    <circle cx="256" cy="394" r="14" fill="#00e5ff" opacity="0.75" />
+    <circle cx="256" cy="394" r="26" fill="#00e5ff" opacity="0.3" />
+  </g>
+
+  <!-- PUNTO DE RETÍCULA CENTRAL CRÍTICO (TARGET LOCKED) -->
+  <circle cx="256" cy="225" r="3.5" fill="#ff2d55" filter="url(#uvGlow)" />
+  <circle cx="256" cy="225" r="9" fill="none" stroke="#ff2d55" stroke-width="1.2" opacity="0.8" />
+
+  <!-- CÓDIGO DE TIEMPO / COORDENADAS TÁCTICAS MINIATURA -->
+  <text x="44" y="468" fill="#475569" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', monospace" font-size="12" font-weight="700" letter-spacing="2">VESTIGO // POL-ID 402</text>
+  <text x="390" y="468" fill="#00e5ff" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', monospace" font-size="12" font-weight="700" letter-spacing="2" opacity="0.8">SEC-V3</text>
+</svg>

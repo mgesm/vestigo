@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VESTIGO | Terminal Policial Judicial - Diligencias 402/2024</title>
+  <link rel="icon" type="image/svg+xml" href="../branding/vestigo_icon.svg">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Inter:wght@300;400;600;800&family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0e14;
+      --panel-bg: #121820;
+      --panel-border: #233140;
+      --accent-cyan: #00e5ff;
+      --accent-green: #00e676;
+      --accent-red: #ff1744;
+      --accent-amber: #ffab00;
+      --text-main: #e2e8f0;
+      --text-muted: #64748b;
+      --font-mono: 'Fira Code', monospace;
+      --font-sans: 'Inter', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 0),
+        linear-gradient(to bottom, rgba(10, 14, 20, 0.8), rgba(10, 14, 20, 0.98));
+      background-size: 24px 24px, 100% 100%;
+    }
+
+    /* HEADER OFICIAL */
+    header {
+      background-color: #070a0e;
+      border-bottom: 2px solid var(--panel-border);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .badge-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .coat-arms {
+      width: 44px;
+      height: 44px;
+      background: #1e293b;
+      border: 1px solid var(--accent-cyan);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    .title-area h1 {
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      font-weight: 700;
+    }
+
+    .title-area p {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .terminal-status {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent-green);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent-green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.9); }
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    main {
+      flex: 1;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 24px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* SIDEBAR DE CONTROL */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background-color: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 6px;
+      padding: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-header {
+      border-bottom: 1px solid var(--panel-border);
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-header h2 {
+      font-size: 13px;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent-cyan);
+    }
+
+    .case-data-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .case-data-list li {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .case-data-list .label {
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .case-data-list .val {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* NAVEGACIÓN DE FASES */
+    .phase-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .phase-btn {
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--panel-border);
+      color: var(--text-main);
+      padding: 12px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+
+    .phase-btn:hover {
+      background-color: rgba(0, 229, 255, 0.08);
+      border-color: var(--accent-cyan);
+    }
+
+    .phase-btn.active {
+      background-color: rgba(0, 229, 255, 0.12);
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+      font-weight: 600;
+    }
+
+    .phase-btn.locked {
+      opacity: 0.5;
+      cursor: not-allowed;
+      border-color: #1e293b;
+    }
+
+    .phase-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: #1e293b;
+    }
+
+    .phase-btn.active .phase-badge {
+      background: var(--accent-cyan);
+      color: #000;
+    }
+
+    /* HERRAMIENTAS ADICIONALES */
+    .tool-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #e2e8f0;
+      padding: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .tool-btn:hover {
+      background: #334155;
+      color: #fff;
+    }
+
+    /* CONTENIDO DINÁMICO CENTRAL */
+    .content-area {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .phase-section {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .phase-section.active {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .alert-banner {
+      background: rgba(0, 229, 255, 0.05);
+      border-left: 4px solid var(--accent-cyan);
+      padding: 14px 18px;
+      border-radius: 0 4px 4px 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .alert-banner strong {
+      color: var(--accent-cyan);
+      font-family: var(--font-mono);
+    }
+
+    /* FORMULARIOS DE VALIDACIÓN */
+    .question-box {
+      background: #161e29;
+      border: 1px solid var(--panel-border);
+      border-radius: 6px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .question-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      display: flex;
+      gap: 8px;
+      align-items: baseline;
+    }
+
+    .question-num {
+      color: var(--accent-cyan);
+      font-family: var(--font-mono);
+    }
+
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid #1e293b;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+
+    .option-label:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: #475569;
+    }
+
+    .option-label input[type="radio"],
+    .option-label input[type="checkbox"] {
+      accent-color: var(--accent-cyan);
+    }
+
+    .text-input-group input {
+      width: 100%;
+      background: #0a0e14;
+      border: 1px solid var(--panel-border);
+      padding: 12px 14px;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .text-input-group input:focus {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+    }
+
+    .submit-btn {
+      background: var(--accent-cyan);
+      color: #000;
+      border: none;
+      padding: 14px 20px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+      margin-top: 10px;
+    }
+
+    .submit-btn:hover {
+      background: #38bdf8;
+      box-shadow: 0 0 16px rgba(0, 229, 255, 0.4);
+      transform: translateY(-1px);
+    }
+
+    /* REPRODUCTOR DE AUDIO / EVIDENCIAS DIGITALES */
+    .digital-evidence {
+      background: #0d1218;
+      border: 1px dashed var(--panel-border);
+      border-radius: 6px;
+      padding: 16px;
+      margin-top: 10px;
+    }
+
+    .audio-player {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: #161e29;
+      border: 1px solid #334155;
+      padding: 12px 16px;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+
+    .play-btn {
+      background: var(--accent-green);
+      color: #000;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .play-btn:hover {
+      transform: scale(1.08);
+    }
+
+    .audio-waveform {
+      flex: 1;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .waveform-bar {
+      flex: 1;
+      background: #334155;
+      height: 20%;
+      border-radius: 2px;
+      transition: height 0.2s;
+    }
+
+    .audio-playing .waveform-bar {
+      background: var(--accent-green);
+      animation: wave 0.8s infinite ease-in-out alternate;
+    }
+
+    @keyframes wave {
+      0% { height: 15%; }
+      100% { height: 100%; }
+    }
+
+    .audio-transcript {
+      background: #0a0e14;
+      border: 1px solid #1e293b;
+      padding: 12px;
+      border-radius: 4px;
+      margin-top: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #cbd5e1;
+      max-height: 120px;
+      overflow-y: auto;
+      line-height: 1.5;
+    }
+
+    /* MODAL DE DESPRECINTO / EXITO */
+    .success-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .success-modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--panel-bg);
+      border: 2px solid var(--accent-green);
+      border-radius: 8px;
+      max-width: 600px;
+      width: 100%;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 0 40px rgba(0, 230, 118, 0.3);
+      animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes modalPop {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-icon {
+      font-size: 48px;
+      color: var(--accent-green);
+      margin-bottom: 16px;
+    }
+
+    .modal-title {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      color: var(--accent-green);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .modal-code-box {
+      background: #0a0e14;
+      border: 2px dashed var(--accent-green);
+      padding: 16px;
+      border-radius: 6px;
+      margin: 20px 0;
+      font-family: var(--font-mono);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: #fff;
+    }
+
+    .modal-btn {
+      background: var(--accent-green);
+      color: #000;
+      border: none;
+      padding: 12px 24px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 13px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* ERROR FEEDBACK */
+    .error-box {
+      display: none;
+      background: rgba(255, 23, 68, 0.1);
+      border: 1px solid var(--accent-red);
+      color: #ff80ab;
+      padding: 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      margin-top: 10px;
+    }
+
+    /* BASE DE DATOS DGT (CONSULTA) */
+    .dgt-search-box {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .dgt-search-box input {
+      flex: 1;
+      background: #070a0e;
+      border: 1px solid #334155;
+      color: #fff;
+      padding: 8px 12px;
+      font-family: var(--font-mono);
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .dgt-result-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+    }
+
+    .dgt-result-table th, .dgt-result-table td {
+      border: 1px solid #233140;
+      padding: 8px 12px;
+      text-align: left;
+    }
+
+    .dgt-result-table th {
+      background: #0a0e14;
+      color: var(--accent-cyan);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CABECERA DE LA POLICÍA JUDICIAL -->
+  <header>
+    <div class="badge-wrap">
+      <img src="../imagenes/vestigo_icon_2d.png" style="width: 40px; height: 40px; border-radius: 10px; box-shadow: 0 0 12px rgba(0, 229, 255, 0.4); border: 1px solid rgba(0, 229, 255, 0.5);" alt="Vestigo">
+      <div class="title-area">
+        <h1>VESTIGO // UNIDAD ORGÁNICA DE POLICÍA JUDICIAL</h1>
+        <p>SITRA-JUD ENGINE — COMANDANCIA DE VALLADOLID — EXP. D.P. 402/2024</p>
+      </div>
+    </div>
+    <div class="terminal-status">
+      <a href="../branding/index.html" target="_blank" style="background: rgba(0, 229, 255, 0.1); color: #00e5ff; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-weight: 700; font-size: 11px; display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(0, 229, 255, 0.4); transition: all 0.2s;">
+        💎 APP LOGO &amp; MARCA
+      </a>
+      <a href="../video-briefing/index.html" target="_blank" style="background: #e11d48; color: #fff; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-weight: 700; font-size: 11px; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 0 10px rgba(225,29,72,0.4); border: 1px solid #f43f5e; transition: transform 0.2s;">
+        🎬 VÍDEO BRIEFING DEL CASO
+      </a>
+      <div>AGENTE: <strong style="color: #fff;">INSP. 84.920</strong></div>
+      <div class="status-indicator">
+        <span class="status-dot"></span> TERMINAL CIFRADA CONECTADA
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENEDOR CENTRAL -->
+  <main>
+    <!-- BARRA LATERAL CON INFORMACIÓN DEL EXPEDIENTE -->
+    <aside class="sidebar">
+      <div class="card">
+        <div class="card-header">
+          <h2>Expediente Activo</h2>
+          <span style="color: var(--accent-cyan); font-family: var(--font-mono); font-size: 11px;">D.P. 402/24</span>
+        </div>
+        <ul class="case-data-list">
+          <li><span class="label">CAUSA:</span> <span class="val">Homicidio / Asesinato</span></li>
+          <li><span class="label">VÍCTIMA:</span> <span class="val">Gonzalo de la Serna</span></li>
+          <li><span class="label">LUGAR:</span> <span class="val">Peñafiel (Valladolid)</span></li>
+          <li><span class="label">FECHA HALLAZGO:</span> <span class="val">05/10/2024 - 07:15h</span></li>
+          <li><span class="label">JUZGADO:</span> <span class="val">Instrucción Nº 2</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>Fases del Caso</h2>
+        </div>
+        <div class="phase-nav">
+          <button class="phase-btn active" id="nav-phase-1" onclick="switchPhase(1)">
+            <span>1. Sobre A: La Falsa Asfixia</span>
+            <span class="phase-badge" id="badge-phase-1">EN CURSO</span>
+          </button>
+          <button class="phase-btn locked" id="nav-phase-2" onclick="switchPhase(2)">
+            <span>2. Sobre B: El Escenario</span>
+            <span class="phase-badge" id="badge-phase-2">BLOQUEADO</span>
+          </button>
+          <button class="phase-btn locked" id="nav-phase-3" onclick="switchPhase(3)">
+            <span>3. Sobre C: La Convicción</span>
+            <span class="phase-badge" id="badge-phase-3">BLOQUEADO</span>
+          </button>
+          <button class="phase-btn locked" id="nav-phase-4" onclick="switchPhase(4)">
+            <span>4. Auto de Procesamiento</span>
+            <span class="phase-badge" id="badge-phase-4">FINAL</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- HERRAMIENTA: CONSULTA LPR TRÁFICO DGT -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Lector Matrículas DGT</h2>
+        </div>
+        <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">
+          Consulte los pasos registrados por los pórticos LPR en la N-122 durante la noche del crimen:
+        </p>
+        <div class="dgt-search-box">
+          <input type="text" id="dgt-input" placeholder="Ej: 4188KLT" maxlength="8">
+          <button class="tool-btn" style="margin-top:0; width: auto;" onclick="searchDGT()">BUSCAR</button>
+        </div>
+        <div id="dgt-result-container" style="display: none; margin-top: 10px;">
+          <!-- Dinámico -->
+        </div>
+      </div>
+
+      <!-- HERRAMIENTA: EXPEDIENTES Y FOTOTECA -->
+      <div class="card" style="border-color: #3b82f6;">
+        <div class="card-header" style="border-color: #3b82f6;">
+          <h2 style="color: #60a5fa;">Expedientes y Pruebas</h2>
+        </div>
+        <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">
+          Consulte las fichas de filiación con mugshots, notas del agente instructor y hemeroteca:
+        </p>
+        <a href="../video-briefing/index.html" target="_blank" class="tool-btn" style="background:#e11d48; border-color:#f43f5e; text-decoration:none; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; margin-top:8px; box-shadow: 0 0 10px rgba(225,29,72,0.4);">
+          🎬 VÍDEO BRIEFING DEL CASO
+        </a>
+        <a href="../documentos-imprimibles/INSTRUCCIONES_DE_JUEGO.pdf" target="_blank" class="tool-btn" style="background:#ca8a04; border-color:#facc15; text-decoration:none; display:flex; align-items:center; justify-content:center; color:#000; font-weight:800; margin-top:8px;">
+          📖 MANUAL DE REGLAS (PDF)
+        </a>
+        <button class="tool-btn" style="background:#1e3a8a; border-color:#3b82f6;" onclick="openProfilesModal()">
+          👥 FICHAS DE FILIACIÓN
+        </button>
+        <button class="tool-btn" style="background:#0284c7; border-color:#38bdf8;" onclick="openPhotosModal()">
+          📸 FOTOTECA FORENSE ESCENA
+        </button>
+        <button class="tool-btn" style="background:#0d9488; border-color:#2dd4bf;" onclick="openMapModal()">
+          🗺️ MAPA TÁCTICO SIG (PEÑAFIEL)
+        </button>
+        <button class="tool-btn" style="background:#065f46; border-color:#34d399;" onclick="openCctvModal()">
+          📹 CIRCUITO CERRADO CCTV
+        </button>
+        <button class="tool-btn" style="background:#4c1d95; border-color:#8b5cf6;" onclick="openNotebookModal()">
+          📓 CUADERNO DEL AGENTE
+        </button>
+        <button class="tool-btn" style="background:#78350f; border-color:#f59e0b;" onclick="openPressModal()">
+          📰 EL NORTE DE CASTILLA
+        </button>
+        <button class="tool-btn" style="background:#854d0e; border-color:#facc15;" onclick="openHintsModal()">
+          💡 PISTAS / CENTRAL DE MANDO
+        </button>
+      </div>
+    </aside>
+
+    <!-- ÁREA DE TRABAJO DINÁMICA -->
+    <section class="content-area">
+
+      <!-- ========================================== -->
+      <!-- FASE 1: SOBRE A                            -->
+      <!-- ========================================== -->
+      <div class="phase-section active" id="phase-1-content">
+        <div class="alert-banner">
+          <strong>INSTRUCCIÓN JUDICIAL Nº 1:</strong> La dirección de Bodegas Valdeluna y la aseguradora pretenden archivar las actuaciones como un desgraciado accidente de vendimia por inhalación de anhídrido carbónico ("tufo del vino"). Analizad la documentación física del <strong>SOBRE A</strong> (Atestado inicial, autopsia preliminar y registros) para demostrar ante el Juez que estamos ante un homicidio y fijar la ventana temporal de la muerte.
+        </div>
+
+        <div class="question-box">
+          <div class="question-title">
+            <span class="question-num">1.1</span>
+            <span>Determinación Médico-Legal de la Causa Real de la Muerte:</span>
+          </div>
+          <div class="options-group">
+            <label class="option-label">
+              <input type="radio" name="p1_cause" value="accidente">
+              <span>Asfixia aguda por intoxicación letal de CO2 (Hipoxia celular pura).</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="p1_cause" value="homicidio">
+              <span>Traumatismo craneoencefálico / Shock neurogénico provocado por agresión con objeto contundente.</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="p1_cause" value="infarto">
+              <span>Fibrilación ventricular y muerte súbita previa a la caída en la nave.</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="question-box">
+          <div class="question-title">
+            <span class="question-num">1.2</span>
+            <span>Indicio Tanatológico que demuestra que el cuerpo fue trasladado y colocado boca abajo deliberadamente:</span>
+          </div>
+          <div class="text-input-group">
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">
+              Escriba el hallazgo forense clave sobre las manchas de posición cadavérica (pistas: livideces, hipostasias):
+            </p>
+            <input type="text" id="p1_livideces" placeholder="Ej: Livideces dorsales fijas en cuerpo hallado boca abajo">
+          </div>
+        </div>
+
+        <div class="question-box">
+          <div class="question-title">
+            <span class="question-num">1.3</span>
+            <span>Franja Horaria Real del Fallecimiento (cruzando digestión gástrica con el ticket de catering de las 19:15h):</span>
+          </div>
+          <div class="options-group">
+            <label class="option-label">
+              <input type="radio" name="p1_time" value="madrugada">
+              <span>Entre las 05:00 h y las 06:30 h del sábado (según versión de la familia).</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="p1_time" value="noche_tarde">
+              <span>Entre las 01:00 h y las 02:30 h de la madrugada.</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="p1_time" value="real">
+              <span>Entre las 20:30 h y las 21:15 h del viernes (digestión interrumpida en fase gástrica inicial).</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="error-box" id="error-p1"></div>
+
+        <button class="submit-btn" onclick="validatePhase1()">
+          VALIDAR HIPÓTESIS ANTE EL JUZGADO &gt;&gt;
+        </button>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- FASE 2: SOBRE B                            -->
+      <!-- ========================================== -->
+      <div class="phase-section" id="phase-2-content">
+        <div class="alert-banner">
+          <strong>INSTRUCCIÓN JUDICIAL Nº 2:</strong> Diligencia de homicidio admitida. Ahora debéis abrir el <strong>SOBRE B</strong>. Examinad las transcripciones de los 4 interrogatorios, el informe de luminol de la Policía Científica y las triangulaciones de telefonía móvil. Es prioritario hallar el verdadero escenario primario y desarticular las pistas falsas para exonerar a inocentes.
+        </div>
+
+        <!-- EVIDENCIA DIGITAL: AUDIO LLAMADA 112 -->
+        <div class="digital-evidence">
+          <span style="font-family: var(--font-mono); font-size: 11px; color: var(--accent-cyan);">EVIDENCIA INTERCEPTADA #AUD-112:</span>
+          <div class="audio-player">
+            <button class="play-btn" id="play-112-btn" onclick="toggleAudio112()">▶</button>
+            <div style="flex: 1;">
+              <div style="font-size: 12px; font-weight: 600;">Llamada Centro de Emergencias 112 CyL - Grabación Capataz</div>
+              <div style="font-size: 10px; color: var(--text-muted); font-family: var(--font-mono);">05/10/2024 - 07:16:04 AM | Duración: 00:48</div>
+              <div class="audio-waveform" id="waveform">
+                <div class="waveform-bar" style="height: 30%;"></div>
+                <div class="waveform-bar" style="height: 70%;"></div>
+                <div class="waveform-bar" style="height: 40%;"></div>
+                <div class="waveform-bar" style="height: 90%;"></div>
+                <div class="waveform-bar" style="height: 50%;"></div>
+                <div class="waveform-bar" style="height: 80%;"></div>
+                <div class="waveform-bar" style="height: 20%;"></div>
+                <div class="waveform-bar" style="height: 60%;"></div>
+                <div class="waveform-bar" style="height: 100%;"></div>
+                <div class="waveform-bar" style="height: 45%;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="audio-transcript">
+            <strong>OPERADOR 112:</strong> Emergencias Castilla y León, dígame.<br>
+            <strong>JAVIER (Voz agitada):</strong> ¡Vengan rápido, por Dios! A Bodegas Valdeluna... ¡Don Gonzalo está en el suelo de la nave de cubas! ¡No respira, está helado!<br>
+            <strong>OPERADOR:</strong> Tranquilo señor, mantenga la calma. ¿Hay olor a gas en la nave?<br>
+            <strong>JAVIER:</strong> Huele a mosto fuerte... la tina 4 está fermentando... pero tiene la cabeza con sangre... ¡vengan ya por favor!
+          </div>
+        </div>
+
+        <div class="question-box">
+          <div class="question-title">
+            <span class="question-num">2.1</span>
+            <span>Ubicación exacta del Escenario Primario (donde se consumó la agresión):</span>
+          </div>
+          <div class="options-group">
+            <label class="option-label">
+              <input type="radio" name="p2_scene" value="tolva">
+              <span>Tolva exterior de descarga de vendimia (junto a los tractores).</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="p2_scene" value="laboratorio">
+              <span>Laboratorio Enológico privado / Despacho de Gonzalo (reacción intensa a luminol en rodapié).</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="p2_scene" value="nave2">
+              <span>La propia Nave 2 de cubas metálicas subterránea.</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="question-box">
+          <div class="question-title">
+            <span class="question-num">2.2</span>
+            <span>¿Qué dos sospechosos quedan EXONERADOS de la autoría material por tener una coartada cruzada demostrada en el Mirador del Castillo?</span>
+          </div>
+          <div class="options-group">
+            <label class="option-label">
+              <input type="checkbox" id="ex_marcos" value="marcos"> <span>Marcos Varela (Director Financiero)</span>
+            </label>
+            <label class="option-label">
+              <input type="checkbox" id="ex_lucia" value="lucia"> <span>Lucía de la Serna (Hija / Enóloga)</span>
+            </label>
+            <label class="option-label">
+              <input type="checkbox" id="ex_javier" value="javier"> <span>Javier Beltrán (Capataz)</span>
+            </label>
+            <label class="option-label">
+              <input type="checkbox" id="ex_elena" value="elena"> <span>Elena Fontanals (Representante Vitis Capital)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="question-box">
+          <div class="question-title">
+            <span class="question-num">2.3</span>
+            <span>¿Qué delito encubría el Capataz Javier Beltrán al mentir sobre el uso nocturno de su furgoneta?</span>
+          </div>
+          <div class="text-input-group">
+            <input type="text" id="p2_capataz_crime" placeholder="Ej: Robo de botellas de vino de colección / Hurto">
+          </div>
+        </div>
+
+        <div class="error-box" id="error-p2"></div>
+
+        <button class="submit-btn" onclick="validatePhase2()">
+          CONFIRMAR DILIGENCIAS Y SOLICITAR PRUEBA FINAL &gt;&gt;
+        </button>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- FASE 3: SOBRE C                            -->
+      <!-- ========================================== -->
+      <div class="phase-section" id="phase-3-content">
+        <div class="alert-banner">
+          <strong>INSTRUCCIÓN JUDICIAL Nº 3:</strong> Abrid el <strong>SOBRE C</strong>. El cerco se estrecha entre Elena Fontanals y Marcos Varela. Analizad el análisis químico de SECRIM sobre los vehículos, el ticket de parking aportado y los registros telemáticos para destruir la coartada definitiva.
+        </div>
+
+        <div class="question-box">
+          <div class="question-title">
+            <span class="question-num">3.1</span>
+            <span>Motivo concluyente por el cual D. Marcos Varela queda descartado como autor material del homicidio:</span>
+          </div>
+          <div class="options-group">
+            <label class="option-label">
+              <input type="radio" name="p3_marcos_ex" value="coartada_valladolid">
+              <span>El peritaje del ticket y el radar de Tudela a las 20:38h confirman que estaba en Valladolid a la hora del crimen (20:45 - 21:05h).</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="p3_marcos_ex" value="no_movil">
+              <span>No tenía ningún interés económico ni beneficio en la muerte de Gonzalo.</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="p3_marcos_ex" value="fuerza">
+              <span>Su complexión física le impedía levantar el peso de la víctima.</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="question-box">
+          <div class="question-title">
+            <span class="question-num">3.2</span>
+            <span>La Falla Crítica que destruye la coartada de Dña. Elena Fontanals:</span>
+          </div>
+          <div class="options-group">
+            <label class="option-label">
+              <input type="radio" name="p3_elena_flaw" value="dgt_elena">
+              <span>La cámara LPR captó su Audi saliendo de la bodega a las 21:28h (mintió sobre volver al hotel a las 20:54h). Se conectó a Teams desde 4G en ruta y la habitación no se abrió hasta las 21:48h.</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="p3_elena_flaw" value="testigo_hotel">
+              <span>El recepcionista del hotel declaró que nunca llegó a dormir en la habitación.</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="p3_elena_flaw" value="movil">
+              <span>Su teléfono móvil estuvo apagado toda la noche.</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="question-box">
+          <div class="question-title">
+            <span class="question-num">3.3</span>
+            <span>La Prueba Forense / Química Irrefutable (La "Pistola Humeante"):</span>
+          </div>
+          <div class="text-input-group">
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">
+              Compuesto químico del vial derramado en el laboratorio hallado en la alfombrilla del Audi A5 y calzado de Elena:
+            </p>
+            <input type="text" id="p3_quimica" placeholder="Ej: Sulfato de cobre">
+          </div>
+        </div>
+
+        <div class="error-box" id="error-p3"></div>
+
+        <button class="submit-btn" onclick="validatePhase3()">
+          PROCEDER AL AUTO DE PROCESAMIENTO JUDICIAL &gt;&gt;
+        </button>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- FASE 4: AUTO DE PROCESAMIENTO FINAL        -->
+      <!-- ========================================== -->
+      <div class="phase-section" id="phase-4-content">
+        <div class="card" style="border: 2px solid var(--accent-green);">
+          <div class="card-header" style="border-color: var(--accent-green);">
+            <h2 style="color: var(--accent-green);">TRIBUNAL SUPERIOR DE JUSTICIA — AUTO DE PRISIÓN</h2>
+            <span style="font-family: var(--font-mono); color: var(--accent-green);">CASO RESUELTO</span>
+          </div>
+          <div style="font-size: 13px; line-height: 1.8; color: #e2e8f0;">
+            <p><strong>VISTOS LOS AUTOS:</strong></p>
+            <p>Se decreta la <strong>PRISIÓN PROVISIONAL, COMUNICADA Y SIN FIANZA</strong> para <strong>ELENA FONTANALS PUIG</strong> como presunta autora criminalmente responsable de un delito de <strong>ASESINATO CON ALEVOSÍA</strong> (Art. 139 Código Penal) y <strong>ESTAFA AGRAVADA CON FALSEDAD DOCUMENTAL</strong>.</p>
+            
+            <div style="background: #0a0e14; border-left: 3px solid var(--accent-green); padding: 14px; margin: 16px 0; font-family: var(--font-mono); font-size: 12px;">
+              <strong>TRANSCRIPCIÓN DE LA CONFESIÓN EN SEDE JUDICIAL:</strong><br><br>
+              <em>"Gonzalo me citó en el laboratorio a las 20:30 h. Sabía que el aval bancario de 2,4 millones de Suiza era falso y amenazó con presentar la querella penal ante la Fiscalía esa misma noche... Entré en pánico. Se dio la vuelta para llamar por teléfono y le golpeé en la nuca con el manómetro de acero... No quería matarlo, pero no respiraba. Sabía que los extractores de la Nave 2 se apagaban a las 20:00 h y lo bajé en el montacargas para fingir un accidente por el gas de las cubas. Me conecté a la videollamada de Teams con el móvil en el coche mientras conducía para simular que estaba en el hotel. Jamás imaginé que la cámara de la salida me cazaría a las 21:28 h ni que pisaría ese reactivo azul..."</em>
+            </div>
+
+            <p style="color: var(--accent-cyan); font-weight: 600;">
+              ENHORABUENA, AGENTES. HABÉIS RESUELTO EL CASO CON ÉXITO Y RIGOR FORENSE ABSOLUTO.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- MODAL DE DESPRECINTO Y CLAVE -->
+  <div class="success-modal" id="success-modal">
+    <div class="modal-box">
+      <div class="modal-icon">✓</div>
+      <h3 class="modal-title" id="modal-title">DILIGENCIA VERIFICADA</h3>
+      <p id="modal-desc" style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+        El Juez de Instrucción ha admitido la hipótesis criminal. Podéis romper el precinto del siguiente sobre.
+      </p>
+      <div class="modal-code-box" id="modal-code">
+        VALDELUNA-ROMPE-B77
+      </div>
+      <button class="modal-btn" onclick="closeModal()">ABRIR SIGUIENTE FASE &gt;&gt;</button>
+    </div>
+  </div>
+
+  <!-- MODAL: FICHAS DE FILIACIÓN -->
+  <div class="success-modal" id="profiles-modal">
+    <div class="modal-box" style="max-width: 800px; text-align: left; max-height: 85vh; overflow-y: auto;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:10px; margin-bottom:14px;">
+        <h3 style="color:var(--accent-cyan); font-family:var(--font-mono); font-size:15px;">FICHAS DE FILIACIÓN BIOMÉTRICA (SIRDEE)</h3>
+        <button onclick="closeProfilesModal()" style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;">✕</button>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; font-size:11px;">
+        <!-- GONZALO -->
+        <div style="background:#0a0e14; border:1px solid #334155; padding:10px; border-radius:4px; display:flex; gap:10px;">
+          <img src="../imagenes/gonzalo_de_la_serna.png" alt="Gonzalo" style="width:70px; height:85px; object-fit:cover; border-radius:3px; border:1px solid #475569; flex-shrink:0;">
+          <div>
+            <div style="color:#ef4444; font-weight:700; margin-bottom:4px;">GONZALO DE LA SERNA [VÍCTIMA]</div>
+            <div><strong>Edad:</strong> 58 años | <strong>DNI:</strong> 12.384.901-K</div>
+            <div><strong>Cargo:</strong> Director General & Enólogo</div>
+            <div><strong>Vehículo:</strong> Audi A6 (Aparcado en porche)</div>
+            <div style="color:var(--text-muted); margin-top:4px; font-size:10px;">Hallado cadáver en Nave 2 junto a Tina 4. Traumatismo craneoencefálico occipital.</div>
+          </div>
+        </div>
+
+        <!-- MARCOS -->
+        <div style="background:#0a0e14; border:1px solid #334155; padding:10px; border-radius:4px; display:flex; gap:10px;">
+          <img src="../imagenes/marcos_varela.png" alt="Marcos" style="width:70px; height:85px; object-fit:cover; border-radius:3px; border:1px solid #475569; flex-shrink:0;">
+          <div>
+            <div style="color:var(--accent-amber); font-weight:700; margin-bottom:4px;">MARCOS VARELA RÍOS [INVESTIGADO]</div>
+            <div><strong>Edad:</strong> 44 años | <strong>DNI:</strong> 09.841.229-P</div>
+            <div><strong>Cargo:</strong> Director Financiero (CFO) / Primo</div>
+            <div><strong>Vehículo:</strong> Volvo XC60 Negro (4188-KLT)</div>
+            <div style="color:var(--text-muted); margin-top:4px; font-size:10px;">Aporta ticket de parking de Valladolid a las 21:02h. Niega problemas económicos.</div>
+          </div>
+        </div>
+
+        <!-- LUCÍA -->
+        <div style="background:#0a0e14; border:1px solid #334155; padding:10px; border-radius:4px; display:flex; gap:10px;">
+          <img src="../imagenes/lucia_de_la_serna.png" alt="Lucía" style="width:70px; height:85px; object-fit:cover; border-radius:3px; border:1px solid #475569; flex-shrink:0;">
+          <div>
+            <div style="color:var(--accent-amber); font-weight:700; margin-bottom:4px;">LUCÍA DE LA SERNA MONTES [INVESTIGADA]</div>
+            <div><strong>Edad:</strong> 29 años | <strong>DNI:</strong> 71.982.404-X</div>
+            <div><strong>Cargo:</strong> Enóloga adjunta / Hija única</div>
+            <div><strong>Vehículo:</strong> VW Golf Gris (9012-GTV)</div>
+            <div style="color:var(--text-muted); margin-top:4px; font-size:10px;">Afirmó estar en bar La Barrica. Testigos declaran que se ausentó de 20:35 a 21:15h.</div>
+          </div>
+        </div>
+
+        <!-- JAVIER -->
+        <div style="background:#0a0e14; border:1px solid #334155; padding:10px; border-radius:4px; display:flex; gap:10px;">
+          <img src="../imagenes/javier_beltran.png" alt="Javier" style="width:70px; height:85px; object-fit:cover; border-radius:3px; border:1px solid #475569; flex-shrink:0;">
+          <div>
+            <div style="color:var(--accent-amber); font-weight:700; margin-bottom:4px;">JAVIER BELTRÁN GÓMEZ [INVESTIGADO]</div>
+            <div><strong>Edad:</strong> 53 años | <strong>DNI:</strong> 11.904.318-D</div>
+            <div><strong>Cargo:</strong> Capataz general (28 años en finca)</div>
+            <div><strong>Vehículo:</strong> Nissan Navara Blanca (8209-FDC)</div>
+            <div style="color:var(--text-muted); margin-top:4px; font-size:10px;">Afirmó dormir en casa. Su furgoneta fue detectada a las 22:36h en la bodega.</div>
+          </div>
+        </div>
+
+        <!-- ELENA -->
+        <div style="background:#0a0e14; border:1px solid #334155; padding:10px; border-radius:4px; grid-column: span 2; display:flex; gap:12px;">
+          <img src="../imagenes/elena_fontanals.png" alt="Elena" style="width:70px; height:85px; object-fit:cover; border-radius:3px; border:1px solid #475569; flex-shrink:0;">
+          <div>
+            <div style="color:var(--accent-amber); font-weight:700; margin-bottom:4px;">ELENA FONTANALS PUIG [INVESTIGADA]</div>
+            <div><strong>Edad:</strong> 47 años | <strong>DNI:</strong> 46.721.890-W | <strong>Empresa:</strong> Vitis Capital Partners</div>
+            <div><strong>Vehículo:</strong> Audi A5 Gris Plomo (5512-LMN) | <strong>Hotel:</strong> Convento Las Claras (Hab 204)</div>
+            <div style="color:var(--text-muted); margin-top:4px; font-size:10px;">Salió del hotel hacia la bodega a las 20:20h y volvió a las 20:54h. Videollamada Teams a las 21:12h.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:right; margin-top:14px;">
+        <button class="modal-btn" style="background:#3b82f6; color:#fff;" onclick="closeProfilesModal()">CERRAR VISOR</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CUADERNO DEL AGENTE -->
+  <div class="success-modal" id="notebook-modal">
+    <div class="modal-box" style="max-width: 650px; text-align: left; max-height: 80vh; overflow-y: auto; background:#0f172a;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:10px; margin-bottom:14px;">
+        <h3 style="color:#a78bfa; font-family:var(--font-mono); font-size:14px;">CUADERNO DE NOTAS DEL INSTRUCTOR (TIP GC-84.920)</h3>
+        <button onclick="closeNotebookModal()" style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;">✕</button>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:11px; line-height:1.7; color:#cbd5e1;">
+        <p style="color:#fde047;">[APUNTES DE URGENCIA 05/10 - 10:30 H]</p>
+        <p>• La familia dice que Gonzalo se asfixió de madrugada, pero las livideces son DORSALES y el cuerpo estaba BOCA ABAJO. Alguien lo movió horas después.</p>
+        <p>• Ticket de cena a las 19:15h. El estómago aún tenía comida casi entera. Murió entre las 20:45h y las 21:05h.</p>
+        <p>• ¿Por qué faltaba el smartwatch Garmin? Quien lo mató no quería que viéramos el registro de pulso.</p>
+        <p>• En el suelo del laboratorio de la 1ª planta se rompió un vial azul. Enviar frotis urgente a SECRIM.</p>
+        <p>• Comprobar ticket de parking de Marcos con microscopio y pedir pasos de radar de Tudela de Duero.</p>
+      </div>
+      <div style="text-align:right; margin-top:14px;">
+        <button class="modal-btn" style="background:#8b5cf6; color:#fff;" onclick="closeNotebookModal()">CERRAR NOTAS</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PRENSA EL NORTE DE CASTILLA -->
+  <div class="success-modal" id="press-modal">
+    <div class="modal-box" style="max-width: 650px; text-align: left; max-height: 80vh; overflow-y: auto; background:#faf8f5; color:#1c1917;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #1c1917; padding-bottom:6px; margin-bottom:10px;">
+        <div>
+          <div style="font-family:'Newsreader', serif; font-size:22px; font-weight:700;">EL NORTE DE CASTILLA</div>
+          <div style="font-size:9px; color:#57534e;">DOMINGO, 6 DE OCTUBRE DE 2024 · EDICIÓN RIBERA DEL DUERO</div>
+        </div>
+        <button onclick="closePressModal()" style="background:none; border:none; color:#000; font-size:20px; cursor:pointer;">✕</button>
+      </div>
+      <div style="font-family:'Newsreader', serif; font-size:13px; font-weight:700; line-height:1.2; margin-bottom:6px;">
+        CONSTERNACIÓN EN PEÑAFIEL: HALLAN MUERTO EN SUS BODEGAS AL ENÓLOGO GONZALO DE LA SERNA
+      </div>
+      <div style="font-size:10px; line-height:1.5; color:#44403c; text-align:justify;">
+        El cuerpo del viticultor fue hallado el sábado a las siete de la mañana en la nave subterránea de cubas. La Policía Judicial precintó el recinto de Bodegas Valdeluna e investiga el suceso bajo secreto de sumario. La tragedia coincide con las tensiones desatadas por la inminente venta de la bodega centenaria al fondo inversor catalán Vitis Capital, operación a la que se oponía abiertamente su hija Lucía.
+      </div>
+      <div style="text-align:right; margin-top:14px;">
+        <button class="modal-btn" style="background:#44403c; color:#fff;" onclick="closePressModal()">CERRAR ARTÍCULO</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: FOTOTECA FORENSE ESCENA -->
+  <div class="success-modal" id="photos-modal">
+    <div class="modal-box" style="max-width: 850px; text-align: left; max-height: 85vh; overflow-y: auto;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:10px; margin-bottom:14px;">
+        <h3 style="color:#38bdf8; font-family:var(--font-mono); font-size:15px;">FOTOTECA FORENSE JUDICIAL — DILIGENCIAS 402/2024</h3>
+        <button onclick="closePhotosModal()" style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;">✕</button>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+        <div style="background:#0a0e14; border:1px solid #334155; padding:8px; border-radius:4px;">
+          <img src="../imagenes/escena_tina4_bodega.png" style="width:100%; height:180px; object-fit:cover; border-radius:2px;" alt="Tina 4">
+          <div style="font-size:10.5px; font-family:var(--font-mono); color:#facc15; margin-top:6px; font-weight:bold;">IND-01: ESCENARIO SECUNDARIO (NAVE 2)</div>
+          <div style="font-size:10px; color:#cbd5e1; margin-top:2px;">Cuerpo de la víctima en decúbito prono junto a Tina 4. Muestra ausencia de signos de lucha en cubas.</div>
+        </div>
+        <div style="background:#0a0e14; border:1px solid #334155; padding:8px; border-radius:4px;">
+          <img src="../imagenes/escena_laboratorio_reactivo.png" style="width:100%; height:180px; object-fit:cover; border-radius:2px;" alt="Laboratorio">
+          <div style="font-size:10.5px; font-family:var(--font-mono); color:#facc15; margin-top:6px; font-weight:bold;">IND-02: ESCENARIO PRIMARIO (LABORATORIO)</div>
+          <div style="font-size:10px; color:#cbd5e1; margin-top:2px;">Frasco fracturado de reactivo azul (Sulfato de Cobre) con regla métrica ABFO y manómetro metálico en banco.</div>
+        </div>
+        <div style="background:#0a0e14; border:1px solid #334155; padding:8px; border-radius:4px;">
+          <img src="../imagenes/evidencia_calzado_alfombrilla.png" style="width:100%; height:180px; object-fit:cover; border-radius:2px;" alt="Calzado y alfombrilla">
+          <div style="font-size:10.5px; font-family:var(--font-mono); color:#facc15; margin-top:6px; font-weight:bold;">IND-03: TRANSFERENCIA QUÍMICA SECRIM</div>
+          <div style="font-size:10px; color:#cbd5e1; margin-top:2px;">Macro de alfombrilla y calzado de tacón con reactivo azul cristalizado transferido por pisada directa.</div>
+        </div>
+        <div style="background:#0a0e14; border:1px solid #334155; padding:8px; border-radius:4px;">
+          <img src="../imagenes/mirador_castillo_penafiel.png" style="width:100%; height:180px; object-fit:cover; border-radius:2px;" alt="Castillo Peñafiel">
+          <div style="font-size:10.5px; font-family:var(--font-mono); color:#facc15; margin-top:6px; font-weight:bold;">IND-04: MIRADOR DEL CASTILLO DE PEÑAFIEL</div>
+          <div style="font-size:10px; color:#cbd5e1; margin-top:2px;">Zona de pinar y mirador con vista al castillo donde se registraron las celdas de telefonía de 20:38 a 21:12 h.</div>
+        </div>
+      </div>
+      <div style="text-align:right; margin-top:14px;">
+        <button class="modal-btn" style="background:#0284c7; color:#fff;" onclick="closePhotosModal()">CERRAR FOTOTECA</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: MAPA TÁCTICO SIG -->
+  <div class="success-modal" id="map-modal">
+    <div class="modal-box" style="max-width: 850px; text-align: left; max-height: 85vh; overflow-y: auto;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:10px; margin-bottom:14px;">
+        <h3 style="color:#2dd4bf; font-family:var(--font-mono); font-size:15px;">MAPA TÁCTICO SIG — COMARCA DE PEÑAFIEL / RIBERA DEL DUERO</h3>
+        <button onclick="closeMapModal()" style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;">✕</button>
+      </div>
+
+      <div style="background:#070d14; border:1px solid #1e293b; border-radius:4px; padding:10px; position:relative;">
+        <svg viewBox="0 0 700 360" style="width:100%; height:auto; display:block;">
+          <defs>
+            <pattern id="grid" width="35" height="35" patternUnits="userSpaceOnUse">
+              <path d="M 35 0 L 0 0 0 35" fill="none" stroke="#16202c" stroke-width="0.8"/>
+            </pattern>
+          </defs>
+          <rect width="700" height="360" fill="url(#grid)" />
+
+          <!-- Río Duero -->
+          <path d="M 20 220 C 140 230, 240 180, 350 200 C 460 220, 580 170, 680 190" fill="none" stroke="#0284c7" stroke-width="8" opacity="0.4"/>
+          <text x="350" y="215" fill="#38bdf8" font-size="10" font-family="monospace" letter-spacing="2">RÍO DUERO</text>
+
+          <!-- Carretera N-122 -->
+          <path d="M 20 140 C 200 135, 400 145, 680 130" fill="none" stroke="#f59e0b" stroke-width="4" stroke-dasharray="8,4" opacity="0.7"/>
+          <text x="120" y="130" fill="#fbbf24" font-size="9" font-family="monospace">CARRETERA NACIONAL N-122 (VALLADOLID &lt;-&gt; ARANDA)</text>
+
+          <!-- Camino a Bodega -->
+          <path d="M 450 135 L 450 60" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-dasharray="4,2"/>
+
+          <!-- Puntos Clave -->
+          <circle cx="450" cy="55" r="10" fill="#dc2626" stroke="#fff" stroke-width="2"/>
+          <text x="465" y="55" fill="#ef4444" font-weight="bold" font-size="11" font-family="monospace">BODEGAS VALDELUNA (Escena del Crimen)</text>
+          <text x="465" y="68" fill="#94a3b8" font-size="9" font-family="monospace">N-122 km 349.2 | Salida Finca</text>
+
+          <rect x="435" y="125" width="28" height="18" fill="#0284c7" stroke="#fff" rx="2"/>
+          <text x="440" y="138" fill="#fff" font-weight="bold" font-size="9" font-family="monospace">LPR</text>
+          <text x="370" y="160" fill="#38bdf8" font-size="9" font-family="monospace">Pórtico LPR DGT C-02</text>
+
+          <circle cx="340" cy="180" r="8" fill="#a855f7" stroke="#fff" stroke-width="1.5"/>
+          <text x="250" y="200" fill="#c084fc" font-weight="bold" font-size="10" font-family="monospace">HOTEL LAS CLARAS (Peñafiel)</text>
+          <text x="250" y="212" fill="#94a3b8" font-size="9" font-family="monospace">Distancia a Bodega: 5.8 km</text>
+
+          <polygon points="380,240 395,210 410,240" fill="#eab308" stroke="#fff"/>
+          <text x="415" y="230" fill="#fde047" font-weight="bold" font-size="10" font-family="monospace">MIRADOR DEL CASTILLO</text>
+          <text x="415" y="242" fill="#94a3b8" font-size="9" font-family="monospace">Pinar / Celda BTS Sur (4.2 km)</text>
+
+          <rect x="70" y="130" width="20" height="20" fill="#dc2626" stroke="#fff" rx="2"/>
+          <text x="75" y="144" fill="#fff" font-weight="bold" font-size="9" font-family="monospace">KM</text>
+          <text x="40" y="165" fill="#f87171" font-weight="bold" font-size="9" font-family="monospace">RADAR TUDELA (km 322)</text>
+          <text x="40" y="177" fill="#94a3b8" font-size="8.5" font-family="monospace">A 32 km de Bodega (Hacia Valladolid)</text>
+
+          <circle cx="480" cy="110" r="5" fill="#10b981"/>
+          <path d="M 480 110 L 440 40 A 60 60 0 0 1 520 40 Z" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" stroke-width="0.8"/>
+          <text x="510" y="115" fill="#34d399" font-size="8.5" font-family="monospace">BTS Peñafiel-Norte (Celda 4819)</text>
+
+          <circle cx="360" cy="230" r="5" fill="#10b981"/>
+          <path d="M 360 230 L 330 290 A 60 60 0 0 0 430 270 Z" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" stroke-width="0.8"/>
+          <text x="260" y="260" fill="#34d399" font-size="8.5" font-family="monospace">BTS Peñafiel-Sur (Celda 4821)</text>
+        </svg>
+      </div>
+
+      <div style="background:#0a0e14; border:1px solid #334155; padding:12px; border-radius:4px; margin-top:10px; font-size:11px;">
+        <div style="font-weight:bold; color:#2dd4bf; margin-bottom:6px; font-family:var(--font-mono);">
+          CALCULADORA FORENSE DE VELOCIDAD Y DISTANCIAS:
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div>
+            <label style="color:#94a3b8;">Trayecto a verificar:</label>
+            <select id="route-select" onchange="calcRoute()" style="width:100%; background:#161e29; border:1px solid #334155; color:#fff; padding:6px; font-family:var(--font-mono); margin-top:4px;">
+              <option value="bodega_hotel">Bodegas Valdeluna ➔ Hotel Las Claras (Peñafiel)</option>
+              <option value="bodega_mirador">Bodegas Valdeluna ➔ Mirador del Castillo</option>
+              <option value="bodega_tudela">Bodegas Valdeluna ➔ Radar Tudela de Duero (km 322)</option>
+              <option value="bodega_valladolid">Bodegas Valdeluna ➔ Parking Plaza Mayor Valladolid</option>
+            </select>
+          </div>
+          <div id="route-result" style="background:#111827; border:1px dashed #2dd4bf; padding:8px; border-radius:4px; font-family:var(--font-mono);">
+            <div style="color:#2dd4bf; font-weight:bold;">DISTANCIA: 5.8 km</div>
+            <div>Tiempo a 50-70 km/h: <strong>7 a 9 minutos</strong></div>
+            <div style="color:#94a3b8; font-size:10px;">Ruta urbana y camino asfaltado.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:right; margin-top:14px;">
+        <button class="modal-btn" style="background:#0d9488; color:#fff;" onclick="closeMapModal()">CERRAR MAPA TÁCTICO</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CIRCUITO CERRADO CCTV -->
+  <div class="success-modal" id="cctv-modal">
+    <div class="modal-box" style="max-width: 800px; text-align: left; max-height: 85vh; overflow-y: auto;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:10px; margin-bottom:14px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:#ef4444;"></span>
+          <h3 style="color:#34d399; font-family:var(--font-mono); font-size:15px;">GRABADOR DIGITAL CCTV — BODEGAS VALDELUNA</h3>
+        </div>
+        <button onclick="closeCctvModal()" style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;">✕</button>
+      </div>
+
+      <div style="display:flex; gap:10px; margin-bottom:10px;">
+        <button class="tool-btn" style="background:#065f46; border-color:#34d399; margin:0;" onclick="switchCctv(1)">CAM-01: VERJA PRINCIPAL</button>
+        <button class="tool-btn" style="background:#161e29; border-color:#334155; margin:0;" onclick="switchCctv(2)">CAM-02: BÁSCULA Y TOLVA</button>
+        <button class="tool-btn" style="background:#161e29; border-color:#334155; margin:0;" onclick="switchCctv(3)">CAM-03: TRASERA NAVE 2</button>
+      </div>
+
+      <div style="background:#020617; border:2px solid #334155; border-radius:4px; padding:16px; position:relative; min-height:200px; font-family:var(--font-mono); color:#22c55e;">
+        <div style="display:flex; justify-content:space-between; border-bottom:1px solid #1e293b; padding-bottom:6px; margin-bottom:10px; font-size:11px;">
+          <span id="cctv-cam-title">CANAL: CAM-01 [VERJA NORTE - N-122]</span>
+          <span style="color:#ef4444; font-weight:bold;">● REC [25 FPS]</span>
+        </div>
+
+        <div id="cctv-feed-content" style="background:#070a0e; border:1px dashed #1e293b; padding:14px; min-height:140px;">
+          <!-- Dinámico -->
+        </div>
+      </div>
+
+      <div style="text-align:right; margin-top:14px;">
+        <button class="modal-btn" style="background:#059669; color:#fff;" onclick="closeCctvModal()">CERRAR CCTV</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PISTAS Y ASISTENCIA -->
+  <div class="success-modal" id="hints-modal">
+    <div class="modal-box" style="max-width: 650px; text-align: left; max-height: 85vh; overflow-y: auto;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:10px; margin-bottom:14px;">
+        <h3 style="color:#facc15; font-family:var(--font-mono); font-size:15px;">MESA DE APOYO / CENTRAL DE MANDO (PISTAS)</h3>
+        <button onclick="closeHintsModal()" style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;">✕</button>
+      </div>
+      <p style="font-size:11px; color:#94a3b8; margin-bottom:12px;">
+        Si os encontráis atascados en alguna deducción, desplegad las pistas de forma progresiva. Cada pista está oculta para no arruinaros la experiencia.
+      </p>
+
+      <details style="background:#0a0e14; border:1px solid #334155; padding:10px; border-radius:4px; margin-bottom:8px;">
+        <summary style="font-weight:bold; color:var(--accent-cyan); cursor:pointer;">💡 PISTAS PARA LA FASE 1 (SOBRE A: FALSA ASFIXIA)</summary>
+        <div style="padding-top:8px; font-size:11px; line-height:1.6; color:#cbd5e1;">
+          <p><strong>Nivel 1 (Dónde mirar):</strong> Comparad la posición en la que la Guardia Civil encontró el cuerpo con el apartado de <em>tanatología y livideces</em> del informe médico-forense.</p>
+          <p style="margin-top:6px;"><strong>Nivel 2 (Fórmula horaria):</strong> El estómago tenía 260 gramos de comida apenas descompuesta. Consultad el albarán del catering de la cena para saber a qué hora comió y sumad los 90 a 120 minutos de digestión gástrica.</p>
+        </div>
+      </details>
+
+      <details style="background:#0a0e14; border:1px solid #334155; padding:10px; border-radius:4px; margin-bottom:8px;">
+        <summary style="font-weight:bold; color:var(--accent-cyan); cursor:pointer;">💡 PISTAS PARA LA FASE 2 (SOBRE B: ESCENARIO Y COARTADAS)</summary>
+        <div style="padding-top:8px; font-size:11px; line-height:1.6; color:#cbd5e1;">
+          <p><strong>Nivel 1 (El escenario):</strong> Revisad el informe de luminol (BlueStar). ¿En qué estancia dio positivo la prueba de sangre oculta en rodapiés y botón de montacargas?</p>
+          <p style="margin-top:6px;"><strong>Nivel 2 (La coartada del mirador):</strong> Cruzad los mensajes de WhatsApp entre Lucía y Javier con el informe de las antenas BTS repetidoras de Peñafiel-Sur.</p>
+          <p style="margin-top:6px;"><strong>Nivel 3 (El delito del capataz):</strong> El acta de intervención en el garaje de Javier muestra botellas de vino de colección sustraídas.</p>
+        </div>
+      </details>
+
+      <details style="background:#0a0e14; border:1px solid #334155; padding:10px; border-radius:4px; margin-bottom:8px;">
+        <summary style="font-weight:bold; color:var(--accent-cyan); cursor:pointer;">💡 PISTAS PARA LA FASE 3 (SOBRE C: CONVICCIÓN FINAL)</summary>
+        <div style="padding-top:8px; font-size:11px; line-height:1.6; color:#cbd5e1;">
+          <p><strong>Nivel 1 (Marcos Varela):</strong> Comprobad el informe de documentoscopia sobre el ticket de parking y calculad si era físicamente posible estar en Tudela de Duero a las 20:38 h y en Peñafiel a la vez.</p>
+          <p style="margin-top:6px;"><strong>Nivel 2 (Elena Fontanals):</strong> Cotejad a qué hora dijo que volvió al hotel con el fotograma nocturno del pórtico LPR de la DGT saliendo de la finca y la auditoría de la cerradura RFID.</p>
+          <p style="margin-top:6px;"><strong>Nivel 3 (La prueba química):</strong> Buscad en el informe de SECRIM qué reactivo del laboratorio coincidió al 100% con la muestra del calzado y la alfombrilla del vehículo.</p>
+        </div>
+      </details>
+
+      <div style="text-align:right; margin-top:14px;">
+        <button class="modal-btn" style="background:#ca8a04; color:#000;" onclick="closeHintsModal()">CERRAR PISTAS</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ESTADO DE LA PARTIDA
+    let currentUnlockedPhase = 1;
+    let audioPlaying = false;
+    let audioContext = null;
+
+    function openProfilesModal() { playBeep(750); document.getElementById('profiles-modal').classList.add('show'); }
+    function closeProfilesModal() { playBeep(500); document.getElementById('profiles-modal').classList.remove('show'); }
+
+    function openPhotosModal() { playBeep(750); document.getElementById('photos-modal').classList.add('show'); }
+    function closePhotosModal() { playBeep(500); document.getElementById('photos-modal').classList.remove('show'); }
+
+    function openMapModal() { playBeep(750); document.getElementById('map-modal').classList.add('show'); calcRoute(); }
+    function closeMapModal() { playBeep(500); document.getElementById('map-modal').classList.remove('show'); }
+
+    function openCctvModal() { playBeep(750); document.getElementById('cctv-modal').classList.add('show'); switchCctv(1); }
+    function closeCctvModal() { playBeep(500); document.getElementById('cctv-modal').classList.remove('show'); }
+
+    function openHintsModal() { playBeep(750); document.getElementById('hints-modal').classList.add('show'); }
+    function closeHintsModal() { playBeep(500); document.getElementById('hints-modal').classList.remove('show'); }
+
+    const ROUTES_DB = {
+      'bodega_hotel': { dist: '5.8 km', t90: '6 a 7 min', t120: '4 a 5 min', note: 'Trayecto comarcal Peñafiel Norte a Plaza del Coso. Cruza pórtico LPR a la salida del camino de la finca.' },
+      'bodega_mirador': { dist: '4.2 km', t90: '5 a 6 min', t120: '4 min', note: 'Camino rural hacia la falda sur del cerro del Castillo. Cobertura antena BTS Peñafiel-Sur (Celda 4821).' },
+      'bodega_tudela': { dist: '32 km', t90: '22 min (a 90 km/h)', t120: '16.8 min (a 114 km/h)', note: 'Carretera Nacional N-122. Cinemómetro fijo en km 322. Un vehículo que sale a las 20:10 h pasa por Tudela a las 20:38 h.' },
+      'bodega_valladolid': { dist: '56 km', t90: '42 min', t120: '31 min', note: 'Autovía y acceso a centro urbano de Valladolid (Aparcamiento Plaza Mayor). Saliendo a las 20:10 h se llega al cajero a las 21:02 h.' }
+    };
+
+    function calcRoute() {
+      const sel = document.getElementById('route-select').value;
+      const data = ROUTES_DB[sel];
+      if (data) {
+        document.getElementById('route-result').innerHTML = `
+          <div style="color:#2dd4bf; font-weight:bold;">DISTANCIA REAL: ${data.dist}</div>
+          <div style="margin-top:2px;">Tiempo legal: <strong>${data.t90}</strong></div>
+          <div style="margin-top:2px;">Tiempo velocidad alta: <strong>${data.t120}</strong></div>
+          <div style="color:#94a3b8; font-size:10px; margin-top:4px;">${data.note}</div>
+        `;
+      }
+    }
+
+    const CCTV_FEEDS = {
+      1: {
+        title: 'CANAL: CAM-01 [VERJA NORTE - N-122]',
+        html: `
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:10.5px;">
+            <span>UBICACIÓN: CRUCE CAMINO VALDELUNA CON N-122</span>
+            <span style="color:#facc15;">SENSOR DE MOVIMIENTO ACTIVADO</span>
+          </div>
+          <div style="border-left:2px solid #22c55e; padding-left:10px; font-size:10px; line-height:1.6; color:#a7f3d0;">
+            • 19:15:10 - Furgoneta Catering "La Ribera" (Entrada / Albarán 2201)<br>
+            • 19:38:40 - Salida Nissan Navara (Javier Beltrán)<br>
+            • 20:10:05 - Salida Volvo XC60 Negro (Marcos Varela)<br>
+            • 20:25:12 - Entrada Audi A5 Gris (Elena Fontanals)<br>
+            • <strong style="color:#ef4444;">21:28:44 - SALIDA A GRAN VELOCIDAD: Audi A5 Gris (Elena Fontanals)</strong><br>
+            • 22:36:10 - Entrada silenciosa Nissan Navara Blanca (Javier Beltrán)
+          </div>
+        `
+      },
+      2: {
+        title: 'CANAL: CAM-02 [BÁSCULA DE PESAJE Y TOLVA EXTERIOR]',
+        html: `
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:10.5px;">
+            <span>UBICACIÓN: TOLVA DE RECEPCIÓN DE VENDIMIA</span>
+            <span style="color:#94a3b8;">MODO VISIÓN NOCTURNA IR</span>
+          </div>
+          <div style="border-left:2px solid #38bdf8; padding-left:10px; font-size:10px; line-height:1.6; color:#bae6fd;">
+            • 17:50:00 - Tractor New Holland (5.100 kg Tempranillo - Parcela 08)<br>
+            • 19:08:30 - Tractor John Deere (3.890 kg Tempranillo - Último remolque)<br>
+            • 19:45:00 - Fin de despalillado. Operarios se retiran a vestuarios.<br>
+            • 20:00:00 - Luces de tolva apagadas. Sin actividad posterior registrada.
+          </div>
+        `
+      },
+      3: {
+        title: 'CANAL: CAM-03 [ACCESO TRASERO NAVE 2 - CUBAS]',
+        html: `
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:10.5px;">
+            <span>UBICACIÓN: PORTÓN TRASERO NAVE SUBTERRÁNEA</span>
+            <span style="color:#facc15;">REGISTRO DE APERTURAS</span>
+          </div>
+          <div style="border-left:2px solid #facc15; padding-left:10px; font-size:10px; line-height:1.6; color:#fef08a;">
+            • 20:00:00 - Desconexión automática de extractores de ventilación forzada.<br>
+            • 20:58:14 - Activación del montacargas interno desde Planta 1 hacia Sótano (Nave 2).<br>
+            • 22:36:50 - Portón trasero abierto manualmente desde el exterior.<br>
+            • 22:41:20 - Carga de 3 cajas de madera en caja de furgoneta pick-up.
+          </div>
+        `
+      }
+    };
+
+    function switchCctv(camNum) {
+      playBeep(700);
+      const data = CCTV_FEEDS[camNum];
+      document.getElementById('cctv-cam-title').innerText = data.title;
+      document.getElementById('cctv-feed-content').innerHTML = data.html;
+    }
+
+    function openNotebookModal() { playBeep(750); document.getElementById('notebook-modal').classList.add('show'); }
+    function closeNotebookModal() { playBeep(500); document.getElementById('notebook-modal').classList.remove('show'); }
+
+    function openPressModal() { playBeep(750); document.getElementById('press-modal').classList.add('show'); }
+    function closePressModal() { playBeep(500); document.getElementById('press-modal').classList.remove('show'); }
+
+    // SONIDO PROCEDIMENTAL MEDIANTE WEB AUDIO API (Click y Beeps de terminal)
+    function playBeep(freq = 800, type = 'sine', duration = 0.08) {
+      try {
+        if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.type = type;
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.05, audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+        osc.start();
+        osc.stop(audioContext.currentTime + duration);
+      } catch (e) {
+        // Audio deshabilitado o no interactuado
+      }
+    }
+
+    function switchPhase(phaseNum) {
+      if (phaseNum > currentUnlockedPhase) {
+        alert("FASE BLOQUEADA: Debéis resolver la fase actual y obtener la autorización judicial.");
+        return;
+      }
+      playBeep(600);
+      document.querySelectorAll('.phase-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.phase-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(`phase-${phaseNum}-content`).classList.add('active');
+      document.getElementById(`nav-phase-${phaseNum}`).classList.add('active');
+    }
+
+    // VALIDACIÓN FASE 1
+    function validatePhase1() {
+      playBeep(900);
+      const cause = document.querySelector('input[name="p1_cause"]:checked');
+      const time = document.querySelector('input[name="p1_time"]:checked');
+      const livideces = document.getElementById('p1_livideces').value.toLowerCase();
+      const errBox = document.getElementById('error-p1');
+
+      let errors = [];
+
+      if (!cause || cause.value !== 'homicidio') {
+        errors.push("• La causa médica seleccionada no es correcta o sigue asumiendo el accidente.");
+      }
+
+      if (!livideces.includes('livide') && !livideces.includes('dorsal') && !livideces.includes('espalda') && !livideces.includes('hipostasi')) {
+        errors.push("• El indicio de posición cadavérica debe mencionar las livideces/hipostasias dorsales fijas.");
+      }
+
+      if (!time || time.value !== 'real') {
+        errors.push("• La franja horaria calculada no cuadra con la fase de digestión del ticket de cena.");
+      }
+
+      if (errors.length > 0) {
+        playBeep(220, 'sawtooth', 0.2);
+        errBox.innerHTML = errors.join('<br>');
+        errBox.style.display = 'block';
+      } else {
+        errBox.style.display = 'none';
+        playBeep(1200, 'sine', 0.3);
+        showModal(
+          "OBJETIVO 1 COMPLETADO",
+          "Habéis demostrado que fue un homicidio y no un accidente laboral. El Juez autoriza desprecintar el SOBRE B.",
+          "VALDELUNA-ROMPE-B77",
+          2
+        );
+      }
+    }
+
+    // VALIDACIÓN FASE 2
+    function validatePhase2() {
+      playBeep(900);
+      const scene = document.querySelector('input[name="p2_scene"]:checked');
+      const exLucia = document.getElementById('ex_lucia').checked;
+      const exJavier = document.getElementById('ex_javier').checked;
+      const exMarcos = document.getElementById('ex_marcos').checked;
+      const exElena = document.getElementById('ex_elena').checked;
+      const crime = document.getElementById('p2_capataz_crime').value.toLowerCase();
+      const errBox = document.getElementById('error-p2');
+
+      let errors = [];
+
+      if (!scene || scene.value !== 'laboratorio') {
+        errors.push("• El escenario primario señalado no coincide con los hallazgos de luminol y transferencia.");
+      }
+
+      if (!exLucia || !exJavier || exMarcos || exElena) {
+        errors.push("• La exoneración por coartada en el Mirador del Castillo corresponde exclusivamente a Lucía y Javier.");
+      }
+
+      if (!crime.includes('vino') && !crime.includes('robo') && !crime.includes('hurto') && !crime.includes('botella')) {
+        errors.push("• Debe especificarse el hurto/robo de las cajas de vino histórico por parte de Javier.");
+      }
+
+      if (errors.length > 0) {
+        playBeep(220, 'sawtooth', 0.2);
+        errBox.innerHTML = errors.join('<br>');
+        errBox.style.display = 'block';
+      } else {
+        errBox.style.display = 'none';
+        playBeep(1200, 'sine', 0.3);
+        showModal(
+          "OBJETIVO 2 COMPLETADO",
+          "Escenario primario fijado y sospechosos descartados. Autorizada la apertura del SOBRE C (Pieza de Convicción).",
+          "JUSTICIA-C99-VALDELUNA",
+          3
+        );
+      }
+    }
+
+    // VALIDACIÓN FASE 3
+    function validatePhase3() {
+      playBeep(900);
+      const marcosEx = document.querySelector('input[name="p3_marcos_ex"]:checked');
+      const elenaFlaw = document.querySelector('input[name="p3_elena_flaw"]:checked');
+      const quimica = document.getElementById('p3_quimica').value.toLowerCase();
+      const errBox = document.getElementById('error-p3');
+
+      let errors = [];
+
+      if (!marcosEx || marcosEx.value !== 'coartada_valladolid') {
+        errors.push("• El motivo de descarte de Marcos Varela no es correcto. Revisad el peritaje documental del parking y la velocidad en Tudela de Duero.");
+      }
+
+      if (!elenaFlaw || elenaFlaw.value !== 'dgt_elena') {
+        errors.push("• La falla crítica en la coartada de Elena Fontanals radica en el registro de cámaras LPR de la DGT y su conexión telemática en ruta.");
+      }
+
+      if (!quimica.includes('cobre') && !quimica.includes('sulfato') && !quimica.includes('cuso4')) {
+        errors.push("• El reactivo químico hallado en el calzado y alfombrilla de su vehículo es el Sulfato de Cobre.");
+      }
+
+      if (errors.length > 0) {
+        playBeep(220, 'sawtooth', 0.2);
+        errBox.innerHTML = errors.join('<br>');
+        errBox.style.display = 'block';
+      } else {
+        errBox.style.display = 'none';
+        playBeep(1400, 'sine', 0.5);
+        showModal(
+          "INVESTIGACIÓN CULMINADA",
+          "Las pruebas contra la persona responsable son demoledoras. Procediendo a la emisión del Auto de Procesamiento Judicial.",
+          "CONDENA-FIRME-2024",
+          4
+        );
+      }
+    }
+
+    function showModal(title, desc, code, nextPhase) {
+      document.getElementById('modal-title').innerText = title;
+      document.getElementById('modal-desc').innerText = desc;
+      document.getElementById('modal-code').innerText = code;
+      document.getElementById('success-modal').classList.add('show');
+
+      // Actualizar fase
+      if (nextPhase > currentUnlockedPhase) {
+        currentUnlockedPhase = nextPhase;
+        const navBtn = document.getElementById(`nav-phase-${nextPhase}`);
+        const badge = document.getElementById(`badge-phase-${nextPhase}`);
+        navBtn.classList.remove('locked');
+        badge.innerText = nextPhase === 4 ? "AUTO" : "EN CURSO";
+        badge.style.background = "var(--accent-green)";
+        badge.style.color = "#000";
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('success-modal').classList.remove('show');
+      switchPhase(currentUnlockedPhase);
+    }
+
+    // CONSULTA LPR TRÁFICO DGT
+    const DGT_DB = {
+      '4188KLT': {
+        titular: 'Marcos Varela Ríos',
+        vehiculo: 'Volvo XC60 (Color Negro)',
+        registros: [
+          { hora: '17:45 h', punto: 'N-122 km 348 (Peñafiel Centro) - Sentido Bodega' },
+          { hora: '20:38 h', punto: 'N-122 km 322 (Tudela de Duero) - Sentido Valladolid [VEL: 112 km/h]' },
+          { hora: '21:02 h', punto: 'Aparcamiento Subterráneo Plaza Mayor Valladolid (Cajero P-02)' }
+        ]
+      },
+      '8209FDC': {
+        titular: 'Javier Beltrán Gómez',
+        vehiculo: 'Nissan Navara Pick-Up (Color Blanco)',
+        registros: [
+          { hora: '19:38 h', punto: 'N-122 km 349 (Salida Finca Valdeluna)' },
+          { hora: '20:34 h', punto: 'Camino Mirador del Castillo (Cámara Rural)' },
+          { hora: '22:36 h', punto: 'Camino Acceso Trasero Bodegas Valdeluna' }
+        ]
+      },
+      '5512LMN': {
+        titular: 'Elena Fontanals Puig (Renting Vitis Capital)',
+        vehiculo: 'Audi A5 Sportback (Color Gris Plomo)',
+        registros: [
+          { hora: '19:10 h', punto: 'N-122 Entrada Peñafiel (Hotel Las Claras)' },
+          { hora: '20:25 h', punto: 'Travesía Peñafiel Norte - Dirección Finca Valdeluna' },
+          { hora: '21:28 h', punto: 'Cámara C-02 (Salida Finca Valdeluna - N-122 km 349) [VEL: 92 km/h]' },
+          { hora: '21:48 h', punto: 'Acceso Hotel Convento Las Claras (Peñafiel)' }
+        ]
+      }
+    };
+
+    function searchDGT() {
+      playBeep(700);
+      const query = document.getElementById('dgt-input').value.toUpperCase().replace(/[\s-]/g, '');
+      const container = document.getElementById('dgt-result-container');
+
+      if (!query) return;
+
+      if (DGT_DB[query]) {
+        const item = DGT_DB[query];
+        let html = `
+          <div style="background:#070a0e; border:1px solid var(--accent-cyan); padding:10px; border-radius:4px; font-size:11px;">
+            <div style="color:var(--accent-cyan); font-weight:700; margin-bottom:4px;">MATRÍCULA: ${query}</div>
+            <div><strong>TITULAR:</strong> ${item.titular}</div>
+            <div><strong>VEHÍCULO:</strong> ${item.vehiculo}</div>
+            <table class="dgt-result-table">
+              <thead><tr><th>HORA</th><th>UBICACIÓN RADAR</th></tr></thead>
+              <tbody>
+                ${item.registros.map(r => `<tr><td style="color:var(--accent-amber);">${r.hora}</td><td>${r.punto}</td></tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+        container.innerHTML = html;
+        container.style.display = 'block';
+      } else {
+        container.innerHTML = `
+          <div style="background:#070a0e; border:1px solid #475569; padding:8px; font-size:11px; color:#94a3b8;">
+            No se han registrado pasos para la matrícula [${query}] en el arco de control de la N-122 durante las últimas 24 horas.
+          </div>
+        `;
+        container.style.display = 'block';
+      }
+    }
+
+    // SIMULADOR DE AUDIO LLAMADA 112
+    function toggleAudio112() {
+      const btn = document.getElementById('play-112-btn');
+      const waveform = document.getElementById('waveform');
+      if (!audioPlaying) {
+        audioPlaying = true;
+        btn.innerText = '⏸';
+        waveform.parentElement.parentElement.classList.add('audio-playing');
+        playVoiceSimulation();
+      } else {
+        audioPlaying = false;
+        btn.innerText = '▶';
+        waveform.parentElement.parentElement.classList.remove('audio-playing');
+      }
+    }
+
+    function playVoiceSimulation() {
+      // Simulación de audio con síntesis o tonos
+      if ('speechSynthesis' in window) {
+        const text = "Emergencias 112. Vengan rápido a Bodegas Valdeluna, don Gonzalo está en el suelo de la nave de cubas, no respira.";
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'es-ES';
+        utter.rate = 1.1;
+        utter.pitch = 0.9;
+        utter.onend = () => {
+          audioPlaying = false;
+          document.getElementById('play-112-btn').innerText = '▶';
+          document.getElementById('waveform').parentElement.parentElement.classList.remove('audio-playing');
+        };
+        window.speechSynthesis.speak(utter);
+      }
+    }
+  </script>
+</body>
+</html>

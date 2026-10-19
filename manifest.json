@@ -1,0 +1,26 @@
+{
+  "name": "VESTIGO — Forensic Crime Engine",
+  "short_name": "VESTIGO",
+  "description": "Plataforma de Investigación Criminalística y Deducción Forense",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#070b12",
+  "theme_color": "#070b12",
+  "categories": ["games", "entertainment", "productivity"],
+  "icons": [
+    {
+      "src": "imagenes/vestigo_icon_2d.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "branding/vestigo_icon_2d.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

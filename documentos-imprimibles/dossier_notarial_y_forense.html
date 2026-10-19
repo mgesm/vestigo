@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>DOSSIER JUDICIAL - PIEZA COMPLEMENTARIA: NOTARIAL, BANCARIA Y FOTOGRÁFICA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700;800&family=Cinzel:wght@700&family=Special+Elite&family=Libre+Barcode+39+Text&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 10mm 14mm 10mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #525659;
+      font-family: 'Courier Prime', monospace;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .no-print-bar {
+      background: #1e293b;
+      color: #fff;
+      width: 210mm;
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .print-btn {
+      background: #00e5ff;
+      color: #000;
+      border: none;
+      padding: 9px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .sheet {
+      background-color: #fcfbf7;
+      width: 210mm;
+      box-sizing: border-box;
+      padding: 12mm 15mm;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    @media print {
+      html, body {
+        background: transparent !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .no-print-bar {
+        display: none !important;
+      }
+      .sheet {
+        background-color: transparent !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+    }
+
+    .official-header {
+      border-bottom: 2px solid #000;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .official-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      line-height: 1.3;
+    }
+
+    .case-number {
+      font-family: 'Courier Prime', monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      border: 1.5px solid #000;
+      padding: 4px 8px;
+      background: #f0eee6;
+      text-align: right;
+      line-height: 1.2;
+    }
+
+    .stamp-confidential {
+      position: absolute;
+      top: 30px;
+      right: 35px;
+      border: 2.5px solid #b91c1c;
+      color: #b91c1c;
+      font-family: 'Special Elite', cursive;
+      font-size: 15px;
+      font-weight: bold;
+      padding: 4px 10px;
+      text-transform: uppercase;
+      transform: rotate(-8deg);
+      opacity: 0.85;
+      letter-spacing: 2px;
+      pointer-events: none;
+    }
+
+    h1.doc-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 12.5px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 6px 0 12px 0;
+      text-decoration: underline;
+    }
+
+    p.legal-text {
+      font-size: 10px;
+      line-height: 1.55;
+      text-align: justify;
+      margin-bottom: 8px;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0;
+      font-size: 9.5px;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid #71717a;
+      padding: 4px 6px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background-color: #e4e4e7;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 9px;
+    }
+
+    .signature-area {
+      margin-top: 10px;
+      padding-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 9.5px;
+      line-height: 1.3;
+    }
+
+    .signature-box {
+      width: 175px;
+      border-top: 1px dotted #000;
+      padding-top: 5px;
+      text-align: center;
+    }
+
+    /* ESTILO PAPEL TIMBRADO NOTARIAL */
+    .notarial-border {
+      border: 2px double #1e3a8a;
+      padding: 16px;
+      background: #faf8f0;
+      position: relative;
+    }
+
+    .notarial-stamp {
+      width: 80px;
+      height: 80px;
+      border: 2px dashed #1e3a8a;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 7.5px;
+      text-align: center;
+      color: #1e3a8a;
+      font-weight: 700;
+      font-family: 'Cinzel', serif;
+      transform: rotate(-15deg);
+      position: absolute;
+      bottom: 20px;
+      right: 30px;
+      opacity: 0.85;
+    }
+
+    .fnmt-code {
+      font-family: 'Courier Prime', monospace;
+      font-size: 8px;
+      color: #475569;
+      letter-spacing: 2px;
+      border-bottom: 1px solid #cbd5e1;
+      padding-bottom: 2px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* ESTILO EXTRACTO BANCARIO */
+    .bank-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid #0079c1;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+
+    .bank-logo {
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 20px;
+      color: #0079c1;
+      letter-spacing: -0.5px;
+    }
+
+    .bank-badge {
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 9px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* NOTA MANUSCRITA RESCATADA */
+    .handwritten-note {
+      background: #fef9c3;
+      border: 1px solid #facc15;
+      box-shadow: 2px 4px 10px rgba(0,0,0,0.15);
+      padding: 14px 18px;
+      font-family: 'Caveat', cursive;
+      font-size: 19px;
+      line-height: 1.4;
+      color: #1e1b4b;
+      transform: rotate(-1deg);
+      margin: 10px 0;
+      position: relative;
+    }
+
+    .paper-tear {
+      position: absolute;
+      top: -8px;
+      left: 20px;
+      background: #fef08a;
+      width: 40px;
+      height: 12px;
+      border: 1px dashed #ca8a04;
+      transform: rotate(3deg);
+    }
+
+    /* FOTOGRAFÍAS JUDICIALES */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 10px 0;
+    }
+
+    .evidence-photo-card {
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      padding: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .photo-frame {
+      width: 100%;
+      height: 165px;
+      background: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-placeholder {
+      font-size: 10px;
+      color: #94a3b8;
+      text-align: center;
+      padding: 10px;
+      line-height: 1.4;
+    }
+
+    .photo-metric-marker {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      background: #facc15;
+      color: #000;
+      font-family: 'Inter', sans-serif;
+      font-size: 8px;
+      font-weight: 800;
+      padding: 2px 5px;
+      border: 1px solid #000;
+      letter-spacing: 0.5px;
+    }
+
+    .photo-card-info {
+      margin-top: 6px;
+      font-size: 9px;
+      line-height: 1.35;
+      color: #334155;
+    }
+
+    .photo-card-title {
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      color: #0f172a;
+      margin-bottom: 2px;
+      font-size: 9.5px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .keycard-box {
+      border: 2px solid #000;
+      border-radius: 8px;
+      width: 85mm;
+      height: 54mm;
+      padding: 10px;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 2px 4px 10px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print-bar">
+    <div>
+      <strong>MATERIAL ANEXO: PIEZA NOTARIAL, BANCARIA Y FOTO-FORENSE</strong>
+      <div style="font-size: 11px; color: #94a3b8;">Fotografías de escena de crimen, testamento de la víctima, extracto bancario y auditoría de accesos.</div>
+    </div>
+    <button class="print-btn" onclick="window.print()">🖨️ IMPRIMIR PIEZA ANEXA (PDF / PAPEL)</button>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 1: COPIA SIMPLE DEL TESTAMENTO NOTARIAL             -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div class="notarial-border">
+      <div class="fnmt-code">
+        <span>TIMBRE DEL ESTADO // CLASE 8ª // SERIE 0A-9418290</span>
+        <span>COLEGIO NOTARIAL DE CASTILLA Y LEÓN</span>
+      </div>
+
+      <div style="text-align: center; margin-bottom: 12px; border-bottom: 1px solid #1e3a8a; padding-bottom: 6px;">
+        <div style="font-family: 'Cinzel', serif; font-size: 15px; font-weight: 700; color: #1e3a8a; letter-spacing: 1px;">
+          DON CARLOS MENÉNDEZ PIDAL
+        </div>
+        <div style="font-size: 9px; color: #475569;">NOTARIO DEL ILUSTRE COLEGIO NOTARIAL DE VALLADOLID — RESIDENCIA EN PEÑAFIEL</div>
+        <div style="font-size: 9px; font-weight: bold; margin-top: 4px;">NÚMERO DE PROTOCOLO: 412 / 2023</div>
+      </div>
+
+      <h1 class="doc-title" style="text-decoration: none; font-size: 11.5px; margin-bottom: 8px;">
+        COPIA SIMPLE DE TESTAMENTO ABIERTO OTORGADO POR D. GONZALO DE LA SERNA Y MENDIETA
+      </h1>
+
+      <p class="legal-text">
+        En la Villa de Peñafiel, a doce de enero de dos mil veintitrés, ante mí, CARLOS MENÉNDEZ PIDAL, Notario del Ilustre Colegio Notarial, comparece <strong>DON GONZALO DE LA SERNA Y MENDIETA</strong>, mayor de edad, viudo de sus únicas nupcias con Dña. Carmen Montes Rebollo, enólogo y vecino de Peñafiel. A mi juicio tiene el compareciente la capacidad legal necesaria para otorgar el presente TESTAMENTO ABIERTO y, a tal efecto:
+      </p>
+
+      <p class="legal-text"><strong>DISPONE:</strong></p>
+      <p class="legal-text">
+        <strong>PRIMERA.-</strong> Revoca todo testamento y disposición mortis causa anterior al presente acto.<br>
+        <strong>SEGUNDA.-</strong> Instituye por su <strong>ÚNICA Y UNIVERSAL HEREDERA</strong> en el tercio de legítima estricta y tercio de mejora a su única hija, <strong>DOÑA LUCÍA DE LA SERNA MONTES</strong>, consolidando en su persona la plena propiedad de los viñedos históricos familiares y la marca comercial "Bodegas Valdeluna".<br>
+        <strong>TERCERA.- CLÁUSULA DE PROTECCIÓN SOCIETARIA:</strong> Prohíbe expresamente la enajenación forzosa, liquidación o venta a fondos de capital riesgo o terceros de la finca solariega de Peñafiel durante un plazo de diez años desde su fallecimiento, confiando la dirección enológica y el veto de cualquier transmisión accionarial a su referida hija Lucía.<br>
+        <strong>CUARTA.- LEGADO CONDICIONADO:</strong> Con cargo al tercio de libre disposición, lega a su sobrino político y Director Financiero, <strong>DON MARCOS VARELA RÍOS</strong>, un 5% de los derechos económicos de la sociedad, <em>quedando dicho legado estrictamente condicionado y subordinado a la ratificación judicial y auditoría mercantil limpia y favorable de su gestión contable</em> al frente de la sociedad, revocándose en caso de dolo, fraude o perjuicio patrimonial contra la bodega.
+      </p>
+
+      <div class="notarial-stamp">
+        CARLOS MENÉNDEZ<br>NOTARIO<br>PEÑAFIEL
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL TESTADOR:<br>Gonzalo de la Serna</div>
+      <div class="signature-box">ANTE MÍ, EL NOTARIO:<br>Carlos Menéndez Pidal</div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 2: EXTRACTO BANCARIO OFICIAL CAIXABANK             -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="bank-header">
+        <div>
+          <div class="bank-logo">CaixaBank</div>
+          <div style="font-size: 8.5px; color: #475569;">OFICINA 0482 - PEÑAFIEL (PLAZA DEL COSO 14)</div>
+        </div>
+        <div style="text-align: right;">
+          <span class="bank-badge">EXTRACTO BANCARIO FISCAL</span>
+          <div style="font-size: 9px; color: #475569; margin-top: 4px;">EMISIÓN: 05/10/2024 · 09:12 H</div>
+        </div>
+      </div>
+
+      <div style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; margin-bottom: 10px; font-size: 9.5px;">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 8px;">
+          <div><strong>TITULAR:</strong> BODEGAS VALDELUNA S.A. (CIF: A-47091244)</div>
+          <div><strong>MONEDA:</strong> EUR (€)</div>
+          <div><strong>CUENTA CORRIENTE:</strong> ES84 2100 0482 11 0200389104</div>
+          <div><strong>PERÍODO:</strong> 01/09/2024 al 04/10/2024</div>
+        </div>
+      </div>
+
+      <h1 class="doc-title" style="margin-bottom: 6px;">MOVIMIENTOS DE CUENTA CORRIENTE EMPRESARIAL</h1>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>FECHA</th>
+            <th>CONCEPTO / BENEFICIARIO</th>
+            <th>REFERENCIA</th>
+            <th>IMPORTE (€)</th>
+            <th>SALDO DISPONIBLE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>02/09/2024</td>
+            <td>ABONO EXPORTACIÓN - CONTINENTAL WINES UK</td>
+            <td>REM-99410</td>
+            <td style="color:#166534; font-weight:bold;">+ 42.800,00</td>
+            <td>68.420,15 €</td>
+          </tr>
+          <tr>
+            <td>10/09/2024</td>
+            <td>PAGO SUMINISTRO ELÉCTRICO IBERDROLA</td>
+            <td>REC-04182</td>
+            <td style="color:#b91c1c;">- 3.840,50</td>
+            <td>64.579,65 €</td>
+          </tr>
+          <tr style="background:#fef2f2;">
+            <td><strong>15/09/2024</strong></td>
+            <td><strong>TRANSFERENCIA SALIENTE: VITISUR SERVICIOS ENOLÓGICOS S.L.</strong></td>
+            <td><strong>TRF-88192</strong></td>
+            <td style="color:#b91c1c; font-weight:bold;">- 36.900,00</td>
+            <td>27.679,65 €</td>
+          </tr>
+          <tr>
+            <td>22/09/2024</td>
+            <td>ANTICIPO CAMPAÑA VENDIMIA (18 OPERARIOS AGRÍCOLAS)</td>
+            <td>NOM-SEP-24</td>
+            <td style="color:#b91c1c;">- 14.400,00</td>
+            <td>13.279,65 €</td>
+          </tr>
+          <tr>
+            <td>30/09/2024</td>
+            <td>LIQUIDACIÓN MENSUAL VISA BUSINESS (MARCOS VARELA)</td>
+            <td>TARJ-4109</td>
+            <td style="color:#b91c1c;">- 2.810,40</td>
+            <td>10.469,25 €</td>
+          </tr>
+          <tr style="background:#fef2f2;">
+            <td><strong>02/10/2024</strong></td>
+            <td><strong>TRANSFERENCIA SALIENTE: VITISUR SERVICIOS ENOLÓGICOS S.L.</strong></td>
+            <td><strong>TRF-90214</strong></td>
+            <td style="color:#b91c1c; font-weight:bold;">- 36.900,00</td>
+            <td style="color:#b91c1c; font-weight:bold;">- 26.430,75 € (DESCUBIERTO)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="border: 1px solid #b91c1c; background: #fff5f5; padding: 8px; margin-top: 8px; font-size: 9px; line-height: 1.4;">
+        <strong style="color: #b91c1c;">DILIGENCIA POLICIAL DE INCORPORACIÓN:</strong><br>
+        La sociedad beneficiaria <em>Vitisur Servicios Enológicos S.L.</em> carece de empleados y actividad real. Está domiciliada en un buzón postal de Valladolid, figurando como administradora única la cuñada de Marcos Varela Ríos. Las salidas acumuladas suman 442.800 € en 12 meses, generando una situación de quiebra técnica inminente descubierta por Gonzalo horas antes de morir.
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL INTERVENTOR CAIXABANK<br>(Firma y sello sucursal)</div>
+      <div class="signature-box">POLICÍA JUDICIAL (UOPJ)<br>(Recepción de oficio)</div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 3: LIBRO OFICIAL DE VENDIMIA (D.O. RIBERA)          -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="official-header">
+        <div class="official-title">
+          CONSEJO REGULADOR DE LA D.O. RIBERA DEL DUERO<br>
+          SERVICIO TÉCNICO DE CONTROL DE VENDIMIA Y BÁSCULAS<br>
+          <span style="font-size: 9px; font-weight: normal;">Libro de Registro Oficial de Entradas de Uva — Campaña 2024</span>
+        </div>
+        <div class="case-number">
+          FOLIO OFICIAL: CR-2024-819<br>
+          BODEGA INSCRITA: Nº 084
+        </div>
+      </div>
+
+      <h1 class="doc-title">REGISTRO DIARIO DE PESAJE Y ENTRADA A TOLVA</h1>
+
+      <p class="legal-text">
+        <strong>FECHA: VIERNES, 04 DE OCTUBRE DE 2024</strong> | <strong>BODEGA: VALDELUNA (PEÑAFIEL)</strong><br>
+        Certificación facultativa de pesajes realizados en la báscula de pesaje de entrada a la tolva exterior:
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>HORA PESAJE</th>
+            <th>TRACTOR / REMOLQUE</th>
+            <th>PARCELA DE ORIGEN</th>
+            <th>VARIEDAD</th>
+            <th>PESO NETO (KG)</th>
+            <th>º BAUMÉ</th>
+            <th>DESTINO ENCUBE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>16:25 h</td>
+            <td>John Deere (VA-4102-E)</td>
+            <td>Pago de los Arcos (Parc. 14)</td>
+            <td>Tempranillo 100%</td>
+            <td>4.250 kg</td>
+            <td>13.8º</td>
+            <td>Tina 2 (Acero)</td>
+          </tr>
+          <tr>
+            <td>17:40 h</td>
+            <td>New Holland (VA-8819-D)</td>
+            <td>Valdeluna Alta (Parc. 08)</td>
+            <td>Tempranillo 100%</td>
+            <td>5.100 kg</td>
+            <td>14.1º</td>
+            <td>Tina 3 (Acero)</td>
+          </tr>
+          <tr style="background:#ecfdf5;">
+            <td><strong>19:08 h</strong></td>
+            <td><strong>John Deere (VA-4102-E)</strong></td>
+            <td><strong>Laderas del Molino (Parc. 02)</strong></td>
+            <td><strong>Tempranillo 100%</strong></td>
+            <td><strong>3.890 kg</strong></td>
+            <td><strong>14.3º</strong></td>
+            <td><strong>TINA 4 (Nave 2 Subterránea)</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="background:#fff; border:1px solid #71717a; padding:10px; margin-top:8px;">
+        <div style="font-size:9.5px; font-weight:bold; margin-bottom:4px; color:#1e3a8a;">
+          OBSERVACIONES TÉCNICAS ASENTADAS POR EL CAPATAZ D. JAVIER BELTRÁN:
+        </div>
+        <p style="font-family:'Caveat', cursive; font-size:18px; line-height:1.4; color:#1e293b;">
+          "19:45 h: Descarga y despalillado del último remolque terminada en Tina 4. Uva muy sana con alta carga de azúcares (14.3º Baumé). Se añade levadura seleccionada y se cierra tapa superior. La fermentación tumultuosa arrancará con fuerza esta noche desprendiendo fuerte gas carbónico. Dejo activado el extractor en modo automático hasta las 20:00 h según ordenanza laboral."
+        </p>
+      </div>
+
+      <div style="margin-top:10px; font-size:9.5px; line-height:1.45; color:#475569;">
+        <strong>VERIFICACIÓN DEL VEEDOR TÉCNICO DEL CONSEJO REGULADOR:</strong><br>
+        Acreditada la presencia del Veedor oficial D. Raúl Sanchís hasta las 19:30 h en la báscula de pesaje. No se registró ninguna entrada de vehículos agrícolas con posterioridad a las 19:15 h.
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL CAPATAZ RESPONSABLE:<br>Javier Beltrán Gómez</div>
+      <div class="signature-box">EL VEEDOR DEL CONSEJO:<br>Raúl Sanchís (Nº 19)</div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 4: AUDITORÍA DE CERRADURA ELECTRÓNICA HOTEL         -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="official-header">
+        <div class="official-title">
+          HOTEL CONVENTO LAS CLARAS **** (PEÑAFIEL)<br>
+          DEPARTAMENTO DE SEGURIDAD Y SISTEMAS DE CONTROL<br>
+          <span style="font-size: 9px; font-weight: normal;">Registro Telemático de Cerraduras RFID TESA Hotel (Assa Abloy)</span>
+        </div>
+        <div class="case-number">
+          LOG AUDITORÍA: HAB-204<br>
+          FECHA: 04-05 OCTUBRE 2024
+        </div>
+      </div>
+
+      <h1 class="doc-title">REPORTE FORENSE DE LECTURAS DE CERRADURA MAGNÉTICA</h1>
+
+      <p class="legal-text">
+        A requerimiento de la Unidad Orgánica de Policía Judicial (UOPJ), se extrae la memoria de eventos volátil no modificable de la cerradura electromecánica de proximidad instalada en la puerta de la <strong>Habitación 204</strong>, asignada a la huésped <strong>Dña. Elena Fontanals Puig</strong>:
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>TIMESTAMP</th>
+            <th>TARJETA / DISPOSITIVO</th>
+            <th>USUARIO / TIPO</th>
+            <th>EVENTO REGISTRADO</th>
+            <th>ESTADO RESULTANTE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>04/10/2024 14:12:08</td>
+            <td>UID-99142-M</td>
+            <td>Recepción (Tarjeta Maestra)</td>
+            <td>Apertura de servicio / Check-in</td>
+            <td>DESBLOQUEO OK</td>
+          </tr>
+          <tr>
+            <td>04/10/2024 14:35:40</td>
+            <td>UID-204-A (Azul)</td>
+            <td>Elena Fontanals (Huésped)</td>
+            <td>Apertura tarjeta cliente</td>
+            <td>DESBLOQUEO OK</td>
+          </tr>
+          <tr>
+            <td>04/10/2024 18:24:19</td>
+            <td>UID-204-A (Azul)</td>
+            <td>Elena Fontanals (Huésped)</td>
+            <td>Apertura tras regreso de Peñafiel</td>
+            <td>DESBLOQUEO OK</td>
+          </tr>
+          <tr style="background:#fef2f2;">
+            <td><strong>04/10/2024 20:20:11</strong></td>
+            <td>MEC-MANUAL</td>
+            <td>Elena Fontanals (Manilla interior)</td>
+            <td><strong>SALIDA DE LA HABITACIÓN</strong></td>
+            <td><strong>PUERTA CERRADA CON PESTILLO</strong></td>
+          </tr>
+          <tr style="background:#fef2f2;">
+            <td><strong>04/10/2024 21:48:32</strong></td>
+            <td>UID-204-A (Azul)</td>
+            <td>Elena Fontanals (Huésped)</td>
+            <td><strong>APERTURA TARJETA CLIENTE</strong></td>
+            <td><strong>DESBLOQUEO OK (ENTRADA DEFINITIVA)</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="background:#eff6ff; border:1px solid #bfdbfe; padding:10px; margin-top:10px; font-size:9.5px; line-height:1.5;">
+        <strong style="color:#1e3a8a;">CONCLUSIÓN PERICIAL DE POLICÍA JUDICIAL:</strong><br>
+        1. La investigada Elena Fontanals Puig permaneció <strong>físicamente fuera de su habitación de hotel entre las 20:20:11 h y las 21:48:32 h</strong> de manera ininterrumpida.<br>
+        2. Dicho registro telemático <strong>invalida por completo su declaración oficial</strong> en la que aseguró haber regresado al hotel a las 20:54 h.<br>
+        3. Su entrada al hotel a las 21:48 h concuerda con el paso de su vehículo Audi A5 saliendo de la bodega a las 21:28 h (captado por el pórtico LPR de la DGT) y el tiempo de trayecto hasta el centro de Peñafiel.
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL DIRECTOR DE SEGURIDAD<br>Hotel Convento Las Claras</div>
+      <div class="signature-box">EL AGENTE INSTRUCTOR<br>Guardia Civil (TIP 84.920)</div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 5: NOTA MANUSCRITA RESCATADA Y PRUEBAS DE BOLSILLO  -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">EVIDENCIA FÍSICA</div>
+      <div class="official-header">
+        <div class="official-title">
+          GUARDIA CIVIL — INSPECCIÓN OCULAR TÉCNICO-POLICIAL<br>
+          PIEZAS DE CONVICCIÓN Y EFECTOS INTERVENIDOS<br>
+          <span style="font-size: 9px; font-weight: normal;">D.P. 402/2024 // Acta de Recogida de Vestigios Documentales</span>
+        </div>
+        <div class="case-number">
+          EVIDENCIA Nº: EV-DOC-04<br>
+          LUGAR: LABORATORIO BODEGA
+        </div>
+      </div>
+
+      <h1 class="doc-title" style="margin-bottom: 8px;">EFECTOS FÍSICOS RECUPERADOS EN LA ESCENA</h1>
+
+      <p class="legal-text">
+        <strong>1. NOTA MANUSCRITA ARRUGADA RECUPERADA DE LA PAPELERA METÁLICA DEL DESPACHO:</strong><br>
+        Manuscrito en papel con membrete de Bodegas Valdeluna, con grafía identificada indubitadamente como perteneciente al finado D. Gonzalo de la Serna y Mendieta:
+      </p>
+
+      <div class="handwritten-note">
+        <div class="paper-tear"></div>
+        Viernes 4 Oct - 18:40 h.<br>
+        Llamada de Barral (Banco Santander): ¡El aval de 2,4M presentado por Elena de Vitis Capital es FALSO! El Banque Léman suizo no lo reconoce. Quieren liquidar y desmantelar la bodega...<br>
+        La he citado aquí a las 20:30 h. O se retira de la venta y renuncia a todo o llamo al Cuartel de la Guardia Civil hoy mismo. ¡No destruirá el legado de mi padre!
+      </div>
+
+      <p class="legal-text" style="margin-top: 14px;">
+        <strong>2. TARJETA LLAVE MAGNÉTICA DEL HOTEL RECUPERADA EN EL BOLSILLO DE ELENA FONTANALS:</strong>
+      </p>
+
+      <div style="display: flex; gap: 20px; align-items: center; margin-top: 8px;">
+        <div class="keycard-box">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 4px;">
+            <span style="font-size: 11px; font-weight: bold; letter-spacing: 1px;">HOTEL CONVENTO LAS CLARAS</span>
+            <span style="font-size: 8px; color: #38bdf8;">★★★★</span>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 9px; color: #94a3b8; text-transform: uppercase;">Habitación</div>
+            <div style="font-size: 26px; font-weight: 800; font-family: 'Inter', sans-serif; letter-spacing: 2px; color: #facc15;">204</div>
+          </div>
+          <div style="font-size: 7px; color: #64748b; display: flex; justify-content: space-between;">
+            <span>CHIP RFID ASSA ABLOY</span>
+            <span>PEÑAFIEL (VALLADOLID)</span>
+          </div>
+        </div>
+
+        <div style="flex: 1; font-size: 9px; line-height: 1.45; background: #fff; border: 1px dashed #71717a; padding: 10px;">
+          <strong>RESEÑA TÉCNICA DEL ELEMENTO:</strong><br>
+          • Tarjeta de radiofrecuencia (RFID) UID-204-A intervenida a Dña. Elena Fontanals en el momento de su detención preliminar.<br>
+          • La cinta magnética inversa y la superficie plástica fueron sometidas a revelado dactiloscópico por cianoacrilato, obteniéndose una huella uniprocedente coincidente con el dedo índice derecho de la portadora.
+        </div>
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL INSTRUCTOR DEL ATESTADO</div>
+      <div class="signature-box">EL SECRETARIO DE POLICÍA JUDICIAL</div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 6: ÁLBUM FOTOGRÁFICO DE POLICÍA CIENTÍFICA          -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">FOTOGRAFÍA FORENSE</div>
+      <div class="official-header">
+        <div class="official-title">
+          DIRECCIÓN GENERAL DE LA GUARDIA CIVIL<br>
+          DEPARTAMENTO DE IDENTIFICACIÓN Y FOTOGRAFÍA JUDICIAL<br>
+          <span style="font-size: 9px; font-weight: normal;">Inspección Ocular Técnico-Policial // Diligencias 402/2024</span>
+        </div>
+        <div class="case-number">
+          ÁLBUM FOTOGRÁFICO Nº: 04-F<br>
+          FECHA: 05/10/2024
+        </div>
+      </div>
+
+      <h1 class="doc-title" style="margin-bottom: 6px;">REPORTE FOTOGRÁFICO DE VESTIGIOS EN LA ESCENA DEL CRIMEN</h1>
+
+      <div class="photo-grid">
+        <!-- FOTO 1: TINA 4 BODEGA -->
+        <div class="evidence-photo-card">
+          <div class="photo-frame">
+            <img src="../imagenes/escena_tina4_bodega.png" alt="Escena Tina 4" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="photo-placeholder" style="display:none;">
+              [FOTOGRAFÍA POLICIAL JUDICIAL: NAVE 2 DE FERMENTACIÓN]<br>
+              Depósito Tina 4 con silueta de tiza en el suelo, charco de mosto y testigo métrico forense nº 1.
+            </div>
+            <span class="photo-metric-marker">IND-01</span>
+          </div>
+          <div class="photo-card-info">
+            <div class="photo-card-title">
+              <span>FIG. 1: ESCENARIO SECUNDARIO (NAVE 2)</span>
+              <span style="color:#b91c1c;">07:35 H</span>
+            </div>
+            Ubicación del cadáver junto a Tina 4. Posición decúbito prono con cara hacia el suelo. Ausencia de salpicaduras hemáticas en las paredes metálicas de la cuba.
+          </div>
+        </div>
+
+        <!-- FOTO 2: LABORATORIO QUÍMICO -->
+        <div class="evidence-photo-card">
+          <div class="photo-frame">
+            <img src="../imagenes/escena_laboratorio_reactivo.png" alt="Laboratorio reactivo azul" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="photo-placeholder" style="display:none;">
+              [FOTOGRAFÍA POLICIAL JUDICIAL: LABORATORIO ENOLÓGICO 1ª PLANTA]<br>
+              Frasco de borosilicato roto, charco de reactivo azul turquesa desecado en rodapié y regla métrica en L.
+            </div>
+            <span class="photo-metric-marker">IND-02</span>
+          </div>
+          <div class="photo-card-info">
+            <div class="photo-card-title">
+              <span>FIG. 2: ESCENARIO PRIMARIO (LABORATORIO)</span>
+              <span style="color:#b91c1c;">11:20 H</span>
+            </div>
+            Frasco roto de Sulfato de Cobre al 10% en suelo junto al banco de pruebas. Trazas de reactivo azul y sangre lavada detectada con luminol en rodapié contiguo.
+          </div>
+        </div>
+
+        <!-- FOTO 3: CALZADO Y ALFOMBRILLA -->
+        <div class="evidence-photo-card">
+          <div class="photo-frame">
+            <img src="../imagenes/evidencia_calzado_alfombrilla.png" alt="Calzado y alfombrilla" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="photo-placeholder" style="display:none;">
+              [FOTOGRAFÍA PERICIAL SECRIM: MACRO DE TRANSFERENCIA QUÍMICA]<br>
+              Tacón de calzado intervenido y alfombrilla de conductor con residuos de cristales azul turquesa.
+            </div>
+            <span class="photo-metric-marker">IND-03</span>
+          </div>
+          <div class="photo-card-info">
+            <div class="photo-card-title">
+              <span>FIG. 3: MACROFOTOGRAFÍA VESTIGIO QUÍMICO</span>
+              <span style="color:#b91c1c;">16:45 H</span>
+            </div>
+            Cotejo de cristales de sulfato de cobre transferidos por pisada directa sobre el reactivo derramado hacia el calzado de tacón y la moqueta del vehículo intervenido.
+          </div>
+        </div>
+
+        <!-- FOTO 4: MIRADOR DEL CASTILLO -->
+        <div class="evidence-photo-card">
+          <div class="photo-frame">
+            <img src="../imagenes/mirador_castillo_penafiel.png" alt="Mirador Castillo Peñafiel" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="photo-placeholder" style="display:none;">
+              [FOTOGRAFÍA NOCTURNA: MIRADOR DEL CASTILLO DE PEÑAFIEL]<br>
+              Vista panorámica del cerro y castillo iluminado desde la zona de pinar donde se registraron los móviles.
+            </div>
+            <span class="photo-metric-marker">IND-04</span>
+          </div>
+          <div class="photo-card-info">
+            <div class="photo-card-title">
+              <span>FIG. 4: MIRADOR DEL CASTILLO (COARTADA)</span>
+              <span style="color:#b91c1c;">20:45 H</span>
+            </div>
+            Ubicación del pinar del Mirador del Castillo, a 4,2 km de la bodega. Zona de sombra visual y cobertura exclusiva de la celda BTS Peñafiel-Sur (Celda ID 4821).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL FOTÓGRAFO JUDICIAL<br>Guardia Civil (TIP 19.802)</div>
+      <div class="signature-box">EL OFICIAL DE CRIMINALÍSTICA<br>(SECRIM Valladolid)</div>
+    </div>
+  </div>
+
+</body>
+</html>

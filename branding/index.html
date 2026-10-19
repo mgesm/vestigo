@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>VESTIGO — Identidad Visual y App Icon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #070a0f;
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 80px 20px;
+    }
+
+    .container {
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    /* HEADER */
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+    }
+
+    .brand-tag {
+      font-family: 'Courier Prime', monospace;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: #00e5ff;
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      padding: 6px 14px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+
+    h1 span {
+      color: #00e5ff;
+      text-shadow: 0 0 25px rgba(0, 229, 255, 0.6);
+    }
+
+    p.tagline {
+      font-size: 16px;
+      color: #94a3b8;
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* HERO SHOWCASE CARD */
+    .hero-card {
+      background: linear-gradient(145deg, #0f172a, #090e17);
+      border: 1px solid #1e293b;
+      border-radius: 24px;
+      padding: 50px 40px;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 40px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 229, 255, 0.08);
+    }
+
+    .icon-hero-wrap {
+      position: relative;
+    }
+
+    .icon-glow-backdrop {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(0, 229, 255, 0.25) 0%, transparent 70%);
+      filter: blur(40px);
+      z-index: 1;
+    }
+
+    .app-icon-img {
+      position: relative;
+      z-index: 2;
+      width: 280px;
+      height: 280px;
+      border-radius: 64px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(0, 229, 255, 0.3);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+    }
+
+    .app-icon-img:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 50px rgba(0, 229, 255, 0.5);
+    }
+
+    .hero-details {
+      max-width: 480px;
+    }
+
+    .hero-details h2 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      color: #fff;
+    }
+
+    .hero-details p {
+      font-size: 14px;
+      color: #cbd5e1;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .badge-pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 30px;
+    }
+
+    .pill {
+      font-family: 'Courier Prime', monospace;
+      font-size: 11px;
+      background: #1e293b;
+      color: #94a3b8;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #334155;
+    }
+
+    .pill.active {
+      background: rgba(0, 229, 255, 0.15);
+      color: #00e5ff;
+      border-color: #00e5ff;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #00e5ff;
+      color: #000;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      font-family: 'Courier Prime', monospace;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: #38bdf8;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+    }
+
+    .btn-secondary {
+      background: #1e293b;
+      color: #fff;
+      border: 1px solid #334155;
+    }
+
+    .btn-secondary:hover {
+      background: #334155;
+      box-shadow: none;
+    }
+
+    /* GRID DE PRESENTACIÓN */
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin: 40px 0 20px 0;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 18px;
+      background: #00e5ff;
+      border-radius: 2px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+
+    @media (max-width: 600px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 16px;
+      padding: 28px;
+    }
+
+    /* WORDMARK PREVIEW */
+    .wordmark-wrap {
+      width: 100%;
+      background: #06090e;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .wordmark-img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* ESCALAS DE TAMAÑO DE LA APP */
+    .sizes-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      padding: 30px 10px;
+      background: #080c14;
+      border-radius: 12px;
+      border: 1px solid #1e293b;
+    }
+
+    .size-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .size-label {
+      font-family: 'Courier Prime', monospace;
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    /* MOCKUP IPHONE HOME SCREEN */
+    .phone-mockup-frame {
+      width: 260px;
+      height: 520px;
+      background: #000;
+      border: 8px solid #1e293b;
+      border-radius: 40px;
+      margin: 0 auto;
+      padding: 20px 14px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 10px rgba(255,255,255,0.05);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .phone-notch {
+      width: 80px;
+      height: 18px;
+      background: #1e293b;
+      border-radius: 10px;
+      margin: 0 auto 20px auto;
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px 10px;
+      justify-items: center;
+    }
+
+    .mock-app {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .mock-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 11px;
+      background: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .mock-icon.vestigo-icon {
+      background: transparent;
+      box-shadow: 0 4px 12px rgba(0, 229, 255, 0.4);
+    }
+
+    .mock-icon.vestigo-icon img {
+      width: 100%;
+      height: 100%;
+      border-radius: 11px;
+    }
+
+    .mock-title {
+      font-size: 9px;
+      color: #94a3b8;
+      text-align: center;
+    }
+
+    .mock-title.vestigo-title {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .dock-bar {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-around;
+      margin-top: auto;
+    }
+
+    /* PALETA DE COLOR */
+    .palette-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .palette-card {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #1e293b;
+    }
+
+    .palette-color {
+      height: 60px;
+      width: 100%;
+    }
+
+    .palette-info {
+      padding: 8px;
+      background: #080c14;
+      font-family: 'Courier Prime', monospace;
+      font-size: 11px;
+    }
+
+    .palette-hex {
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .palette-name {
+      color: #64748b;
+      font-size: 10px;
+    }
+
+    /* FOOTER */
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 12px;
+      color: #64748b;
+      font-family: 'Courier Prime', monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- CABECERA DE MARCA -->
+    <header>
+      <div class="brand-tag">APP BRANDING &amp; DESIGN SYSTEM</div>
+      <h1>VESTIG<span>O</span></h1>
+      <p class="tagline">
+        Identidad visual y logotipo oficial para la plataforma de investigación criminalística y deducción forense. Del latín <em>vestigium</em>: el rastro que nunca miente.
+      </p>
+    </header>
+
+    <!-- HERO CARD: ICONO 2D OFICIAL + EDICIÓN 3D -->
+    <div class="hero-card">
+      <div class="icon-hero-wrap">
+        <div class="icon-glow-backdrop"></div>
+        <img src="../imagenes/vestigo_icon_2d.png" alt="VESTIGO App Icon 2D Plano" class="app-icon-img" style="border: 2px solid rgba(0, 229, 255, 0.4);">
+      </div>
+
+      <div class="hero-details">
+        <div class="badge-pill-group">
+          <span class="pill active">2D FLAT ICON (FRONT-FACING)</span>
+          <span class="pill">iOS / ANDROID 1:1</span>
+          <span class="pill">1024 × 1024 PX</span>
+          <span class="pill">VECTOR-GRADE</span>
+        </div>
+        <h2>Icono de App 2D Oficial</h2>
+        <p>
+          Diseñado con vista ortográfica frontal pura (sin inclinaciones ni perspectiva 3D), ideal para su uso como icono oficial en <strong>App Store, Google Play, launcher móvil, dock de escritorio y favicon</strong>.
+        </p>
+        <p>
+          Mantiene la máxima legibilidad a cualquier escala: el monograma en <strong>'V' cian neón</strong> enmarca las crestas concéntricas de una <strong>huella dactilar biométrica</strong> y la <strong>retícula pericial</strong> central sobre un fondo obsidiana profundo.
+        </p>
+
+        <div class="btn-group">
+          <a href="../imagenes/vestigo_icon_2d.png" download="vestigo_icon_2d_1024.png" class="btn">
+            DESCARGAR ICONO 2D (PNG) 📥
+          </a>
+          <a href="vestigo_icon_2d.svg" download="vestigo_icon_2d.svg" class="btn btn-secondary">
+            VECTOR 2D (SVG) ⚡
+          </a>
+          <a href="../imagenes/vestigo_app_icon.png" download="vestigo_icon_3d.png" class="btn btn-secondary">
+            VERSIÓN 3D MARKETING 🎨
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN: LOGOTIPO COMPLETO (WORDMARK) -->
+    <div class="section-title">LOGOTIPO COMPLETO Y TIPOGRAFÍA</div>
+    <div class="card" style="margin-bottom: 30px;">
+      <div class="wordmark-wrap">
+        <img src="vestigo_wordmark.svg" alt="VESTIGO Wordmark Vector" class="wordmark-img">
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+        <div style="font-size: 13px; color: #94a3b8;">
+          Wordmark oficial en formato vectorial SVG con interletrado extendido y acento de luminol en la 'O' final.
+        </div>
+        <a href="vestigo_wordmark.svg" download="vestigo_wordmark.svg" class="btn btn-secondary">
+          DESCARGAR WORDMARK SVG 📥
+        </a>
+      </div>
+    </div>
+
+    <!-- SECCIÓN: MOCKUPS DE ESCALA Y EN DISPOSITIVO -->
+    <div class="section-title">VISUALIZACIÓN EN ENTORNO MÓVIL Y ESCALAS</div>
+    <div class="grid-2">
+      <!-- ESCALAS -->
+      <div class="card">
+        <h3 style="font-size: 15px; margin-bottom: 16px; color: #fff;">Escalabilidad en Pantalla (Responsive Icon)</h3>
+        <p style="font-size: 12px; color: #94a3b8; line-height: 1.5; margin-bottom: 20px;">
+          El icono mantiene su legibilidad y contraste tanto en paneles Retina de alta densidad como en badges mínimos de notificación:
+        </p>
+
+        <div class="sizes-row">
+          <div class="size-col">
+            <img src="../imagenes/vestigo_icon_2d.png" style="width: 96px; height: 96px; border-radius: 22px; box-shadow: 0 4px 14px rgba(0,0,0,0.6);" alt="96px">
+            <span class="size-label">96 × 96 (HD)</span>
+          </div>
+          <div class="size-col">
+            <img src="../imagenes/vestigo_icon_2d.png" style="width: 64px; height: 64px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.6);" alt="64px">
+            <span class="size-label">64 × 64 (Home)</span>
+          </div>
+          <div class="size-col">
+            <img src="../imagenes/vestigo_icon_2d.png" style="width: 44px; height: 44px; border-radius: 10px;" alt="44px">
+            <span class="size-label">44 × 44 (List)</span>
+          </div>
+          <div class="size-col">
+            <img src="../imagenes/vestigo_icon_2d.png" style="width: 24px; height: 24px; border-radius: 6px;" alt="24px">
+            <span class="size-label">24 × 24 (Badge)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOCKUP IPHONE -->
+      <div class="card" style="display: flex; flex-direction: column; align-items: center;">
+        <h3 style="font-size: 15px; margin-bottom: 16px; color: #fff; width: 100%;">Vista Previa en Pantalla de Inicio (iOS)</h3>
+        
+        <div class="phone-mockup-frame">
+          <div class="phone-notch"></div>
+          
+          <div class="app-grid">
+            <!-- Fila 1 -->
+            <div class="mock-app">
+              <div class="mock-icon">📁</div>
+              <div class="mock-title">Archivos</div>
+            </div>
+            <div class="mock-app">
+              <div class="mock-icon">🗺️</div>
+              <div class="mock-title">Mapas</div>
+            </div>
+            <div class="mock-app">
+              <div class="mock-icon">📷</div>
+              <div class="mock-title">Cámara</div>
+            </div>
+            <div class="mock-app">
+              <div class="mock-icon">⚖️</div>
+              <div class="mock-title">Justicia</div>
+            </div>
+
+            <!-- Fila 2: VESTIGO DESTACADA -->
+            <div class="mock-app">
+              <div class="mock-icon vestigo-icon">
+                <img src="../imagenes/vestigo_icon_2d.png" alt="Vestigo">
+              </div>
+              <div class="mock-title vestigo-title">Vestigo</div>
+            </div>
+            <div class="mock-app">
+              <div class="mock-icon">🎙️</div>
+              <div class="mock-title">Notas</div>
+            </div>
+            <div class="mock-app">
+              <div class="mock-icon">📡</div>
+              <div class="mock-title">Radar</div>
+            </div>
+            <div class="mock-app">
+              <div class="mock-icon">⚙️</div>
+              <div class="mock-title">Ajustes</div>
+            </div>
+          </div>
+
+          <div class="dock-bar">
+            <div class="mock-icon" style="width:36px; height:36px; font-size:14px;">📞</div>
+            <div class="mock-icon" style="width:36px; height:36px; font-size:14px;">💬</div>
+            <div class="mock-icon" style="width:36px; height:36px; font-size:14px;">🧭</div>
+            <div class="mock-icon" style="width:36px; height:36px; font-size:14px;">🎧</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN: PALETA CROMÁTICA -->
+    <div class="section-title">TOKENS Y PALETA CROMÁTICA OFICIAL</div>
+    <div class="card">
+      <div class="palette-row">
+        <div class="palette-card">
+          <div class="palette-color" style="background: #00e5ff;"></div>
+          <div class="palette-info">
+            <div class="palette-hex">#00E5FF</div>
+            <div class="palette-name">Luminol Cyan</div>
+          </div>
+        </div>
+        <div class="palette-card">
+          <div class="palette-color" style="background: #38bdf8;"></div>
+          <div class="palette-info">
+            <div class="palette-hex">#38BDF8</div>
+            <div class="palette-name">UV Flare</div>
+          </div>
+        </div>
+        <div class="palette-card">
+          <div class="palette-color" style="background: #0284c7;"></div>
+          <div class="palette-info">
+            <div class="palette-hex">#0284C7</div>
+            <div class="palette-name">Forensic Blue</div>
+          </div>
+        </div>
+        <div class="palette-card">
+          <div class="palette-color" style="background: #ff2d55;"></div>
+          <div class="palette-info">
+            <div class="palette-hex">#FF2D55</div>
+            <div class="palette-name">Evidence Red</div>
+          </div>
+        </div>
+        <div class="palette-card">
+          <div class="palette-color" style="background: #0f172a;"></div>
+          <div class="palette-info">
+            <div class="palette-hex">#0F172A</div>
+            <div class="palette-name">Midnight Slate</div>
+          </div>
+        </div>
+        <div class="palette-card">
+          <div class="palette-color" style="background: #06090e;"></div>
+          <div class="palette-info">
+            <div class="palette-hex">#06090E</div>
+            <div class="palette-name">Obsidian Black</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENLACES DE RETORNO AL JUEGO -->
+    <div style="margin-top: 40px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+      <a href="../terminal-policial/index.html" class="btn btn-secondary">
+        ← VOLVER A LA TERMINAL WEB
+      </a>
+      <a href="../video-briefing/index.html" class="btn btn-secondary">
+        🎬 VÍDEO BRIEFING DEL CASO
+      </a>
+      <a href="../documentos-imprimibles/index.html" class="btn btn-secondary">
+        📄 CENTRAL DE IMPRESIÓN
+      </a>
+    </div>
+
+    <footer>
+      VESTIGO™ — Sistema Registrado de Investigación y Deducción Criminalística © 2024
+    </footer>
+
+  </div>
+
+</body>
+</html>

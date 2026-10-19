@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>DOSSIER JUDICIAL - MATERIAL EXTRA DE INMERSIÓN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700;800&family=Libre+Barcode+39+Text&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,700;1,6..72,400&family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 10mm 14mm 10mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #525659;
+      font-family: 'Courier Prime', monospace;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .no-print-bar {
+      background: #1e293b;
+      color: #fff;
+      width: 210mm;
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .print-btn {
+      background: #00e5ff;
+      color: #000;
+      border: none;
+      padding: 9px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .sheet {
+      background-color: #fcfbf7;
+      width: 210mm;
+      box-sizing: border-box;
+      padding: 12mm 15mm;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    @media print {
+      html, body {
+        background: transparent !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .no-print-bar {
+        display: none !important;
+      }
+      .sheet {
+        background-color: transparent !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+    }
+
+    .official-header {
+      border-bottom: 2px solid #000;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .official-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      line-height: 1.3;
+    }
+
+    .case-number {
+      font-family: 'Courier Prime', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1.5px solid #000;
+      padding: 4px 8px;
+      background: #f0eee6;
+      text-align: right;
+      line-height: 1.2;
+    }
+
+    /* ESTILO FICHAS DE FILIACIÓN CON MUGSHOTS */
+    .filiacion-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 6px;
+    }
+
+    .filiacion-card {
+      border: 1.5px solid #27272a;
+      background: #fff;
+      padding: 10px;
+      display: flex;
+      gap: 12px;
+      box-shadow: 1px 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .filiacion-photo-wrap {
+      width: 100px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mugshot-box {
+      width: 100px;
+      height: 120px;
+      background: #e2e8f0;
+      border: 1px solid #64748b;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fingerprint-box {
+      width: 50px;
+      height: 60px;
+      border: 1px solid #71717a;
+      background: #fafaf9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .filiacion-info {
+      flex: 1;
+      font-size: 9.5px;
+      line-height: 1.45;
+    }
+
+    .filiacion-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #0f172a;
+      border-bottom: 1px solid #000;
+      padding-bottom: 3px;
+      margin-bottom: 6px;
+    }
+
+    .badge-victim {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 1px 5px;
+      border-radius: 2px;
+      font-weight: 700;
+      font-size: 8px;
+    }
+
+    .badge-suspect {
+      background: #fef3c7;
+      color: #92400e;
+      padding: 1px 5px;
+      border-radius: 2px;
+      font-weight: 700;
+      font-size: 8px;
+    }
+
+    /* ESTILO PERIÓDICO HISTÓRICO EL NORTE DE CASTILLA */
+    .newspaper-wrap {
+      background: #fbf9f4;
+      border: 1px solid #d4d4d8;
+      padding: 14px 16px;
+      color: #1c1917;
+      font-family: 'Newsreader', serif;
+    }
+
+    .news-header {
+      text-align: center;
+      border-bottom: 3px double #1c1917;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+
+    .news-title-main {
+      font-size: 32px;
+      font-family: 'Newsreader', serif;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .news-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      font-family: 'Inter', sans-serif;
+      text-transform: uppercase;
+      border-top: 1px solid #1c1917;
+      border-bottom: 1px solid #1c1917;
+      padding: 3px 0;
+      margin-top: 6px;
+    }
+
+    .news-headline {
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.15;
+      text-align: center;
+      margin: 10px 0 6px 0;
+      font-family: 'Newsreader', serif;
+    }
+
+    .news-subheadline {
+      font-size: 11.5px;
+      font-style: italic;
+      text-align: center;
+      color: #44403c;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .news-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      font-size: 9.5px;
+      line-height: 1.45;
+      text-align: justify;
+    }
+
+    .news-photo-box {
+      border: 1px solid #78716c;
+      background: #e7e5e4;
+      padding: 4px;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .news-caption {
+      font-size: 8px;
+      font-family: 'Inter', sans-serif;
+      color: #57534e;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    /* ESTILO CUADERNO DE CAMPO MANUSCRITO */
+    .notebook-sheet {
+      background-color: #fffef8;
+      background-image: 
+        linear-gradient(#e5e7eb 1px, transparent 1px),
+        linear-gradient(90deg, #e5e7eb 1px, transparent 1px);
+      background-size: 16px 16px;
+      border: 1px solid #d1d5db;
+      padding: 18px 20px;
+      font-family: 'Caveat', cursive;
+      font-size: 15px;
+      color: #1e3a8a;
+      line-height: 1.4;
+      position: relative;
+    }
+
+    .notebook-margin-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 45px;
+      width: 1.5px;
+      background-color: #f87171;
+    }
+
+    .sticky-note {
+      position: absolute;
+      width: 140px;
+      padding: 10px;
+      background: #fef08a;
+      border: 1px solid #facc15;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
+      font-size: 13px;
+      color: #854d0e;
+      transform: rotate(2deg);
+      line-height: 1.3;
+    }
+
+    /* RECORTABLES Y ETIQUETAS DE EVIDENCIA */
+    .evidence-tags-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .evidence-tag {
+      border: 2px dashed #b91c1c;
+      background: #fff;
+      padding: 10px 12px;
+      font-size: 9px;
+      line-height: 1.4;
+      position: relative;
+    }
+
+    .evidence-tag-header {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1.5px solid #b91c1c;
+      padding-bottom: 4px;
+      margin-bottom: 6px;
+      color: #b91c1c;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 10px;
+    }
+
+    .business-card-wrap {
+      display: flex;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .business-card {
+      width: 85mm;
+      height: 48mm;
+      border: 1px solid #cbd5e1;
+      padding: 12px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 1px 2px 6px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print-bar">
+    <div>
+      <strong>MATERIAL COMPLEMENTARIO DE INMERSIÓN POLICIAL (EXTRAS)</strong>
+      <div style="font-size: 11px; color: #94a3b8;">Fichas de filiación con mugshots, periódico local, notas manuscritas del agente y etiquetas de evidencia.</div>
+    </div>
+    <button class="print-btn" onclick="window.print()">🖨️ IMPRIMIR EXTRAS (PDF / PAPEL)</button>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 1: FICHAS DE FILIACIÓN (PARTE 1)                    -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="official-header">
+        <div class="official-title">
+          DIRECCIÓN GENERAL DE LA GUARDIA CIVIL<br>
+          SISTEMA DE REGISTRO BIOMÉTRICO Y FILIACIÓN (SIRDEE)<br>
+          <span style="font-size: 9px; font-weight: normal;">UOPJ VALLADOLID // CASO D.P. 402/2024</span>
+        </div>
+        <div class="case-number">
+          FICHAS DE IDENTIFICACIÓN<br>
+          HOJA 1 DE 2
+        </div>
+      </div>
+
+      <h1 class="doc-title" style="margin-bottom: 8px;">FICHAS DE FILIACIÓN POLICIAL Y REGISTRO DACTILAR</h1>
+
+      <div class="filiacion-grid">
+        <!-- VÍCTIMA: GONZALO DE LA SERNA -->
+        <div class="filiacion-card">
+          <div class="filiacion-photo-wrap">
+            <div class="mugshot-box" style="width: 100px; height: 120px; overflow: hidden; border: 1.5px solid #000; background: #cbd5e1;">
+              <img src="../imagenes/gonzalo_de_la_serna.png" alt="Gonzalo de la Serna" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div class="fingerprint-box">
+              <svg width="40" height="48" viewBox="0 0 40 48" stroke="#1e293b" fill="none" stroke-width="0.8">
+                <ellipse cx="20" cy="24" rx="16" ry="20"/>
+                <path d="M 12 24 Q 20 12 28 24 Q 20 36 12 24"/>
+                <path d="M 16 24 Q 20 18 24 24 Q 20 30 16 24"/>
+                <circle cx="20" cy="24" r="2" fill="#1e293b"/>
+              </svg>
+            </div>
+          </div>
+          <div class="filiacion-info">
+            <div class="filiacion-name">DE LA SERNA Y MENDIETA, Gonzalo <span class="badge-victim">VÍCTIMA</span></div>
+            <div><strong>DNI:</strong> 12.384.901-K</div>
+            <div><strong>F. NACIMIENTO:</strong> 14/03/1966 (58 años)</div>
+            <div><strong>ESTATURA:</strong> 1,78 m | <strong>OJOS:</strong> Castaños</div>
+            <div><strong>ESTADO CIVIL:</strong> Viudo</div>
+            <div><strong>PROFESIÓN:</strong> Enólogo Director / Propietario</div>
+            <div><strong>DOMICILIO:</strong> Camino de los Arcos 4, Peñafiel</div>
+            <div><strong>ANTECEDENTES:</strong> Ninguno</div>
+            <div style="margin-top: 4px; font-size: 8.5px; color: #475569; font-style: italic;">
+              *Hallado cadáver el 05/10/2024 a las 07:15h en Nave 2.*
+            </div>
+          </div>
+        </div>
+
+        <!-- SOSPECHOSO 1: MARCOS VARELA -->
+        <div class="filiacion-card">
+          <div class="filiacion-photo-wrap">
+            <div class="mugshot-box" style="width: 100px; height: 120px; overflow: hidden; border: 1.5px solid #000; background: #cbd5e1;">
+              <img src="../imagenes/marcos_varela.png" alt="Marcos Varela" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div class="fingerprint-box">
+              <svg width="40" height="48" viewBox="0 0 40 48" stroke="#1e293b" fill="none" stroke-width="0.8">
+                <ellipse cx="20" cy="24" rx="15" ry="19"/>
+                <path d="M 10 20 Q 20 8 30 20 Q 20 34 10 20"/>
+                <path d="M 14 26 Q 20 32 26 26"/>
+              </svg>
+            </div>
+          </div>
+          <div class="filiacion-info">
+            <div class="filiacion-name">VARELA RÍOS, Marcos <span class="badge-suspect">INVESTIGADO</span></div>
+            <div><strong>DNI:</strong> 09.841.229-P</div>
+            <div><strong>F. NACIMIENTO:</strong> 22/08/1980 (44 años)</div>
+            <div><strong>ESTATURA:</strong> 1,82 m | <strong>OJOS:</strong> Azules</div>
+            <div><strong>VÍNCULO:</strong> Primo de la difunta esposa de Gonzalo</div>
+            <div><strong>PROFESIÓN:</strong> Director Financiero (CFO)</div>
+            <div><strong>DOMICILIO:</strong> Pza. Poniente 6, 4ºB, Valladolid</div>
+            <div><strong>VEHÍCULO:</strong> Volvo XC60 Negro (4188-KLT)</div>
+            <div><strong>ANTECEDENTES:</strong> Ninguno (sin condenas)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="filiacion-grid" style="margin-top: 14px;">
+        <!-- SOSPECHOSA 2: LUCÍA DE LA SERNA -->
+        <div class="filiacion-card">
+          <div class="filiacion-photo-wrap">
+            <div class="mugshot-box" style="width: 100px; height: 120px; overflow: hidden; border: 1.5px solid #000; background: #cbd5e1;">
+              <img src="../imagenes/lucia_de_la_serna.png" alt="Lucía de la Serna" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div class="fingerprint-box">
+              <svg width="40" height="48" viewBox="0 0 40 48" stroke="#1e293b" fill="none" stroke-width="0.8">
+                <ellipse cx="20" cy="24" rx="14" ry="18"/>
+                <path d="M 12 18 Q 20 10 28 18 Q 20 30 12 18"/>
+              </svg>
+            </div>
+          </div>
+          <div class="filiacion-info">
+            <div class="filiacion-name">DE LA SERNA MONTES, Lucía <span class="badge-suspect">INVESTIGADA</span></div>
+            <div><strong>DNI:</strong> 71.982.404-X</div>
+            <div><strong>F. NACIMIENTO:</strong> 09/11/1994 (29 años)</div>
+            <div><strong>ESTATURA:</strong> 1,67 m | <strong>OJOS:</strong> Verdes</div>
+            <div><strong>VÍNCULO:</strong> Hija única y heredera legal</div>
+            <div><strong>PROFESIÓN:</strong> Enóloga adjunta Bodegas Valdeluna</div>
+            <div><strong>DOMICILIO:</strong> C/ Atarazanas 12, Peñafiel</div>
+            <div><strong>VEHÍCULO:</strong> Volkswagen Golf Gris (9012-GTV)</div>
+            <div><strong>ANTECEDENTES:</strong> Ninguno</div>
+          </div>
+        </div>
+
+        <!-- SOSPECHOSO 3: JAVIER BELTRÁN -->
+        <div class="filiacion-card">
+          <div class="filiacion-photo-wrap">
+            <div class="mugshot-box" style="width: 100px; height: 120px; overflow: hidden; border: 1.5px solid #000; background: #cbd5e1;">
+              <img src="../imagenes/javier_beltran.png" alt="Javier Beltrán" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div class="fingerprint-box">
+              <svg width="40" height="48" viewBox="0 0 40 48" stroke="#1e293b" fill="none" stroke-width="0.8">
+                <ellipse cx="20" cy="24" rx="15" ry="19"/>
+                <path d="M 8 24 Q 20 12 32 24"/>
+                <path d="M 12 28 Q 20 18 28 28"/>
+              </svg>
+            </div>
+          </div>
+          <div class="filiacion-info">
+            <div class="filiacion-name">BELTRÁN GÓMEZ, Javier <span class="badge-suspect">INVESTIGADO</span></div>
+            <div><strong>DNI:</strong> 11.904.318-D</div>
+            <div><strong>F. NACIMIENTO:</strong> 04/02/1971 (53 años)</div>
+            <div><strong>ESTATURA:</strong> 1,74 m | <strong>OJOS:</strong> Marrones</div>
+            <div><strong>VÍNCULO:</strong> Capataz general (28 años en finca)</div>
+            <div><strong>PROFESIÓN:</strong> Encargado de campo y vendimia</div>
+            <div><strong>DOMICILIO:</strong> Ctra. Pesquera km 1,2, Peñafiel</div>
+            <div><strong>VEHÍCULO:</strong> Nissan Navara Blanca (8209-FDC)</div>
+            <div><strong>ANTECEDENTES:</strong> Ninguno</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size: 8.5px; color: #71717a; text-align: center; border-top: 1px dotted #a1a1aa; padding-top: 4px;">
+      MINISTERIO DEL INTERIOR — ARCHIVO CENTRAL DE IDENTIFICACIÓN CRIMINAL (GC-UOPJ)
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 2: FICHAS DE FILIACIÓN (PARTE 2)                    -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="official-header">
+        <div class="official-title">
+          DIRECCIÓN GENERAL DE LA GUARDIA CIVIL<br>
+          SISTEMA DE REGISTRO BIOMÉTRICO Y FILIACIÓN (SIRDEE)<br>
+          <span style="font-size: 9px; font-weight: normal;">UOPJ VALLADOLID // CASO D.P. 402/2024</span>
+        </div>
+        <div class="case-number">
+          FICHAS DE IDENTIFICACIÓN<br>
+          HOJA 2 DE 2
+        </div>
+      </div>
+
+      <h1 class="doc-title" style="margin-bottom: 8px;">FICHAS DE FILIACIÓN POLICIAL (CONTINUACIÓN)</h1>
+
+      <div class="filiacion-grid" style="grid-template-columns: 1fr;">
+        <!-- SOSPECHOSA 4: ELENA FONTANALS -->
+        <div class="filiacion-card" style="max-width: 480px; margin: 0 auto;">
+          <div class="filiacion-photo-wrap">
+            <div class="mugshot-box" style="width: 100px; height: 120px; overflow: hidden; border: 1.5px solid #000; background: #cbd5e1;">
+              <img src="../imagenes/elena_fontanals.png" alt="Elena Fontanals" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div class="fingerprint-box">
+              <svg width="40" height="48" viewBox="0 0 40 48" stroke="#1e293b" fill="none" stroke-width="0.8">
+                <ellipse cx="20" cy="24" rx="14" ry="18"/>
+                <path d="M 12 24 Q 20 14 28 24 Q 20 32 12 24"/>
+              </svg>
+            </div>
+          </div>
+          <div class="filiacion-info">
+            <div class="filiacion-name">FONTANALS PUIG, Elena <span class="badge-suspect">INVESTIGADA</span></div>
+            <div><strong>DNI:</strong> 46.721.890-W</div>
+            <div><strong>F. NACIMIENTO:</strong> 18/06/1977 (47 años)</div>
+            <div><strong>ESTATURA:</strong> 1,71 m | <strong>OJOS:</strong> Miel</div>
+            <div><strong>PROFESIÓN:</strong> Abogada / Socia Directora de Inversiones</div>
+            <div><strong>EMPRESA:</strong> Vitis Capital Partners S.L. (Barcelona)</div>
+            <div><strong>ALOJAMIENTO TEMPORAL:</strong> Hotel Convento Las Claras, Hab. 204 (Peñafiel)</div>
+            <div><strong>VEHÍCULO:</strong> Audi A5 Sportback Gris (5512-LMN)</div>
+            <div><strong>ANTECEDENTES:</strong> Ninguno</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INFORME DE VEHÍCULOS INTERVENIDOS -->
+      <div style="margin-top: 20px; border: 1.5px solid #000; padding: 12px; background: #fff;">
+        <h2 style="font-size: 11px; font-family: 'Inter', sans-serif; text-transform: uppercase; margin-bottom: 6px;">
+          RESUMEN DE VEHÍCULOS SOMETIDOS A INSPECCIÓN OCULAR Y RASTREO LPR
+        </h2>
+        <table style="width: 100%; border-collapse: collapse; font-size: 9.5px;">
+          <thead>
+            <tr style="background: #e2e8f0; text-align: left;">
+              <th style="padding: 4px; border: 1px solid #71717a;">MATRÍCULA</th>
+              <th style="padding: 4px; border: 1px solid #71717a;">MODELO</th>
+              <th style="padding: 4px; border: 1px solid #71717a;">COLOR</th>
+              <th style="padding: 4px; border: 1px solid #71717a;">TITULAR REGISTRADO</th>
+              <th style="padding: 4px; border: 1px solid #71717a;">ESTADO</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 4px; border: 1px solid #71717a; font-weight: bold;">4188-KLT</td>
+              <td style="padding: 4px; border: 1px solid #71717a;">Volvo XC60 D4 AWD</td>
+              <td style="padding: 4px; border: 1px solid #71717a;">Negro</td>
+              <td style="padding: 4px; border: 1px solid #71717a;">Marcos Varela Ríos</td>
+              <td style="padding: 4px; border: 1px solid #71717a;">Inspeccionado (Muestras tomadas)</td>
+            </tr>
+            <tr>
+              <td style="padding: 4px; border: 1px solid #71717a; font-weight: bold;">8209-FDC</td>
+              <td style="padding: 4px; border: 1px solid #71717a;">Nissan Navara Pick-Up</td>
+              <td style="padding: 4px; border: 1px solid #71717a;">Blanco</td>
+              <td style="padding: 4px; border: 1px solid #71717a;">Javier Beltrán Gómez</td>
+              <td style="padding: 4px; border: 1px solid #71717a;">Inspeccionado (Muestras tomadas)</td>
+            </tr>
+            <tr>
+              <td style="padding: 4px; border: 1px solid #71717a; font-weight: bold;">5512-LMN</td>
+              <td style="padding: 4px; border: 1px solid #71717a;">Audi A5 Sportback</td>
+              <td style="padding: 4px; border: 1px solid #71717a;">Gris Plomo</td>
+              <td style="padding: 4px; border: 1px solid #71717a;">Renting Vitis Capital</td>
+              <td style="padding: 4px; border: 1px solid #71717a;">Inspeccionado (Muestras tomadas)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div style="font-size: 8.5px; color: #71717a; text-align: center; border-top: 1px dotted #a1a1aa; padding-top: 4px;">
+      DILIGENCIAS PREVIAS Nº 402/2024 — JUZGADO DE INSTRUCCIÓN Nº 2 DE VALLADOLID
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 3: RECORTE PERIÓDICO "EL NORTE DE CASTILLA"         -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div class="newspaper-wrap">
+      <div class="news-header">
+        <div style="font-size: 9px; letter-spacing: 2px; text-transform: uppercase;">FUNDADO EN 1854 — EL PERIÓDICO MÁS ANTIGUO DE LA PRENSA DIARIA ESPAÑOLA</div>
+        <div class="news-title-main">EL NORTE DE CASTILLA</div>
+        <div class="news-meta-bar">
+          <span>DOMINGO, 6 DE OCTUBRE DE 2024</span>
+          <span>EDICIÓN RIBERA DEL DUERO / PEÑAFIEL</span>
+          <span>NÚMERO 61.204 | 1,80 EUROS</span>
+        </div>
+      </div>
+
+      <div class="news-headline">
+        CONSTERNACIÓN EN PEÑAFIEL: HALLAN MUERTO EN SUS BODEGAS AL ENÓLOGO GONZALO DE LA SERNA EN PLENA CAMPAÑA DE VENDIMIA
+      </div>
+      <div class="news-subheadline">
+        El cuerpo del histórico viticultor fue localizado en la madrugada del sábado en la nave subterránea de cubas. La Policía Judicial de la Guardia Civil precinta las instalaciones mientras investiga las circunstancias del suceso.
+      </div>
+
+      <div class="news-columns">
+        <div>
+          <div class="news-photo-box">
+            <svg width="150" height="90" viewBox="0 0 150 90" style="background:#57534e;">
+              <!-- Fachada bodega con cinta policial -->
+              <rect x="25" y="20" width="100" height="55" fill="#d6d3d1"/>
+              <polygon points="15,20 75,2 135,20" fill="#78716c"/>
+              <rect x="65" y="45" width="20" height="30" fill="#44403c"/>
+              <!-- Cinta Guardia Civil -->
+              <line x1="0" y1="75" x2="150" y2="70" stroke="#facc15" stroke-width="4"/>
+              <line x1="0" y1="75" x2="150" y2="70" stroke="#000" stroke-width="1" stroke-dasharray="6,4"/>
+            </svg>
+            <div class="news-caption">Acceso a Bodegas Valdeluna, acordonado ayer por la Benemérita. / FOTO: EL NORTE</div>
+          </div>
+          <p>
+            <strong>PEÑAFIEL.</strong> La comarca de la Ribera del Duero amaneció ayer conmocionada tras confirmarse la repentina muerte de Gonzalo de la Serna y Mendieta (58 años), una de las figuras más carismáticas y respetadas del panorama vitivinícola vallisoletano. 
+          </p>
+          <p style="margin-top: 6px;">
+            El hallazgo se produjo alrededor de las siete de la mañana, cuando los primeros operarios y vendimiadores llegaban a la finca para proseguir con la recogida de la uva tempranillo, en un fin de semana crucial para la cosecha.
+          </p>
+        </div>
+
+        <div>
+          <p>
+            Fuentes próximas a la bodega apuntaron inicialmente a un trágico accidente laboral provocado por la inhalación del conocido como "tufo del vino", la densa nube de dióxido de carbono que se genera durante la fermentación tumultuosa en los depósitos subterráneos.
+          </p>
+          <p style="margin-top: 6px;">
+            Sin embargo, la presencia a primera hora de especialistas de la Policía Judicial y de la Comisión Judicial del Juzgado de Instrucción de Valladolid ha disparado todas las alarmas en el municipio.
+          </p>
+          <p style="margin-top: 6px;">
+            <em>"Gonzalo conocía cada rincón de esa bodega desde que era un niño. Es muy difícil de creer que cometiera una imprudencia así"</em>, aseguraba ayer consternado un viticultor veterano de la zona en la Plaza del Coso.
+          </p>
+        </div>
+
+        <div>
+          <p>
+            <strong>TENSIONES POR LA VENTA.</strong> El fallecimiento se produce en un momento de máxima tensión financiera para la firma familiar. Durante los últimos meses habían trascendido los intensos contactos para la venta del 80% del accionariado al fondo inversor barcelonés <em>Vitis Capital</em>.
+          </p>
+          <p style="margin-top: 6px;">
+            La operación, según fuentes del sector, contaba con la frontal oposición de su hija y enóloga, Lucía de la Serna, y había generado hondo desasosiego entre la plantilla histórica de trabajadores ante el temor a despidos inmediatos.
+          </p>
+          <p style="margin-top: 6px;">
+            El Juzgado mantiene el secreto de las actuaciones y se espera que el informe preliminar de autopsia arroje luz en las próximas horas.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size: 8.5px; color: #71717a; text-align: center; border-top: 1px dotted #a1a1aa; padding-top: 4px;">
+      HEMEROTECA JUDICIAL — CAUSA D.P. 402/2024
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 4: CUADERNO DE CAMPO DEL INVESTIGADOR               -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div class="notebook-sheet">
+      <div class="notebook-margin-line"></div>
+
+      <!-- POST-IT AMARILLO PEGADO -->
+      <div class="sticky-note" style="top: 20px; right: 25px;">
+        <strong>¡OJO!</strong><br>
+        Falta el reloj Garmin de Gonzalo. Si se paró con el golpe, registraría la hora y el pulso exacto.<br>
+        ¿Dónde lo tiró?
+      </div>
+
+      <div style="margin-left: 45px;">
+        <div style="font-size: 20px; font-weight: 700; color: #1e3a8a; border-bottom: 2px solid #3b82f6; padding-bottom: 4px; margin-bottom: 12px;">
+          CUADERNO DE NOTAS — AGENTE TIP GC-84.920 (UOPJ)
+        </div>
+
+        <p><strong>05/10/2024 - 10:30 h: Dudas urgentes tras el levantamiento:</strong></p>
+        <p style="margin-top: 4px;">
+          1. <u>La postura no cuadra</u>: Dicen que cayó por el "tufo", pero el forense avisa que las livideces son <em>dorsales</em> (espalda). El cuerpo estaba boca abajo. <strong>¡ALGUIEN LO MOVIÓ VARIAS HORAS DESPUÉS!</strong>
+        </p>
+        <p style="margin-top: 6px;">
+          2. <u>La cena</u>: La ensalada del catering llegó a las 19:15 h. Si murió de madrugada, el estómago estaría vacío. La comida estaba casi entera ➔ <strong>Murió sobre las 20:45 - 21:05 h</strong>.
+        </p>
+
+        <!-- DIAGRAMA VISUAL DE FLECHAS ENTRE SOSPECHOSOS -->
+        <div style="margin: 16px 0; border: 1px dashed #3b82f6; padding: 10px; background: rgba(239, 246, 255, 0.6);">
+          <div style="font-weight: 700; font-size: 16px; margin-bottom: 6px;">ESQUEMA DE COARTADAS A LAS 20:50 H:</div>
+          <p>• <strong>LUCÍA (Hija):</strong> Dice que estaba en el bar... pero se ausentó de 20:35 a 21:15. ¿Se vio con alguien?</p>
+          <p>• <strong>JAVIER (Capataz):</strong> Dice que estaba en la cama, pero su furgoneta pasó por el camino a las 22:30. ¿Qué escondía en el garaje?</p>
+          <p>• <strong>ELENA (Fondo):</strong> Audi salió del hotel a las 20:20 y volvió a las 20:54. ¿Entró a la bodega?</p>
+          <p>• <strong>MARCOS (CFO):</strong> Dice que salió a las 20:10 hacia Valladolid y enseña ticket de parking a las 21:02. Revisar cámaras de la N-122 para comprobar la hora real.</p>
+        </div>
+
+        <p><strong>TAREAS PENDIENTES DEL EQUIPO:</strong></p>
+        <p style="text-decoration: line-through;">- Interrogar a los cuatro sospechosos en el puesto.</p>
+        <p>- Pedir a la DGT las fotos del radar de Tudela de Duero.</p>
+        <p>- Llevar al microscopio el ticket térmico de Marcos (la tinta térmica se manipula con calor o desgaste).</p>
+        <p>- ¿Qué es el líquido azul que había derramado en el suelo del laboratorio de la primera planta?</p>
+      </div>
+    </div>
+
+    <div style="font-size: 8.5px; color: #71717a; text-align: center; border-top: 1px dotted #a1a1aa; padding-top: 4px;">
+      DILIGENCIAS POLICIALES — NOTAS DE INVESTIGACIÓN DE CAMPO
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 5: ETIQUETAS DE EVIDENCIA Y TARJETAS                -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="official-header">
+        <div class="official-title">
+          DIRECCIÓN GENERAL DE LA GUARDIA CIVIL<br>
+          SERVICIO DE CRIMINALÍSTICA — CADENA DE CUSTODIA<br>
+          <span style="font-size: 9px; font-weight: normal;">ETIQUETAS OFICIALES DE PRECINTO DE PRUEBAS</span>
+        </div>
+        <div class="case-number">
+          PIEZAS DE CONVICCIÓN<br>
+          RECORTABLES / TESTIGOS
+        </div>
+      </div>
+
+      <h1 class="doc-title" style="margin-bottom: 6px;">ETIQUETAS OFICIALES DE CADENA DE CUSTODIA (EVIDENCIAS FÍSICAS)</h1>
+
+      <div class="evidence-tags-grid">
+        <!-- ETIQUETA 1: SULFATO DE COBRE -->
+        <div class="evidence-tag">
+          <div class="evidence-tag-header">
+            <span>GUARDIA CIVIL - SECRIM</span>
+            <span>REF: EVID-01/Q</span>
+          </div>
+          <div><strong>OBJETO:</strong> Frasco fracturado de borosilicato y reactivo azul.</div>
+          <div><strong>LUGAR RECOGIDA:</strong> Suelo Laboratorio Enológico (1ª Planta).</div>
+          <div><strong>COMPUESTO:</strong> Sulfato de Cobre al 10% (CuSO4·5H2O).</div>
+          <div><strong>RECOGIDO POR:</strong> Perito TIP 19.802 (05/10/2024 - 15:30h).</div>
+          <div style="margin-top: 4px; font-family:'Libre Barcode 39 Text', cursive; font-size: 22px;">*EVID-01-CUSO4*</div>
+        </div>
+
+        <!-- ETIQUETA 2: TICKET PARKING -->
+        <div class="evidence-tag">
+          <div class="evidence-tag-header">
+            <span>GUARDIA CIVIL - SECRIM</span>
+            <span>REF: EVID-02/DOC</span>
+          </div>
+          <div><strong>OBJETO:</strong> Ticket térmico Parking Plaza Mayor Valladolid.</div>
+          <div><strong>APORTADO POR:</strong> Marcos Varela Ríos en su declaración.</div>
+          <div><strong>MOTIVO:</strong> Comprobación de trazabilidad horaria (21:02 h).</div>
+          <div><strong>DESTINO:</strong> Sección de Documentoscopia e Infrarrojos.</div>
+          <div style="margin-top: 4px; font-family:'Libre Barcode 39 Text', cursive; font-size: 22px;">*EVID-02-TICKET*</div>
+        </div>
+
+        <!-- ETIQUETA 3: FROTIS AUDI A5 Y CALZADO -->
+        <div class="evidence-tag">
+          <div class="evidence-tag-header">
+            <span>GUARDIA CIVIL - SECRIM</span>
+            <span>REF: EVID-03/VEH</span>
+          </div>
+          <div><strong>OBJETO:</strong> Frotis H-02 en alfombrilla Audi A5 y calzado intervenido.</div>
+          <div><strong>MATRÍCULA / TITULAR:</strong> 5512-LMN (Elena Fontanals Puig).</div>
+          <div><strong>RESULTADO:</strong> Positivo CuSO4·5H2O (Transferencia directa 100%).</div>
+          <div><strong>CUSTODIO:</strong> Departamento de Química SECRIM Madrid.</div>
+          <div style="margin-top: 4px; font-family:'Libre Barcode 39 Text', cursive; font-size: 22px;">*EVID-03-AUDIA5*</div>
+        </div>
+
+        <!-- ETIQUETA 4: CAJAS DE VINO RECUPERADAS -->
+        <div class="evidence-tag">
+          <div class="evidence-tag-header">
+            <span>GUARDIA CIVIL - SECRIM</span>
+            <span>REF: EVID-04/MAT</span>
+          </div>
+          <div><strong>OBJETO:</strong> 3 cajas Valdeluna Gran Reserva 1999 (18 botellas).</div>
+          <div><strong>LUGAR RECOGIDA:</strong> Garaje D. Javier Beltrán Gómez.</div>
+          <div><strong>CALIFICACIÓN:</strong> Hurto material consumado a las 22:36h.</div>
+          <div><strong>VALOR TASACIÓN:</strong> 3.600 € (Mercado coleccionista).</div>
+          <div style="margin-top: 4px; font-family:'Libre Barcode 39 Text', cursive; font-size: 22px;">*EVID-04-VINO99*</div>
+        </div>
+      </div>
+
+      <!-- TARJETAS DE VISITA REALISTAS -->
+      <h2 style="font-size: 10.5px; font-family: 'Inter', sans-serif; text-transform: uppercase; margin-top: 14px; margin-bottom: 4px;">
+        DOCUMENTOS PERSONALES INCAUTADOS (TARJETAS DE VISITA)
+      </h2>
+
+      <div class="business-card-wrap">
+        <!-- TARJETA ELENA FONTANALS -->
+        <div class="business-card">
+          <div style="border-bottom: 1px solid #0f172a; padding-bottom: 4px;">
+            <div style="font-family:'Inter', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 1px; color:#0f172a;">
+              VITIS CAPITAL PARTNERS
+            </div>
+            <div style="font-size: 7.5px; color:#64748b; letter-spacing: 0.5px;">PRIVATE EQUITY & AGRIBUSINESS INVESTMENTS</div>
+          </div>
+          <div>
+            <div style="font-family:'Inter', sans-serif; font-size: 10.5px; font-weight: 700;">Elena Fontanals Puig</div>
+            <div style="font-size: 8px; color:#475569;">Socia Directora / M&A Advisory</div>
+          </div>
+          <div style="font-size: 7.5px; color:#64748b; border-top: 1px dotted #cbd5e1; padding-top: 4px;">
+            Paseo de Gracia 48, 5º · 08007 Barcelona · Tlf: 93 481 09 00 · elena.fontanals@vitiscapital.es
+          </div>
+        </div>
+
+        <!-- TARJETA GONZALO DE LA SERNA -->
+        <div class="business-card" style="background:#faf8f5;">
+          <div style="border-bottom: 1px solid #78350f; padding-bottom: 4px;">
+            <div style="font-family:'Inter', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 1px; color:#78350f;">
+              BODEGAS VALDELUNA
+            </div>
+            <div style="font-size: 7.5px; color:#92400e; letter-spacing: 0.5px;">D.O. RIBERA DEL DUERO · PEÑAFIEL</div>
+          </div>
+          <div>
+            <div style="font-family:'Inter', sans-serif; font-size: 10.5px; font-weight: 700; color:#1c1917;">Gonzalo de la Serna y Mendieta</div>
+            <div style="font-size: 8px; color:#78716c;">Director General & Enólogo</div>
+          </div>
+          <div style="font-size: 7.5px; color:#a8a29e; border-top: 1px dotted #d6d3d1; padding-top: 4px;">
+            Camino de los Arcos s/n · 47300 Peñafiel (Valladolid) · www.bodegasvaldeluna.es
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size: 8.5px; color: #71717a; text-align: center; border-top: 1px dotted #a1a1aa; padding-top: 4px;">
+      MATERIAL ANEXO DE CONVICCIÓN — DILIGENCIAS PREVIAS 402/2024
+    </div>
+  </div>
+
+</body>
+</html>

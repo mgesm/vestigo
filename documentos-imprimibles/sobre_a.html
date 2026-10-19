@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>DOSSIER JUDICIAL - SOBRE A: PIEZA PRINCIPAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700;800&family=Special+Elite&family=Libre+Barcode+39+Text&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 10mm 14mm 10mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #525659;
+      font-family: 'Courier Prime', monospace;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .no-print-bar {
+      background: #1e293b;
+      color: #fff;
+      width: 210mm;
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .print-btn {
+      background: #00e5ff;
+      color: #000;
+      border: none;
+      padding: 9px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .sheet {
+      background-color: #fcfbf7;
+      width: 210mm;
+      box-sizing: border-box;
+      padding: 14mm 16mm;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    @media print {
+      html, body {
+        background: transparent !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .no-print-bar {
+        display: none !important;
+      }
+      .sheet {
+        background-color: transparent !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+    }
+
+    .official-header {
+      border-bottom: 2px solid #000;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .official-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      line-height: 1.3;
+    }
+
+    .case-number {
+      font-family: 'Courier Prime', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1.5px solid #000;
+      padding: 4px 8px;
+      background: #f0eee6;
+      text-align: right;
+      line-height: 1.2;
+    }
+
+    .stamp-confidential {
+      position: absolute;
+      top: 35px;
+      right: 35px;
+      border: 2.5px solid #b91c1c;
+      color: #b91c1c;
+      font-family: 'Special Elite', cursive;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 4px 10px;
+      text-transform: uppercase;
+      transform: rotate(-10deg);
+      opacity: 0.85;
+      letter-spacing: 2px;
+      pointer-events: none;
+    }
+
+    .stamp-registered {
+      border: 1.5px solid #1d4ed8;
+      color: #1d4ed8;
+      font-family: 'Courier Prime', monospace;
+      font-size: 9px;
+      padding: 4px 6px;
+      text-align: center;
+      line-height: 1.2;
+      width: 130px;
+      transform: rotate(3deg);
+      margin-top: 8px;
+    }
+
+    h1.doc-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 8px 0 14px 0;
+      text-decoration: underline;
+    }
+
+    p.legal-text {
+      font-size: 10.5px;
+      line-height: 1.6;
+      text-align: justify;
+      margin-bottom: 10px;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 10px;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid #71717a;
+      padding: 5px 8px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background-color: #e4e4e7;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .signature-area {
+      margin-top: 14px;
+      padding-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      line-height: 1.3;
+    }
+
+    .signature-box {
+      width: 180px;
+      border-top: 1px dotted #000;
+      padding-top: 6px;
+      text-align: center;
+    }
+
+    .croquis-container {
+      border: 1.5px solid #3f3f46;
+      background: #fafaf9;
+      padding: 8px;
+      margin: 10px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .receipt-wrap {
+      background: #fff;
+      border: 1px solid #d4d4d8;
+      width: 72mm;
+      padding: 12px;
+      font-family: 'Courier Prime', monospace;
+      font-size: 9.5px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+      margin: 12px auto;
+      line-height: 1.35;
+      border-bottom: 4px dashed #a1a1aa;
+    }
+
+    .receipt-header {
+      text-align: center;
+      border-bottom: 1px dashed #000;
+      padding-bottom: 6px;
+      margin-bottom: 6px;
+    }
+
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 2px 0;
+    }
+
+    .barcode {
+      font-family: 'Libre Barcode 39 Text', cursive;
+      font-size: 28px;
+      text-align: center;
+      margin-top: 8px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print-bar">
+    <div>
+      <strong>MATERIAL PARA EL JUGADOR: SOBRE A (PIEZA PRINCIPAL)</strong>
+      <div style="font-size: 11px; color: #94a3b8;">Imprima este documento y métalo en un sobre rotulado como "SOBRE A - APERTURA".</div>
+    </div>
+    <button class="print-btn" onclick="window.print()">🖨️ IMPRIMIR SOBRE A (PDF / PAPEL)</button>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 1: DILIGENCIA DE INCOACIÓN JUDICIAL                 -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">SECRETO SUMARIO</div>
+      <div class="official-header">
+        <div class="official-title">
+          ADMINISTRACIÓN DE JUSTICIA<br>
+          JUZGADO DE INSTRUCCIÓN Nº 2 DE VALLADOLID<br>
+          <span style="font-size: 9px; font-weight: normal;">Plaza del Rosarillo s/n, 47003 Valladolid</span>
+        </div>
+        <div class="case-number">
+          DILIGENCIAS PREVIAS Nº: 402/2024<br>
+          PIEZA: PRINCIPAL (SOBRE A)
+        </div>
+      </div>
+
+      <h1 class="doc-title">PROVIDENCIA JUDICIAL DE INCOACIÓN DE SUMARIO</h1>
+
+      <p class="legal-text">
+        <strong>VALLADOLID, a cinco de octubre de dos mil veinticuatro.</strong>
+      </p>
+
+      <p class="legal-text">
+        Dada cuenta del Atestado Policial de urgencia remitido por el Puesto Principal de la Guardia Civil de Peñafiel en relación con el hallazgo del cuerpo sin vida de quien resulta ser <strong>D. GONZALO DE LA SERNA Y MENDIETA</strong>, de 58 años de edad, en las instalaciones de la mercantil <em>Bodegas Valdeluna S.A.</em>, habiéndose procedido al preceptivo levantamiento del cadáver a las 08:30 horas del día de hoy por la Comisión Judicial constituida por el Juez Instructor, la Médico Forense y el Letrado de la Administración de Justicia.
+      </p>
+
+      <p class="legal-text">
+        <strong>ACUERDO:</strong><br>
+        1º.- Incoar las correspondientes <strong>DILIGENCIAS PREVIAS Nº 402/2024</strong> para el esclarecimiento de las causas del fallecimiento.<br>
+        2º.- Facultar con carácter urgente a la <strong>Unidad Orgánica de Policía Judicial (UOPJ) de la Comandancia de Valladolid</strong> para que practique las pesquisas que procedan, preservando íntegramente el precinto de la Nave nº 2 de Fermentación y dependencias anejas.<br>
+        3º.- Unir a la presente causa el Informe de Levantamiento y la Ficha de Necropsia tanatológica preliminar practicada por el Instituto de Medicina Legal y Ciencias Forenses.
+      </p>
+
+      <div style="margin: 18px 0; border: 1.5px solid #000; padding: 12px; background: #f4f3ed; font-size: 10px; line-height: 1.5;">
+        <strong>ADVERTENCIA A LOS INVESTIGADORES POLICIALES:</strong><br>
+        La representación legal de la empresa y la compañía aseguradora han formulado solicitud formal de archivo alegando muerte accidental por anoxia derivada de la emanación de anhídrido carbónico en recinto cerrado (accidente laboral fortuito por "tufo"). No se autorizará el ejercicio de acciones penales ni la apertura de interrogatorios formales mientras no se acredite técnicamente la existencia de indicios de violencia o criminalidad dolosa.
+      </div>
+    </div>
+
+    <div>
+      <div class="signature-area">
+        <div class="signature-box">
+          EL JUEZ DE INSTRUCCIÓN<br><br>
+          <em>Ilmo. Sr. D. Carlos M. Velasco</em>
+        </div>
+        <div class="signature-box">
+          EL LETRADO DE LA ADM. DE JUSTICIA<br><br>
+          <em>D. Santiago Fuertes Rivas</em>
+        </div>
+      </div>
+
+      <div class="stamp-registered">
+        REGISTRO GENERAL ENTRADA<br>
+        05 OCT 2024 - 09:15 H<br>
+        REG Nº: 2024/09841
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 2: ATESTADO GUARDIA CIVIL - PRIMERA INTERVENCIÓN    -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="official-header">
+        <div class="official-title">
+          MINISTERIO DEL INTERIOR<br>
+          DIRECCIÓN GENERAL DE LA GUARDIA CIVIL<br>
+          <span style="font-size: 9px; font-weight: normal;">UOPJ VALLADOLID // PUESTO PEÑAFIEL</span>
+        </div>
+        <div class="case-number">
+          ATESTADO POLICIAL Nº: 118/2024<br>
+          FECHA: 05/10/2024 - 07:45 H
+        </div>
+      </div>
+
+      <h1 class="doc-title">DILIGENCIA DE INSPECCIÓN OCULAR Y HALLAZGO DE CADÁVER</h1>
+
+      <p class="legal-text">
+        Comparecen los Agentes de la Guardia Civil con TIP <strong>GC-84.920</strong> y <strong>GC-31.504</strong>, adscritos al Equipo de Policía Judicial de Peñafiel, e instruyen la presente diligencia:
+      </p>
+
+      <p class="legal-text">
+        <strong>1. REQUERIMIENTO:</strong> A las 07:18 horas del día 5 de octubre de 2024, se recibe comunicación del Centro Operativo de Servicios (COS) dimanante de llamada a la Sala del 112 realizada por D. Javier Beltrán Gómez (capataz de la finca), manifestando haber hallado el cuerpo inmóvil de D. Gonzalo de la Serna en la nave subterránea de cubas.
+      </p>
+
+      <p class="legal-text">
+        <strong>2. SITUACIÓN DEL ESCENARIO DEL HALLAZGO:</strong><br>
+        Constituida la dotación en <em>Bodegas Valdeluna</em> (Camino de los Arcos s/n, Peñafiel) a las 07:28 horas, se accede a la denominada <strong>Nave 2 (Nave de Fermentación en Acero Inoxidable)</strong>, situada en cota subterránea (-1). Se constata una atmósfera densa con fuerte olor acético y a mosto fresco en fermentación. Se procede a realizar una medición ambiental de urgencia con detector multigás portátil Dräger X-am 2500:
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Punto de Muestreo</th>
+            <th>Concentración CO2</th>
+            <th>Oxígeno (% O2)</th>
+            <th>Riesgo Ambiental</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Acceso superior / Escalera</td>
+            <td>0,08 % (800 ppm)</td>
+            <td>20,8 %</td>
+            <td>Nivel Normal</td>
+          </tr>
+          <tr>
+            <td>Suelo junto a Tina 4 (Cadáver)</td>
+            <td>3,90 % (39.000 ppm)</td>
+            <td>16,2 %</td>
+            <td>Asfixia crítica en permanencia &gt; 15 min</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="legal-text">
+        <strong>3. POSICIÓN Y ESTADO DEL CUERPO:</strong><br>
+        El cuerpo yace sobre el pavimento industrial de hormigón pulido, a 1,2 metros de la válvula inferior de descarga de la Tina nº 4. Se encuentra colocado en <strong>decúbito prono (boca abajo)</strong>, con el brazo izquierdo extendido a lo largo del cuerpo y el brazo derecho flexionado bajo el torso. El rostro está lateralizado hacia su derecha. La ropa está seca, sin desgarros. Se observa un pequeño reguero hemático de 12 cm de longitud que emana del lateral occipital izquierdo, ya coagulado y seco sobre el suelo.
+      </p>
+
+      <p class="legal-text">
+        <strong>4. EFECTOS PERSONALES INTERVENIDOS SOBRE EL CADÁVER:</strong><br>
+        - Cartera de piel con DNI a nombre de la víctima y 140 euros en efectivo.<br>
+        - Llaves del vehículo particular de la víctima (Audi A6, estacionado en el porche).<br>
+        - <em>ANOMALÍA CONSTATADA:</em> No se localiza el teléfono móvil corporativo de la víctima ni el reloj de pulsera deportivo (marca Garmin) que llevaba puesto de forma continuada.
+      </p>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">
+        EL INSTRUCTOR DEL ATESTADO<br><br>
+        <em>Agente TIP GC-84.920</em>
+      </div>
+      <div class="signature-box">
+        EL SECRETARIO<br><br>
+        <em>Agente TIP GC-31.504</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 3: AUTOPSIA - PARTE I: TANATOLOGÍA Y LESIONES       -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">MÉDICO FORENSE</div>
+      <div class="official-header">
+        <div class="official-title">
+          INSTITUTO DE MEDICINA LEGAL Y CIENCIAS FORENSES<br>
+          DEPARTAMENTO DE PATOLOGÍA FORENSE — VALLADOLID<br>
+          <span style="font-size: 9px; font-weight: normal;">C/ Real de Burgos s/n, Valladolid</span>
+        </div>
+        <div class="case-number">
+          INFORME NECROPSIA Nº: 882/2024<br>
+          HOJA 1 DE 2 — PARTE I
+        </div>
+      </div>
+
+      <h1 class="doc-title">INFORME PRELIMINAR DE AUTOPSIA JUDICIAL (I/II)</h1>
+
+      <p class="legal-text">
+        <strong>MÉDICO FORENSE:</strong> Dra. M. Teresa Albarrán Carvajal (Colegiada 47/03812).<br>
+        <strong>IDENTIFICACIÓN CADÁVER:</strong> D. Gonzalo de la Serna y Mendieta (58 años).<br>
+        <strong>INICIO DEL EXAMEN TANATOLÓGICO:</strong> 05 de octubre de 2024 a las 11:00 horas.
+      </p>
+
+      <p class="legal-text"><strong>I. FENÓMENOS CADAVÉRICOS Y CRONOTANATODIAGNÓSTICO:</strong></p>
+      <table class="data-table">
+        <tr>
+          <td style="width: 32%;"><strong>Temperatura Rectal</strong></td>
+          <td><strong>27,1 ºC</strong> (Medida en sala de autopsias a las 11:15 h; Temp. ambiente nave: 14 ºC). Conforme a la fórmula de Henssge, data de muerte estimada entre <strong>14 y 16 horas previas</strong>.</td>
+        </tr>
+        <tr>
+          <td><strong>Rigidez Cadavérica</strong></td>
+          <td>Completamente instaurada e irreductible en maseteros, cuello, tronco y extremidades.</td>
+        </tr>
+        <tr>
+          <td><strong>Livideces Cadavéricas (*Hipostasias*)</strong></td>
+          <td>
+            <strong style="color: #b91c1c;">HALLAZGO CRÍTICO DISCORDANTE:</strong> Livideces de coloración violácea oscura distribuidas extensamente en <strong>REGIÓN POSTERIOR Y DORSAL DEL TRONCO</strong> (escápulas, nalgas y pantorrillas), con zonas de blanqueamiento por compresión compatibles con haber reposado sobre una superficie plana.<br>
+            <em>*Nota Médico-Legal:*</em> Las livideces <strong>NO DESAPARECEN</strong> a la digitopresión (fijación completa). Siendo el cadáver hallado en posición <strong>decúbito prono (boca abajo)</strong>, este patrón demuestra concluyentemente que el cuerpo permaneció en decúbito supino (boca arriba) un mínimo de 6 a 8 horas con posterioridad a la parada cardíaca.
+          </td>
+        </tr>
+      </table>
+
+      <p class="legal-text"><strong>II. EXAMEN EXTERNO E INTERNO DE LESIONES TRAUMÁTICAS:</strong></p>
+      <p class="legal-text">
+        En región parieto-occipital izquierda se aprecia herida contusa estrellada de 4,2 cm de bordes anfractuosos con puente dérmico. La apertura craneal revela <strong>fractura conminuta deprimida de la escama occipital</strong> con desgarro de la duramadre y hematoma subdural agudo de aproximadamente 65 cc, asociado a contusión del lóbulo occipital y laceración del tronco encefálico. Se objetiva infiltración hemática peri-lesional masiva de origen perimortem (compatible con impacto violento con instrumento romo circular de masa considerable).
+      </p>
+    </div>
+
+    <div style="font-size: 9.5px; text-align: right; color: #52525b; border-top: 1px dotted #71717a; padding-top: 6px;">
+      [Continúa en Hoja 2: Contenido Gástrico, Toxicología y Conclusiones]
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 4: AUTOPSIA - PARTE II: GÁSTRICO Y CONCLUSIONES     -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">MÉDICO FORENSE</div>
+      <div class="official-header">
+        <div class="official-title">
+          INSTITUTO DE MEDICINA LEGAL Y CIENCIAS FORENSES<br>
+          DEPARTAMENTO DE PATOLOGÍA FORENSE — VALLADOLID
+        </div>
+        <div class="case-number">
+          INFORME NECROPSIA Nº: 882/2024<br>
+          HOJA 2 DE 2 — PARTE II
+        </div>
+      </div>
+
+      <h1 class="doc-title">INFORME PRELIMINAR DE AUTOPSIA JUDICIAL (II/II)</h1>
+
+      <p class="legal-text"><strong>III. EXAMEN DEL CONTENIDO GÁSTRICO:</strong></p>
+      <p class="legal-text">
+        El estómago contiene 260 gramos de quimo alimentario poco digerido, reconociéndose macroscópicamente fragmentos identificables de lechuga, tomate y pasta de queso curado. Ausencia casi total de quimo en la ampolla duodenal. Este estadio de evacuación gástrica corresponde a un tiempo de digestión postprandial de <strong>entre 90 y 120 minutos tras la última ingesta</strong>.
+      </p>
+
+      <p class="legal-text"><strong>IV. EXAMEN TOXICOLÓGICO Y ANÁLISIS DE GASES EN SANGRE:</strong></p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Parámetro Analizado</th>
+            <th>Resultado Muestra Víctima</th>
+            <th>Valor Típico Intoxicación Letal CO2</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Carboxihemoglobina (HbCO)</td>
+            <td>2,8 %</td>
+            <td>Normal (&lt; 3 %)</td>
+          </tr>
+          <tr>
+            <td>Presión arterial pCO2 postmortem</td>
+            <td>42 mmHg</td>
+            <td>&gt; 95 mmHg en asfixia hipercápnica</td>
+          </tr>
+          <tr>
+            <td>Edema / Enfisema agudo pulmonar</td>
+            <td>Ausente (pulmones sin espuma)</td>
+            <td>Presente de forma masiva en asfixia por gas</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="border: 1.5px solid #000; padding: 12px; background: #fff; margin: 14px 0;">
+        <p class="legal-text" style="margin-bottom: 0;">
+          <strong>CONCLUSIÓN PROVISIONAL MÉDICO-LEGAL:</strong><br>
+          1. La causa inmediata de la muerte es un <strong>SHOCK NEUROGÉNICO Y PARADA CARDIORRESPIRATORIA POR TRAUMATISMO CRANEOENCEFÁLICO SEVERO</strong> de etiología médico-legal inequívocamente HOMICIDA.<br>
+          2. La víctima no falleció por asfixia en la nave de cubas. Los niveles de gases y la ausencia de enfisema agudo descartan la inhalación letal continuada de CO2.<br>
+          3. La discordancia absoluta de las livideces dorsales fijas con la posición de decúbito prono prueba que el cuerpo fue trasladado y colocado deliberadamente en la Nave 2 varias horas después del óbito.<br>
+          4. La data de la muerte queda fijada entre las <strong>20:30 y las 21:15 horas del viernes 04/10/2024</strong>.
+        </p>
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">
+        LA MÉDICO FORENSE<br><br>
+        <em>Dra. M. Teresa Albarrán Carvajal</em><br>
+        <span style="font-size: 8px;">Col. Oficial de Médicos 47/03812</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 5: PLANIMETRÍA Y CROQUIS DE LA BODEGA               -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="official-header">
+        <div class="official-title">
+          DIRECCIÓN GENERAL DE LA GUARDIA CIVIL<br>
+          SISTEMA DE PLANIMETRÍA FORENSE INFOGRÁFICA<br>
+          <span style="font-size: 9px; font-weight: normal;">BODEGAS VALDELUNA S.A. — PEÑAFIEL</span>
+        </div>
+        <div class="case-number">
+          ANEXO PLANIMÉTRICO 1<br>
+          ESCALA 1:200
+        </div>
+      </div>
+
+      <h1 class="doc-title">CROQUIS DE INSTALACIONES Y ZONAS DE ACCESO</h1>
+
+      <div class="croquis-container">
+        <svg viewBox="0 0 640 370" style="width: 100%; max-width: 580px; height: auto; background:#fff; font-family:'Inter', sans-serif;">
+          <defs>
+            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="640" height="370" fill="url(#grid)" />
+
+          <!-- EDIFICIO PRINCIPAL (PLANTA 1 Y BAJA) -->
+          <rect x="30" y="20" width="260" height="150" fill="#f8fafc" stroke="#334155" stroke-width="2"/>
+          <text x="40" y="38" font-size="10" font-weight="700" fill="#0f172a">EDIFICIO NOBLE (PLANTA 1 / OFICINAS)</text>
+          
+          <!-- ZONA LABORATORIO -->
+          <rect x="40" y="52" width="130" height="95" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <text x="48" y="70" font-size="9" font-weight="700" fill="#0369a1">LABORATORIO ENOLÓGICO</text>
+          <text x="48" y="83" font-size="8" fill="#0284c7">Y DESPACHO GONZALO</text>
+          <circle cx="95" cy="110" r="4" fill="#0284c7"/>
+          <text x="104" y="113" font-size="7.5" fill="#475569">Mesa de análisis</text>
+
+          <!-- DESPACHO MARCOS -->
+          <rect x="180" y="52" width="100" height="95" fill="#f1f5f9" stroke="#64748b" stroke-width="1"/>
+          <text x="186" y="74" font-size="8.5" font-weight="600" fill="#334155">DESPACHO CFO</text>
+          <text x="186" y="87" font-size="7.5" fill="#64748b">(Marcos Varela)</text>
+
+          <!-- MONTACARGAS INDUSTRIAL -->
+          <rect x="255" y="115" width="35" height="32" fill="#fef08a" stroke="#ca8a04" stroke-width="1.5"/>
+          <text x="257" y="134" font-size="7.5" font-weight="700" fill="#854d0e">MONTAC.</text>
+
+          <!-- NAVE 2 (SUBTERRÁNEA - NIVEL -1) -->
+          <rect x="330" y="20" width="280" height="325" fill="#f8fafc" stroke="#334155" stroke-width="2"/>
+          <text x="340" y="42" font-size="10" font-weight="700" fill="#0f172a">NAVE 2 - FERMENTACIÓN (NIVEL -1)</text>
+
+          <!-- CUBAS DE ACERO INOXIDABLE -->
+          <circle cx="380" cy="95" r="24" fill="#cbd5e1" stroke="#475569" stroke-width="1.5"/>
+          <text x="367" y="98" font-size="8.5" font-weight="600">TINA 1</text>
+          <circle cx="455" cy="95" r="24" fill="#cbd5e1" stroke="#475569" stroke-width="1.5"/>
+          <text x="442" y="98" font-size="8.5" font-weight="600">TINA 2</text>
+          <circle cx="530" cy="95" r="24" fill="#cbd5e1" stroke="#475569" stroke-width="1.5"/>
+          <text x="517" y="98" font-size="8.5" font-weight="600">TINA 3</text>
+
+          <circle cx="380" cy="185" r="24" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
+          <text x="365" y="188" font-size="8.5" font-weight="700" fill="#9a3412">TINA 4*</text>
+          <text x="357" y="198" font-size="6.5" fill="#ea580c">[ACTIVA CO2]</text>
+
+          <circle cx="455" cy="185" r="24" fill="#cbd5e1" stroke="#475569" stroke-width="1.5"/>
+          <text x="442" y="188" font-size="8.5" font-weight="600">TINA 5</text>
+          <circle cx="530" cy="185" r="24" fill="#cbd5e1" stroke="#475569" stroke-width="1.5"/>
+          <text x="517" y="188" font-size="8.5" font-weight="600">TINA 6</text>
+
+          <!-- SILUETA DEL CADÁVER EN TINA 4 -->
+          <rect x="412" y="188" width="20" height="9" fill="#dc2626" rx="2"/>
+          <circle cx="410" cy="192" r="3.5" fill="#991b1b"/>
+          <text x="403" y="210" font-size="8" font-weight="700" fill="#dc2626">CADÁVER</text>
+          <line x1="412" y1="192" x2="403" y2="184" stroke="#dc2626" stroke-width="1"/>
+
+          <!-- EXTRACTORES DE TECHO -->
+          <rect x="440" y="280" width="40" height="18" fill="#94a3b8" stroke="#334155"/>
+          <text x="443" y="292" font-size="7" fill="#000">EXTRACTOR</text>
+
+          <!-- PATIO EXTERIOR Y TOLVAS -->
+          <rect x="30" y="190" width="260" height="155" fill="#f1f5f9" stroke="#64748b" stroke-width="1.5"/>
+          <text x="40" y="210" font-size="9" font-weight="700" fill="#334155">PATIO DE DESCARGA Y TOLVAS</text>
+          <text x="40" y="224" font-size="7.5" fill="#64748b">Acceso tractores y camiones</text>
+
+          <!-- ACCESO MONTACARGAS NAVE 2 -->
+          <line x1="280" y1="147" x2="330" y2="147" stroke="#ca8a04" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <text x="285" y="160" font-size="7" fill="#854d0e">Túnel montacargas</text>
+        </svg>
+      </div>
+
+      <p class="legal-text" style="font-size: 10px;">
+        <strong>NOTAS PLANIMÉTRICAS POLICIALES:</strong><br>
+        • El montacargas comunica directamente la trastienda del laboratorio con el pasillo de servicio de la Nave 2 (Nivel -1), permitiendo mover bultos pesados sin salir al patio exterior.<br>
+        • La Tina 4 contenía 25.000 litros de mosto de tempranillo en fermentación tumultuosa iniciada a las 11:00 h del día 04/10/2024.
+      </p>
+    </div>
+
+    <div style="font-size: 9px; color: #71717a; text-align: center; border-top: 1px dotted #a1a1aa; padding-top: 4px;">
+      COMANDANCIA GUARDIA CIVIL VALLADOLID — SECCIÓN DE PLANIMETRÍA FORENSE
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- HOJA 6: FICHA TÉCNICA Y TICKET CENA                      -->
+  <!-- ======================================================== -->
+  <div class="sheet">
+    <div>
+      <div class="official-header">
+        <div class="official-title">
+          DOCUMENTACIÓN COMPLEMENTARIA INCAUTADA<br>
+          BODEGAS VALDELUNA S.A. — ARCHIVO DE SERVICIO
+        </div>
+        <div class="case-number">
+          PIEZA EVIDENCIA A-5 y A-6
+        </div>
+      </div>
+
+      <h2 style="font-size: 11px; font-family: 'Inter', sans-serif; text-transform: uppercase; margin-bottom: 6px;">
+        EVIDENCIA A-5: FICHA TÉCNICA DEL SISTEMA DE VENTILACIÓN Y EXTRACTORES NAVE 2
+      </h2>
+
+      <div style="border: 1px solid #71717a; padding: 10px; background: #fff; font-size: 10px; margin-bottom: 16px;">
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr>
+            <td style="padding: 3px; width: 38%;"><strong>INSTALACIÓN:</strong></td>
+            <td style="padding: 3px;">Ventilación Forzada Nave de Cubas 2 (Subterráneo)</td>
+          </tr>
+          <tr>
+            <td style="padding: 3px;"><strong>CONTROLADOR:</strong></td>
+            <td style="padding: 3px;">Siemens Desigo CC - Autómata Programable Nave Central</td>
+          </tr>
+          <tr>
+            <td style="padding: 3px;"><strong>HORARIO PROGRAMADO:</strong></td>
+            <td style="padding: 3px;">Lunes a Jueves: 06:00 h a 22:00 h (Continuo).</td>
+          </tr>
+          <tr>
+            <td style="padding: 3px;"><strong>PROGRAMA VIERNES TARDE:</strong></td>
+            <td style="padding: 3px; color: #b91c1c; font-weight: bold;">
+              Desconexión automática programada a las 20:00 h (Tarifa Valle Fin de Semana).
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 3px;"><strong>ADVERTENCIA DE SEGURIDAD:</strong></td>
+            <td style="padding: 3px;">
+              En caso de fermentación activa, tras el apagado de extractores, el CO2 satura el suelo (&lt; 50 cm de altura) en un plazo de 45 a 60 minutos, alcanzando concentraciones incompatibles con la vida.
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <h2 style="font-size: 11px; font-family: 'Inter', sans-serif; text-transform: uppercase; margin-bottom: 6px;">
+        EVIDENCIA A-6: TICKET DE RESTAURACIÓN / CATERING DESPACHO GONZALO
+      </h2>
+
+      <div class="receipt-wrap">
+        <div class="receipt-header">
+          <strong>RESTAURANTE EL LAGAR DE PEÑAFIEL</strong><br>
+          Servicio a Domicilio / Empresas<br>
+          NIF: B-47291840 | Tlf: 983 88 12 04<br>
+          Plaza de España 4, Peñafiel
+        </div>
+        <div class="receipt-row">
+          <span>FECHA: 04/10/2024</span>
+          <span>HORA: 19:14:22</span>
+        </div>
+        <div class="receipt-row">
+          <span>PEDIDO: #4190</span>
+          <span>CLIENTE: G. de la Serna</span>
+        </div>
+        <div class="receipt-row" style="margin-top: 6px; border-top: 1px dotted #000; padding-top: 4px;">
+          <span>1x Ensalada Ventresca y Canónigos</span>
+          <span>14.50€</span>
+        </div>
+        <div class="receipt-row">
+          <span>1x Tabla Quesos Curados Ribera</span>
+          <span>12.00€</span>
+        </div>
+        <div class="receipt-row">
+          <span>1x Botellín Agua Mineral 500ml</span>
+          <span>2.00€</span>
+        </div>
+        <div class="receipt-row" style="border-top: 1px dashed #000; margin-top: 6px; padding-top: 4px; font-weight: bold;">
+          <span>TOTAL IMPORTE:</span>
+          <span>28.50€</span>
+        </div>
+        <div class="receipt-row">
+          <span>FORMA PAGO:</span>
+          <span>TARJETA (VISA ****8102)</span>
+        </div>
+        <div style="font-size: 8px; text-align: center; margin-top: 8px; color: #52525b;">
+          *Entrega confirmada a las 19:25 h en conserjería Bodegas Valdeluna*
+        </div>
+        <span class="barcode">*TKT4190-2024*</span>
+      </div>
+
+      <div style="margin-top: 12px; font-size: 10px; color: #3f3f46; font-style: italic; border-top: 1px solid #a1a1aa; padding-top: 8px;">
+        <strong>DILIGENCIA POLICIAL:</strong> El ticket fue recuperado de la papelera del despacho de D. Gonzalo de la Serna. Los restos de la ensalada y el envoltorio del queso se encontraban en la mesa del laboratorio, coincidiendo íntegramente con los alimentos hallados en la cavidad gástrica durante la necropsia.
+      </div>
+    </div>
+
+    <div style="font-size: 9px; color: #71717a; text-align: center; border-top: 1px dotted #a1a1aa; padding-top: 4px;">
+      PIEZA SEPARADA DE EVIDENCIAS MATERIALES — EXPEDIENTE VALDELUNA
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+# Archivos del sistema y temporales
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+
+# Entornos virtuales / Node si aplica
+node_modules/
+.venv/
+__pycache__/
+
+# Mantener todos los PDFs, imágenes, código y documentación
+!*.pdf
+!*.png
+!*.svg
+!*.jpg
