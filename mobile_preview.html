@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>VESTIGO — Mobile Touch & Liquid Glass Noir Showcase (iPhone Pro 393x852)</title>
+  
+  <!-- Apple PWA & Status Bar Tokens -->
+  <meta name="theme-color" content="#04070D">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Core Design System & Mobile UX -->
+  <link rel="stylesheet" href="css/liquid-glass.css">
+  <link rel="stylesheet" href="css/mobile-ux.css">
+
+  <style>
+    /* Desktop Simulation Container for Testing Mobile Device Frame */
+    body {
+      background: #020408;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    /* Simulation Control Toolbar (visible on desktop screens) */
+    .simulator-bar {
+      display: none;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 20px;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      color: #94a3b8;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+    }
+
+    @media (min-width: 769px) {
+      .simulator-bar {
+        display: flex;
+      }
+      .mobile-stage-wrap {
+        padding: 40px 20px 80px 20px;
+      }
+      .iphone-frame {
+        width: 393px;
+        height: 852px;
+        border-radius: 54px;
+        border: 4px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 0 0 10px #1a2233, 0 30px 90px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 229, 255, 0.15);
+        overflow: hidden;
+        position: relative;
+        background: #04070D;
+        display: flex;
+        flex-direction: column;
+      }
+      .dynamic-island {
+        position: absolute;
+        top: 11px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 32px;
+        background: #000;
+        border-radius: 20px;
+        z-index: 5000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 12px;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
+      }
+      .dynamic-island-camera {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #090e1a;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .dynamic-island-sensor {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #040810;
+      }
+      .home-indicator {
+        position: absolute;
+        bottom: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 134px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.35);
+        border-radius: 2px;
+        z-index: 5000;
+        pointer-events: none;
+      }
+      .iphone-viewport {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        position: relative;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .iphone-frame {
+        width: 100%;
+        min-height: 100dvh;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        background: #04070D;
+      }
+      .dynamic-island, .home-indicator {
+        display: none;
+      }
+      .iphone-viewport {
+        width: 100%;
+        min-height: 100dvh;
+      }
+    }
+
+    /* Interactive Demonstration Utilities */
+    .showcase-content {
+      padding: 16px 16px 120px 16px;
+    }
+
+    .demo-tag {
+      display: inline-block;
+      font-family: var(--vg-font-mono, monospace);
+      font-size: 10px;
+      color: var(--vg-cyan, #00e5ff);
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      padding: 3px 10px;
+      border-radius: 9999px;
+      margin-bottom: 8px;
+    }
+
+    .demo-spec-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 16px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #94a3b8;
+    }
+
+    .demo-spec-box b {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DESKTOP SIMULATOR TOPBAR -->
+  <div class="simulator-bar">
+    <div>
+      <span style="color: #00e5ff;">VESTIGO MOBILE UX SIMULATOR</span> // iPhone 14/15/16 Pro (393 × 852 pt)
+    </div>
+    <div>
+      Touch Physics: Active · Dynamic Viewports: 100dvh · Glass Dock: Floating Island
+    </div>
+  </div>
+
+  <div class="mobile-stage-wrap">
+    <div class="iphone-frame">
+      <!-- Simulated Apple Dynamic Island -->
+      <div class="dynamic-island">
+        <div class="dynamic-island-sensor"></div>
+        <div class="dynamic-island-camera"></div>
+      </div>
+
+      <!-- Simulated iOS Home Indicator -->
+      <div class="home-indicator"></div>
+
+      <!-- Scrollable Phone Viewport -->
+      <div class="iphone-viewport" id="mobileScrollContainer">
+        
+        <!-- HEADER SUPERIOR TOPBAR (LIQUID GLASS NOIR) -->
+        <header class="topbar">
+          <div class="brand-group" onclick="showSection('catalog')">
+            <img src="imagenes/vestigo_icon_2d.png" alt="VESTIGO" class="brand-logo-img">
+            <div class="brand-text-wrap">
+              <div class="brand-title">VESTIG<span>O</span></div>
+              <div class="brand-subtitle">FORENSIC CASE ENGINE</div>
+            </div>
+          </div>
+
+          <div class="topbar-actions">
+            <span class="demo-tag" style="margin-bottom:0;">v2.0 TOUCH</span>
+            <a href="index.html" class="icon-link-btn" title="Ir a la App">
+              ↗ APP
+            </a>
+          </div>
+        </header>
+
+        <!-- MAIN APP CONTENT -->
+        <main class="showcase-content">
+
+          <!-- ========================================== -->
+          <!-- SECCIÓN 1: CATÁLOGO DE CASOS (MOBILE STREAMLINED) -->
+          <!-- ========================================== -->
+          <div id="section-catalog" class="active">
+            
+            <!-- HERO BANNER CON PROGRESSIVE DISCLOSURE -->
+            <div class="hero-banner">
+              <span class="hero-tag">MOTOR DE INVESTIGACIÓN HÍBRIDO</span>
+              <h1 class="hero-title">Expedientes de Instrucción</h1>
+              
+              <!-- Wall-of-text fatigue eliminated via Progressive Disclosure -->
+              <p class="hero-desc" id="heroDesc">
+                Resuelve crímenes verosímiles mediante el cruce de atestados periciales físicos, autopsias tanatológicas en dos tiempos, radares cinemométricos DGT, registros de telefonía celular BTS y deducción científica implacable.
+              </p>
+              
+              <button class="vg-disclosure-trigger" data-target="heroDesc" data-expand-text="Ver introducción forense ▾" data-collapse-text="Ocultar síntesis ▴">
+                Ver introducción forense ▾
+              </button>
+            </div>
+
+            <div class="demo-spec-box">
+              ⚡ <b>De-clutter Móvil:</b> Se eliminan bloques densos de texto. Los datos clave se priorizan mediante disclosure progresivo y tarjetas condensadas.
+            </div>
+
+            <!-- CASO 01: EL ÚLTIMO MOSTO (TARJETA STREAMLINED) -->
+            <div class="catalog-grid">
+              <div class="case-card">
+                <div class="case-cover-wrap">
+                  <img src="imagenes/escena_tina4_bodega.png" alt="Caso 01" class="case-cover-img">
+                  <div class="case-badge-overlay">
+                    <span class="case-badge badge-active">CASO 01 · ACTIVO</span>
+                    <span class="case-badge" style="background:#ca8a04; color:#000;">DIFICULTAD MEDIA</span>
+                  </div>
+                </div>
+                
+                <div class="case-body">
+                  <div>
+                    <div class="case-number">DILIGENCIAS PREVIAS Nº 402/2024</div>
+                    <h2 class="case-title">El Último Mosto de Bodegas Valdeluna</h2>
+                    
+                    <!-- Line-clamped summary with tap-to-expand -->
+                    <p class="case-summary" id="caseSummary">
+                      Peñafiel, noche gélida de vendimia. El cuerpo del bodeguero Gonzalo de la Serna yace a los pies de la Tina 4. Una aparente asfixia por gas carbónico desmentida por livideces dorsales y un reactivo químico azul revelador.
+                    </p>
+                    <button class="vg-disclosure-trigger" data-target="caseSummary" data-expand-text="Ver sinopsis completa ▾" data-collapse-text="Ocultar sinopsis ▴">
+                      Ver sinopsis completa ▾
+                    </button>
+                  </div>
+
+                  <!-- 3-Pill Specs Dock -->
+                  <div class="case-specs">
+                    <div class="spec-item">
+                      <div class="spec-label">JUGADORES</div>
+                      <div class="spec-val">1 - 2</div>
+                    </div>
+                    <div class="spec-item">
+                      <div class="spec-label">DURACIÓN</div>
+                      <div class="spec-val">2 - 3 H</div>
+                    </div>
+                    <div class="spec-item">
+                      <div class="spec-label">MATERIAL</div>
+                      <div class="spec-val">6 PDFs / WEB</div>
+                    </div>
+                  </div>
+
+                  <!-- High-tactile button with spring feedback -->
+                  <button class="btn-enter-case" onclick="showSection('case')">
+                    ABRIR EXPEDIENTE Y JUGAR ▶
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ========================================== -->
+          <!-- SECCIÓN 2: WORKSPACE DEL CASO (MOBILE TEST) -->
+          <!-- ========================================== -->
+          <div id="section-case" style="display: none;">
+            
+            <div class="case-header-nav">
+              <button class="back-btn" onclick="showSection('catalog')">
+                ← CATÁLOGO
+              </button>
+              <button class="back-btn" onclick="openPhotoSheet('imagenes/escena_tina4_bodega.png', 'Inspección Ocular Tina 4', 'Nave subterránea 2 de fermentación. Silueta del cadáver y testigo métrico #1.')">
+                🔍 VER BOTTOM SHEET
+              </button>
+            </div>
+
+            <!-- Meta Header Condensado -->
+            <div class="case-meta-header">
+              <div class="case-meta-left">
+                <h2>El Último Mosto de Bodegas Valdeluna</h2>
+                <p>DILIGENCIAS PREVIAS 402/2024 · JUZGADO Nº 2</p>
+              </div>
+              <div style="display:flex; gap:6px;">
+                <span class="case-badge" style="background:#ff2d55; color:#fff; font-size:9px; padding:3px 8px;">HOMICIDIO</span>
+                <span class="case-badge" style="background:#0284c7; color:#fff; font-size:9px; padding:3px 8px;">HÍBRIDO</span>
+              </div>
+            </div>
+
+            <!-- SUB-PESTAÑA SELECCIONADA -->
+            <div id="sub-briefing" class="subtab-panel">
+              <div class="embed-toolbar">
+                <span>VÍDEO BRIEFING // SESIÓN NARRADA // 100DVH</span>
+                <a href="video-briefing/index.html" target="_blank" class="back-btn">PANTALLA COMPLETA ↗</a>
+              </div>
+              <div class="embed-viewport">
+                <iframe src="video-briefing/index.html" class="embed-iframe" title="Briefing Judicial"></iframe>
+              </div>
+              <div class="vg-iframe-escape-zone">
+                ↕ Desliza por fuera del visor para navegar la página
+              </div>
+            </div>
+
+            <!-- SUB-PESTAÑA DOSSIERS -->
+            <div id="sub-dossiers" class="subtab-panel" style="display:none;">
+              <h3 style="font-size:15px; margin-bottom:12px; color:#fff;">Dossiers y Piezas Imprimibles</h3>
+              
+              <div class="dossier-grid">
+                <!-- Tile Sobre A -->
+                <div class="dossier-card">
+                  <span class="dossier-badge" style="background:#0284c7; color:#fff;">SOBRE A · ABIERTO DE INICIO</span>
+                  <div class="dossier-title">Pieza Principal: Hallazgo y Autopsia</div>
+                  <div class="dossier-desc" id="descSobreA">
+                    Providencia judicial, atestado de la Guardia Civil de Peñafiel, autopsia preliminar completa en 2 hojas (tanatología y digestión), plano SVG de la bodega y extractores.
+                  </div>
+                  <button class="vg-disclosure-trigger" data-target="descSobreA" data-expand-text="Detalles del archivo ▾" data-collapse-text="Ocultar ▴">
+                    Detalles del archivo ▾
+                  </button>
+                  <div class="dossier-btns" style="margin-top:10px;">
+                    <a href="documentos-imprimibles/SOBRE_A_PIEZA_PRINCIPAL.pdf" target="_blank" class="btn-pdf">DESCARGAR PDF 📥</a>
+                    <a href="documentos-imprimibles/sobre_a.html" target="_blank" class="btn-html">VER HTML ➔</a>
+                  </div>
+                </div>
+
+                <!-- Tile Sobre B -->
+                <div class="dossier-card">
+                  <span class="dossier-badge" style="background:#ca8a04; color:#000;">SOBRE B · PRECINTADO</span>
+                  <div class="dossier-title">Pieza I: Escenario y Testigos</div>
+                  <div class="dossier-desc" id="descSobreB">
+                    Acta de luminol en el laboratorio, 4 interrogatorios policiales completos, chats de WhatsApp incautados, triangulación de antenas BTS y acta de efectos sustraídos.
+                  </div>
+                  <button class="vg-disclosure-trigger" data-target="descSobreB" data-expand-text="Detalles del archivo ▾" data-collapse-text="Ocultar ▴">
+                    Detalles del archivo ▾
+                  </button>
+                  <div class="dossier-btns" style="margin-top:10px;">
+                    <a href="documentos-imprimibles/SOBRE_B_PIEZA_SEPARADA_1.pdf" target="_blank" class="btn-pdf">DESCARGAR PDF 📥</a>
+                    <a href="documentos-imprimibles/sobre_b.html" target="_blank" class="btn-html">VER HTML ➔</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SUB-PESTAÑA TERMINAL -->
+            <div id="sub-terminal" class="subtab-panel" style="display:none;">
+              <div class="embed-toolbar">
+                <span>TERMINAL SITRA-JUD // LPR DGT // CCTV</span>
+                <a href="terminal-policial/index.html" target="_blank" class="back-btn">PANTALLA COMPLETA ↗</a>
+              </div>
+              <div class="embed-viewport">
+                <iframe src="terminal-policial/index.html" class="embed-iframe" title="Terminal Judicial"></iframe>
+              </div>
+            </div>
+
+            <!-- SUB-PESTAÑA SOSPECHOSOS -->
+            <div id="sub-evidencias" class="subtab-panel" style="display:none;">
+              <h3 style="font-size:15px; margin-bottom:12px; color:#fff;">Investigados y Peritajes Forenses</h3>
+              <p style="font-size:12px; color:#94a3b8; margin-bottom:14px;">Toca cualquier ficha para abrir el Bottom Sheet nativo:</p>
+              
+              <div class="profiles-grid">
+                <div class="profile-card" onclick="openPhotoSheet('imagenes/gonzalo_de_la_serna.png', 'Gonzalo de la Serna', 'Víctima (58 años) · Enólogo y Propietario de Bodegas Valdeluna. Fallecido en la Tina 4.')">
+                  <div class="profile-thumb-wrap">
+                    <img src="imagenes/gonzalo_de_la_serna.png" alt="Gonzalo" class="profile-thumb">
+                  </div>
+                  <div class="profile-info">
+                    <div class="profile-name">Gonzalo de la Serna</div>
+                    <div class="profile-role">VÍCTIMA · PROPIETARIO</div>
+                  </div>
+                </div>
+
+                <div class="profile-card" onclick="openPhotoSheet('imagenes/marcos_varela.png', 'Marcos Varela Ríos', 'Investigado (44 años) · CFO y Primo de la víctima · Conductor Volvo XC60 4188-KLT')">
+                  <div class="profile-thumb-wrap">
+                    <img src="imagenes/marcos_varela.png" alt="Marcos" class="profile-thumb">
+                  </div>
+                  <div class="profile-info">
+                    <div class="profile-name">Marcos Varela Ríos</div>
+                    <div class="profile-role">INVESTIGADO · CFO</div>
+                  </div>
+                </div>
+
+                <div class="profile-card" onclick="openPhotoSheet('imagenes/elena_fontanals.png', 'Elena Fontanals Puig', 'Investigada (47 años) · Socia de Vitis Capital · Presunto móvil económico y compra hostil.')">
+                  <div class="profile-thumb-wrap">
+                    <img src="imagenes/elena_fontanals.png" alt="Elena" class="profile-thumb">
+                  </div>
+                  <div class="profile-info">
+                    <div class="profile-name">Elena Fontanals Puig</div>
+                    <div class="profile-role">INVESTIGADA · VITIS</div>
+                  </div>
+                </div>
+
+                <div class="profile-card" onclick="openPhotoSheet('imagenes/evidencia_calzado_alfombrilla.png', 'Vestigio Químico en Vehículo', 'Macro pericial de calzado y alfombrilla con tinción azul de reactivo sulfato de cobre.')">
+                  <div class="profile-thumb-wrap">
+                    <img src="imagenes/evidencia_calzado_alfombrilla.png" alt="Prueba" class="profile-thumb">
+                  </div>
+                  <div class="profile-info">
+                    <div class="profile-name">Alfombrilla y Tacón</div>
+                    <div class="profile-role">LOCARD · VESTIGIO QUÍMICO</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SUB-PESTAÑA NOTAS -->
+            <div id="sub-notas" class="subtab-panel" style="display:none;">
+              <div class="notepad-wrap">
+                <div class="notepad-header">
+                  <div class="notepad-title">📓 Cuaderno de Campo</div>
+                  <button class="back-btn" onclick="document.getElementById('demoNotes').value=''">BORRAR</button>
+                </div>
+                <textarea id="demoNotes" class="notepad-textarea" placeholder="Escribe aquí tus deducciones, horas de radar y discrepancias de autopsia..."></textarea>
+              </div>
+            </div>
+
+          </div>
+
+        </main>
+
+        <!-- ======================================================== -->
+        <!-- FLOATING LIQUID GLASS MOBILE BOTTOM NAVIGATION (DOCK)    -->
+        <!-- ======================================================== -->
+        <nav class="mobile-bottom-nav">
+          <button class="nav-item active" id="dock-catalog" onclick="dockNavigate('catalog')">
+            <span class="nav-icon">🗂️</span>
+            <span>Casos</span>
+          </button>
+          <button class="nav-item" id="dock-briefing" onclick="dockNavigate('briefing')">
+            <span class="nav-icon">🎬</span>
+            <span>Vídeo</span>
+          </button>
+          <button class="nav-item" id="dock-dossiers" onclick="dockNavigate('dossiers')">
+            <span class="nav-icon">📄</span>
+            <span>PDFs</span>
+          </button>
+          <button class="nav-item" id="dock-terminal" onclick="dockNavigate('terminal')">
+            <span class="nav-icon">💻</span>
+            <span>Terminal</span>
+          </button>
+          <button class="nav-item" id="dock-evidencias" onclick="dockNavigate('evidencias')">
+            <span class="nav-icon">👥</span>
+            <span>Pruebas</span>
+          </button>
+        </nav>
+
+        <!-- ======================================================== -->
+        <!-- NATIVE iOS BOTTOM SHEET MODAL (PULL HANDLE & SWIPE)      -->
+        <!-- ======================================================== -->
+        <div id="photo-modal" class="modal-backdrop" onclick="closePhotoSheet(event)">
+          <div class="modal-content" onclick="event.stopPropagation()">
+            <!-- iOS Pull-to-dismiss handle bar (36px x 4px) -->
+            <div class="vg-sheet-handle-wrap" onclick="closePhotoSheet()">
+              <div class="vg-sheet-handle"></div>
+            </div>
+
+            <div class="modal-header">
+              <div>
+                <h3 id="sheetTitle" class="vg-sheet-title">Detalle de Inspección</h3>
+                <p id="sheetSub" class="vg-sheet-sub">REGISTRO POLICIAL // PERITAJE JUDICIAL</p>
+              </div>
+              <button class="modal-close" onclick="closePhotoSheet()">&times;</button>
+            </div>
+
+            <div class="modal-body">
+              <img id="sheetImg" src="imagenes/escena_tina4_bodega.png" alt="Prueba" style="width:100%; border-radius:14px; margin-bottom:14px;">
+              <p id="sheetDesc" style="font-size:13px; color:#cbd5e1; line-height:1.6;"></p>
+              
+              <div style="margin-top:16px;">
+                <button class="btn-enter-case" style="height:44px; font-size:12px;" onclick="closePhotoSheet()">
+                  ENTENDIDO // CONTINUAR INVESTIGACIÓN
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div> <!-- /iphone-viewport -->
+    </div> <!-- /iphone-frame -->
+  </div> <!-- /mobile-stage-wrap -->
+
+  <!-- Mobile Touch Gesture Engine Script -->
+  <script src="css/mobile-touch-engine.js"></script>
+
+  <script>
+    // NAVIGATION CONTROLLER FOR MOBILE PREVIEW
+    function showSection(name) {
+      if (name === 'catalog') {
+        document.getElementById('section-catalog').style.display = 'block';
+        document.getElementById('section-case').style.display = 'none';
+        setActiveDock('catalog');
+      } else {
+        document.getElementById('section-catalog').style.display = 'none';
+        document.getElementById('section-case').style.display = 'block';
+      }
+      document.getElementById('mobileScrollContainer').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function dockNavigate(tabKey) {
+      if (tabKey === 'catalog') {
+        showSection('catalog');
+        return;
+      }
+      showSection('case');
+      document.querySelectorAll('.subtab-panel').forEach(p => p.style.display = 'none');
+      const target = document.getElementById('sub-' + tabKey);
+      if (target) target.style.display = 'block';
+      setActiveDock(tabKey);
+      document.getElementById('mobileScrollContainer').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function setActiveDock(key) {
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      const activeEl = document.getElementById('dock-' + key);
+      if (activeEl) activeEl.classList.add('active');
+    }
+
+    // BOTTOM SHEET CONTROLLER
+    function openPhotoSheet(src, title, desc) {
+      document.getElementById('sheetImg').src = src;
+      document.getElementById('sheetTitle').textContent = title;
+      document.getElementById('sheetDesc').textContent = desc;
+      const modal = document.getElementById('photo-modal');
+      modal.classList.add('open');
+      if (window.VestigoTouch) window.VestigoTouch.triggerHaptic('light');
+    }
+
+    function closePhotoSheet() {
+      const modal = document.getElementById('photo-modal');
+      modal.classList.remove('open');
+      if (window.VestigoTouch) window.VestigoTouch.triggerHaptic('light');
+    }
+  </script>
+</body>
+</html>

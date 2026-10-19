@@ -1,6 +1,6 @@
 # 📁 VESTIGO™ — EXPEDIENTE DE CONTEXTO Y REGISTRO DE CAMBIOS (CHANGELOG)
 > **Documento Maestro de Arquitectura, Intención de Producto y Registro Vivo de Evolución**  
-> **Última Actualización:** 19 de Octubre de 2026 | **Versión Actual:** v1.2.0  
+> **Última Actualización:** 19 de Octubre de 2026 | **Versión Actual:** v1.3.0  
 > **Ubicación del Proyecto:** `C:\Users\migue\.gemini\antigravity\scratch\crimenes-imperfectos-valdeluna\`
 > **Repositorio Oficial en GitHub:** [https://github.com/mgesm/vestigo](https://github.com/mgesm/vestigo)
 
@@ -34,7 +34,7 @@ flowchart TD
     A["VESTIGO: Plataforma"] --> B["1. Capa Física (Dossiers PDF)"]
     A --> C["2. Capa Digital (Terminal SITRA-JUD)"]
     A --> D["3. Capa Audiovisual (Vídeo Briefing)"]
-    A --> E["4. Identidad de Marca (Branding & 2D Icon)"]
+    A --> E["4. Identidad de Marca & UI (Liquid Glass Noir)"]
 
     B --> B1["Sobre A: Pieza Principal (Autopsia + Planos)"]
     B --> B2["Sobre B: Pieza Separada I (Interrogatorios + BTS)"]
@@ -54,55 +54,40 @@ flowchart TD
     D --> D3["Web Speech API (Voz en Castellano)"]
     D --> D4["6 Actos sin Spoilers"]
 
-    E --> E1["Icono 2D Frontal (1024px PNG)"]
-    E --> E2["Isotipo Vectorial 2D (SVG)"]
-    E --> E3["Wordmark Oficial (SVG)"]
-    E --> E4["Icono 3D Promocional"]
-    E --> E5["Showcase Interactivo (branding/index.html)"]
+    E --> E1["Design System: liquid-glass.css"]
+    E --> E2["Desktop Layout: desktop-layout.css"]
+    E --> E3["Mobile Touch UX: mobile-ux.css"]
+    E --> E4["Mobile Engine: mobile-touch-engine.js"]
+    E --> E5["Icono 2D Frontal & Wordmark SVG"]
 ```
 
 ---
 
 ## 📂 3. INVENTARIO COMPLETO DE ARCHIVOS Y MÓDULOS
 
-### 📄 Capa de Documentación Física e Imprimibles (`documentos-imprimibles/`)
-* **`index.html`:** Portal web centralizado de descarga e inspección de todos los dossiers.
-* **`INSTRUCCIONES_DE_JUEGO.pdf` (4 págs / 1.03 MB):** Manual de operaciones, montaje de mesa, flujo de sobres y decálogo de deducción forense.
-* **`SOBRE_A_PIEZA_PRINCIPAL.pdf` (6 págs / 651 KB):** Providencia judicial, atestado inicial de Peñafiel, autopsia preliminar completa en dos hojas (tanatología y digestión), plano arquitectónico acotado en SVG, ficha técnica de ventilación y albarán de catering.
-* **`SOBRE_B_PIEZA_SEPARADA_1.pdf` (6 págs / 517 KB):** Acta de reactivo luminol (BlueStar), 4 transcripciones de interrogatorios policiales, vaciado de chats de WhatsApp, informe pericial de telefonía (antenas BTS) y acta de botellas sustraídas.
-* **`SOBRE_C_PIEZA_CONVICCION.pdf` (4 págs / 570 KB):** Documentoscopia pericial con luz infrarroja del ticket de aparcamiento, reporte LPR cinemométrico de la DGT, auditoría contable de Delitos Económicos (UDEF) sobre el aval de 2,4 M€ y dictamen de espectrometría química definitiva de SECRIM (INTCF).
-* **`EXTRAS_INMERSION.pdf` (5 págs / 4.91 MB):** Fichas de filiación con retratos biométricos y huellas de los 5 personajes, periódico *El Norte de Castilla*, cuaderno manuscrito del agente instructor y etiquetas oficiales recortables de cadena de custodia.
-* **`DOSSIER_NOTARIAL_Y_FORENSE.pdf` (6 págs / 4.24 MB):** Copia simple de testamento notarial con timbres FNMT, extracto bancario de CaixaBank, libro oficial de pesaje de vendimia D.O. Ribera del Duero, auditoría de cerradura RFID de hotel, nota manuscrita arrugada y álbum fotográfico forense con regla métrica ABFO.
-
-### 💻 Capa Digital e Interactiva (`terminal-policial/`)
-* **`index.html`:** Terminal web militar/policial SITRA-JUD que incluye:
-  - Consulta en tiempo real de matrículas en el radar LPR de la N-122.
-  - Fototeca forense interactiva en alta resolución con testigos métricos.
-  - Mapa táctico cartográfico interactivo con cálculo automático de distancias y tiempos de conducción.
-  - Visor perimetral CCTV con registros cronológicos de sensores de presencia.
-  - Simulador sonoro de llamada de emergencia al 112.
-  - Sistema de desbloqueo judicial escalonado de sobres mediante deducción.
-  - Central de pistas progresivas (Nivel 1, 2 y 3) para evitar bloqueos.
-
-### 🎬 Capa Audiovisual y Briefing (`video-briefing/`)
-* **`index.html`:** Reproductor cinematográfico 16:9 con estética de circuito clasificado.
-  - Motor de audio procedural en tiempo real mediante **Web Audio API** (subgraves oscilantes a 55 Hz, intervalos armónicos a 82.4 Hz, pulsos cardíacos y ruido analógico).
-  - Locución hablada en castellano mediante **Web Speech API** (`es-ES`) con subtítulos teletipo sincronizados.
-  - Exposición de 6 actos narrativos con efecto Ken Burns sobre fotografías forenses y sospechosos (sin spoilers).
-
-### 💎 Identidad de Marca y Aplicación (`branding/` e `imagenes/`)
-* **`imagenes/vestigo_icon_2d.png`:** Icono oficial 2D plano (1024×1024 px) en vista ortográfica frontal para App Store / Google Play / Launcher.
-* **`branding/vestigo_icon_2d.svg`:** Icono vectorial 2D escalable con filtros luminiscentes de luminol y retícula de precisión.
-* **`branding/vestigo_wordmark.svg`:** Logotipo horizontal completo con tipografía display extendida.
-* **`imagenes/vestigo_app_icon.png`:** Icono renderizado en 3D squircle para marketing y portadas.
-* **`branding/index.html`:** Brand Showcase interactivo con visualización del icono en pantalla de iPhone y tokens de diseño.
-
-### 🔒 Núcleo Secreto del Caso
-* **`SOLUCION_CONFIDENCIAL.md`:** Archivo sellado que contiene la identidad del culpable, móvil económico/personal, reconstrucción cronológica al minuto y las claves forenses irrefutables. **No debe leerse antes de jugar.**
+### 🎨 Capa de Diseño y UI (`css/` y `branding/`)
+* **`css/liquid-glass.css` (35 KB):** Sistema de diseño base con tokens obsidian, translucidez multicapa, micro-bordes especulares, jerarquía tipográfica SF Pro/Inter, Case Card 2.0 y animaciones con curvas spring de Apple (`cubic-bezier(0.16, 1, 0.3, 1)`).
+* **`css/desktop-layout.css` (24 KB):** Motor de maquetación para monitores y tabletas/iPad: vista dividida (*Split-View*), barra de atajos de teclado (`Esc`, `1`-`5`, `D`, `Ctrl+K`), visor modal de expedientes con modo UV y zoom, y custom scrollbars de cristal líquido.
+* **`css/mobile-ux.css` (24 KB):** Motor de maquetación para smartphones: unidades `100dvh`, eliminación de desbordamientos e iframe traps, área segura de iOS (`safe-area-inset`), dianas táctiles mínimas de 44 pt y divulgación progresiva.
+* **`css/mobile-touch-engine.js` (5.7 KB):** Controlador de gestos táctiles nativos para iOS Bottom Sheets con física de arrastre por velocidad/delta, bloqueo de scroll en body y retroalimentación háptica.
+* **`branding/design_system_preview.html`:** Showroom de todos los componentes del sistema de diseño.
+* **`desktop_tablet_preview.html`:** Simulador de entorno de escritorio/iPad con atajos y split-view.
+* **`mobile_preview.html`:** Simulador interactivo en marco de iPhone 15 Pro con Dynamic Island y Bottom Sheet deslizable.
 
 ---
 
 ## 📝 4. REGISTRO HISTÓRICO DE CAMBIOS (CHANGELOG)
+
+### [v1.3.0] — 2026-10-19
+#### Añadido & Rediseñado (Overhaul Completo UI/UX)
+- **Pipeline de 3 Subagentes Especializados Completado:**
+  1. *Lead UI Designer & Frontend Architect:* Creación de la arquitectura **Liquid Glass Noir** (`css/liquid-glass.css`) inspirada en Apple Design Award (cristal esmerilado, micro-bordes de luz especular, paleta cian pericial y tipografía SF Pro/Inter).
+  2. *Desktop & Tablet Widescreen Specialist:* Implementación de `css/desktop-layout.css`, navegación por atajos de teclado (`Esc` para cerrar, `1` a `5` para pestañas, `D` para split sidecar, `Ctrl+K` para búsqueda), visor documental nativo con controles de zoom y modo Luminol UV.
+  3. *Mobile UX & Touch Specialist:* Implementación de `css/mobile-ux.css` y `css/mobile-touch-engine.js`: limpieza de pantalla con divulgación progresiva (evitando fatiga de texto en móvil), eliminación de bugs de iframes con unidades `100dvh`, soporte completo de áreas seguras de iOS y Bottom Sheet táctil nativo con tirador de arrastre (`36px x 4px`).
+- **Lector Documental Integrado en la App:** Posibilidad de leer cómodamente en pantalla todos los dossiers y atestados sin forzar la descarga de PDFs, manteniendo el botón de descarga para imprimir.
+- **Showcases de Verificación:** Creación de `desktop_tablet_preview.html` y `mobile_preview.html` para pruebas aisladas de responsividad.
+
+---
 
 ### [v1.2.0] — 2026-10-19
 #### Añadido

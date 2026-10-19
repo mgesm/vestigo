@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>VESTIGO — Desktop & Tablet Experience Preview</title>
+  
+  <!-- Apple & PWA Meta -->
+  <meta name="theme-color" content="#04070D">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="icon" type="image/png" href="imagenes/vestigo_icon_2d.png">
+
+  <!-- Core Design System CSS -->
+  <link rel="stylesheet" href="css/liquid-glass.css">
+  <!-- Specialized Desktop & Tablet Layout CSS -->
+  <link rel="stylesheet" href="css/desktop-layout.css">
+
+  <style>
+    /* Desktop Preview Stage Ambient Background */
+    .vg-desktop-ambient-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        radial-gradient(1000px circle at 15% 15%, rgba(0, 229, 255, 0.04) 0%, transparent 65%),
+        radial-gradient(900px circle at 85% 30%, rgba(56, 189, 248, 0.03) 0%, transparent 70%),
+        radial-gradient(1100px circle at 50% 90%, rgba(255, 45, 85, 0.025) 0%, transparent 75%),
+        radial-gradient(circle at 50% 50%, #04070D 0%, #020408 100%);
+    }
+
+    .vg-desktop-ambient-layer::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-size: 36px 36px;
+      opacity: 0.4;
+    }
+
+    /* Live Search Results Dropdown */
+    .vg-search-results-popover {
+      display: none;
+      position: absolute;
+      top: 46px;
+      left: 0;
+      right: 0;
+      background: rgba(11, 17, 32, 0.95);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(0, 229, 255, 0.35);
+      border-radius: 14px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.8), 0 0 20px rgba(0,229,255,0.15);
+      padding: 10px;
+      z-index: 1050;
+      max-height: 360px;
+      overflow-y: auto;
+    }
+
+    .vg-search-results-popover.open {
+      display: block;
+      animation: vgPopIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes vgPopIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .vg-search-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      color: #E2E8F0;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .vg-search-item:hover {
+      background: rgba(0, 229, 255, 0.12);
+      color: #00E5FF;
+    }
+
+    .vg-search-item-badge {
+      font-family: var(--vg-font-mono, monospace);
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #94A3B8;
+    }
+  </style>
+</head>
+<body class="vg-desktop-optimized">
+
+  <!-- Forensic Ambient Mesh -->
+  <div class="vg-desktop-ambient-layer"></div>
+
+  <!-- ===================================================================== -->
+  <!-- FLOATING LIQUID GLASS DESKTOP HEADER                                  -->
+  <!-- ===================================================================== -->
+  <header class="vg-desktop-header">
+    
+    <!-- Left: Brand + Breadcrumbs -->
+    <div class="vg-header-left">
+      <div class="vg-header-brand" onclick="switchView('catalog')">
+        <div class="vg-header-logo-icon">
+          <img src="imagenes/vestigo_icon_2d.png" alt="VESTIGO" class="vg-header-logo-img">
+        </div>
+        <div style="display:flex; flex-direction:column;">
+          <span style="font-weight:900; font-size:1.05rem; letter-spacing:0.12em; color:#fff; line-height:1;">
+            VESTIG<span style="color:#00E5FF; text-shadow:0 0 10px rgba(0,229,255,0.6);">O</span>
+          </span>
+          <span style="font-family:var(--vg-font-mono, monospace); font-size:0.6rem; letter-spacing:0.18em; color:#64748B;">
+            FORENSIC WORKSPACE
+          </span>
+        </div>
+      </div>
+
+      <!-- Live Dynamic Breadcrumbs -->
+      <nav class="vg-breadcrumbs" aria-label="Ruta de navegación">
+        <span class="vg-breadcrumb-sep">/</span>
+        <a class="vg-breadcrumb-item" onclick="switchView('catalog')">Expedientes</a>
+        <span class="vg-breadcrumb-sep">/</span>
+        <span class="vg-breadcrumb-item" id="crumb-case-name">Caso 01 · Valdeluna</span>
+        <span class="vg-breadcrumb-sep">/</span>
+        <span class="vg-breadcrumb-current" id="crumb-active-tab">
+          <span style="width:6px; height:6px; border-radius:50%; background:#00E5FF; box-shadow:0 0 8px #00E5FF;"></span>
+          <span id="crumb-tab-text">Vídeo Briefing</span>
+        </span>
+      </nav>
+    </div>
+
+    <!-- Center: Forensic Case Search Bar (Ctrl+K or /) -->
+    <div class="vg-header-center">
+      <div class="vg-search-capsule">
+        <span class="vg-search-icon">🔍</span>
+        <input type="text" id="vg-global-search" class="vg-search-input" placeholder="Buscar pruebas, matrículas, coartadas, actas... (Ctrl+K)" autocomplete="off">
+        <span class="vg-search-shortcut-pill">⌘K</span>
+      </div>
+
+      <!-- Live Search Results Dropdown -->
+      <div id="vg-search-results" class="vg-search-results-popover">
+        <div style="font-family:var(--vg-font-mono, monospace); font-size:0.68rem; color:#64748B; padding:4px 8px; text-transform:uppercase;">
+          Acceso Inmediato
+        </div>
+        <div class="vg-search-item" onclick="selectSearchResult('terminal')">
+          <span class="vg-search-item-badge">SITRA-JUD</span>
+          <span>Radar DGT km 312.4 (Marcos Varela 00:23)</span>
+        </div>
+        <div class="vg-search-item" onclick="selectSearchResult('dossier_a')">
+          <span class="vg-search-item-badge">AUTOPSIA</span>
+          <span>Sobre A: Informe Médico Forense (Tina 4)</span>
+        </div>
+        <div class="vg-search-item" onclick="selectSearchResult('suspect_lucia')">
+          <span class="vg-search-item-badge">SOSPECHOSO</span>
+          <span>Lucía de la Serna · Enóloga Adjunta (Golf GTV)</span>
+        </div>
+        <div class="vg-search-item" onclick="selectSearchResult('suspect_marcos')">
+          <span class="vg-search-item-badge">SOSPECHOSO</span>
+          <span>Marcos Varela Ríos · CFO Vitis (Volvo KLT)</span>
+        </div>
+        <div class="vg-search-item" onclick="selectSearchResult('dossier_b')">
+          <span class="vg-search-item-badge">LUMINOL</span>
+          <span>Sobre B: Acta Reactivo Sulfato de Cobre</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Command Pills, Dual Sidecar & Shortcuts -->
+    <div class="vg-header-right">
+      <!-- Status Indicator Pill -->
+      <div class="vg-status-pill" style="display:inline-flex;">
+        <span class="vg-pulse-dot"></span> EN LÍNEA
+      </div>
+
+      <!-- Dual Sidecar Pane Toggle (D) -->
+      <button class="vg-cmd-pill" id="btn-toggle-sidecar" onclick="toggleDualSidecar()" title="Abrir/Cerrar Panel Lateral Dual (Tecla D)">
+        <span>◫ Panel Dual</span>
+        <span class="vg-cmd-pill-kbd">D</span>
+      </button>
+
+      <!-- Keyboard Shortcuts Cheatsheet Modal Trigger (?) -->
+      <button class="vg-cmd-pill" onclick="openShortcutsModal()" title="Guía de Atajos de Teclado">
+        <span>⌨ Atajos</span>
+        <span class="vg-cmd-pill-kbd">?</span>
+      </button>
+
+      <a href="branding/design_system_preview.html" class="vg-cmd-pill" target="_blank" title="Design System Showcase">
+        <span>💎 Brand</span>
+      </a>
+    </div>
+
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- MAIN WORKSPACE CONTAINER (NO NESTED DOUBLE SCROLLBARS)                -->
+  <!-- ===================================================================== -->
+  <main class="vg-app-workspace">
+
+    <!-- ======================================================== -->
+    <!-- VISTA 1: CATÁLOGO DE CASOS                               -->
+    <!-- ======================================================== -->
+    <section id="view-catalog" class="view-section active">
+      
+      <!-- Hero Banner Liquid Glass -->
+      <div class="hero-banner" style="margin-bottom: 28px;">
+        <div class="hero-tag">PLATAFORMA DE INVESTIGACIÓN POLICIAL HÍBRIDA (DESKTOP & TABLET ENGINE)</div>
+        <h1 class="hero-title">Expedientes de Instrucción Criminalística</h1>
+        <p class="hero-desc">
+          Entorno pericial de alta resolución optimizado para monitores panorámicos (1920x1080 / 1440x900) e iPads (1024x768 / 1180x820). Cruce simultáneo de atestados, autopsias, terminal de tráfico SITRA-JUD y cuaderno de campo en doble panel.
+        </p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <button class="vg-btn vg-btn-primary" onclick="openCase('valdeluna')">
+            INICIAR CASO VALDELUNA ▶
+          </button>
+          <button class="vg-btn vg-btn-glass" onclick="openDocReader('documentos-imprimibles/instrucciones_juego.html', 'Manual de Operaciones Policiales', 'LEER PRIMERO')">
+            📖 REGLAS DE JUEGO (LECTOR NATIVO)
+          </button>
+        </div>
+      </div>
+
+      <!-- Rejilla de Casos Responsiva -->
+      <div class="catalog-grid">
+        
+        <!-- Caso 01 Activo -->
+        <div class="vg-case-card" onclick="openCase('valdeluna')">
+          <div class="vg-case-media">
+            <img src="imagenes/escena_tina4_bodega.png" alt="Caso 01" class="vg-case-img">
+            <div class="case-badge-overlay">
+              <span class="case-badge badge-active">CASO 01 · ACTIVO</span>
+              <span class="case-badge" style="background:#ca8a04; color:#000;">DIFICULTAD MEDIA</span>
+            </div>
+          </div>
+          <div class="case-body" style="padding: 22px;">
+            <div class="case-number">DILIGENCIAS PREVIAS Nº 402/2024</div>
+            <h2 class="case-title" style="margin-bottom: 8px;">El Último Mosto de Bodegas Valdeluna</h2>
+            <p class="case-summary" style="margin-bottom: 18px;">
+              Peñafiel, noche gélida de vendimia. El cuerpo del bodeguero Gonzalo de la Serna yace a los pies de la Tina 4. Una aparente asfixia por gas carbónico desmentida por livideces dorsales y un reactivo azul revelador.
+            </p>
+            <div class="case-specs">
+              <div class="spec-item"><span class="spec-label">JUGADORES</span><span class="spec-val">1 - 2</span></div>
+              <div class="spec-item"><span class="spec-label">DURACIÓN</span><span class="spec-val">2 - 3 H</span></div>
+              <div class="spec-item"><span class="spec-label">MATERIAL</span><span class="spec-val">6 PDFs / WEB</span></div>
+            </div>
+            <button class="btn-enter-case" style="margin-top: 14px;">
+              ABRIR EXPEDIENTE Y JUGAR ▶
+            </button>
+          </div>
+        </div>
+
+        <!-- Caso 02 Próximamente -->
+        <div class="vg-case-card" style="opacity: 0.7;">
+          <div class="vg-case-media" style="display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #091e3a, #030a14);">
+            <span style="font-size: 48px; opacity: 0.35;">⚓</span>
+            <div class="case-badge-overlay">
+              <span class="case-badge badge-locked">CASO 02 · EN DESARROLLO</span>
+            </div>
+          </div>
+          <div class="case-body" style="padding: 22px;">
+            <div class="case-number">SUMARIO Nº 118/2025</div>
+            <h2 class="case-title" style="margin-bottom: 8px;">Marea Negra en Ría de Arousa</h2>
+            <p class="case-summary" style="margin-bottom: 18px;">
+              Un pesquero a la deriva con el patrón desaparecido y las coordenadas del GPS manipuladas. Toxicología marina, peritajes náuticos y contrabando en la costa gallega.
+            </p>
+            <div class="case-specs">
+              <div class="spec-item"><span class="spec-label">JUGADORES</span><span class="spec-val">1 - 4</span></div>
+              <div class="spec-item"><span class="spec-label">DURACIÓN</span><span class="spec-val">3 - 4 H</span></div>
+              <div class="spec-item"><span class="spec-label">ESTADO</span><span class="spec-val">PRÓXIMAMENTE</span></div>
+            </div>
+            <button class="btn-enter-case btn-locked" disabled style="margin-top: 14px;">
+              🔒 CASO EN INSTRUCCIÓN
+            </button>
+          </div>
+        </div>
+
+        <!-- Caso 03 Planificado -->
+        <div class="vg-case-card" style="opacity: 0.55;">
+          <div class="vg-case-media" style="display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #2b112c, #070308);">
+            <span style="font-size: 48px; opacity: 0.35;">🏛️</span>
+            <div class="case-badge-overlay">
+              <span class="case-badge badge-locked">CASO 03 · PLANIFICADO</span>
+            </div>
+          </div>
+          <div class="case-body" style="padding: 22px;">
+            <div class="case-number">D.I.P. Nº 590/2025</div>
+            <h2 class="case-title" style="margin-bottom: 8px;">La Cripta de San Jerónimo</h2>
+            <p class="case-summary" style="margin-bottom: 18px;">
+              Muerte súbita en el archivo diocesano. Manuscritos iluminados adulterados, venenos históricos y disputas de mecenazgo en Toledo.
+            </p>
+            <div class="case-specs">
+              <div class="spec-item"><span class="spec-label">JUGADORES</span><span class="spec-val">2 - 3</span></div>
+              <div class="spec-item"><span class="spec-label">DURACIÓN</span><span class="spec-val">2.5 H</span></div>
+              <div class="spec-item"><span class="spec-label">ESTADO</span><span class="spec-val">PLANIFICADO</span></div>
+            </div>
+            <button class="btn-enter-case btn-locked" disabled style="margin-top: 14px;">
+              🔒 CASO EN INSTRUCCIÓN
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- VISTA 2: ESPACIO DE TRABAJO DEL CASO VALDELUNA           -->
+    <!-- ======================================================== -->
+    <section id="view-case" class="view-section">
+      
+      <!-- Meta Cabecera del Caso con Badge Judicial -->
+      <div class="case-meta-header">
+        <div class="case-meta-left">
+          <h2>El Último Mosto de Bodegas Valdeluna</h2>
+          <p>DILIGENCIAS PREVIAS 402/2024 · JUZGADO DE INSTRUCCIÓN Nº 2 DE VALLADOLID</p>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <span class="case-badge" style="background:#FF2D55; color:#fff;">HOMICIDIO</span>
+          <span class="case-badge" style="background:#0284c7; color:#fff;">FORMATO HÍBRIDO</span>
+          <button class="vg-btn vg-btn-glass" onclick="toggleDualSidecar()" style="padding:6px 14px; font-size:0.78rem;">
+            ◫ Vista Dual (D)
+          </button>
+        </div>
+      </div>
+
+      <!-- Barra de Pestañas Desktop con Atajos Teclado [1] a [5] -->
+      <nav class="vg-desktop-tabs-bar" aria-label="Navegación del Expediente">
+        <button class="vg-tab-item active" id="tab-nav-briefing" onclick="switchCaseTab('briefing')">
+          <span class="vg-tab-num-key">1</span>
+          <span>🎬 Vídeo Briefing</span>
+        </button>
+        <button class="vg-tab-item" id="tab-nav-dossiers" onclick="switchCaseTab('dossiers')">
+          <span class="vg-tab-num-key">2</span>
+          <span>📄 Dossiers &amp; PDFs (31 págs)</span>
+        </button>
+        <button class="vg-tab-item" id="tab-nav-terminal" onclick="switchCaseTab('terminal')">
+          <span class="vg-tab-num-key">3</span>
+          <span>💻 Terminal SITRA-JUD</span>
+        </button>
+        <button class="vg-tab-item" id="tab-nav-evidencias" onclick="switchCaseTab('evidencias')">
+          <span class="vg-tab-num-key">4</span>
+          <span>👥 Sospechosos &amp; Escena</span>
+        </button>
+        <button class="vg-tab-item" id="tab-nav-notas" onclick="switchCaseTab('notas')">
+          <span class="vg-tab-num-key">5</span>
+          <span>📓 Bloc de Notas</span>
+        </button>
+      </nav>
+
+      <!-- ======================================================== -->
+      <!-- SPLIT-SCREEN WORKSPACE CONTAINER (MAIN PANE + SIDECAR)   -->
+      <!-- ======================================================== -->
+      <div class="vg-split-workspace" id="vg-workspace-split">
+        
+        <!-- PANE 1: VISTA PRIMARIA ACTIVA -->
+        <div class="vg-split-primary">
+
+          <!-- PESTAÑA 1: VÍDEO BRIEFING -->
+          <div id="tab-briefing" class="tab-content active">
+            <div class="embed-toolbar">
+              <span style="font-size:12px; color:#94A3B8; font-family:var(--vg-font-mono, monospace);">
+                SESIÓN CLASIFICADA // 6 ACTOS NARRADOS EN CASTELLANO // CERO SPOILERS
+              </span>
+              <a href="video-briefing/index.html" target="_blank" class="back-btn">
+                PANTALLA COMPLETA ↗
+              </a>
+            </div>
+            <div class="embed-viewport">
+              <iframe src="video-briefing/index.html" class="embed-iframe" title="Vídeo Briefing Judicial"></iframe>
+            </div>
+          </div>
+
+          <!-- PESTAÑA 2: DOSSIERS FÍSICOS E IMPRIMIBLES (PDFS) -->
+          <div id="tab-dossiers" class="tab-content">
+            <div style="margin-bottom: 20px; display:flex; justify-content:space-between; align-items:flex-end;">
+              <div>
+                <h3 style="font-size:18px; margin-bottom:6px;">Expedientes y Diligencias Imprimibles (Formato A4)</h3>
+                <p style="font-size:13px; color:#94A3B8;">
+                  Haz clic en "VER EN LECTOR" para abrir el visor nativo con zoom, salto de página y filtro UV:
+                </p>
+              </div>
+              <a href="documentos-imprimibles/index.html" target="_blank" class="vg-btn vg-btn-glass" style="font-size:0.78rem; padding:8px 14px;">
+                📥 HUB DE DESCARGAS COMPLETO
+              </a>
+            </div>
+
+            <div class="dossier-grid">
+              
+              <!-- MANUAL DE INSTRUCCIONES -->
+              <div class="dossier-card" style="border-color:#facc15; background: #172033; grid-column: 1 / -1;">
+                <div>
+                  <span class="dossier-badge" style="background:#facc15; color:#000;">LEER PRIMERO — GUÍA DE OPERACIONES</span>
+                  <div class="dossier-title" style="color:#fde047;">Manual del Investigador y Reglas de Juego (4 páginas)</div>
+                  <div class="dossier-desc">
+                    Protocolo de montaje de la mesa de investigación, preparación de sobres físicos, uso del sistema híbrido con la terminal digital y el decálogo forense.
+                  </div>
+                </div>
+                <div class="dossier-btns">
+                  <a href="documentos-imprimibles/INSTRUCCIONES_DE_JUEGO.pdf" target="_blank" class="btn-pdf" style="background:#facc15; color:#000;">DESCARGAR PDF 📥</a>
+                  <button onclick="openDocReader('documentos-imprimibles/instrucciones_juego.html', 'Manual del Investigador', 'GUÍA DE OPERACIONES')" class="btn-html">
+                    VER EN LECTOR ➔
+                  </button>
+                </div>
+              </div>
+
+              <!-- SOBRE A -->
+              <div class="dossier-card">
+                <div>
+                  <span class="dossier-badge" style="background:#0284c7; color:#fff;">SOBRE A — ABIERTO DE INICIO</span>
+                  <div class="dossier-title">Pieza Principal: Hallazgo y Autopsia</div>
+                  <div class="dossier-desc">
+                    Providencia judicial, atestado de la Guardia Civil de Peñafiel, autopsia preliminar completa en 2 hojas (tanatología y digestión), plano SVG de la bodega y extractores.
+                  </div>
+                </div>
+                <div class="dossier-btns">
+                  <a href="documentos-imprimibles/SOBRE_A_PIEZA_PRINCIPAL.pdf" target="_blank" class="btn-pdf">DESCARGAR PDF 📥</a>
+                  <button onclick="openDocReader('documentos-imprimibles/sobre_a.html', 'Sobre A: Pieza Principal y Autopsia', 'SOBRE A - INICIAL')" class="btn-html">
+                    VER EN LECTOR ➔
+                  </button>
+                </div>
+              </div>
+
+              <!-- SOBRE B -->
+              <div class="dossier-card">
+                <div>
+                  <span class="dossier-badge" style="background:#ca8a04; color:#000;">SOBRE B — PRECINTADO</span>
+                  <div class="dossier-title">Pieza I: Escenario y Testigos</div>
+                  <div class="dossier-desc">
+                    Acta de luminol en el laboratorio, 4 interrogatorios policiales completos, chats de WhatsApp incautados, triangulación de antenas BTS y acta de efectos sustraídos.
+                  </div>
+                </div>
+                <div class="dossier-btns">
+                  <a href="documentos-imprimibles/SOBRE_B_PIEZA_SEPARADA_1.pdf" target="_blank" class="btn-pdf">DESCARGAR PDF 📥</a>
+                  <button onclick="openDocReader('documentos-imprimibles/sobre_b.html', 'Sobre B: Escenario y Testigos', 'SOBRE B - PRECINTADO')" class="btn-html">
+                    VER EN LECTOR ➔
+                  </button>
+                </div>
+              </div>
+
+              <!-- SOBRE C -->
+              <div class="dossier-card">
+                <div>
+                  <span class="dossier-badge" style="background:#dc2626; color:#fff;">SOBRE C — PRECINTADO</span>
+                  <div class="dossier-title">Pieza II: Convicción Final</div>
+                  <div class="dossier-desc">
+                    Dictamen pericial de documentoscopia del ticket aportado, reporte LPR cinemométrico DGT, auditoría de Delitos Económicos (UDEF) y dictamen químico SECRIM.
+                  </div>
+                </div>
+                <div class="dossier-btns">
+                  <a href="documentos-imprimibles/SOBRE_C_PIEZA_CONVICCION.pdf" target="_blank" class="btn-pdf">DESCARGAR PDF 📥</a>
+                  <button onclick="openDocReader('documentos-imprimibles/sobre_c.html', 'Sobre C: Pieza de Convicción Final', 'SOBRE C - SECRETO')" class="btn-html">
+                    VER EN LECTOR ➔
+                  </button>
+                </div>
+              </div>
+
+              <!-- EXTRAS DE INMERSIÓN -->
+              <div class="dossier-card">
+                <div>
+                  <span class="dossier-badge" style="background:#8b5cf6; color:#fff;">EXTRAS DISPONIBLES DE INICIO</span>
+                  <div class="dossier-title">Fichas de Filiación y Prensa Local</div>
+                  <div class="dossier-desc">
+                    Retratos fotográficos y huellas de los 5 personajes, carátula de *El Norte de Castilla*, cuaderno de campo del agente instructor y etiquetas de custodia.
+                  </div>
+                </div>
+                <div class="dossier-btns">
+                  <a href="documentos-imprimibles/EXTRAS_INMERSION.pdf" target="_blank" class="btn-pdf">DESCARGAR PDF 📥</a>
+                  <button onclick="openDocReader('documentos-imprimibles/extras_inmersion.html', 'Fichas de Filiación y Prensa', 'EXTRAS INMERSIÓN')" class="btn-html">
+                    VER EN LECTOR ➔
+                  </button>
+                </div>
+              </div>
+
+              <!-- DOSSIER NOTARIAL Y FORENSE -->
+              <div class="dossier-card">
+                <div>
+                  <span class="dossier-badge" style="background:#06b6d4; color:#000;">PIEZA ANEXA DE COLECCIONISTA</span>
+                  <div class="dossier-title">Dossier Notarial, Bancario y Fotos</div>
+                  <div class="dossier-desc">
+                    Copia del testamento con timbres FNMT, extracto oficial de CaixaBank, libro de vendimia D.O. Ribera, auditoría RFID del hotel y fotos con regla ABFO.
+                  </div>
+                </div>
+                <div class="dossier-btns">
+                  <a href="documentos-imprimibles/DOSSIER_NOTARIAL_Y_FORENSE.pdf" target="_blank" class="btn-pdf">DESCARGAR PDF 📥</a>
+                  <button onclick="openDocReader('documentos-imprimibles/dossier_notarial_y_forense.html', 'Dossier Notarial y Bancario', 'PIEZA ANEXA')" class="btn-html">
+                    VER EN LECTOR ➔
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- PESTAÑA 3: TERMINAL POLICIAL SITRA-JUD -->
+          <div id="tab-terminal" class="tab-content">
+            <div class="embed-toolbar">
+              <span style="font-size:12px; color:#94A3B8; font-family:var(--vg-font-mono, monospace);">
+                RADAR DGT LPR // MAPA SIG TÁCTICO // CCTV PERIMETRAL // AUDIO 112 // AUTOS JUDICIALES
+              </span>
+              <div style="display:flex; gap:8px;">
+                <button class="back-btn" onclick="openSidecarWith('notas')">
+                  📓 ABRIR BLOC EN PARALELO
+                </button>
+                <a href="terminal-policial/index.html" target="_blank" class="back-btn">
+                  VENTANA DEDICADA ↗
+                </a>
+              </div>
+            </div>
+            <div class="embed-viewport">
+              <iframe src="terminal-policial/index.html" class="embed-iframe" title="Terminal Policial SITRA-JUD"></iframe>
+            </div>
+          </div>
+
+          <!-- PESTAÑA 4: SOSPECHOSOS Y FOTOTECA FORENSE -->
+          <div id="tab-evidencias" class="tab-content">
+            <div style="margin-bottom: 20px;">
+              <h3 style="font-size:18px; margin-bottom:6px;">Filiación de Investigados y Fototeca de la Escena</h3>
+              <p style="font-size:13px; color:#94A3B8;">
+                Haz clic en cualquier ficha o fotografía pericial para ampliarla en alta definición:
+              </p>
+            </div>
+
+            <!-- Personas Vinculadas -->
+            <h4 style="font-size:13px; color:#00E5FF; font-family:var(--vg-font-mono, monospace); margin-bottom:14px; letter-spacing:1px;">
+              PERSONAS VINCULADAS A LAS DILIGENCIAS
+            </h4>
+            <div class="profiles-grid">
+              
+              <div class="profile-card" onclick="openPhotoModal('imagenes/gonzalo_de_la_serna.png', 'Gonzalo de la Serna y Mendieta', 'Víctima (58 años) · Enólogo y Propietario de Bodegas Valdeluna')">
+                <div class="profile-thumb-wrap">
+                  <img src="imagenes/gonzalo_de_la_serna.png" alt="Gonzalo de la Serna" class="profile-thumb">
+                </div>
+                <div class="profile-info">
+                  <div class="profile-name">Gonzalo de la Serna</div>
+                  <div class="profile-role">VÍCTIMA · PROPIETARIO</div>
+                </div>
+              </div>
+
+              <div class="profile-card" onclick="openPhotoModal('imagenes/marcos_varela.png', 'Marcos Varela Ríos', 'Investigado (44 años) · CFO y Primo de la víctima · Volvo XC60 4188-KLT')">
+                <div class="profile-thumb-wrap">
+                  <img src="imagenes/marcos_varela.png" alt="Marcos Varela" class="profile-thumb">
+                </div>
+                <div class="profile-info">
+                  <div class="profile-name">Marcos Varela Ríos</div>
+                  <div class="profile-role">INVESTIGADO · CFO</div>
+                </div>
+              </div>
+
+              <div class="profile-card" onclick="openPhotoModal('imagenes/lucia_de_la_serna.png', 'Lucía de la Serna Montes', 'Investigada (29 años) · Enóloga Adjunta e Hija única · VW Golf 9012-GTV')">
+                <div class="profile-thumb-wrap">
+                  <img src="imagenes/lucia_de_la_serna.png" alt="Lucía de la Serna" class="profile-thumb">
+                </div>
+                <div class="profile-info">
+                  <div class="profile-name">Lucía de la Serna</div>
+                  <div class="profile-role">INVESTIGADA · ENÓLOGA</div>
+                </div>
+              </div>
+
+              <div class="profile-card" onclick="openPhotoModal('imagenes/javier_beltran.png', 'Javier Beltrán Gómez', 'Investigado (53 años) · Capataz histórico · Nissan Navara 8209-FDC')">
+                <div class="profile-thumb-wrap">
+                  <img src="imagenes/javier_beltran.png" alt="Javier Beltrán" class="profile-thumb">
+                </div>
+                <div class="profile-info">
+                  <div class="profile-name">Javier Beltrán Gómez</div>
+                  <div class="profile-role">INVESTIGADO · CAPATAZ</div>
+                </div>
+              </div>
+
+              <div class="profile-card" onclick="openPhotoModal('imagenes/elena_fontanals.png', 'Elena Fontanals Puig', 'Investigada (47 años) · Socia de Vitis Capital · Audi A5 5512-LMN')">
+                <div class="profile-thumb-wrap">
+                  <img src="imagenes/elena_fontanals.png" alt="Elena Fontanals" class="profile-thumb">
+                </div>
+                <div class="profile-info">
+                  <div class="profile-name">Elena Fontanals Puig</div>
+                  <div class="profile-role">INVESTIGADA · VITIS CAPITAL</div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Fototeca Pericial -->
+            <h4 style="font-size:13px; color:#00E5FF; font-family:var(--vg-font-mono, monospace); margin: 30px 0 14px 0; letter-spacing:1px;">
+              FOTOTECA PERICIAL JUDICIAL (TESTIGOS MÉTRICOS ABFO)
+            </h4>
+            <div class="profiles-grid">
+              
+              <div class="profile-card" onclick="openPhotoModal('imagenes/escena_tina4_bodega.png', 'Inspección Ocular Tina 4', 'Nave subterránea 2 de fermentación. Silueta del cadáver y testigo métrico #1.')">
+                <div class="profile-thumb-wrap">
+                  <img src="imagenes/escena_tina4_bodega.png" alt="Tina 4" class="profile-thumb">
+                </div>
+                <div class="profile-info">
+                  <div class="profile-name">Nave 2 de Cubas (Tina 4)</div>
+                  <div class="profile-role">ESCENA DE HALLAZGO</div>
+                </div>
+              </div>
+
+              <div class="profile-card" onclick="openPhotoModal('imagenes/escena_laboratorio_reactivo.png', 'Laboratorio Enológico', 'Pila de reactivo sulfato de cobre derramado y manómetro en la 1ª planta.')">
+                <div class="profile-thumb-wrap">
+                  <img src="imagenes/escena_laboratorio_reactivo.png" alt="Laboratorio" class="profile-thumb">
+                </div>
+                <div class="profile-info">
+                  <div class="profile-name">Laboratorio Enológico</div>
+                  <div class="profile-role">ESCENA PRIMARIA (LUMINOL)</div>
+                </div>
+              </div>
+
+              <div class="profile-card" onclick="openPhotoModal('imagenes/evidencia_calzado_alfombrilla.png', 'Vestigio Químico en Vehículo', 'Macro pericial de calzado y alfombrilla con tinción azul de reactivo.')">
+                <div class="profile-thumb-wrap">
+                  <img src="imagenes/evidencia_calzado_alfombrilla.png" alt="Evidencia calzado" class="profile-thumb">
+                </div>
+                <div class="profile-info">
+                  <div class="profile-name">Alfombrilla y Tacón</div>
+                  <div class="profile-role">TRANSFERENCIA DE LOCARD</div>
+                </div>
+              </div>
+
+              <div class="profile-card" onclick="openPhotoModal('imagenes/mirador_castillo_penafiel.png', 'Mirador del Castillo de Peñafiel', 'Ubicación nocturna captada por cámaras de tráfico y antenas BTS.')">
+                <div class="profile-thumb-wrap">
+                  <img src="imagenes/mirador_castillo_penafiel.png" alt="Castillo de Peñafiel" class="profile-thumb">
+                </div>
+                <div class="profile-info">
+                  <div class="profile-name">Mirador de Peñafiel</div>
+                  <div class="profile-role">COARTADA Y ANTENAS BTS</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- PESTAÑA 5: BLOC DE NOTAS CON AUTOGUARDADO -->
+          <div id="tab-notas" class="tab-content">
+            <div class="notepad-wrap">
+              <div class="notepad-header">
+                <div>
+                  <div class="notepad-title">📓 Cuaderno de Campo del Investigador</div>
+                  <p style="font-size:12px; color:#64748B; font-family:var(--vg-font-mono, monospace);">
+                    Sincronización en tiempo real con el panel lateral dual y almacenamiento local.
+                  </p>
+                </div>
+                <button class="back-btn" onclick="clearNotepad()">
+                  🗑️ BORRAR NOTAS
+                </button>
+              </div>
+              <textarea id="investigator-notes" class="notepad-textarea" placeholder="Escribe aquí tus deducciones, horas de paso por el radar de tráfico, análisis de las coartadas, discordancias de la autopsia..."></textarea>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ======================================================== -->
+        <!-- PANE 2: SIDECAR PANEL (SPLIT INSPECTION)                 -->
+        <!-- ======================================================== -->
+        <aside class="vg-split-sidecar" id="vg-sidecar-drawer">
+          <div class="vg-sidecar-header">
+            <div class="vg-sidecar-title-wrap">
+              <span style="color:#00E5FF; font-size:1.1rem;">◫</span>
+              <span class="vg-sidecar-title">Inspección Paralela (Sidecar)</span>
+            </div>
+            <button class="modal-close" onclick="toggleDualSidecar()" title="Cerrar Panel (Tecla D o Esc)">&times;</button>
+          </div>
+
+          <!-- Selector de Contenido Sidecar -->
+          <div class="vg-sidecar-tabs">
+            <button class="vg-sidecar-tab-btn active" id="sidecar-tab-btn-notas" onclick="switchSidecarTab('notas')">
+              📓 Notas Rápidas
+            </button>
+            <button class="vg-sidecar-tab-btn" id="sidecar-tab-btn-sospechosos" onclick="switchSidecarTab('sospechosos')">
+              👥 Sospechosos
+            </button>
+            <button class="vg-sidecar-tab-btn" id="sidecar-tab-btn-doc" onclick="switchSidecarTab('doc')">
+              📄 Extracto Atestado
+            </button>
+          </div>
+
+          <!-- Cuerpo del Sidecar -->
+          <div class="vg-sidecar-body">
+            
+            <!-- Vista 1 Sidecar: Notas Sincronizadas -->
+            <div id="sidecar-view-notas" style="display:flex; flex-direction:column; height:100%; gap:10px;">
+              <div style="font-size:0.75rem; color:#94A3B8; font-family:var(--vg-font-mono, monospace);">
+                ANOTACIONES EN PARALELO (AUTO-GUARDADO)
+              </div>
+              <textarea id="sidecar-notes-area" class="vg-sidecar-notepad-textarea" placeholder="Anota indicios mientras consultas la terminal o el vídeo..."></textarea>
+            </div>
+
+            <!-- Vista 2 Sidecar: Lista Rápida de Sospechosos -->
+            <div id="sidecar-view-sospechosos" style="display:none; flex-direction:column; gap:8px;">
+              <div style="font-size:0.75rem; color:#94A3B8; font-family:var(--vg-font-mono, monospace); margin-bottom:4px;">
+                5 PERSONAS DE INTERÉS
+              </div>
+              <div class="vg-sidecar-mini-item" onclick="openPhotoModal('imagenes/gonzalo_de_la_serna.png', 'Gonzalo de la Serna', 'Víctima (58 años)')">
+                <img src="imagenes/gonzalo_de_la_serna.png" class="vg-sidecar-mini-avatar" alt="Gonzalo">
+                <div class="vg-sidecar-mini-details">
+                  <div class="vg-sidecar-mini-name">Gonzalo de la Serna</div>
+                  <div class="vg-sidecar-mini-role">VÍCTIMA · PROPIETARIO</div>
+                </div>
+              </div>
+              <div class="vg-sidecar-mini-item" onclick="openPhotoModal('imagenes/marcos_varela.png', 'Marcos Varela', 'Investigado · Volvo 4188-KLT')">
+                <img src="imagenes/marcos_varela.png" class="vg-sidecar-mini-avatar" alt="Marcos">
+                <div class="vg-sidecar-mini-details">
+                  <div class="vg-sidecar-mini-name">Marcos Varela Ríos</div>
+                  <div class="vg-sidecar-mini-role">CFO · COARTADA DISCORDANTE</div>
+                </div>
+              </div>
+              <div class="vg-sidecar-mini-item" onclick="openPhotoModal('imagenes/lucia_de_la_serna.png', 'Lucía de la Serna', 'Investigada · VW Golf 9012-GTV')">
+                <img src="imagenes/lucia_de_la_serna.png" class="vg-sidecar-mini-avatar" alt="Lucía">
+                <div class="vg-sidecar-mini-details">
+                  <div class="vg-sidecar-mini-name">Lucía de la Serna</div>
+                  <div class="vg-sidecar-mini-role">HIJA · HEREDERA UNIVERSAL</div>
+                </div>
+              </div>
+              <div class="vg-sidecar-mini-item" onclick="openPhotoModal('imagenes/javier_beltran.png', 'Javier Beltrán', 'Investigado · Nissan Navara 8209-FDC')">
+                <img src="imagenes/javier_beltran.png" class="vg-sidecar-mini-avatar" alt="Javier">
+                <div class="vg-sidecar-mini-details">
+                  <div class="vg-sidecar-mini-name">Javier Beltrán Gómez</div>
+                  <div class="vg-sidecar-mini-role">CAPATAZ · LLAVES BODEGA</div>
+                </div>
+              </div>
+              <div class="vg-sidecar-mini-item" onclick="openPhotoModal('imagenes/elena_fontanals.png', 'Elena Fontanals', 'Investigada · Audi A5 5512-LMN')">
+                <img src="imagenes/elena_fontanals.png" class="vg-sidecar-mini-avatar" alt="Elena">
+                <div class="vg-sidecar-mini-details">
+                  <div class="vg-sidecar-mini-name">Elena Fontanals Puig</div>
+                  <div class="vg-sidecar-mini-role">FONDO VITIS · CLAUSULA RESCISIÓN</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vista 3 Sidecar: Visor Rápido de Documento Incrustado -->
+            <div id="sidecar-view-doc" style="display:none; flex-direction:column; height:100%; gap:8px;">
+              <div style="font-size:0.75rem; color:#94A3B8; font-family:var(--vg-font-mono, monospace);">
+                EXTRACTO DE AUTOPSIA (SOBRE A)
+              </div>
+              <iframe src="documentos-imprimibles/sobre_a.html" style="width:100%; flex:1; border:none; border-radius:10px; background:#080d16;" title="Extracto de Documento"></iframe>
+            </div>
+
+          </div>
+        </aside>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- IN-APP NATIVE FORENSIC DOCUMENT READER (FULLSCREEN MODAL)             -->
+  <!-- ===================================================================== -->
+  <div id="vg-doc-reader-modal" class="vg-native-reader" role="dialog" aria-modal="true" aria-labelledby="vg-reader-doc-name">
+    <!-- Top Glass Toolbar -->
+    <div class="vg-reader-topbar">
+      <div class="vg-reader-meta">
+        <span class="vg-reader-badge" id="vg-reader-badge-text">DILIGENCIA JUDICIAL</span>
+        <h3 class="vg-reader-title" id="vg-reader-doc-name">Sobre A: Pieza Principal</h3>
+      </div>
+
+      <!-- Zoom & Luminol UV Controls -->
+      <div class="vg-reader-controls">
+        <button class="vg-reader-ctrl-btn" onclick="adjustDocZoom(-0.1)" title="Alejar (-)">−</button>
+        <span class="vg-reader-zoom-level" id="vg-zoom-display">100%</span>
+        <button class="vg-reader-ctrl-btn" onclick="adjustDocZoom(0.1)" title="Acercar (+)">+</button>
+        <button class="vg-reader-ctrl-btn" onclick="resetDocZoom()" title="Restablecer (100%)" style="font-size:0.7rem;">1:1</button>
+        <button class="vg-reader-uv-btn" id="btn-reader-uv" onclick="toggleReaderUV()" title="Alternar Filtro UV / Luminol Forense (Tecla U)">
+          <span>⚡ Modo UV</span>
+        </button>
+      </div>
+
+      <!-- Actions -->
+      <div class="vg-reader-actions">
+        <button class="vg-cmd-pill" onclick="printCurrentDoc()" title="Imprimir Documento">
+          <span>🖨️ Imprimir</span>
+        </button>
+        <a id="btn-reader-download-pdf" href="documentos-imprimibles/SOBRE_A_PIEZA_PRINCIPAL.pdf" target="_blank" class="vg-cmd-pill" title="Descargar PDF Original">
+          <span>📥 PDF</span>
+        </a>
+        <button class="modal-close" onclick="closeDocReader()" title="Cerrar Visor (Esc)">&times;</button>
+      </div>
+    </div>
+
+    <!-- Viewer Stage Viewport -->
+    <div class="vg-reader-viewport" id="vg-reader-viewport">
+      <div class="vg-reader-frame-container" id="vg-reader-frame-container">
+        <iframe id="vg-reader-iframe" src="about:blank" title="Visor Documental Nativo"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- KEYBOARD SHORTCUTS CHEATSHEET MODAL                                   -->
+  <!-- ===================================================================== -->
+  <div id="vg-shortcuts-modal" class="vg-shortcuts-modal-backdrop" onclick="closeShortcutsModal(event)">
+    <div class="vg-shortcuts-modal-card" onclick="event.stopPropagation()">
+      <div class="vg-shortcuts-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="color:#00E5FF; font-size:1.2rem;">⌨</span>
+          <h3 style="font-size:1.05rem; font-weight:800; color:#fff;">Atajos de Teclado del Investigador</h3>
+        </div>
+        <button class="modal-close" onclick="closeShortcutsModal()">&times;</button>
+      </div>
+      <div class="vg-shortcuts-body">
+        <div class="vg-shortcut-row">
+          <span class="vg-shortcut-label">Cambiar a Vídeo Briefing</span>
+          <div class="vg-shortcut-keys"><span class="vg-key-badge">1</span></div>
+        </div>
+        <div class="vg-shortcut-row">
+          <span class="vg-shortcut-label">Cambiar a Dossiers &amp; Diligencias Imprimibles</span>
+          <div class="vg-shortcut-keys"><span class="vg-key-badge">2</span></div>
+        </div>
+        <div class="vg-shortcut-row">
+          <span class="vg-shortcut-label">Cambiar a Terminal Digital SITRA-JUD</span>
+          <div class="vg-shortcut-keys"><span class="vg-key-badge">3</span></div>
+        </div>
+        <div class="vg-shortcut-row">
+          <span class="vg-shortcut-label">Cambiar a Sospechosos &amp; Fototeca</span>
+          <div class="vg-shortcut-keys"><span class="vg-key-badge">4</span></div>
+        </div>
+        <div class="vg-shortcut-row">
+          <span class="vg-shortcut-label">Cambiar a Cuaderno de Campo (Notas)</span>
+          <div class="vg-shortcut-keys"><span class="vg-key-badge">5</span></div>
+        </div>
+        <div class="vg-shortcut-row">
+          <span class="vg-shortcut-label">Alternar Panel Lateral Dual (Sidecar)</span>
+          <div class="vg-shortcut-keys"><span class="vg-key-badge">D</span></div>
+        </div>
+        <div class="vg-shortcut-row">
+          <span class="vg-shortcut-label">Buscador Forense Rápido</span>
+          <div class="vg-shortcut-keys"><span class="vg-key-badge">Ctrl</span> + <span class="vg-key-badge">K</span> o <span class="vg-key-badge">/</span></div>
+        </div>
+        <div class="vg-shortcut-row">
+          <span class="vg-shortcut-label">Alternar Filtro UV / Luminol (en Lector)</span>
+          <div class="vg-shortcut-keys"><span class="vg-key-badge">U</span></div>
+        </div>
+        <div class="vg-shortcut-row">
+          <span class="vg-shortcut-label">Cerrar Lector / Modales / Panel</span>
+          <div class="vg-shortcut-keys"><span class="vg-key-badge">Esc</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL DE AMPLIACIÓN DE FOTOS PERICIALES (ABFO)                       -->
+  <!-- ===================================================================== -->
+  <div id="photo-modal" class="modal-backdrop" onclick="closePhotoModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div>
+          <h3 id="modal-title" style="font-size:16px; color:#fff;">Detalle Pericial</h3>
+          <p id="modal-sub" style="font-size:11px; font-family:var(--vg-font-mono, monospace); color:#00E5FF;"></p>
+        </div>
+        <button class="modal-close" onclick="closePhotoModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <img id="modal-img" src="" alt="Prueba" style="width:100%; border-radius:8px; margin-bottom:12px; box-shadow:0 10px 30px rgba(0,0,0,0.6);">
+        <p id="modal-desc" style="font-size:13px; color:#94A3B8; line-height:1.5;"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- CLIENT JAVASCRIPT ENGINE (DESKTOP & TABLET SPECIALIST)                 -->
+  <!-- ===================================================================== -->
+  <script>
+    /* State */
+    let currentView = 'catalog';
+    let currentTab = 'briefing';
+    let sidecarOpen = false;
+    let docReaderZoom = 1.0;
+    let readerUVActive = false;
+
+    const TAB_MAP = {
+      '1': 'briefing',
+      '2': 'dossiers',
+      '3': 'terminal',
+      '4': 'evidencias',
+      '5': 'notas'
+    };
+
+    const TAB_NAMES = {
+      'briefing': 'Vídeo Briefing',
+      'dossiers': 'Dossiers & PDFs',
+      'terminal': 'Terminal SITRA-JUD',
+      'evidencias': 'Sospechosos & Escena',
+      'notas': 'Bloc de Notas'
+    };
+
+    // VISTAS PRINCIPALES
+    function switchView(viewName) {
+      currentView = viewName;
+      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById('view-' + viewName);
+      if (target) {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Breadcrumbs update
+      const crumbCase = document.getElementById('crumb-case-name');
+      const crumbTab = document.getElementById('crumb-active-tab');
+      if (viewName === 'catalog') {
+        if (crumbCase) crumbCase.style.display = 'none';
+        if (crumbTab) crumbTab.style.display = 'none';
+      } else {
+        if (crumbCase) crumbCase.style.display = 'inline-flex';
+        if (crumbTab) crumbTab.style.display = 'inline-flex';
+      }
+    }
+
+    function openCase(caseId) {
+      if (caseId === 'valdeluna') {
+        switchView('case');
+        switchCaseTab('briefing');
+      }
+    }
+
+    // PESTAÑAS DEL CASO
+    function switchCaseTab(tabName) {
+      currentTab = tabName;
+      document.querySelectorAll('.vg-tab-item').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+      const activeBtn = document.getElementById('tab-nav-' + tabName);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const targetTab = document.getElementById('tab-' + tabName);
+      if (targetTab) targetTab.classList.add('active');
+
+      // Update Breadcrumbs
+      const crumbText = document.getElementById('crumb-tab-text');
+      if (crumbText && TAB_NAMES[tabName]) {
+        crumbText.textContent = TAB_NAMES[tabName];
+      }
+    }
+
+    // SPLIT-SCREEN SIDECAR PANEL
+    function toggleDualSidecar() {
+      const workspace = document.getElementById('vg-workspace-split');
+      const btn = document.getElementById('btn-toggle-sidecar');
+      sidecarOpen = !sidecarOpen;
+
+      if (sidecarOpen) {
+        workspace.classList.add('sidecar-open');
+        if (btn) btn.classList.add('active');
+      } else {
+        workspace.classList.remove('sidecar-open');
+        if (btn) btn.classList.remove('active');
+      }
+    }
+
+    function openSidecarWith(sidecarSubTab) {
+      if (!sidecarOpen) toggleDualSidecar();
+      switchSidecarTab(sidecarSubTab);
+    }
+
+    function switchSidecarTab(subTab) {
+      document.querySelectorAll('.vg-sidecar-tab-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById('sidecar-tab-btn-' + subTab);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      document.getElementById('sidecar-view-notas').style.display = subTab === 'notas' ? 'flex' : 'none';
+      document.getElementById('sidecar-view-sospechosos').style.display = subTab === 'sospechosos' ? 'flex' : 'none';
+      document.getElementById('sidecar-view-doc').style.display = subTab === 'doc' ? 'flex' : 'none';
+    }
+
+    // NOTAS Y SINCRONIZACIÓN EN TIEMPO REAL ENTRE MAIN Y SIDECAR
+    const mainNotes = document.getElementById('investigator-notes');
+    const sideNotes = document.getElementById('sidecar-notes-area');
+    const STORAGE_KEY = 'vestigo_notes_case_valdeluna';
+
+    const savedNotes = localStorage.getItem(STORAGE_KEY) || '';
+    if (mainNotes) mainNotes.value = savedNotes;
+    if (sideNotes) sideNotes.value = savedNotes;
+
+    function syncNotes(text) {
+      localStorage.setItem(STORAGE_KEY, text);
+      if (mainNotes && mainNotes.value !== text) mainNotes.value = text;
+      if (sideNotes && sideNotes.value !== text) sideNotes.value = text;
+    }
+
+    if (mainNotes) mainNotes.addEventListener('input', (e) => syncNotes(e.target.value));
+    if (sideNotes) sideNotes.addEventListener('input', (e) => syncNotes(e.target.value));
+
+    function clearNotepad() {
+      if (confirm('¿Deseas vaciar todas las notas del cuaderno de campo?')) {
+        syncNotes('');
+      }
+    }
+
+    // IN-APP NATIVE DOCUMENT READER
+    function openDocReader(docUrl, title, badge) {
+      const modal = document.getElementById('vg-doc-reader-modal');
+      const iframe = document.getElementById('vg-reader-iframe');
+      const titleEl = document.getElementById('vg-reader-doc-name');
+      const badgeEl = document.getElementById('vg-reader-badge-text');
+
+      titleEl.textContent = title || 'Documento Judicial';
+      badgeEl.textContent = badge || 'CONFIDENCIAL';
+      iframe.src = docUrl;
+
+      docReaderZoom = 1.0;
+      updateZoomDisplay();
+
+      modal.classList.add('active');
+    }
+
+    function closeDocReader() {
+      const modal = document.getElementById('vg-doc-reader-modal');
+      const iframe = document.getElementById('vg-reader-iframe');
+      modal.classList.remove('active');
+      iframe.src = 'about:blank';
+    }
+
+    function adjustDocZoom(delta) {
+      docReaderZoom = Math.max(0.6, Math.min(2.0, docReaderZoom + delta));
+      updateZoomDisplay();
+    }
+
+    function resetDocZoom() {
+      docReaderZoom = 1.0;
+      updateZoomDisplay();
+    }
+
+    function updateZoomDisplay() {
+      const display = document.getElementById('vg-zoom-display');
+      const container = document.getElementById('vg-reader-frame-container');
+      if (display) display.textContent = Math.round(docReaderZoom * 100) + '%';
+      if (container) {
+        container.style.transform = `scale(${docReaderZoom})`;
+      }
+    }
+
+    function toggleReaderUV() {
+      readerUVActive = !readerUVActive;
+      const viewport = document.getElementById('vg-reader-viewport');
+      const btn = document.getElementById('btn-reader-uv');
+      if (readerUVActive) {
+        viewport.classList.add('uv-active');
+        btn.classList.add('active');
+      } else {
+        viewport.classList.remove('uv-active');
+        btn.classList.remove('active');
+      }
+    }
+
+    function printCurrentDoc() {
+      const iframe = document.getElementById('vg-reader-iframe');
+      try {
+        iframe.contentWindow.focus();
+        iframe.contentWindow.print();
+      } catch (err) {
+        window.print();
+      }
+    }
+
+    // SEARCH BAR LOGIC
+    const searchInput = document.getElementById('vg-global-search');
+    const searchPop = document.getElementById('vg-search-results');
+
+    if (searchInput) {
+      searchInput.addEventListener('focus', () => {
+        if (searchPop) searchPop.classList.add('open');
+      });
+
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        const items = searchPop.querySelectorAll('.vg-search-item');
+        items.forEach(item => {
+          const text = item.textContent.toLowerCase();
+          item.style.display = text.includes(query) ? 'flex' : 'none';
+        });
+        if (searchPop) searchPop.classList.add('open');
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      if (searchInput && searchPop && !searchInput.contains(e.target) && !searchPop.contains(e.target)) {
+        searchPop.classList.remove('open');
+      }
+    });
+
+    function selectSearchResult(type) {
+      if (searchPop) searchPop.classList.remove('open');
+      if (searchInput) searchInput.value = '';
+
+      switchView('case');
+      if (type === 'terminal') {
+        switchCaseTab('terminal');
+      } else if (type === 'dossier_a') {
+        openDocReader('documentos-imprimibles/sobre_a.html', 'Sobre A: Pieza Principal y Autopsia', 'SOBRE A');
+      } else if (type === 'dossier_b') {
+        openDocReader('documentos-imprimibles/sobre_b.html', 'Sobre B: Pieza Separada I', 'SOBRE B');
+      } else if (type === 'suspect_lucia') {
+        switchCaseTab('evidencias');
+        openPhotoModal('imagenes/lucia_de_la_serna.png', 'Lucía de la Serna Montes', 'Investigada · Enóloga Adjunta');
+      } else if (type === 'suspect_marcos') {
+        switchCaseTab('evidencias');
+        openPhotoModal('imagenes/marcos_varela.png', 'Marcos Varela Ríos', 'Investigado · CFO de Vitis');
+      }
+    }
+
+    // SHORTCUTS MODAL
+    function openShortcutsModal() {
+      document.getElementById('vg-shortcuts-modal').classList.add('open');
+    }
+
+    function closeShortcutsModal(e) {
+      document.getElementById('vg-shortcuts-modal').classList.remove('open');
+    }
+
+    // FOTO PERICIAL MODAL
+    function openPhotoModal(imgSrc, title, desc) {
+      document.getElementById('modal-img').src = imgSrc;
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-sub').textContent = 'REGISTRO POLICIAL // PERITAJE JUDICIAL';
+      document.getElementById('modal-desc').textContent = desc;
+      document.getElementById('photo-modal').classList.add('open');
+    }
+
+    function closePhotoModal(e) {
+      document.getElementById('photo-modal').classList.remove('open');
+    }
+
+    // KEYBOARD SHORTCUTS DISPATCHER
+    document.addEventListener('keydown', (e) => {
+      // Don't intercept when user is typing inside textarea or input
+      const tag = (e.target && e.target.tagName) ? e.target.tagName.toUpperCase() : '';
+      const isInput = tag === 'INPUT' || tag === 'TEXTAREA' || e.target.isContentEditable;
+
+      // Esc always closes active overlay
+      if (e.key === 'Escape') {
+        const readerModal = document.getElementById('vg-doc-reader-modal');
+        if (readerModal && readerModal.classList.contains('active')) {
+          closeDocReader();
+          return;
+        }
+        const photoModal = document.getElementById('photo-modal');
+        if (photoModal && photoModal.classList.contains('open')) {
+          closePhotoModal();
+          return;
+        }
+        const shortcutsModal = document.getElementById('vg-shortcuts-modal');
+        if (shortcutsModal && shortcutsModal.classList.contains('open')) {
+          closeShortcutsModal();
+          return;
+        }
+        if (searchPop && searchPop.classList.contains('open')) {
+          searchPop.classList.remove('open');
+          return;
+        }
+        if (sidecarOpen) {
+          toggleDualSidecar();
+          return;
+        }
+      }
+
+      if (isInput) return;
+
+      // Number keys 1-5 to switch tabs
+      if (['1', '2', '3', '4', '5'].includes(e.key)) {
+        if (currentView !== 'case') switchView('case');
+        switchCaseTab(TAB_MAP[e.key]);
+        e.preventDefault();
+        return;
+      }
+
+      // 'D' or 'd' to toggle split sidecar
+      if (e.key === 'd' || e.key === 'D') {
+        if (currentView === 'case') {
+          toggleDualSidecar();
+          e.preventDefault();
+        }
+        return;
+      }
+
+      // '?' to open shortcuts modal
+      if (e.key === '?') {
+        openShortcutsModal();
+        e.preventDefault();
+        return;
+      }
+
+      // 'Ctrl+K' or '/' to focus search
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K') || e.key === '/') {
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.select();
+          e.preventDefault();
+        }
+        return;
+      }
+
+      // Document reader specific shortcuts
+      const readerModal = document.getElementById('vg-doc-reader-modal');
+      if (readerModal && readerModal.classList.contains('active')) {
+        if (e.key === '+' || e.key === '=') {
+          adjustDocZoom(0.1);
+          e.preventDefault();
+        } else if (e.key === '-' || e.key === '_') {
+          adjustDocZoom(-0.1);
+          e.preventDefault();
+        } else if (e.key === 'u' || e.key === 'U') {
+          toggleReaderUV();
+          e.preventDefault();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
