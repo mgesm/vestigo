@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EXTRAS DE INMERSIÓN - CASO 04 CARTAGENA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700;800;900&family=Special+Elite&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    @page { size: A4 portrait; margin: 10mm 14mm 10mm 14mm; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #525659;
+      font-family: 'Courier Prime', monospace;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .no-print-bar {
+      background: #0f172a;
+      color: #fff;
+      width: 210mm;
+      max-width: 100%;
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .print-btn {
+      background: #00e5ff;
+      color: #000;
+      border: none;
+      padding: 9px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    .sheet {
+      background-color: #fcfbf7;
+      width: 210mm;
+      max-width: 100%;
+      min-height: 297mm;
+      box-sizing: border-box;
+      padding: 13mm 16mm;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    @media print {
+      html, body { background: transparent !important; margin: 0 !important; padding: 0 !important; }
+      .no-print-bar { display: none !important; }
+      .sheet {
+        background-color: transparent !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+      }
+    }
+    .official-header {
+      border-bottom: 2px solid #000;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .official-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      line-height: 1.3;
+    }
+    .case-number {
+      font-family: 'Courier Prime', monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      border: 1.5px solid #000;
+      padding: 4px 8px;
+      background: #f0eee6;
+      text-align: right;
+      line-height: 1.2;
+    }
+    h1.doc-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 6px 0 12px 0;
+      text-decoration: underline;
+    }
+    .newspaper-box {
+      border: 2px solid #1e293b;
+      padding: 16px;
+      background: #fffdf5;
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+    .newspaper-name {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      border-bottom: 3px double #000;
+      padding-bottom: 6px;
+      margin-bottom: 6px;
+    }
+    .newspaper-sub {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Inter', sans-serif;
+      font-size: 8.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      border-bottom: 1px solid #000;
+      padding-bottom: 4px;
+      margin-bottom: 12px;
+    }
+    .headline {
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1.2;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .subheadline {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      color: #334155;
+      text-align: center;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .news-columns {
+      display: flex;
+      gap: 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 9.5px;
+      line-height: 1.5;
+      text-align: justify;
+    }
+    .news-col { flex: 1; }
+    .card-profile {
+      display: flex;
+      border: 1.5px solid #334155;
+      background: #fff;
+      padding: 8px;
+      margin-bottom: 10px;
+      gap: 12px;
+      border-radius: 4px;
+    }
+    .card-thumb {
+      width: 72px;
+      height: 90px;
+      object-fit: cover;
+      border: 1px solid #64748b;
+      flex-shrink: 0;
+    }
+    .card-info {
+      flex: 1;
+      font-size: 9px;
+      line-height: 1.4;
+    }
+    .card-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+    .card-role {
+      font-family: 'Courier Prime', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      color: #0284c7;
+      margin-bottom: 4px;
+    }
+    @media (max-width: 600px) {
+      body { padding: 0 !important; }
+      .sheet { padding: 12px !important; margin-bottom: 12px !important; box-shadow: none !important; }
+      .no-print-bar { display: none !important; }
+      .news-columns { flex-direction: column !important; }
+      .card-profile { flex-direction: column !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print-bar">
+    <div><strong>VESTIGO // DOSSIER JUDICIAL</strong> · CASO 04 · EXTRAS DE INMERSIÓN Y HEMEROTECA</div>
+    <button class="print-btn" onclick="window.print()">IMPRIMIR EN A4 🖨</button>
+  </div>
+
+  <!-- HOJA 1: PORTADA PERIÓDICO LA VERDAD DE MURCIA -->
+  <div class="sheet">
+    <div>
+      <div class="official-header" style="border:none; margin-bottom:4px;">
+        <div style="font-size:9px; color:#64748b;">PIEZA DE CONTEXTO SOCIAL Y PRENSA REGIONAL · ARCHIVO HEMEROTECA</div>
+        <div class="case-number">EDICIÓN CARTAGENA<br>SÁBADO 18 OCTUBRE</div>
+      </div>
+
+      <div class="newspaper-box">
+        <div class="newspaper-name">LA VERDAD</div>
+        <div class="newspaper-sub">
+          <span>DIARIO DE LA REGIÓN DE MURCIA · EDICIÓN CARTAGENA Y COMARCA</span>
+          <span>AÑO CXXII · Nº 44.120 · PRECIO: 1,80 €</span>
+        </div>
+
+        <div class="headline">HALLAN EL CADÁVER DE UN RECONOCIDO ARQUEÓLOGO DEL ARQVA FLOTANDO EN CALA CORTINA</div>
+        <div class="subheadline">La Policía Local acordonó la cala a primera hora tras ser alertada por una agente de patrulla costera. La víctima realizaba prospecciones en la bocana entre los faros de Navidad y Curra.</div>
+
+        <div class="news-columns">
+          <div class="news-col">
+            <p style="margin-bottom:8px;"><strong>CARTAGENA.</strong> La tranquilidad habitual de un sábado otoñal en la histórica ciudad naval se vio truncada a las 06:45 horas de la mañana, cuando la Policía Local de Cartagena descubrió el cuerpo sin vida de D. Aurelio Saura Mengual, de 49 años, uno de los investigadores más destacados del Museo Nacional de Arqueología Subacuática (ARQVA).</p>
+            <p>El cuerpo, ataviado con equipo de buceo autónomo técnico para inmersión profunda, se encontraba flotando entre las rocas del espigón de Cala Cortina. Fue la agente de la Policía Local Patricia Normand quien, durante su ronda por la ensenada, advirtió la anomalía en el rompeolas y coordinó el despliegue de emergencia.</p>
+          </div>
+          <div class="news-col">
+            <p style="margin-bottom:8px;"><strong>INTRIGA EN LA BOCANA.</strong> Fuentes portuarias confirman que el fallecido lideraba un estudio batimétrico sobre un pecio de época púnico-romana en el canal de entrada a la bahía, en la línea que une el Faro Rojo de Navidad y el Faro Verde de Curra.</p>
+            <p>Aunque inicialmente se barajó un fatídico percance por descompresión en solitario, el Juzgado de Instrucción número 3 de Cartagena ha incoado diligencias previas bajo secreto para determinar si las botellas de gas pudieron haber sido alteradas o si existió alguna colisión nocturna con embarcaciones en la zona de exclusión de la bocana.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:15px; border-top:1px dashed #64748b; padding-top:10px; font-size:8.5px; color:#475569; text-align:center;">
+      DOCUMENTO REPRODUCIDO CON FINES DE INVESTIGACIÓN POLICIAL · AYUNTAMIENTO DE CARTAGENA
+    </div>
+  </div>
+
+  <!-- HOJA 2: FICHAS DE FILIACIÓN DE PERSONAJES -->
+  <div class="sheet">
+    <div>
+      <div class="official-header">
+        <div>
+          <div class="official-title">POLICÍA LOCAL DE CARTAGENA · FICHERO CENTRAL DE IDENTIFICACIÓN</div>
+          <div style="font-size:9.5px; color:#475569;">CUARTEL DE SEGURIDAD CIUDADANA · GRUPO DE POLICÍA JUDICIAL</div>
+          <div style="font-size:8.5px; color:#64748b;">EXPEDIENTE D.P. 204/2025 · FICHAS DE INTERVINIENTES Y TESTIGOS</div>
+        </div>
+        <div class="case-number">
+          FICHAS FILIACIÓN<br>
+          CARTAGENA
+        </div>
+      </div>
+
+      <h1 class="doc-title">FICHAS POLICIALES Y PERICIALES DEL CASO</h1>
+
+      <!-- AGENTE PATRICIA NORMAND -->
+      <div class="card-profile" style="border-left: 4px solid #00e5ff; background:#f0fdfa;">
+        <img src="../imagenes/patricia_normand.png" alt="Patricia Normand" class="card-thumb">
+        <div class="card-info">
+          <div class="card-name">PATRICIA NORMAND · AGENTE 1482</div>
+          <div class="card-role">INSTRUCTORA POLICÍA LOCAL · UNIDAD DE PLAYAS Y LITORAL</div>
+          <p>31 años. Destaca por su agudeza visual, su profundo arraigo en Cartagena y su cabello liso muy largo y negro azabache, junto con ojos de llamativa heterocromía central (marrón avellana junto a la pupila con iris exterior verde). Fue quien descubrió el escenario y dirigió la instrucción del atestado.</p>
+        </div>
+      </div>
+
+      <!-- PACO EL GATO -->
+      <div class="card-profile" style="border-left: 4px solid #f97316; background:#fff7ed;">
+        <img src="../imagenes/paco_el_gato.png" alt="Paco el Gato" class="card-thumb">
+        <div class="card-info">
+          <div class="card-name">«PACO» · TESTIGO Y CENTINELA DE CALA CORTINA</div>
+          <div class="card-role" style="color:#f97316;">FELINO COSTERO COMUNITARIO · PROVEEDOR EVIDENCIA E-01</div>
+          <p>Macho adulto bicolor (naranja y blanco). Residente habitual en las rocas y el espigón de Cala Cortina. Su insistencia al arañar la oquedad donde se ocultaba la cápsula de titanio de la cámara GoPro permitió rescatar la prueba reina del homicidio.</p>
+        </div>
+      </div>
+
+      <!-- AURELIO SAURA (VÍCTIMA) -->
+      <div class="card-profile">
+        <img src="../imagenes/aurelio_saura.png" alt="Aurelio Saura" class="card-thumb">
+        <div class="card-info">
+          <div class="card-name">AURELIO SAURA MENGUAL (49 AÑOS)</div>
+          <div class="card-role" style="color:#ef4444;">VÍCTIMA · ARQUEÓLOGO SUBACUÁTICO DEL ARQVA</div>
+          <p>Investigador de reconocido prestigio internacional. Experto buceador técnico en circuito abierto y mezclas Trimix. Descubrió el expolio en el pecio Curra-II y confrontó a los responsables antes de su muerte.</p>
+        </div>
+      </div>
+
+      <!-- VÍCTOR HUESCA -->
+      <div class="card-profile">
+        <img src="../imagenes/victor_huesca.png" alt="Víctor Huesca" class="card-thumb">
+        <div class="card-info">
+          <div class="card-name">VÍCTOR HUESCA VIDAL (34 AÑOS)</div>
+          <div class="card-role">INVESTIGADO · GERENTE DE «BOCANA DIVE» EN CALA CORTINA</div>
+          <p>Instructor de buceo profesional. Propietario del centro que cargó las botellas bibotella de la víctima. Posee una lancha semirrígida negra que opera habitualmente en la bocana.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">LA AGENTE INSTRUCTORA<br>Patricia Normand · Placa 1482</div>
+      <div class="signature-box">EL OFICIAL JEFE DE POLICÍA LOCAL<br>Ayuntamiento de Cartagena</div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.type === 'VESTIGO_ZOOM') {
+        var zoom = e.data.zoom || 1.0;
+        if (typeof document.body.style.zoom !== 'undefined') {
+          document.body.style.zoom = zoom;
+        } else {
+          document.body.style.transform = zoom === 1.0 ? 'none' : 'scale(' + zoom + ')';
+          document.body.style.transformOrigin = 'top center';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

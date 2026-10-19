@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOSSIER JUDICIAL - SOBRE B: INTERROGATORIOS Y FAROS (CARTAGENA)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700;800;900&family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    @page { size: A4 portrait; margin: 10mm 14mm 10mm 14mm; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #525659;
+      font-family: 'Courier Prime', monospace;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .no-print-bar {
+      background: #0f172a;
+      color: #fff;
+      width: 210mm;
+      max-width: 100%;
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .print-btn {
+      background: #00e5ff;
+      color: #000;
+      border: none;
+      padding: 9px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    .sheet {
+      background-color: #fcfbf7;
+      width: 210mm;
+      max-width: 100%;
+      min-height: 297mm;
+      box-sizing: border-box;
+      padding: 13mm 16mm;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    @media print {
+      html, body { background: transparent !important; margin: 0 !important; padding: 0 !important; }
+      .no-print-bar { display: none !important; }
+      .sheet {
+        background-color: transparent !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+      }
+    }
+    .official-header {
+      border-bottom: 2px solid #000;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .official-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      line-height: 1.3;
+    }
+    .case-number {
+      font-family: 'Courier Prime', monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      border: 1.5px solid #000;
+      padding: 4px 8px;
+      background: #f0eee6;
+      text-align: right;
+      line-height: 1.2;
+    }
+    .stamp-confidential {
+      position: absolute;
+      top: 30px;
+      right: 35px;
+      border: 2.5px solid #ca8a04;
+      color: #ca8a04;
+      font-family: 'Special Elite', cursive;
+      font-size: 15px;
+      font-weight: bold;
+      padding: 4px 10px;
+      text-transform: uppercase;
+      transform: rotate(-7deg);
+      opacity: 0.85;
+      letter-spacing: 2px;
+      pointer-events: none;
+    }
+    h1.doc-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 6px 0 12px 0;
+      text-decoration: underline;
+    }
+    p.legal-text {
+      font-size: 10px;
+      line-height: 1.55;
+      text-align: justify;
+      margin-bottom: 8px;
+    }
+    .info-box {
+      border: 1.5px solid #334155;
+      background: #f8fafc;
+      padding: 8px 12px;
+      margin: 8px 0;
+      font-size: 9.5px;
+      line-height: 1.45;
+    }
+    .qa-block {
+      margin-bottom: 10px;
+      font-size: 9.5px;
+      line-height: 1.5;
+    }
+    .qa-q {
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .qa-a {
+      color: #334155;
+      margin-left: 10px;
+    }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9px;
+      margin: 8px 0;
+    }
+    table.data-table th, table.data-table td {
+      border: 1px solid #64748b;
+      padding: 5px 8px;
+      text-align: left;
+    }
+    table.data-table th {
+      background: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+    }
+    .signature-area {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      padding-top: 10px;
+      border-top: 1px dashed #64748b;
+    }
+    .signature-box {
+      width: 45%;
+      text-align: center;
+      font-size: 8.5px;
+      line-height: 1.4;
+    }
+    @media (max-width: 600px) {
+      body { padding: 0 !important; }
+      .sheet { padding: 12px !important; margin-bottom: 12px !important; box-shadow: none !important; }
+      .no-print-bar { display: none !important; }
+      .official-header { flex-direction: column !important; gap: 8px !important; }
+      .case-number { text-align: left !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print-bar">
+    <div><strong>VESTIGO // DOSSIER JUDICIAL</strong> · CASO 04 · SOBRE B (INTERROGATORIOS Y FAROS)</div>
+    <button class="print-btn" onclick="window.print()">IMPRIMIR EN A4 🖨</button>
+  </div>
+
+  <!-- HOJA 1: INTERROGATORIOS 1 Y 2 -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">SOBRE B - PRECINTADO</div>
+      <div class="official-header">
+        <div>
+          <div class="official-title">JUZGADO DE INSTRUCCIÓN Nº 3 DE CARTAGENA</div>
+          <div style="font-size:9.5px; color:#475569;">DILIGENCIAS PREVIAS SUMARIO Nº 204/2025 · PIEZA SEPARADA I</div>
+          <div style="font-size:8.5px; color:#64748b;">INSTRUCTORA: AGENTE PATRICIA NORMAND (PLACA 1482)</div>
+        </div>
+        <div class="case-number">
+          D.P. 204/2025<br>
+          INTERROGATORIOS 1-2
+        </div>
+      </div>
+
+      <h1 class="doc-title">ACTA DE DECLARACIÓN EN CALIDAD DE INVESTIGADO (1/2)</h1>
+
+      <div class="info-box" style="background:#f1f5f9;">
+        <strong>INVESTIGADO 1: VÍCTOR HUESCA VIDAL</strong> · 34 años · Instructor de Buceo Técnico y titular de <em>Bocana Dive</em> en Cala Cortina.
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-q">PREGUNTADO por la Agente Normand sobre cuándo vio por última vez a Aurelio Saura:</div>
+        <div class="qa-a">«Aurelio vino a mi taller sobre las 19:30 h del viernes. Me pidió que le llenara el bibotella de 12 litros con mezcla Nitrox 32% para una inmersión técnica nocturna de batimetría. Estuvimos charlando tranquilamente, cargué las botellas en mi compresor Bauer y se las llevó en el maletero de su coche hacia las 20:45 h. Yo me quedé en el centro recogiendo neoprenos y a las 23:00 h me fui a mi piso en Los Dolores. No volví a salir en toda la noche.»</div>
+      </div>
+      <div class="qa-block">
+        <div class="qa-q">PREGUNTADO sobre si existían desavenencias o discusiones por extracciones en el pecio de la bocana:</div>
+        <div class="qa-a">«Absolutamente ninguna. Aurelio era un cliente habitual. Es absurdo pensar que mi compresor estuviese averiado; pasamos la revisión técnica del Ministerio de Industria hace cuatro meses y tenemos todos los filtros de aire en regla.»</div>
+      </div>
+
+      <div class="info-box" style="background:#f1f5f9; margin-top:14px;">
+        <strong>INVESTIGADO 2: BERNARDO «EL RUSO» CONESA VIDAL</strong> · 51 años · Patrón de pesca de cerco, barco <em>«Nuevo Espalmador»</em> (Puerto de Santa Lucía).
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-q">PREGUNTADO sobre sus disputas con Aurelio Saura respecto a las cartas arqueológicas de la bocana:</div>
+        <div class="qa-a">«Ese arqueólogo nos tenía amargados a los de Santa Lucía. Quería que Capitanía prohibiera largar redes en toda la enfilación entre Navidad y Curra por unas piedras viejas en el fondo. Tuvimos palabras fuertes en la Cofradía el mes pasado, sí, pero de ahí a hacerle daño va un mundo. Yo el viernes por la noche estuve en la lonja y en la nave de redes de Santa Lucía desde las 22:30 h hasta casi las cuatro de la mañana, cosiendo el copo roto con otros tres marineros. La lonja tiene cámaras y estuve allí a la vista de todo el mundo.»</div>
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">LA AGENTE INSTRUCTORA<br>Patricia Normand · Placa 1482<br>Policía Local de Cartagena</div>
+      <div class="signature-box">EL MAGISTRADO JUEZ<br>Juzgado Instrucción 3 Cartagena</div>
+    </div>
+  </div>
+
+  <!-- HOJA 2: INTERROGATORIOS 3 Y 4 -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">SOBRE B - PRECINTADO</div>
+      <div class="official-header">
+        <div>
+          <div class="official-title">JUZGADO DE INSTRUCCIÓN Nº 3 DE CARTAGENA</div>
+          <div style="font-size:9.5px; color:#475569;">DILIGENCIAS PREVIAS SUMARIO Nº 204/2025 · PIEZA SEPARADA I</div>
+          <div style="font-size:8.5px; color:#64748b;">INSTRUCTORA: AGENTE PATRICIA NORMAND (PLACA 1482)</div>
+        </div>
+        <div class="case-number">
+          D.P. 204/2025<br>
+          INTERROGATORIOS 3-4
+        </div>
+      </div>
+
+      <h1 class="doc-title">ACTA DE DECLARACIÓN EN CALIDAD DE INVESTIGADO (2/2)</h1>
+
+      <div class="info-box" style="background:#f1f5f9;">
+        <strong>INVESTIGADA 3: DRA. MARINA BELMONTE ALARCÓN</strong> · 43 años · Vicedirectora Científica de ARQVA (Museo Nacional de Arqueología Subacuática).
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-q">PREGUNTADA por la Agente Normand sobre su relación profesional con la víctima y los hallazgos en el pecio Curra-II:</div>
+        <div class="qa-a">«Aurelio era un arqueólogo brillante pero muy hermético. Él sostenía que el pecio de la bocana contenía un cargamento excepcional de plata de las minas púnicas de Cartago Nova. Tuvimos discrepancias de criterio porque él insistía en hacer inmersiones nocturnas en solitario para georreferenciar las piezas antes de que el Ministerio ordenara el dragado del canal. Yo le advertí que era peligroso. El viernes yo me quedé en el laboratorio del ARQVA en el Paseo Alfonso XII hasta bien entrada la madrugada, restaurando ánforas del pecio de Mazarrón. El registro biométrico del museo y las cámaras de seguridad acreditan que no salí del edificio entre las 23:10 h y las 03:20 h.»</div>
+      </div>
+
+      <div class="info-box" style="background:#f1f5f9; margin-top:14px;">
+        <strong>INVESTIGADA 4: CLAUDIA VICEDO CÁNOVAS</strong> · 46 años · Jefa de turno de Control y Señales Marítimas de la Autoridad Portuaria de Cartagena.
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-q">PREGUNTADA sobre el funcionamiento de las balizas y cámaras del Faro de Navidad y Faro de Curra durante la noche:</div>
+        <div class="qa-a">«Las linternas de ambos faros funcionaron con normalidad y emitieron sus destellos reglamentarios (rojo a babor y verde a estribor). En cuanto a las cámaras de vigilancia, el sistema central realiza diagnósticos de mantenimiento automáticos. Si hubo alguna desconexión de telemetría en el Dique de Curra fue un reinicio rutinario del nodo troncal de fibra óptica de la bocana. Yo no toqué ninguna orden manual en mi consola.»</div>
+      </div>
+      <div class="qa-block">
+        <div class="qa-q">PREGUNTADA por la Agente Normand sobre por qué el log del servidor marca su clave de usuario personal 'CVICEDO' a las 01:10 h:</div>
+        <div class="qa-a">«(Muestra nerviosismo evidente y consulta con su letrado de oficio). Puede que dejara mi sesión abierta en la terminal de guardia antes de bajar a tomar un café a la máquina de la planta baja. Cualquiera en el centro de control pudo haber pulsado la pantalla.»</div>
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">LA AGENTE INSTRUCTORA<br>Patricia Normand · Placa 1482<br>Policía Local de Cartagena</div>
+      <div class="signature-box">EL MAGISTRADO JUEZ<br>Juzgado Instrucción 3 Cartagena</div>
+    </div>
+  </div>
+
+  <!-- HOJA 3: AUDITORÍA DE LOS DOS FAROS DE CARTAGENA -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">TELEMETRÍA FAROS</div>
+      <div class="official-header">
+        <div>
+          <div class="official-title">AUTORIDAD PORTUARIA DE CARTAGENA · DIVISIÓN DE SEÑALES MARÍTIMAS</div>
+          <div style="font-size:9.5px; color:#475569;">CENTRO DE CONTROL DE TRÁFICO MARÍTIMO DE LA BOCANA (TORRE SANTA LUCÍA)</div>
+          <div style="font-size:8.5px; color:#64748b;">INFORME DE TELEMETRÍA Y SISTEMAS OPTRÓNICOS · NOCHE DEL 17 AL 18 DE OCTUBRE</div>
+        </div>
+        <div class="case-number">
+          APCT-LOG-882<br>
+          FAROS NAVIDAD / CURRA
+        </div>
+      </div>
+
+      <h1 class="doc-title">AUDITORÍA TELEMÁTICA DE LAS BALIZAS Y CÁMARAS DE LA BOCANA</h1>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Dispositivo / Señal</th>
+            <th>Ubicación</th>
+            <th>Estado y Registro Operativo (00:00 h - 04:00 h)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Faro Rojo de Navidad</strong><br>Óptica y Cámara CCD</td>
+            <td>Dique de Navidad (Oeste)<br>Baliza Fl(3)R 10s</td>
+            <td><strong style="color:#16a34a;">OPERATIVO AL 100%</strong>. A las <strong>01:20 h</strong> la cámara graba una embarcación semirrígida de unos 6 metros con casco negro, navegando sin luces de posición pegada al espigón de Curra en dirección a Cala Cortina.</td>
+          </tr>
+          <tr>
+            <td><strong>Faro Verde de Curra</strong><br>Linterna Marítima</td>
+            <td>Dique de Curra (Este)<br>Baliza GpD(2)V 6s</td>
+            <td><strong style="color:#16a34a;">OPERATIVO</strong>. Emisión lumínica ininterrumpida.</td>
+          </tr>
+          <tr>
+            <td><strong>Faro Verde de Curra</strong><br>Cámara Térmica Infrarroja FLIR</td>
+            <td>Dique de Curra (Este)<br>Cobertura 360º Bocana</td>
+            <td><strong style="color:#dc2626;">CAÍDA DELIBERADA DE SEÑAL DE 42 MINUTOS</strong>.<br>Corte forzado a las <strong>01:10:14 h</strong> y restauración a las <strong>01:52:30 h</strong>.<br><em>Motivo registrado en log:</em> «Mantenimiento preventivo manual ordenado desde consola local IP 192.168.4.12 (Usuario: CVICEDO)». No hubo reinicio de red ni fallo eléctrico en el dique.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-box" style="border-left: 4px solid #f59e0b;">
+        <strong>TRIANGULACIÓN DE ANTENAS DE TELEFONÍA (BTS CARTAGENA SUR Y CALA CORTINA):</strong><br>
+        • <em>Terminal de Víctor Huesca:</em> Pese a declarar que estuvo en Los Dolores, su teléfono engancha la celda <strong>BTS-CALA-CORTINA-2</strong> a las 01:05 h, 01:28 h y 01:44 h, situándolo físicamente en la ensenada y el espigón rocoso a la hora exacta del crimen.<br>
+        • <em>Terminal de Bernardo Conesa:</em> Conectado a la antena <strong>BTS-SANTA-LUCIA-LONJA</strong> ininterrumpidamente de 22:30 h a 04:15 h.<br>
+        • <em>Terminal de Dra. Marina Belmonte:</em> Conectada a la celda <strong>BTS-MURALLA-DEL-MAR</strong> (cobertura del museo ARQVA).
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL JEFE DE SISTEMAS Y TELEMÁTICA<br>Autoridad Portuaria de Cartagena</div>
+      <div class="signature-box">LA AGENTE INSTRUCTORA<br>Patricia Normand · Placa 1482</div>
+    </div>
+  </div>
+
+  <!-- HOJA 4: DICTAMEN DEL HALLAZGO DE PACO EL GATO -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">EVIDENCIA FELINA</div>
+      <div class="official-header">
+        <div>
+          <div class="official-title">POLICÍA LOCAL DE CARTAGENA · UNIDAD DE POLICÍA CIENTÍFICA</div>
+          <div style="font-size:9.5px; color:#475569;">INSPECCIÓN TÉCNICA DE EVIDENCIAS · PROTOCOLO DE CUSTODIA #E-01</div>
+          <div style="font-size:8.5px; color:#64748b;">INFORME SOBRE EL HALLAZGO PROTAGONIZADO POR EL FELINO «PACO»</div>
+        </div>
+        <div class="case-number">
+          EVIDENCIA E-01<br>
+          PACO / CALA CORTINA
+        </div>
+      </div>
+
+      <h1 class="doc-title">DICTAMEN PERICIAL SOBRE LA CÁPSULA ESTANCA RECUPERADA</h1>
+
+      <div class="info-box" style="background:#fff7ed; border-color:#f97316;">
+        <strong>DESCRIPCIÓN DE LA PIEZA DE CONVICCIÓN INTERVENIDA:</strong><br>
+        Se trata de un contenedor cilíndrico estanco estandarizado para buceo técnico militar, mecanizado en aleación de titanio negro anodizado, con número de serie troquelado <em>AQUATEC-TITAN-X4</em> y mosquetón giratorio de liberación rápida.
+      </div>
+
+      <p class="legal-text">
+        <strong>ANÁLISIS DE HUELLAS BIOLÓGICAS Y TRAZAS DE ANIMAL:</strong><br>
+        1. En la junta tórica de estanqueidad de nitrilo se recuperaron <strong>7 muestras de fibras capilares queratinizadas</strong>. El examen microscópico en el laboratorio del IML determinó que se trata de pelo de felino doméstico (<em>Felis catus</em>), de color blanco y bermejo-anaranjado, cuya estructura medular y cuticular coincide de manera exacta con el pelaje del gato <strong>«Paco»</strong> de Cala Cortina.<br>
+        2. La cápsula presenta arañazos superficiales y marcas de incisivos felinos en el anillo de goma exterior, evidenciando que el animal manipuló y extrajo el objeto de una grieta profunda de la escollera caliza donde había sido introducido recientemente.<br>
+        3. En el interior hermético seco se halla una tarjeta de memoria microSD SanDisk Extreme de 128 GB, protegida contra la humedad y el salitre.
+      </p>
+
+      <div class="info-box" style="border-left: 4px solid #00e5ff; background: #ecfeff;">
+        <strong>CONCLUSIÓN OPERATIVA DE LA AGENTE PATRICIA NORMAND:</strong><br>
+        El homicida intentó deshacerse de la tarjeta de memoria tras arrebatar el equipo a la víctima en el agua, ocultándola en el espigón antes de huir a través del túnel de Cala Cortina. La oportuna intervención y el instinto curioso de Paco permitieron recuperar la prueba reina intacta antes de que la pleamar matinal la cubriera.<br>
+        <em>Código judicial para desbloquear la pieza pericial final (Sobre C):</em> <strong style="font-family:'Courier Prime'; color:#0284c7;">FARO-CURRA-12V</strong>.
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">LA AGENTE INSTRUCTORA<br>Patricia Normand · Placa 1482<br>Policía Local de Cartagena</div>
+      <div class="signature-box">EL PERITO EN POLICÍA CIENTÍFICA<br>Laboratorio Criminalística Murcia</div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.type === 'VESTIGO_ZOOM') {
+        var zoom = e.data.zoom || 1.0;
+        if (typeof document.body.style.zoom !== 'undefined') {
+          document.body.style.zoom = zoom;
+        } else {
+          document.body.style.transform = zoom === 1.0 ? 'none' : 'scale(' + zoom + ')';
+          document.body.style.transformOrigin = 'top center';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MANUAL DEL INVESTIGADOR - EL ENIGMA DE LOS DOS FAROS (CARTAGENA)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700;800;900&family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    @page { size: A4 portrait; margin: 10mm 14mm 10mm 14mm; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #525659;
+      font-family: 'Courier Prime', monospace;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .no-print-bar {
+      background: #0f172a;
+      color: #fff;
+      width: 210mm;
+      max-width: 100%;
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .print-btn {
+      background: #00e5ff;
+      color: #000;
+      border: none;
+      padding: 9px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    .sheet {
+      background-color: #fcfbf7;
+      width: 210mm;
+      max-width: 100%;
+      min-height: 297mm;
+      box-sizing: border-box;
+      padding: 13mm 16mm;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    @media print {
+      html, body { background: transparent !important; margin: 0 !important; padding: 0 !important; }
+      .no-print-bar { display: none !important; }
+      .sheet {
+        background-color: transparent !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+      }
+    }
+    .official-header {
+      border-bottom: 2px solid #000;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .official-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      line-height: 1.3;
+    }
+    .case-number {
+      font-family: 'Courier Prime', monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      border: 1.5px solid #000;
+      padding: 4px 8px;
+      background: #f0eee6;
+      text-align: right;
+      line-height: 1.2;
+    }
+    .stamp-confidential {
+      position: absolute;
+      top: 30px;
+      right: 35px;
+      border: 2.5px solid #0284c7;
+      color: #0284c7;
+      font-family: 'Special Elite', cursive;
+      font-size: 15px;
+      font-weight: bold;
+      padding: 4px 10px;
+      text-transform: uppercase;
+      transform: rotate(-7deg);
+      opacity: 0.85;
+      letter-spacing: 2px;
+      pointer-events: none;
+    }
+    h1.doc-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 6px 0 12px 0;
+      text-decoration: underline;
+    }
+    p.legal-text {
+      font-size: 10px;
+      line-height: 1.55;
+      text-align: justify;
+      margin-bottom: 8px;
+    }
+    .info-box {
+      border: 1.5px solid #334155;
+      background: #f8fafc;
+      padding: 8px 12px;
+      margin: 8px 0;
+      font-size: 9.5px;
+      line-height: 1.45;
+    }
+    .highlight-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      font-size: 9px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      border-radius: 3px;
+      margin-bottom: 4px;
+    }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9px;
+      margin: 8px 0;
+    }
+    table.data-table th, table.data-table td {
+      border: 1px solid #64748b;
+      padding: 5px 8px;
+      text-align: left;
+    }
+    table.data-table th {
+      background: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+    }
+    .signature-area {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      padding-top: 10px;
+      border-top: 1px dashed #64748b;
+    }
+    .signature-box {
+      width: 45%;
+      text-align: center;
+      font-size: 8.5px;
+      line-height: 1.4;
+    }
+    @media (max-width: 600px) {
+      body { padding: 0 !important; }
+      .sheet { padding: 12px !important; margin-bottom: 12px !important; box-shadow: none !important; }
+      .no-print-bar { display: none !important; }
+      .official-header { flex-direction: column !important; gap: 8px !important; }
+      .case-number { text-align: left !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print-bar">
+    <div><strong>VESTIGO // DOSSIER DE OPERACIONES</strong> · CASO 04: EL ENIGMA DE LOS DOS FAROS</div>
+    <button class="print-btn" onclick="window.print()">IMPRIMIR EN A4 🖨</button>
+  </div>
+
+  <!-- PÁGINA 1: PROTOCOLO OPERATIVO Y PRESENTACIÓN -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">POLICÍA JUDICIAL</div>
+      <div class="official-header">
+        <div>
+          <div class="official-title">AYUNTAMIENTO DE CARTAGENA · POLICÍA LOCAL</div>
+          <div style="font-size:9.5px; color:#475569;">CUARTEL DE SEGURIDAD CIUDADANA · GRUPO DE INVESTIGACIÓN JUDICIAL</div>
+          <div style="font-size:8.5px; color:#64748b;">COLABORACIÓN: JUZGADO DE INSTRUCCIÓN Nº 3 DE CARTAGENA</div>
+        </div>
+        <div class="case-number">
+          D.P. 204/2025<br>
+          CALA CORTINA / BOCANA
+        </div>
+      </div>
+
+      <h1 class="doc-title">MANUAL DEL INVESTIGADOR · PROTOCOLO DE ACTUACIÓN POLICIAL</h1>
+
+      <div class="info-box" style="border-left: 4px solid #00e5ff; background: #f0fdfa;">
+        <strong>IDENTIDAD DEL JUGADOR / PERSONAJE OPERATIVO:</strong><br>
+        En este expediente encarnas a la <strong>Agente Patricia Normand (Placa 1482)</strong> de la Policía Local de Cartagena. Con amplia veteranía en la unidad costera de playas y vigilancia del litoral de Cartagena, Patricia destaca por su agudeza visual, su exhaustivo conocimiento de las calas y baterías militares de la bahía y su estrecha relación con los vecinos de Santa Lucía y los usuarios de <strong>Cala Cortina</strong>.
+      </div>
+
+      <p class="legal-text">
+        <strong>1. NATURALEZA DEL EXPEDIENTE HÍBRIDO:</strong><br>
+        El presente sumario combina elementos físicos documentales (expedientes A4, actas de inspección técnico-ocular, informes de medicina forense, cartas náuticas del Instituto Hidrográfico de la Marina y transcripciones judiciales) con el sistema telemático interactivo <strong>SITRA-JUD</strong> y el canal de audiofonía forense del vídeo-briefing narrado.
+      </p>
+
+      <p class="legal-text">
+        <strong>2. EL ESCENARIO GEOGRÁFICO Y NÁUTICO:</strong><br>
+        La investigación se sitúa en la bahía de Cartagena y la bocana de acceso a su puerto histórico. Los dos puntos de enfilación principales son el <strong>Faro Rojo de Navidad</strong> (en el extremo del Dique de Navidad, a babor según se entra a la bahía) y el <strong>Faro Verde de Curra</strong> (en el morro del colosal Dique de Curra, a estribor). Entre ambos faros se extiende el canal de navegación principal de 28 a 35 metros de profundidad donde yacen pecios de época fenicia, cartaginesa y romana. Justo al este del dique de Curra se resguarda la ensenada de <strong>Cala Cortina</strong>, accesible por el túnel excavado en la roca.
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Elemento Clave</th>
+            <th>Ubicación</th>
+            <th>Relevancia Pericial</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Faro Rojo (Navidad)</strong></td>
+            <td>Dique de Navidad (Oeste)</td>
+            <td>Torre cilíndrica de sillería blanca y linterna roja. Su cámara óptica graba continuamente el canal de entrada a la dársena comercial.</td>
+          </tr>
+          <tr>
+            <td><strong>Faro Verde (Curra)</strong></td>
+            <td>Dique de Curra (Este)</td>
+            <td>Baliza verde sobre bloques de escollera ciclópeos. Equipada con cámara térmica optrónica para control de tráfico marítimo.</td>
+          </tr>
+          <tr>
+            <td><strong>Cala Cortina</strong></td>
+            <td>Ensenada de levante</td>
+            <td>Playa encajada entre acantilados donde aparece el cuerpo de la víctima y se ubica el centro de buceo <em>Bocana Dive</em>.</td>
+          </tr>
+          <tr>
+            <td><strong>Paco el Gato</strong></td>
+            <td>Espigón de Cala Cortina</td>
+            <td>Felino bicolor (naranja y blanco), habitante habitual de la cala. Su hallazgo de una cápsula sumergible desencadena la ruptura del caso.</td>
+          </tr>
+          <tr>
+            <td><strong>ARQVA</strong></td>
+            <td>Paseo Alfonso XII</td>
+            <td>Museo Nacional de Arqueología Subacuática donde trabajaba el arqueólogo fallecido Aurelio Saura.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-box" style="margin-top:8px;">
+        <span class="highlight-badge" style="background:#0284c7;">ESTRUCTURA DE LOS SOBRES DE INVESTIGACIÓN</span><br>
+        <strong>• SOBRE A (ABIERTO DE INICIO):</strong> Atestado inicial de Patricia Normand, levantamiento del cadáver en Cala Cortina, autopsia preliminar completa y plano náutico de la bocana.<br>
+        <strong>• SOBRE B (PRECINTADO):</strong> Interrogatorios de los 4 sospechosos, telemetría de los faros de Navidad y Curra y acta pericial del hallazgo de Paco el Gato.<br>
+        <strong>• SOBRE C (PRECINTADO):</strong> Dictamen SECRIM de cromatografía de gases, fotogramas de la microcámara subacuática y auto judicial definitivo.
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">LA AGENTE INSTRUCTORA<br>Patricia Normand · Placa 1482<br>Policía Local de Cartagena</div>
+      <div class="signature-box">EL MAGISTRADO JUEZ<br>Juzgado de Instrucción Nº 3<br>Cartagena (Murcia)</div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.type === 'VESTIGO_ZOOM') {
+        var zoom = e.data.zoom || 1.0;
+        if (typeof document.body.style.zoom !== 'undefined') {
+          document.body.style.zoom = zoom;
+        } else {
+          document.body.style.transform = zoom === 1.0 ? 'none' : 'scale(' + zoom + ')';
+          document.body.style.transformOrigin = 'top center';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

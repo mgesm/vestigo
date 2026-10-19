@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOSSIER JUDICIAL - SOBRE C: PIEZA DE CONVICCIÓN FINAL (CARTAGENA)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700;800;900&family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    @page { size: A4 portrait; margin: 10mm 14mm 10mm 14mm; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #525659;
+      font-family: 'Courier Prime', monospace;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .no-print-bar {
+      background: #0f172a;
+      color: #fff;
+      width: 210mm;
+      max-width: 100%;
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .print-btn {
+      background: #00e5ff;
+      color: #000;
+      border: none;
+      padding: 9px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    .sheet {
+      background-color: #fcfbf7;
+      width: 210mm;
+      max-width: 100%;
+      min-height: 297mm;
+      box-sizing: border-box;
+      padding: 13mm 16mm;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    @media print {
+      html, body { background: transparent !important; margin: 0 !important; padding: 0 !important; }
+      .no-print-bar { display: none !important; }
+      .sheet {
+        background-color: transparent !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+      }
+    }
+    .official-header {
+      border-bottom: 2px solid #000;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .official-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      line-height: 1.3;
+    }
+    .case-number {
+      font-family: 'Courier Prime', monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      border: 1.5px solid #000;
+      padding: 4px 8px;
+      background: #f0eee6;
+      text-align: right;
+      line-height: 1.2;
+    }
+    .stamp-confidential {
+      position: absolute;
+      top: 30px;
+      right: 35px;
+      border: 2.5px solid #dc2626;
+      color: #dc2626;
+      font-family: 'Special Elite', cursive;
+      font-size: 15px;
+      font-weight: bold;
+      padding: 4px 10px;
+      text-transform: uppercase;
+      transform: rotate(-7deg);
+      opacity: 0.85;
+      letter-spacing: 2px;
+      pointer-events: none;
+    }
+    h1.doc-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 6px 0 12px 0;
+      text-decoration: underline;
+    }
+    p.legal-text {
+      font-size: 10px;
+      line-height: 1.55;
+      text-align: justify;
+      margin-bottom: 8px;
+    }
+    .info-box {
+      border: 1.5px solid #334155;
+      background: #f8fafc;
+      padding: 8px 12px;
+      margin: 8px 0;
+      font-size: 9.5px;
+      line-height: 1.45;
+    }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9px;
+      margin: 8px 0;
+    }
+    table.data-table th, table.data-table td {
+      border: 1px solid #64748b;
+      padding: 5px 8px;
+      text-align: left;
+    }
+    table.data-table th {
+      background: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+    }
+    .signature-area {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      padding-top: 10px;
+      border-top: 1px dashed #64748b;
+    }
+    .signature-box {
+      width: 45%;
+      text-align: center;
+      font-size: 8.5px;
+      line-height: 1.4;
+    }
+    @media (max-width: 600px) {
+      body { padding: 0 !important; }
+      .sheet { padding: 12px !important; margin-bottom: 12px !important; box-shadow: none !important; }
+      .no-print-bar { display: none !important; }
+      .official-header { flex-direction: column !important; gap: 8px !important; }
+      .case-number { text-align: left !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print-bar">
+    <div><strong>VESTIGO // DOSSIER JUDICIAL</strong> · CASO 04 · SOBRE C (CONVICCIÓN FINAL)</div>
+    <button class="print-btn" onclick="window.print()">IMPRIMIR EN A4 🖨</button>
+  </div>
+
+  <!-- HOJA 1: DICTAMEN SECRIM DEL COMPRESOR -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">SECRETO LEVANTADO</div>
+      <div class="official-header">
+        <div>
+          <div class="official-title">GUARDIA CIVIL · SERVICIO DE CRIMINALÍSTICA (SECRIM)</div>
+          <div style="font-size:9.5px; color:#475569;">DEPARTAMENTO DE QUÍMICA Y MEDIO AMBIENTE · COMPLEJO DE GUADALAJARA</div>
+          <div style="font-size:8.5px; color:#64748b;">DICTAMEN PERICIAL QUÍMICO Nº 2025-Q-714 · ASUNTO: CALA CORTINA</div>
+        </div>
+        <div class="case-number">
+          SECRIM-714/25<br>
+          CROMATOGRAFÍA GASES
+        </div>
+      </div>
+
+      <h1 class="doc-title">DICTAMEN TÉCNICO-QUÍMICO DEL COMPRESOR Y MEZCLAS DE GAS</h1>
+
+      <p class="legal-text">
+        Por orden del Juzgado de Instrucción Nº 3 de Cartagena y a solicitud de la instructora Agente Patricia Normand, se procedió a la inspección forense del compresor industrial de alta presión <em>Bauer Mariner 250</em> incautado en el taller de <em>Bocana Dive</em> en Cala Cortina.
+      </p>
+
+      <div class="info-box" style="border-left: 4px solid #dc2626;">
+        <strong>1. IDENTIFICACIÓN DEL MODUS OPERANDI (DESVÍO DE GASES DE ESCAPE):</strong><br>
+        • En el colector de admisión de aire del compresor se localizó una abrazadera metálica de apriete rápido con restos de goma sintética que no corresponde al montaje original de fábrica.<br>
+        • Dicha abrazadera acoplaba un conducto flexible de 32 mm conectado directamente a la salida del escape del generador diésel auxiliar instalado en el patio trasero del taller.<br>
+        • <em>Resultado de cromatografía de gases:</em> Las partículas de hollín y derivados de pirólisis de hidrocarburos pesados hallados en el interior de las botellas de Aurelio Saura coinciden en una correlación espectral del 99,8% con los residuos de combustión del generador de Víctor Huesca.
+      </div>
+
+      <div class="info-box">
+        <strong>2. DACTILOSCOPIA EN LA VÁLVULA DE PURGA:</strong><br>
+        El reactivo cianoacrilato reveló dos huellas latentes nítidas en la tuerca del bypass: corresponden de manera unívoca al <strong>dactilograma del dedo índice y pulgar derechos de Víctor Huesca Vidal</strong>, acreditando su manipulación dolosa.
+      </div>
+
+      <p class="legal-text">
+        <strong>CONCLUSIÓN PERICIAL:</strong> La presencia de un 2,4% de monóxido de carbono en la mezcla respirada no fue accidental ni fruto de un mantenimiento deficiente, sino el resultado de una adulteración activa y deliberada destinada a provocar el colapso fisiológico del usuario a gran profundidad.
+      </p>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL CORONEL JEFE DEL SECRIM<br>Servicio de Criminalística Guardia Civil</div>
+      <div class="signature-box">LA AGENTE DE POLICÍA LOCAL<br>Patricia Normand · Placa 1482</div>
+    </div>
+  </div>
+
+  <!-- HOJA 2: VOLCADO DE LA TARJETA RESCATADA POR PACO EL GATO -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">PRUEBA REINA</div>
+      <div class="official-header">
+        <div>
+          <div class="official-title">POLICÍA LOCAL DE CARTAGENA · BRIGADA DE DELITOS TELEMÁTICOS</div>
+          <div style="font-size:9.5px; color:#475569;">VOLCADO FORENSE DIGITAL DE EVIDENCIA #E-01 (HALLAZGO PACO EL GATO)</div>
+          <div style="font-size:8.5px; color:#64748b;">INFORME DE EXTRACCIÓN Y RECUPERACIÓN DE VÍDEO · GOPR0042.MP4</div>
+        </div>
+        <div class="case-number">
+          VOLCADO-E01<br>
+          GOPR0042.MP4
+        </div>
+      </div>
+
+      <h1 class="doc-title">ANÁLISIS DEL ARCHIVO DE VÍDEO RECUPERADO DE LA CÁPSULA ESTANCA</h1>
+
+      <p class="legal-text">
+        El análisis forense de la tarjeta microSD SanDisk Extreme de 128 GB protegida en la cápsula que el gato Paco extrajo del espigón de Cala Cortina permitió recuperar íntegro el archivo de vídeo submarino grabado con la cámara de acción adosada al casco del finado.
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Timecode</th>
+            <th>Cota / Profundidad</th>
+            <th>Descripción de los Hechos Visualizados en el Fotograma</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>00:45:12</strong></td>
+            <td>-27,8 metros (Pecio)</td>
+            <td>Aurelio ilumina con su foco de buceo el yacimiento Curra-II. Se observan dos ánforas cartaginesas amarradas con eslingas de izado con globos elevadores de color amarillo y la marca rotulada: <em>«BOCANA DIVE - V.H.»</em>.</td>
+          </tr>
+          <tr>
+            <td><strong>01:14:08</strong></td>
+            <td>-18,2 metros</td>
+            <td>La respiración de Aurelio en el regulador se vuelve taquipneica, entrecortada y errática. Comienza a temblar la imagen por desorientación anóxica. Suelta los plomos y acciona el inflador jacket para ascender a superficie de emergencia.</td>
+          </tr>
+          <tr>
+            <td><strong>01:21:40</strong></td>
+            <td>0,0 m (Superficie)</td>
+            <td>Aurelio rompe la superficie junto a los bloques del espigón de Cala Cortina tosiendo. Frente a él se aproxima la proa de una lancha semirrígida negra. En el fotograma <strong>14.280</strong> se observa con nitidez frontal el rostro de <strong>Víctor Huesca</strong> a los mandos.</td>
+          </tr>
+          <tr>
+            <td><strong>01:22:15</strong></td>
+            <td>0,0 m (Impacto)</td>
+            <td>Víctor toma un bichero náutico de aluminio telescópico y golpea a Aurelio en la parte posterior del cráneo. La cámara se desprende y queda flotando gracias al mosquetón hasta encallarse en la grieta de las rocas.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-box" style="background:#ecfdf5; border-color:#10b981;">
+        <strong>VALOR PROBATORIO INDISCUTIBLE:</strong><br>
+        La grabación sitúa sin género de duda a Víctor Huesca Vidal como autor material directo del ataque homicida en las aguas de Cala Cortina, desbaratando por completo su coartada.
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL PERITO EN INFORMÁTICA FORENSE<br>Colegio Oficial Ingenieros Murcia</div>
+      <div class="signature-box">LA AGENTE INSTRUCTORA<br>Patricia Normand · Placa 1482</div>
+    </div>
+  </div>
+
+  <!-- HOJA 3: TRAZAS DE CORRUPCIÓN EN EL CONTROL DE FAROS -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">COHECHO / UDEF</div>
+      <div class="official-header">
+        <div>
+          <div class="official-title">POLICÍA NACIONAL · UNIDAD DE DELINCUENCIA ECONÓMICA Y FISCAL (UDEF)</div>
+          <div style="font-size:9.5px; color:#475569;">BRIGADA DE BLANQUEO DE CAPITALES · JEFATURA SUPERIOR DE MURCIA</div>
+          <div style="font-size:8.5px; color:#64748b;">INFORME FINANCIERO PIEZA DE CORRUPCIÓN · IMPLICADA: CLAUDIA VICEDO CÁNOVAS</div>
+        </div>
+        <div class="case-number">
+          UDEF-MU-319<br>
+          RED CRIPTO / FARO
+        </div>
+      </div>
+
+      <h1 class="doc-title">AUDITORÍA DE CRIPTOACTIVOS Y COMUNICACIONES CIFRADAS</h1>
+
+      <p class="legal-text">
+        El volcado pericial del smartphone intervenido a la jefa de señales marítimas <strong>Claudia Vicedo Cánovas</strong> reveló una billetera digital de la plataforma Binance instalada bajo un perfil oculto.
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Fecha y Hora</th>
+            <th>Moneda / Cantidad</th>
+            <th>Billetera Emisora / Concepto Descifrado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>12/09/2025 · 18:20 h</td>
+            <td>6.000 USDT (5.550 €)</td>
+            <td>0x7F...c14A (Víctor Huesca) · «Anticipo Inmersión Curra»</td>
+          </tr>
+          <tr>
+            <td>28/09/2025 · 20:15 h</td>
+            <td>6.000 USDT (5.550 €)</td>
+            <td>0x7F...c14A (Víctor Huesca) · «Baliza Navidad/Curra»</td>
+          </tr>
+          <tr>
+            <td>17/10/2025 · 23:40 h</td>
+            <td>6.000 USDT (5.550 €)</td>
+            <td>0x7F...c14A (Víctor Huesca) · <strong>«Apagón Cámara Térmica Curra»</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-box">
+        <strong>MENSAJE DE SIGNAL RECUPERADO A LAS 00:58 H:</strong><br>
+        <em>Víctor Huesca ➔ Claudia Vicedo:</em> «Salgo ahora de la dársena. Corta el ojo de Curra a las 01:10 durante tres cuartos de hora. Si Aurelio asoma por el canal no debe quedar rastro en Capitanía».<br>
+        <em>Respuesta de Claudia a las 01:02 H:</em> «Recibido. Tienes 40 minutos a ciegas. Ni se te ocurra tocar la linterna verde de destellos o saltará la alarma general en Madrid».
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL INSPECTOR JEFE DE LA UDEF<br>Delitos Económicos Murcia</div>
+      <div class="signature-box">LA AGENTE INSTRUCTORA<br>Patricia Normand · Placa 1482</div>
+    </div>
+  </div>
+
+  <!-- HOJA 4: AUTO JUDICIAL DE PRISIÓN DEFINITIVA -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">SENTENCIA JUDICIAL</div>
+      <div class="official-header">
+        <div>
+          <div class="official-title">JUZGADO DE INSTRUCCIÓN Nº 3 DE CARTAGENA</div>
+          <div style="font-size:9.5px; color:#475569;">DILIGENCIAS PREVIAS SUMARIO Nº 204/2025 · PIEZA DE RESOLUCIÓN</div>
+          <div style="font-size:8.5px; color:#64748b;">MAGISTRADO JUEZ: D. SANTIAGO MECA BALLESTER</div>
+        </div>
+        <div class="case-number">
+          AUTO 140/2025<br>
+          PRISIÓN INCONDICIONAL
+        </div>
+      </div>
+
+      <h1 class="doc-title">AUTO DE PRISIÓN PROVISIONAL Y CIERRE SUMARIAL</h1>
+
+      <p class="legal-text">
+        <strong>DISPONGO:</strong><br>
+        1. Decretar el ingreso en <strong>PRISIÓN PROVISIONAL COMUNICADA Y SIN FIANZA</strong> para <strong>VÍCTOR HUESCA VIDAL</strong> como presunto autor criminalmente responsable de los delitos de ASESINATO CON ALEVOSÍA (art. 139 CP), ROBO CON FUERZA Y EXPOLIO CONTINUADO DE PATRIMONIO HISTÓRICO ARQUEOLÓGICO SUBACUÁTICO (arts. 238 y 323 CP).
+      </p>
+
+      <p class="legal-text">
+        2. Decretar el ingreso en <strong>PRISIÓN PROVISIONAL COMUNICADA Y SIN FIANZA</strong> para <strong>CLAUDIA VICEDO CÁNOVAS</strong> como cooperadora necesaria en el delito de asesinato y autora de un delito continuado de COHECHO PASIVO IMPROPIO (art. 419 CP).
+      </p>
+
+      <p class="legal-text">
+        3. Decretar el <strong>SOBRESEIMIENTO LIBRE</strong> y archivo de las actuaciones respecto a D. Bernardo Conesa Vidal y a Dña. Marina Belmonte Alarcón, al haber quedado plenamente acreditada su absoluta inocencia.
+      </p>
+
+      <div class="info-box" style="border-left: 4px solid #00e5ff; background: #ecfeff;">
+        <strong>RECONOCIMIENTO POLICIAL OFICIAL:</strong><br>
+        Este Juzgado deja expresa constancia del extraordinario celo profesional, rigor técnico y agudeza investigadora demostrados por la <strong>Agente Patricia Normand (Placa 1482)</strong> de la Policía Local de Cartagena, así como de la providencial aportación pericial del felino <strong>«Paco»</strong> de Cala Cortina, cuya actuación posibilitó el aseguramiento de la prueba reina que desarticuló esta trama criminal.<br>
+        <em>Código judicial definitivo de resolución:</em> <strong style="font-family:'Courier Prime'; color:#0284c7;">JUSTICIA-CARTAGENA-2025</strong>.
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL MAGISTRADO JUEZ<br>D. Santiago Meca Ballester<br>Juzgado Instrucción 3 Cartagena</div>
+      <div class="signature-box">LA AGENTE INSTRUCTORA<br>Patricia Normand · Placa 1482<br>Policía Local de Cartagena</div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.type === 'VESTIGO_ZOOM') {
+        var zoom = e.data.zoom || 1.0;
+        if (typeof document.body.style.zoom !== 'undefined') {
+          document.body.style.zoom = zoom;
+        } else {
+          document.body.style.transform = zoom === 1.0 ? 'none' : 'scale(' + zoom + ')';
+          document.body.style.transformOrigin = 'top center';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

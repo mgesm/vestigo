@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOSSIER JUDICIAL - SOBRE A: PIEZA PRINCIPAL (CARTAGENA)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700;800;900&family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    @page { size: A4 portrait; margin: 10mm 14mm 10mm 14mm; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #525659;
+      font-family: 'Courier Prime', monospace;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .no-print-bar {
+      background: #0f172a;
+      color: #fff;
+      width: 210mm;
+      max-width: 100%;
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .print-btn {
+      background: #00e5ff;
+      color: #000;
+      border: none;
+      padding: 9px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    .sheet {
+      background-color: #fcfbf7;
+      width: 210mm;
+      max-width: 100%;
+      min-height: 297mm;
+      box-sizing: border-box;
+      padding: 13mm 16mm;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    @media print {
+      html, body { background: transparent !important; margin: 0 !important; padding: 0 !important; }
+      .no-print-bar { display: none !important; }
+      .sheet {
+        background-color: transparent !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+      }
+    }
+    .official-header {
+      border-bottom: 2px solid #000;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .official-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      line-height: 1.3;
+    }
+    .case-number {
+      font-family: 'Courier Prime', monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      border: 1.5px solid #000;
+      padding: 4px 8px;
+      background: #f0eee6;
+      text-align: right;
+      line-height: 1.2;
+    }
+    .stamp-confidential {
+      position: absolute;
+      top: 30px;
+      right: 35px;
+      border: 2.5px solid #0284c7;
+      color: #0284c7;
+      font-family: 'Special Elite', cursive;
+      font-size: 15px;
+      font-weight: bold;
+      padding: 4px 10px;
+      text-transform: uppercase;
+      transform: rotate(-7deg);
+      opacity: 0.85;
+      letter-spacing: 2px;
+      pointer-events: none;
+    }
+    h1.doc-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 6px 0 12px 0;
+      text-decoration: underline;
+    }
+    p.legal-text {
+      font-size: 10px;
+      line-height: 1.55;
+      text-align: justify;
+      margin-bottom: 8px;
+    }
+    .info-box {
+      border: 1.5px solid #334155;
+      background: #f8fafc;
+      padding: 8px 12px;
+      margin: 8px 0;
+      font-size: 9.5px;
+      line-height: 1.45;
+    }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9px;
+      margin: 8px 0;
+    }
+    table.data-table th, table.data-table td {
+      border: 1px solid #64748b;
+      padding: 5px 8px;
+      text-align: left;
+    }
+    table.data-table th {
+      background: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+    }
+    .signature-area {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      padding-top: 10px;
+      border-top: 1px dashed #64748b;
+    }
+    .signature-box {
+      width: 45%;
+      text-align: center;
+      font-size: 8.5px;
+      line-height: 1.4;
+    }
+    @media (max-width: 600px) {
+      body { padding: 0 !important; }
+      .sheet { padding: 12px !important; margin-bottom: 12px !important; box-shadow: none !important; }
+      .no-print-bar { display: none !important; }
+      .official-header { flex-direction: column !important; gap: 8px !important; }
+      .case-number { text-align: left !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print-bar">
+    <div><strong>VESTIGO // DOSSIER JUDICIAL</strong> · CASO 04 · SOBRE A (PIEZA PRINCIPAL)</div>
+    <button class="print-btn" onclick="window.print()">IMPRIMIR EN A4 🖨</button>
+  </div>
+
+  <!-- HOJA 1: AUTO DE INCOACIÓN JUDICIAL -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">SOBRE A - JUDICIAL</div>
+      <div class="official-header">
+        <div>
+          <div class="official-title">JUZGADO DE INSTRUCCIÓN Nº 3 DE CARTAGENA</div>
+          <div style="font-size:9.5px; color:#475569;">PALACIO DE JUSTICIA · CALLE ÁNGEL BRUNA, CARTAGENA (MURCIA)</div>
+          <div style="font-size:8.5px; color:#64748b;">DILIGENCIAS PREVIAS SUMARIO Nº 204/2025 · PIEZA PRINCIPAL</div>
+        </div>
+        <div class="case-number">
+          D.P. 204/2025<br>
+          CALA CORTINA
+        </div>
+      </div>
+
+      <h1 class="doc-title">AUTO DE INCOACIÓN DE DILIGENCIAS PREVIAS Y APERTURA DE SUMARIO</h1>
+
+      <p class="legal-text">
+        En la ciudad de Cartagena, a 18 de octubre de 2025.<br>
+        <strong>DADA CUENTA:</strong> Por recibida en este Órgano Judicial comunicación telemática dimanante de la Policía Local de Cartagena, alertando del hallazgo de un varón sin vida en el espigón rocoso de <strong>Cala Cortina</strong>, ataviado con equipo de inmersión técnica profunda autónoma.
+      </p>
+
+      <p class="legal-text">
+        <strong>RESULTANDO:</strong> Que el finado ha sido identificado pericialmente como <strong>D. Aurelio Saura Mengual</strong>, de 49 años de edad, arqueólogo subacuático de reconocido prestigio, con domicilio en Calle Muralla del Mar de esta ciudad e investigador adscrito a proyectos oficiales del ARQVA (Museo Nacional de Arqueología Subacuática).
+      </p>
+
+      <p class="legal-text">
+        <strong>CONSIDERANDO:</strong> Que de las primeras pesquisas de inspección ocular remitidas por la fuerza actuante de la Policía Local de Cartagena y del informe preliminar del médico forense de guardia, se desprenden indicios racionales de criminalidad que impiden catalogar el suceso como un mero accidente de inmersión deportiva, acordándose la incoación de Diligencias Previas con número 204/2025.
+      </p>
+
+      <div class="info-box" style="border-left: 4px solid #dc2626;">
+        <strong>PARTE DISPOSITIVA DEL JUZGADO:</strong><br>
+        1. Se encomienda a la <strong>Agente Patricia Normand (Placa 1482)</strong> de la Policía Local de Cartagena la instrucción del atestado técnico-policial y la coordinación de las pesquisas costeras.<br>
+        2. Se acuerda la preservación estricta del escenario en la cala y el espigón de Cala Cortina, así como el precinto de los equipos de respiración autónoma recuperados.<br>
+        3. Se libra mandamiento a la Autoridad Portuaria de Cartagena para la entrega de los registros telemáticos y videográficos de las señales marítimas del <strong>Faro Rojo de Navidad</strong> y del <strong>Faro Verde de Curra</strong> durante la noche del suceso.<br>
+        4. Se expide el código de seguridad judicial preliminar para habilitación de terminal: <strong style="font-family:'Courier Prime'; color:#0284c7;">CARTAGENA-NITROX-77</strong>.
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL MAGISTRADO JUEZ<br>D. Santiago Meca Ballester<br>Juzgado Instrucción 3 Cartagena</div>
+      <div class="signature-box">LA LETRADA DE LA ADM. DE JUSTICIA<br>Dña. Fuensanta Garrido López<br>Diligencias Previas 204/2025</div>
+    </div>
+  </div>
+
+  <!-- HOJA 2: ATESTADO POLICIAL DE PATRICIA NORMAND -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">POLICÍA LOCAL</div>
+      <div class="official-header">
+        <div>
+          <div class="official-title">POLICÍA LOCAL DE CARTAGENA · GRUPO DE INVESTIGACIÓN</div>
+          <div style="font-size:9.5px; color:#475569;">CUARTEL DE SEGURIDAD CIUDADANA · SECCIÓN PLAYAS Y LITORAL</div>
+          <div style="font-size:8.5px; color:#64748b;">ATESTADO TÉCNICO-OCULAR Nº PL-412/2025 · INSTRUCTORA: AGENTE 1482</div>
+        </div>
+        <div class="case-number">
+          PL-412/2025<br>
+          06:45 HORAS
+        </div>
+      </div>
+
+      <h1 class="doc-title">DILIGENCIA DE INSPECCIÓN OCULAR Y HALLAZGO DE INDICIOS</h1>
+
+      <p class="legal-text">
+        <strong>INSTRUCTORA:</strong> Agente Patricia Normand, con número de carnet profesional 1482 de la Policía Local de Cartagena.<br>
+        <strong>FECHA Y HORA DE ACTUACIÓN:</strong> Sábado 18 de octubre de 2025, a las 06:45 horas.<br>
+        <strong>LUGAR:</strong> Playa y espigón de escollera de Cala Cortina, término municipal de Cartagena.
+      </p>
+
+      <p class="legal-text">
+        <strong>EXPOSICIÓN DE LOS HECHOS:</strong><br>
+        Que prestando servicio ordinario de patrulla de vigilancia del litoral en el vehículo radiopatrulla Z-14, esta instructora accede a Cala Cortina por la rampa tras atravesar el túnel rocoso de acceso. Encontrándose la playa desierta y con el mar en calma con ligera brisa de levante, se observa un comportamiento inusual y reiterado de <strong>«Paco»</strong>, gato feral macho adulto, pelaje blanco y naranja, ampliamente conocido por el vecindario y personal de los servicios municipales de limpieza que atiende las colonias de la ensenada.
+      </p>
+
+      <div class="info-box" style="background:#fff7ed; border-color:#f97316;">
+        <strong>ACTA DETALLADA DEL INTERVENCIÓN DEL FELINO «PACO»:</strong><br>
+        El felino se hallaba subido en el tramo medio del espigón sur, maullando intensamente hacia el agua y arañando entre dos grandes bloques de roca caliza. Al aproximarme para comprobar la causa de su excitación, observo que Paco retiene entre sus patas un objeto metálico cilíndrico de color negro mate provisto de mosquetón de titanio.<br>
+        Tras asegurar el animal, procedo a intervenir dicho efecto con guantes de nitrilo: se trata de una <strong>cápsula estanca subacuática de alta resistencia</strong> con cierre roscado de doble junta tórica (etiqueta #E-01). En las ranuras del mosquetón se aprecian adherencias de algas frescas, grasa de silicona de buceo y <strong>varios pelos finos bicolores (blancos y anaranjados)</strong> compatibles con el pelaje de Paco.
+      </div>
+
+      <p class="legal-text">
+        Siguiendo la dirección visual hacia la que miraba el animal hacia la rompiente inferior del rompeolas, a unos 3 metros de la orilla, se descubre flotando semisumergido entre las rocas el cuerpo inerte de un varón adulto equipado con traje de neopreno trilaminado negro, aletas técnicas y arnés de bibotella con las correas desgarradas. De inmediato se procedió a solicitar apoyo de la Unidad de Intervención Rápida (UIR), aviso a los servicios sanitarios del 061 (que certificaron la defunción) y activación del grupo GEAS de la Guardia Civil para la custodia del material sumergido.
+      </p>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">LA AGENTE INSTRUCTORA<br>Patricia Normand · Placa 1482<br>Policía Local de Cartagena</div>
+      <div class="signature-box">EL OFICIAL DE SERVICIO<br>Jefatura de Policía Local<br>Cartagena</div>
+    </div>
+  </div>
+
+  <!-- HOJA 3: INFORME MÉDICO-FORENSE Y AUTOPSIA -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">MÉDICO FORENSE</div>
+      <div class="official-header">
+        <div>
+          <div class="official-title">INSTITUTO DE MEDICINA LEGAL DE LA REGIÓN DE MURCIA</div>
+          <div style="font-size:9.5px; color:#475569;">SUBDIRECCIÓN TERRITORIAL DE CARTAGENA · PATOLOGÍA FORENSE</div>
+          <div style="font-size:8.5px; color:#64748b;">INFORME DE AUTOPSIA PRELIMINAR Nº 84/2025 · CADÁVER: AURELIO SAURA MENGUAL</div>
+        </div>
+        <div class="case-number">
+          IML-84/2025<br>
+          AUTOPSIA PRELIM.
+        </div>
+      </div>
+
+      <h1 class="doc-title">DICTAMEN MÉDICO-LEGAL TANATOLÓGICO Y TOXICOLÓGICO</h1>
+
+      <table class="data-table">
+        <tbody>
+          <tr>
+            <td style="width:25%;"><strong>Identificación</strong></td>
+            <td>D. Aurelio Saura Mengual · 49 años · Complexión atlética (81 kg, 1,78 m).</td>
+          </tr>
+          <tr>
+            <td><strong>Hora Estimada Muerte</strong></td>
+            <td>Entre las <strong>01:15 h y las 01:30 h</strong> del sábado 18 de octubre de 2025.</td>
+          </tr>
+          <tr>
+            <td><strong>Fenómenos Cadavéricos</strong></td>
+            <td>Rigidez incipiente en mandíbula y cuello. Livideces no modificables de tonalidad <strong>rojo cereza brillante intenso</strong> en cara, tronco anterior y lechos ungueales.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-box" style="border-left: 4px solid #dc2626;">
+        <strong>1. CONCLUSIÓN TOXICOLÓGICA CRUCIAL (GAS RESIDUAL Y SANGRE):</strong><br>
+        El análisis espectrofotométrico urgente de sangre femoral arroja una saturación de <strong>Carboxihemoglobina (CO-Hb) del 58%</strong>. Una concentración superior al 50% es letal en cuestión de minutos, causando cefalea explosiva, colapso neuromuscular, pérdida de conciencia y muerte por hipoxia anóxica cerebral.<br>
+        <em>Dictamen forense:</em> Dicha intoxicación no pudo generarse de forma natural en el medio marino. Proviene de la inhalación directa de gases de combustión adulterados en la mezcla del bibotella de buceo durante el descenso.
+      </div>
+
+      <div class="info-box">
+        <strong>2. EXAMEN TRAUMATOLÓGICO EXTERNO E INTERNO:</strong><br>
+        • En región occipital izquierda se aprecia herida contusa lineal de 5,5 cm con infiltración hemorrágica vital en galea aponeurótica y fractura lineal subyacente. Producida en vida (perimortem) por impacto con objeto metálico romo cilíndrico de alta resistencia.<br>
+        • Ausencia de hongo de espuma traqueobronquial masivo característico de sumersión agónica: los pulmones presentaban escaso enfisema acuoso. El sujeto entró en parada antes de una aspiración masiva de agua marina.
+      </div>
+
+      <p class="legal-text">
+        <strong>3. CONTENIDO GÁSTRICO Y DIGESTIÓN:</strong><br>
+        El estómago contiene 340 gramos de alimento semidigerido (arroz con pescado de roca / caldero y pimientos). De acuerdo con la cronología de vaciado gástrico y habiendo acreditado la comanda del Club de Regatas de Cartagena que la víctima finalizó la cena a las 22:15 h, la digestión se paralizó de forma brusca a las 3 horas de la ingesta (01:15 h - 01:30 h).
+      </p>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL MÉDICO FORENSE<br>Dr. Rafael Peñalver Martínez<br>Col. Médico 30/04128 · IML Cartagena</div>
+      <div class="signature-box">LA DIRECTORA DEL INSTITUTO<br>Dra. Mercedes Carrillo Gómez<br>Patología Forense Murcia</div>
+    </div>
+  </div>
+
+  <!-- HOJA 4: CARTA NÁUTICA DE LA BOCANA Y FAROS -->
+  <div class="sheet">
+    <div>
+      <div class="stamp-confidential">CARTA NÁUTICA</div>
+      <div class="official-header">
+        <div>
+          <div class="official-title">INSTITUTO HIDROGRÁFICO DE LA MARINA · COMISIÓN PERICIAL</div>
+          <div style="font-size:9.5px; color:#475569;">CARTA NÁUTICA ESPECIAL BAHÍA Y PUERTO DE CARTAGENA · ESCALA 1:10.000</div>
+          <div style="font-size:8.5px; color:#64748b;">ANEXO TÉCNICO I · ENFILACIÓN FARO ROJO (NAVIDAD) Y FARO VERDE (CURRA)</div>
+        </div>
+        <div class="case-number">
+          IHM-CART-2025<br>
+          ENFILACIÓN BOCANA
+        </div>
+      </div>
+
+      <h1 class="doc-title">CROQUIS PERICIAL DE LA BOCANA Y SITUACIÓN DE PUNTOS CLAVE</h1>
+
+      <!-- ESQUEMA SVG ELEGANTE Y TÉCNICO -->
+      <div style="text-align:center; margin:10px 0; border:1.5px solid #0f172a; background:#f0fdf4; padding:8px; border-radius:4px;">
+        <svg viewBox="0 0 700 360" width="100%" height="240" style="font-family:'Inter', sans-serif;">
+          <!-- Fondo marino y tierra -->
+          <rect x="0" y="0" width="700" height="360" fill="#e0f2fe" />
+          
+          <!-- Costa Oeste (Navidad) -->
+          <path d="M 0,0 L 220,0 L 220,120 L 160,200 L 210,250 L 170,360 L 0,360 Z" fill="#fef3c7" stroke="#b45309" stroke-width="2" />
+          <text x="30" y="80" font-size="12" font-weight="bold" fill="#78350f">COSTA OESTE (ALGAMECA / NAVIDAD)</text>
+          
+          <!-- Dique de Navidad y Faro Rojo -->
+          <line x1="160" y1="200" x2="250" y2="180" stroke="#475569" stroke-width="8" stroke-linecap="round" />
+          <circle cx="250" cy="180" r="9" fill="#ef4444" stroke="#991b1b" stroke-width="2" />
+          <text x="265" y="175" font-size="10.5" font-weight="bold" fill="#b91c1c">FARO ROJO (NAVIDAD)</text>
+          <text x="265" y="190" font-size="8.5" fill="#475569">Fl(3)R 10s · Cámara Óptica Activa</text>
+
+          <!-- Costa Este (Curra y Cala Cortina) -->
+          <path d="M 480,0 L 700,0 L 700,360 L 460,360 L 490,260 L 520,200 L 460,110 L 480,0 Z" fill="#fef3c7" stroke="#b45309" stroke-width="2" />
+          <text x="540" y="60" font-size="12" font-weight="bold" fill="#78350f">SANTA LUCÍA / CALA CORTINA</text>
+
+          <!-- Ensenada Cala Cortina -->
+          <path d="M 520,200 Q 580,210 560,260 Q 520,280 490,260 Z" fill="#bae6fd" stroke="#0284c7" stroke-width="2" />
+          <text x="545" y="235" font-size="10" font-weight="bold" fill="#0369a1">CALA CORTINA</text>
+          <circle cx="530" cy="245" r="5" fill="#f97316" stroke="#c2410c" stroke-width="1.5" />
+          <text x="540" y="258" font-size="8.5" font-weight="bold" fill="#c2410c">HALLAZGO PACO EL GATO (E-01)</text>
+
+          <!-- Dique de Curra y Faro Verde -->
+          <path d="M 480,110 L 360,190" stroke="#334155" stroke-width="12" stroke-linecap="round" />
+          <circle cx="360" cy="190" r="9" fill="#22c55e" stroke="#15803d" stroke-width="2" />
+          <text x="250" y="215" font-size="10.5" font-weight="bold" fill="#15803d">FARO VERDE (CURRA)</text>
+          <text x="250" y="228" font-size="8.5" fill="#475569">GpD(2)V 6s · Cámara Térmica Desconectada 01:10 - 01:52</text>
+
+          <!-- Línea de enfilación y Pecio -->
+          <line x1="250" y1="180" x2="360" y2="190" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,4" />
+          <text x="270" y="150" font-size="8.5" fill="#dc2626" font-weight="bold">CANAL DE LA BOCANA (PROF. 28-35 m)</text>
+          
+          <polygon points="305,178 315,188 295,188" fill="#d97706" stroke="#92400e" stroke-width="1" />
+          <text x="260" y="135" font-size="9" font-weight="bold" fill="#92400e">PECIO PÚNICO-ROMANO CURRA-II</text>
+        </svg>
+      </div>
+
+      <div class="info-box">
+        <strong>REGISTRO TÉCNICO DE CAPITANÍA MARÍTIMA:</strong><br>
+        La enfilación recta entre la baliza del Faro de Navidad y el extremo del Dique de Curra delimita con exactitud el pasillo de tránsito obligatorio para buques comerciales y de la Armada. En ese punto central exacto (-37.5852º N, -0.9821º W) se localiza la cuadrícula de prospección del pecio arqueológico donde buceaba el finado.
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-box">EL CAPITÁN MARÍTIMO<br>Capitanía Marítima de Cartagena</div>
+      <div class="signature-box">LA POLICÍA JUDICIAL LOCAL<br>Patricia Normand · Placa 1482</div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.type === 'VESTIGO_ZOOM') {
+        var zoom = e.data.zoom || 1.0;
+        if (typeof document.body.style.zoom !== 'undefined') {
+          document.body.style.zoom = zoom;
+        } else {
+          document.body.style.transform = zoom === 1.0 ? 'none' : 'scale(' + zoom + ')';
+          document.body.style.transformOrigin = 'top center';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

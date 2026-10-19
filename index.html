@@ -1112,6 +1112,43 @@
           <span class="vg-search-item-badge" style="background:#f43f5e; color:#fff;">SOSPECHOSO</span>
           <span>Brais Lema Castro (Ingeniero naval y dueño de astillero)</span>
         </div>
+        <!-- CASO 04 CARTAGENA -->
+        <div class="vg-search-item" onclick="selectSearchResult('cartagena_briefing')">
+          <span class="vg-search-item-badge" style="background:#00e5ff; color:#000;">C04 BRIEFING</span>
+          <span>Vídeo Briefing: Los Dos Faros de Cartagena (Agente Patricia Normand)</span>
+        </div>
+        <div class="vg-search-item" onclick="selectSearchResult('cartagena_terminal')">
+          <span class="vg-search-item-badge" style="background:#0284c7; color:#fff;">SITRA-CARTAGENA</span>
+          <span>Terminal Policial Cartagena (Faros Navidad/Curra, Radar Bocana, Paco)</span>
+        </div>
+        <div class="vg-search-item" onclick="selectSearchResult('cartagena_sobre_a')">
+          <span class="vg-search-item-badge" style="background:#0284c7; color:#fff;">C04 SOBRE A</span>
+          <span>Sobre A: Atestado Patricia Normand, Hallazgo en Cala Cortina y Autopsia</span>
+        </div>
+        <div class="vg-search-item" onclick="selectSearchResult('cartagena_sobre_b')">
+          <span class="vg-search-item-badge" style="background:#ca8a04; color:#000;">C04 SOBRE B</span>
+          <span>Sobre B: Interrogatorios, Telemetría Faros y Hallazgo de Paco el Gato</span>
+        </div>
+        <div class="vg-search-item" onclick="selectSearchResult('cartagena_sobre_c')">
+          <span class="vg-search-item-badge" style="background:#dc2626; color:#fff;">C04 SOBRE C</span>
+          <span>Sobre C: Convicción Final, Microcápsula y Dictamen SECRIM</span>
+        </div>
+        <div class="vg-search-item" onclick="selectSearchResult('cartagena_patricia')">
+          <span class="vg-search-item-badge" style="background:#00e5ff; color:#000;">INSTRUCTORA</span>
+          <span>Agente Patricia Normand (Policía Local de Cartagena · Placa 1482)</span>
+        </div>
+        <div class="vg-search-item" onclick="selectSearchResult('cartagena_paco')">
+          <span class="vg-search-item-badge" style="background:#f97316; color:#fff;">CENTINELA</span>
+          <span>Paco el Gato (Cala Cortina · Descubridor Evidencia E-01)</span>
+        </div>
+        <div class="vg-search-item" onclick="selectSearchResult('cartagena_suspect_victor')">
+          <span class="vg-search-item-badge" style="background:#ef4444; color:#fff;">INVESTIGADO</span>
+          <span>Víctor Huesca Vidal (Instructor Bocana Dive en Cala Cortina)</span>
+        </div>
+        <div class="vg-search-item" onclick="selectSearchResult('cartagena_suspect_claudia')">
+          <span class="vg-search-item-badge" style="background:#f59e0b; color:#000;">INVESTIGADA</span>
+          <span>Claudia Vicedo Cánovas (Controladora de Faros del Puerto)</span>
+        </div>
         <div class="vg-search-item" onclick="selectSearchResult('notes')">
           <span class="vg-search-item-badge" style="background:#8b5cf6; color:#fff;">NOTAS</span>
           <span>Cuaderno de Campo del Investigador (Bloc de Notas Dual)</span>
@@ -1246,6 +1283,47 @@
               </div>
 
               <button class="btn-enter-case" onclick="openCase('arousa')">
+                <span>ABRIR EXPEDIENTE</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CASO 04: DISPONIBLE (CARTAGENA) -->
+        <div class="case-card">
+          <div class="case-card-header" style="background: linear-gradient(180deg, rgba(3,7,18,0.2) 0%, rgba(3,7,18,0.95) 100%), url('casos/caso-04-cartagena/imagenes/escena_cala_cortina.png') center/cover no-repeat;">
+            <div class="case-header-tags">
+              <span class="case-badge" style="background:#00e5ff; color:#000;">CASO 04 · DISPONIBLE</span>
+              <span class="case-badge" style="background:#0284c7; color:#fff;">DIFICULTAD MEDIA-ALTA</span>
+            </div>
+          </div>
+          <div class="case-body">
+            <div>
+              <div class="case-number">DILIGENCIAS PREVIAS Nº 204/2025</div>
+              <h2 class="case-title">El Enigma de los Dos Faros</h2>
+              <p class="case-summary">
+                Cartagena, Cala Cortina. La agente de la Policía Local Patricia Normand descubre el cadáver de un arqueólogo del ARQVA con equipo de buceo técnico gracias a Paco, el gato de la cala. La víctima investigaba un pecio expoliado entre el Faro Rojo de Navidad y el Faro Verde de Curra, cuya cámara térmica fue saboteada.
+              </p>
+            </div>
+
+            <div>
+              <div class="case-specs">
+                <div class="spec-item">
+                  <span class="spec-label">JUGADORES</span>
+                  <span class="spec-val">1 - 2</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">DURACIÓN</span>
+                  <span class="spec-val">2 - 3 H</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">MATERIAL</span>
+                  <span class="spec-val">6 DOCS / WEB</span>
+                </div>
+              </div>
+
+              <button class="btn-enter-case" onclick="openCase('cartagena')">
                 <span>ABRIR EXPEDIENTE</span>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
               </button>
@@ -2264,6 +2342,180 @@
             desc: 'CCTV perimetral del astillero y rampa de varada registrados durante la noche del temporal.'
           }
         ]
+      },
+      cartagena: {
+        id: 'cartagena',
+        miniNum: 'D.P. 204/2025',
+        miniTitle: 'Dos Faros (Cartagena)',
+        metaTitle: 'El Enigma de los Dos Faros: Sombra en Cala Cortina',
+        metaCourt: 'DILIGENCIAS PREVIAS Nº 204/2025 · JUZGADO DE INSTRUCCIÓN Nº 3 DE CARTAGENA',
+        crumbTitle: 'Caso 04 · Cartagena',
+        badgesHtml: `
+          <span class="case-badge" style="background:var(--evidence-red); color:#fff;">HOMICIDIO</span>
+          <span class="case-badge" style="background:#0284c7; color:#fff;">POLICÍA LOCAL CARTAGENA</span>
+          <span class="case-badge" style="background:#00e5ff; color:#000;">ARQUEOLOGÍA SUBACUÁTICA</span>
+        `,
+        briefingUrl: 'casos/caso-04-cartagena/video-briefing/index.html',
+        terminalUrl: 'casos/caso-04-cartagena/terminal-policial/index.html',
+        sidecarDocUrl: 'casos/caso-04-cartagena/documentos-imprimibles/sobre_a.html',
+        sidecarDocTitle: 'ATESTADO CALA CORTINA (SOBRE A)',
+        dossiers: [
+          {
+            cardStyle: 'border-color:#facc15; background: #172033; grid-column: 1 / -1;',
+            badgeStyle: 'background:#facc15; color:#000;',
+            badgeText: 'LEER PRIMERO — PROTOCOLO POLICIAL',
+            title: 'Manual de Instrucciones del Investigador (4 páginas)',
+            titleStyle: 'color:#fde047;',
+            desc: 'Protocolo de la Policía Local de Cartagena, balizamiento de los Faros de Navidad y Curra, rol de la Agente Patricia Normand y decálogo del caso.',
+            htmlUrl: 'casos/caso-04-cartagena/documentos-imprimibles/instrucciones_juego.html',
+            pdfUrl: 'casos/caso-04-cartagena/documentos-imprimibles/INSTRUCCIONES_DE_JUEGO.pdf',
+            readerTitle: 'Manual de Instrucciones del Investigador',
+            readerBadge: 'PROTOCOLO POLICIAL',
+            btnHtmlStyle: 'border-color: rgba(250, 204, 21, 0.4); color: #fde047; background: rgba(250, 204, 21, 0.12);'
+          },
+          {
+            cardStyle: '',
+            badgeStyle: 'background:#0284c7; color:#fff;',
+            badgeText: 'SOBRE A — ABIERTO DE INICIO',
+            title: 'Pieza Principal: Hallazgo en Cala Cortina y Autopsia',
+            titleStyle: '',
+            desc: 'Auto judicial, atestado policial de Patricia Normand con intervención de Paco el Gato, autopsia con carboxihemoglobina y plano de los faros.',
+            htmlUrl: 'casos/caso-04-cartagena/documentos-imprimibles/sobre_a.html',
+            pdfUrl: 'casos/caso-04-cartagena/documentos-imprimibles/SOBRE_A_PIEZA_PRINCIPAL.pdf',
+            readerTitle: 'Sobre A: Hallazgo en Cala Cortina y Autopsia',
+            readerBadge: 'SOBRE A - INICIAL',
+            btnHtmlStyle: ''
+          },
+          {
+            cardStyle: '',
+            badgeStyle: 'background:#ca8a04; color:#000;',
+            badgeText: 'SOBRE B — PRECINTADO',
+            title: 'Pieza I: Interrogatorios y Telemetría de los Faros',
+            titleStyle: '',
+            desc: 'Interrogatorios a los 4 sospechosos, apagón telemático de 42 minutos del Faro Verde de Curra y dictamen de la cápsula rescatada por Paco.',
+            htmlUrl: 'casos/caso-04-cartagena/documentos-imprimibles/sobre_b.html',
+            pdfUrl: 'casos/caso-04-cartagena/documentos-imprimibles/SOBRE_B_PIEZA_SEPARADA_1.pdf',
+            readerTitle: 'Sobre B: Interrogatorios y Telemetría de Faros',
+            readerBadge: 'SOBRE B - PRECINTADO',
+            btnHtmlStyle: ''
+          },
+          {
+            cardStyle: '',
+            badgeStyle: 'background:#dc2626; color:#fff;',
+            badgeText: 'SOBRE C — PRECINTADO',
+            title: 'Pieza II: Convicción Final y Volcado de Vídeo',
+            titleStyle: '',
+            desc: 'Dictamen SECRIM del compresor adulterado con CO, volcado del archivo GOPR0042.MP4 y auto judicial definitivo de prisión.',
+            htmlUrl: 'casos/caso-04-cartagena/documentos-imprimibles/sobre_c.html',
+            pdfUrl: 'casos/caso-04-cartagena/documentos-imprimibles/SOBRE_C_PIEZA_CONVICCION.pdf',
+            readerTitle: 'Sobre C: Convicción Final y SECRIM',
+            readerBadge: 'SOBRE C - SECRETO',
+            btnHtmlStyle: ''
+          },
+          {
+            cardStyle: '',
+            badgeStyle: 'background:#8b5cf6; color:#fff;',
+            badgeText: 'EXTRAS DISPONIBLES DESDE EL INICIO',
+            title: 'Fichas Policiales y Portada de La Verdad',
+            titleStyle: '',
+            desc: 'Fichas con huellas de Patricia Normand, Paco el Gato, Aurelio Saura y los investigados, más portada especial del diario La Verdad de Murcia.',
+            htmlUrl: 'casos/caso-04-cartagena/documentos-imprimibles/extras_inmersion.html',
+            pdfUrl: 'casos/caso-04-cartagena/documentos-imprimibles/EXTRAS_INMERSION.pdf',
+            readerTitle: 'Fichas Policiales y Hemeroteca Cartagena',
+            readerBadge: 'EXTRAS INMERSIÓN',
+            btnHtmlStyle: ''
+          },
+          {
+            cardStyle: '',
+            badgeStyle: 'background:#06b6d4; color:#000;',
+            badgeText: 'PIEZA ANEXA CIENTÍFICA',
+            title: 'Dossier Arqueológico ARQVA y Balizamiento',
+            titleStyle: '',
+            desc: 'Memoria de prospección del pecio púnico-romano Curra-II, batimetría de la bocana y normativa EN 12021 de gases de buceo.',
+            htmlUrl: 'casos/caso-04-cartagena/documentos-imprimibles/dossier_arqva_y_forense.html',
+            pdfUrl: 'casos/caso-04-cartagena/documentos-imprimibles/DOSSIER_ARQVA_Y_FORENSE.pdf',
+            readerTitle: 'Dossier Científico ARQVA y Faros',
+            readerBadge: 'PIEZA ANEXA',
+            btnHtmlStyle: ''
+          }
+        ],
+        suspects: [
+          {
+            img: 'casos/caso-04-cartagena/imagenes/patricia_normand.png',
+            name: 'Patricia Normand · Placa 1482',
+            role: 'INSTRUCTORA (31 AÑOS) · AGENTE POLICÍA LOCAL CARTAGENA',
+            shortRole: 'INSTRUCTORA · POLICÍA LOCAL',
+            desc: 'Instructora de la Policía Local de Cartagena. Pelo liso muy largo y negro azabache, ojos con heterocromía central (marrón avellana junto a pupila y verde exterior).'
+          },
+          {
+            img: 'casos/caso-04-cartagena/imagenes/paco_el_gato.png',
+            name: 'Paco «El Centinela de Cala Cortina»',
+            role: 'TESTIGO FELINO · COLONIA COSTERA CALA CORTINA',
+            shortRole: 'CENTINELA · PACO EL GATO',
+            desc: 'Gato blanco y naranja residente en Cala Cortina. Descubrió la cápsula estanca sumergible con la tarjeta de memoria en el espigón rocoso.'
+          },
+          {
+            img: 'casos/caso-04-cartagena/imagenes/aurelio_saura.png',
+            name: 'Aurelio Saura Mengual',
+            role: 'VÍCTIMA (49 AÑOS) · ARQUEÓLOGO SUBACUÁTICO ARQVA',
+            shortRole: 'VÍCTIMA · ARQUEÓLOGO ARQVA',
+            desc: 'Víctima (49 años) · Arqueólogo marino del ARQVA. Investigaba el pecio Curra-II entre el Faro de Navidad y el Faro de Curra.'
+          },
+          {
+            img: 'casos/caso-04-cartagena/imagenes/victor_huesca.png',
+            name: 'Víctor Huesca Vidal',
+            role: 'INVESTIGADO (34 AÑOS) · INSTRUCTOR BUCEO «BOCANA DIVE»',
+            shortRole: 'INSTRUCTOR · BOCANA DIVE',
+            desc: 'Investigado (34 años) · Instructor y gerente del centro de buceo de Cala Cortina. Propietario de la estación de carga de botellas.'
+          },
+          {
+            img: 'casos/caso-04-cartagena/imagenes/claudia_vicedo.png',
+            name: 'Claudia Vicedo Cánovas',
+            role: 'INVESTIGADA (46 AÑOS) · JEFA DE SEÑALES MARÍTIMAS PUERTO',
+            shortRole: 'SEÑALES · PUERTO CARTAGENA',
+            desc: 'Investigada (46 años) · Responsable del control telemático de las cámaras y balizas del Faro de Navidad y Faro de Curra.'
+          },
+          {
+            img: 'casos/caso-04-cartagena/imagenes/bernardo_conesa.png',
+            name: 'Bernardo «El Ruso» Conesa',
+            role: 'INVESTIGADO (51 AÑOS) · PATRÓN DE PESCA SANTA LUCÍA',
+            shortRole: 'PATRÓN · SANTA LUCÍA',
+            desc: 'Investigado (51 años) · Armador del pesquero «Nuevo Espalmador». Mantenía disputas por zonas de exclusión en la bocana.'
+          },
+          {
+            img: 'casos/caso-04-cartagena/imagenes/marina_belmonte.png',
+            name: 'Dra. Marina Belmonte Alarcón',
+            role: 'INVESTIGADA (43 AÑOS) · VICEDIRECTORA CIENTÍFICA ARQVA',
+            shortRole: 'VICEDIRECTORA · ARQVA',
+            desc: 'Investigada (43 años) · Vicedirectora de ARQVA y compañera de Aurelio Saura. Discrepancias sobre la titularidad del pecio Curra-II.'
+          }
+        ],
+        scenes: [
+          {
+            img: 'casos/caso-04-cartagena/imagenes/faro_rojo_navidad.png',
+            name: 'Faro Rojo de Navidad',
+            role: 'BALIZA BABOR BOCANA',
+            desc: 'Faro histórico en el Dique de Navidad. Su cámara óptica registró el paso de la lancha sospechosa a las 01:20 h.'
+          },
+          {
+            img: 'casos/caso-04-cartagena/imagenes/faro_verde_curra.png',
+            name: 'Faro Verde de Curra',
+            role: 'BALIZA ESTRIBOR BOCANA',
+            desc: 'Faro en el extremo del gran Dique de Curra. Su cámara térmica sufrió un corte intencionado de 42 minutos durante el crimen.'
+          },
+          {
+            img: 'casos/caso-04-cartagena/imagenes/escena_cala_cortina.png',
+            name: 'Espigón y Playa de Cala Cortina',
+            role: 'ESCENA DE HALLAZGO',
+            desc: 'Ensenada de Cala Cortina acordonada por la Policía Local de Cartagena donde yacía el cuerpo de Aurelio Saura.'
+          },
+          {
+            img: 'casos/caso-04-cartagena/imagenes/evidencia_capsula_paco.png',
+            name: 'Cápsula Sumergible de Paco (#E-01)',
+            role: 'PRUEBA REINA RESCATADA',
+            desc: 'Cápsula de titanio extraída por el gato Paco de entre las rocas con pelos felinos y la tarjeta de memoria con el vídeo del homicida.'
+          }
+        ]
       }
     };
 
@@ -2505,7 +2757,15 @@
       'casos/caso-02-arousa/documentos-imprimibles/sobre_b.html': 'casos/caso-02-arousa/documentos-imprimibles/SOBRE_B_PIEZA_SEPARADA_1.pdf',
       'casos/caso-02-arousa/documentos-imprimibles/sobre_c.html': 'casos/caso-02-arousa/documentos-imprimibles/SOBRE_C_PIEZA_CONVICCION.pdf',
       'casos/caso-02-arousa/documentos-imprimibles/extras_inmersion.html': 'casos/caso-02-arousa/documentos-imprimibles/EXTRAS_INMERSION.pdf',
-      'casos/caso-02-arousa/documentos-imprimibles/dossier_confradia_y_forense.html': 'casos/caso-02-arousa/documentos-imprimibles/DOSSIER_CONFRADIA_Y_FORENSE.pdf'
+      'casos/caso-02-arousa/documentos-imprimibles/dossier_confradia_y_forense.html': 'casos/caso-02-arousa/documentos-imprimibles/DOSSIER_CONFRADIA_Y_FORENSE.pdf',
+
+      // Caso 04 - Cartagena
+      'casos/caso-04-cartagena/documentos-imprimibles/instrucciones_juego.html': 'casos/caso-04-cartagena/documentos-imprimibles/INSTRUCCIONES_DE_JUEGO.pdf',
+      'casos/caso-04-cartagena/documentos-imprimibles/sobre_a.html': 'casos/caso-04-cartagena/documentos-imprimibles/SOBRE_A_PIEZA_PRINCIPAL.pdf',
+      'casos/caso-04-cartagena/documentos-imprimibles/sobre_b.html': 'casos/caso-04-cartagena/documentos-imprimibles/SOBRE_B_PIEZA_SEPARADA_1.pdf',
+      'casos/caso-04-cartagena/documentos-imprimibles/sobre_c.html': 'casos/caso-04-cartagena/documentos-imprimibles/SOBRE_C_PIEZA_CONVICCION.pdf',
+      'casos/caso-04-cartagena/documentos-imprimibles/extras_inmersion.html': 'casos/caso-04-cartagena/documentos-imprimibles/EXTRAS_INMERSION.pdf',
+      'casos/caso-04-cartagena/documentos-imprimibles/dossier_arqva_y_forense.html': 'casos/caso-04-cartagena/documentos-imprimibles/DOSSIER_ARQVA_Y_FORENSE.pdf'
     };
 
     function getDocPdfUrl(docUrl) {
@@ -2702,6 +2962,33 @@
         searchPop.style.display = 'none';
       }
       if (searchInput) searchInput.value = '';
+      if (type.startsWith('cartagena_')) {
+        openCase('cartagena');
+        if (type === 'cartagena_briefing') {
+          switchCaseTab('briefing');
+        } else if (type === 'cartagena_terminal') {
+          switchCaseTab('terminal');
+        } else if (type === 'cartagena_sobre_a') {
+          openDocReader('casos/caso-04-cartagena/documentos-imprimibles/sobre_a.html', 'Sobre A: Hallazgo en Cala Cortina y Autopsia', 'SOBRE A');
+        } else if (type === 'cartagena_sobre_b') {
+          openDocReader('casos/caso-04-cartagena/documentos-imprimibles/sobre_b.html', 'Sobre B: Interrogatorios y Telemetría Faros', 'SOBRE B');
+        } else if (type === 'cartagena_sobre_c') {
+          openDocReader('casos/caso-04-cartagena/documentos-imprimibles/sobre_c.html', 'Sobre C: Convicción Final y SECRIM', 'SOBRE C');
+        } else if (type === 'cartagena_patricia') {
+          switchCaseTab('evidencias');
+          openPhotoModal('casos/caso-04-cartagena/imagenes/patricia_normand.png', 'Patricia Normand · Placa 1482', 'Instructora (31 años) · Agente de la Policía Local de Cartagena · Unidad de Playas y Litoral');
+        } else if (type === 'cartagena_paco') {
+          switchCaseTab('evidencias');
+          openPhotoModal('casos/caso-04-cartagena/imagenes/paco_el_gato.png', 'Paco «El Centinela de Cala Cortina»', 'Testigo felino · Gato de la colonia costera de Cala Cortina · Descubridor de la evidencia #E-01');
+        } else if (type === 'cartagena_suspect_victor') {
+          switchCaseTab('evidencias');
+          openPhotoModal('casos/caso-04-cartagena/imagenes/victor_huesca.png', 'Víctor Huesca Vidal', 'Investigado (34 años) · Instructor y titular del centro de buceo Bocana Dive en Cala Cortina');
+        } else if (type === 'cartagena_suspect_claudia') {
+          switchCaseTab('evidencias');
+          openPhotoModal('casos/caso-04-cartagena/imagenes/claudia_vicedo.png', 'Claudia Vicedo Cánovas', 'Investigada (46 años) · Jefa de turno de señales marítimas de la Autoridad Portuaria de Cartagena');
+        }
+        return;
+      }
 
       if (type.startsWith('arousa_')) {
         openCase('arousa');

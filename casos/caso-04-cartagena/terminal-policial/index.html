@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VESTIGO | Terminal Policial Judicial - Sumario 204/2025 Cartagena</title>
+  <link rel="icon" type="image/svg+xml" href="../../../branding/vestigo_icon.svg">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Inter:wght@300;400;600;800&family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #070b12;
+      --panel-bg: #0d1522;
+      --panel-border: #1e293b;
+      --accent-cyan: #00e5ff;
+      --accent-green: #22c55e;
+      --accent-red: #ef4444;
+      --accent-amber: #f59e0b;
+      --text-main: #e2e8f0;
+      --text-muted: #64748b;
+      --font-mono: 'Fira Code', monospace;
+      --font-sans: 'Inter', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(rgba(0, 229, 255, 0.04) 1px, transparent 0),
+        linear-gradient(to bottom, rgba(7, 11, 18, 0.8), rgba(7, 11, 18, 0.98));
+      background-size: 24px 24px, 100% 100%;
+    }
+    header {
+      background-color: #05080f;
+      border-bottom: 1px solid var(--panel-border);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .badge-wrap { display: flex; align-items: center; gap: 12px; }
+    .coat-arms {
+      width: 40px;
+      height: 40px;
+      background: #0f172a;
+      border: 1px solid var(--accent-cyan);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: var(--accent-cyan);
+      font-weight: 800;
+      font-family: var(--font-mono);
+      letter-spacing: 0.5px;
+    }
+    .title-area h1 {
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      font-weight: 700;
+    }
+    .title-area p {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+    .terminal-status {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent-green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-green);
+      display: inline-block;
+      margin-right: 6px;
+    }
+    nav.nav-tabs {
+      display: flex;
+      background: #090e18;
+      border-bottom: 1px solid var(--panel-border);
+      padding: 0 20px;
+      gap: 4px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 12px 18px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.02); }
+    .tab-btn.active {
+      color: var(--accent-cyan);
+      border-bottom-color: var(--accent-cyan);
+      background: rgba(0, 229, 255, 0.05);
+    }
+    main {
+      flex: 1;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .view-panel { display: none; }
+    .view-panel.active { display: block; }
+    .card {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      padding: 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .card-title {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 8px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+    .badge-ok { background: rgba(34, 197, 94, 0.15); color: var(--accent-green); border: 1px solid var(--accent-green); }
+    .badge-alert { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); border: 1px solid var(--accent-red); }
+    .badge-warn { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); border: 1px solid var(--accent-amber); }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      margin-top: 10px;
+    }
+    table.data-table th, table.data-table td {
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 8px 10px;
+      text-align: left;
+    }
+    table.data-table th {
+      background: #111a2c;
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+    table.data-table tr:hover { background: rgba(255,255,255,0.02); }
+    .audio-player-box {
+      background: #080d16;
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .btn-audio {
+      background: var(--accent-cyan);
+      color: #000;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-audio:hover { background: #38bdf8; box-shadow: 0 0 14px rgba(0,229,255,0.4); }
+    .validador-form {
+      display: flex;
+      gap: 12px;
+      margin: 15px 0;
+    }
+    .code-input {
+      flex: 1;
+      background: #05080f;
+      border: 1.5px solid #334155;
+      padding: 12px 16px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: #00e5ff;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .code-input:focus { outline: none; border-color: var(--accent-cyan); box-shadow: 0 0 10px rgba(0,229,255,0.25); }
+    .btn-submit {
+      background: var(--accent-cyan);
+      color: #000;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 12px;
+      border: none;
+      padding: 0 24px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .result-box {
+      display: none;
+      padding: 14px 18px;
+      border-radius: 6px;
+      margin-top: 15px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    @media (max-width: 768px) {
+      header { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .terminal-status { width: 100%; justify-content: space-between; }
+      .validador-form { flex-direction: column; }
+      .btn-submit { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge-wrap">
+      <div class="coat-arms">PL-CT</div>
+      <div class="title-area">
+        <h1>SITRA-JUD CARTAGENA // SEGURIDAD CIUDADANA Y PUERTO</h1>
+        <p>AGENTE INSTRUCTORA: PATRICIA NORMAND · PLACA 1482 · D.P. 204/2025</p>
+      </div>
+    </div>
+    <div class="terminal-status">
+      <div><span class="status-dot"></span>NODO BOCANA ACTIVO</div>
+      <div style="color:var(--text-muted); font-size:10px;">ENLACE: CIS-CARTAGENA-VPN</div>
+    </div>
+  </header>
+
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTerminalTab('faros')">
+      TELEMETRÍA FAROS
+    </button>
+    <button class="tab-btn" onclick="switchTerminalTab('radar')">
+      RADAR &amp; LPR PUERTO
+    </button>
+    <button class="tab-btn" onclick="switchTerminalTab('mapa')">
+      CARTA NÁUTICA SIG
+    </button>
+    <button class="tab-btn" onclick="switchTerminalTab('audio')">
+      RADIO VHF / 112
+    </button>
+    <button class="tab-btn" onclick="switchTerminalTab('validador')">
+      VALIDADOR JUDICIAL
+    </button>
+    <button class="tab-btn" onclick="switchTerminalTab('ayuda')">
+      MESA DE PISTAS
+    </button>
+  </nav>
+
+  <main>
+
+    <!-- PANEL 1: TELEMETRÍA DE FAROS -->
+    <section id="panel-faros" class="view-panel active">
+      <div class="card">
+        <div class="card-title">
+          <span>MONITORIZACIÓN DE SEÑALES MARÍTIMAS // FARO ROJO (NAVIDAD) Y FARO VERDE (CURRA)</span>
+          <span class="badge badge-alert">ANOMALÍA DETECTADA EN DIQUE DE CURRA</span>
+        </div>
+        <p style="font-size:11.5px; color:var(--text-muted); margin-bottom:12px;">
+          Registro telemático de las balizas luminosas y cámaras optrónicas de la Bocana de Cartagena durante la madrugada del 18 de octubre de 2025:
+        </p>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Hora (UTC+2)</th>
+              <th>Baliza / Farola</th>
+              <th>Sistema Optrónico</th>
+              <th>Operador en Consola</th>
+              <th>Incidencia / Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>00:00 - 06:00 h</td>
+              <td><strong>Faro Rojo de Navidad</strong> (Babor)</td>
+              <td>Cámara Óptica CCD HD</td>
+              <td>Sistema Automático</td>
+              <td><span class="badge badge-ok">100% OPERATIVO</span> · Tráfico fluido en dársena comercial.</td>
+            </tr>
+            <tr>
+              <td>01:20:15 h</td>
+              <td>Faro Rojo de Navidad</td>
+              <td>Cámara Óptica CCD HD</td>
+              <td>Sistema Automático</td>
+              <td><span class="badge badge-warn">DETECCIÓN SILUETA</span> · Lancha neumática negra sin luces a 12 nudos hacia Cala Cortina.</td>
+            </tr>
+            <tr style="background:rgba(239, 68, 68, 0.08);">
+              <td><strong>01:10:14 h</strong></td>
+              <td><strong>Faro Verde de Curra</strong> (Estribor)</td>
+              <td>Cámara Térmica FLIR 360º</td>
+              <td><strong>CVICEDO (Consola IP .12)</strong></td>
+              <td><span class="badge badge-alert">DESCONEXIÓN MANUAL FORZADA</span> · Orden «Mantenimiento no programado».</td>
+            </tr>
+            <tr style="background:rgba(239, 68, 68, 0.08);">
+              <td><strong>01:52:30 h</strong></td>
+              <td><strong>Faro Verde de Curra</strong></td>
+              <td>Cámara Térmica FLIR 360º</td>
+              <td><strong>CVICEDO (Consola IP .12)</strong></td>
+              <td><span class="badge badge-ok">RESTAURACIÓN SEÑAL</span> · Apagón total de 42 minutos cubriendo el crimen.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- PANEL 2: RADAR & LPR -->
+    <section id="panel-radar" class="view-panel">
+      <div class="card">
+        <div class="card-title">
+          <span>SISTEMA LPR &amp; CÁMARAS DE TRÁFICO // TÚNEL CALA CORTINA Y SANTA LUCÍA</span>
+          <span class="badge badge-ok">3 CÁMARAS REGISTRADAS</span>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Hora</th>
+              <th>Matrícula</th>
+              <th>Titular / Vehículo</th>
+              <th>Ubicación Cámara</th>
+              <th>Dirección</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>21:40 h</td>
+              <td>`5512-KZX`</td>
+              <td>Aurelio Saura Mengual (Volvo XC60)</td>
+              <td>CAM-02 (Túnel Cala Cortina)</td>
+              <td>Entrada con equipo buceo</td>
+            </tr>
+            <tr>
+              <td>22:20 h</td>
+              <td>`9910-HJL`</td>
+              <td>Bernardo Conesa (Furgoneta Nissan)</td>
+              <td>CAM-07 (Dársena Santa Lucía)</td>
+              <td>Entrada Nave de Redes</td>
+            </tr>
+            <tr style="background:rgba(0, 229, 255, 0.06);">
+              <td><strong>00:48 h</strong></td>
+              <td><strong>`3481-LDF`</strong></td>
+              <td><strong>Víctor Huesca (Ford Ranger Negra)</strong></td>
+              <td>CAM-02 (Túnel Cala Cortina)</td>
+              <td>Entrada con remolque Zodiac</td>
+            </tr>
+            <tr style="background:rgba(0, 229, 255, 0.06);">
+              <td><strong>01:58 h</strong></td>
+              <td><strong>`3481-LDF`</strong></td>
+              <td><strong>Víctor Huesca (Ford Ranger Negra)</strong></td>
+              <td>CAM-02 (Túnel Cala Cortina)</td>
+              <td>Salida apresurada tras el ataque</td>
+            </tr>
+            <tr>
+              <td>06:38 h</td>
+              <td>`0142-PML`</td>
+              <td>Policía Local Z-14 (Patricia Normand)</td>
+              <td>CAM-02 (Túnel Cala Cortina)</td>
+              <td>Ronda ordinaria y hallazgo</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- PANEL 3: CARTA NÁUTICA SIG -->
+    <section id="panel-mapa" class="view-panel">
+      <div class="card">
+        <div class="card-title">
+          <span>CARTOGRAFÍA NÁUTICA VECTORIAL // BAHÍA DE CARTAGENA Y CALA CORTINA</span>
+        </div>
+        <div style="background:#081426; border:1px solid #1e293b; border-radius:6px; padding:12px; text-align:center;">
+          <svg viewBox="0 0 700 360" style="width:100%; max-height:400px; display:block; margin:0 auto;" xmlns="http://www.w3.org/2000/svg">
+            <rect width="700" height="360" fill="#081426" />
+            <!-- Costa Oeste -->
+            <path d="M 0,0 L 220,0 L 220,120 L 160,200 L 210,250 L 170,360 L 0,360 Z" fill="#1e293b" stroke="#334155" stroke-width="2" />
+            <text x="30" y="80" fill="#94a3b8" font-size="12" font-family="Inter" font-weight="bold">ALGAMECA / NAVIDAD</text>
+            
+            <!-- Faro Rojo de Navidad -->
+            <line x1="160" y1="200" x2="250" y2="180" stroke="#475569" stroke-width="8" stroke-linecap="round" />
+            <circle cx="250" cy="180" r="9" fill="#ef4444" stroke="#991b1b" stroke-width="2" />
+            <text x="265" y="175" fill="#f87171" font-size="10.5" font-family="Fira Code" font-weight="bold">FARO ROJO (NAVIDAD)</text>
+
+            <!-- Costa Este -->
+            <path d="M 480,0 L 700,0 L 700,360 L 460,360 L 490,260 L 520,200 L 460,110 L 480,0 Z" fill="#1e293b" stroke="#334155" stroke-width="2" />
+            <text x="540" y="60" fill="#94a3b8" font-size="12" font-family="Inter" font-weight="bold">SANTA LUCÍA</text>
+
+            <!-- Cala Cortina y Paco -->
+            <path d="M 520,200 Q 580,210 560,260 Q 520,280 490,260 Z" fill="#0c4a6e" stroke="#0284c7" stroke-width="2" />
+            <text x="545" y="235" fill="#38bdf8" font-size="10" font-family="Inter" font-weight="bold">CALA CORTINA</text>
+            <circle cx="530" cy="245" r="6" fill="#f97316" stroke="#ea580c" stroke-width="2" />
+            <text x="542" y="258" fill="#fb923c" font-size="9" font-family="Fira Code" font-weight="bold">HALLAZGO PACO EL GATO (#E-01)</text>
+
+            <!-- Dique de Curra y Faro Verde -->
+            <path d="M 480,110 L 360,190" stroke="#334155" stroke-width="12" stroke-linecap="round" />
+            <circle cx="360" cy="190" r="9" fill="#22c55e" stroke="#15803d" stroke-width="2" />
+            <text x="250" y="215" fill="#4ade80" font-size="10.5" font-family="Fira Code" font-weight="bold">FARO VERDE (CURRA)</text>
+
+            <!-- Enfilación y Pecio -->
+            <line x1="250" y1="180" x2="360" y2="190" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,4" />
+            <polygon points="305,178 315,188 295,188" fill="#f59e0b" stroke="#d97706" stroke-width="1" />
+            <text x="260" y="145" fill="#fbbf24" font-size="9" font-family="Fira Code" font-weight="bold">PECIO CURRA-II (-28 m)</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL 4: AUDIO VHF / 112 -->
+    <section id="panel-audio" class="view-panel">
+      <div class="card">
+        <div class="card-title">
+          <span>REGISTRO DE TRANSMISIONES DE VOZ // CANAL 112 Y POLICÍA LOCAL Z-14</span>
+          <span class="badge badge-ok">REPRODUCCIÓN SINTETIZADA</span>
+        </div>
+
+        <div class="audio-player-box">
+          <button class="btn-audio" onclick="playSpeechTransmission(1)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            ESCUCHAR COMUNICADO 112 (PATRICIA NORMAND)
+          </button>
+          <div style="font-size:11.5px; color:var(--text-muted); font-family:var(--font-mono);">
+            06:48 h · Agente Patricia Normand reportando el hallazgo del cuerpo en Cala Cortina y la intervención de Paco el Gato.
+          </div>
+        </div>
+
+        <div class="audio-player-box">
+          <button class="btn-audio" onclick="playSpeechTransmission(2)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            ESCUCHAR ALERTA CAPITANÍA (BOCANA CARTAGENA)
+          </button>
+          <div style="font-size:11.5px; color:var(--text-muted); font-family:var(--font-mono);">
+            01:25 h · Canal 16 VHF marino: avistamiento de neumática sospechosa entre Navidad y Curra.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL 5: VALIDADOR JUDICIAL -->
+    <section id="panel-validador" class="view-panel">
+      <div class="card">
+        <div class="card-title">
+          <span>VALIDADOR TELEMÁTICO DE CÓDIGOS JUDICIALES // DESBLOQUEO DE PIEZAS</span>
+        </div>
+        <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">
+          Introduzca los códigos de convicción judicial descubiertos en los sobres impresos para habilitar las siguientes fases:
+        </p>
+
+        <div class="validador-form">
+          <input type="text" id="input-codigo" class="code-input" placeholder="INTRODUZCA CÓDIGO (EJ: CARTAGENA-NITROX-77)" autocomplete="off">
+          <button class="btn-submit" onclick="validarCodigoJudicial()">VALIDAR CÓDIGO</button>
+        </div>
+
+        <div id="val-result" class="result-box"></div>
+      </div>
+    </section>
+
+    <!-- PANEL 6: MESA DE PISTAS -->
+    <section id="panel-ayuda" class="view-panel">
+      <div class="card">
+        <div class="card-title">
+          <span>MESA DE AYUDA AL INVESTIGADOR // PISTAS ESCALONADAS SIN SPOILERS</span>
+        </div>
+        <div style="font-size:12px; line-height:1.6; color:var(--text-main);">
+          <details style="margin-bottom:12px; background:#080e18; padding:10px; border-radius:6px;">
+            <summary style="cursor:pointer; color:var(--accent-cyan); font-weight:700;">PISTA 1: ¿Por qué la muerte no fue un ahogamiento natural?</summary>
+            <p style="margin-top:8px; color:var(--text-muted);">
+              Revisa con atención el informe toxicológico del Sobre A: un 58% de carboxihemoglobina en sangre jamás se produce en el mar. Requiere una fuente de combustión directa introducida en las botellas.
+            </p>
+          </details>
+
+          <details style="margin-bottom:12px; background:#080e18; padding:10px; border-radius:6px;">
+            <summary style="cursor:pointer; color:var(--accent-cyan); font-weight:700;">PISTA 2: ¿Qué significa el corte de señal en el Faro Verde de Curra?</summary>
+            <p style="margin-top:8px; color:var(--text-muted);">
+              Comprueba la auditoría de telemetría del Sobre B: la cámara térmica del dique de Curra se apagó exactamente 42 minutos mediante una orden manual desde la consola de Claudia Vicedo, justo mientras una lancha sin luces cruzaba la bocana.
+            </p>
+          </details>
+
+          <details style="margin-bottom:12px; background:#080e18; padding:10px; border-radius:6px;">
+            <summary style="cursor:pointer; color:var(--accent-cyan); font-weight:700;">PISTA 3: ¿Cuál fue la clave que desenterró Paco el Gato?</summary>
+            <p style="margin-top:8px; color:var(--text-muted);">
+              Paco arañó la cápsula estanca de titanio que contenía la tarjeta microSD de la cámara GoPro de Aurelio. Al insertarla en el terminal de criminalística, el vídeo muestra a la persona que sostenía el bichero en la lancha.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    function switchTerminalTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+
+      const targetBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+      if (targetBtn) targetBtn.classList.add('active');
+
+      const targetPanel = document.getElementById('panel-' + tabId);
+      if (targetPanel) targetPanel.classList.add('active');
+    }
+
+    function validarCodigoJudicial() {
+      const input = document.getElementById('input-codigo');
+      const res = document.getElementById('val-result');
+      if (!input || !res) return;
+
+      const code = input.value.trim().toUpperCase();
+      res.style.display = 'block';
+
+      if (code === 'CARTAGENA-NITROX-77') {
+        res.style.background = 'rgba(34, 197, 94, 0.15)';
+        res.style.border = '1px solid #22c55e';
+        res.style.color = '#4ade80';
+        res.innerHTML = '<strong>[AUTORIZADO] SOBRE A RESUELTO:</strong> Ha identificado la causa real de la muerte por intoxicación dolosa de gas en la estación de carga. Queda autorizado para abrir el <strong>SOBRE B (INTERROGATORIOS Y FAROS)</strong>.';
+      } else if (code === 'FARO-CURRA-12V') {
+        res.style.background = 'rgba(34, 197, 94, 0.15)';
+        res.style.border = '1px solid #22c55e';
+        res.style.color = '#4ade80';
+        res.innerHTML = '<strong>[AUTORIZADO] SOBRE B RESUELTO:</strong> El sabotaje deliberado de la cámara del Faro Verde de Curra y el hallazgo de Paco el Gato han cercado a los sospechosos. Queda autorizado para abrir el <strong>SOBRE C (CONVICCIÓN FINAL)</strong>.';
+      } else if (code === 'JUSTICIA-CARTAGENA-2025') {
+        res.style.background = 'rgba(0, 229, 255, 0.15)';
+        res.style.border = '1px solid #00e5ff';
+        res.style.color = '#38bdf8';
+        res.innerHTML = '<strong>[RESOLUCIÓN SUMARIAL COMPLETA]:</strong> Caso 04 cerrado con éxito por la Agente Patricia Normand. Víctor Huesca Vidal y Claudia Vicedo Cánovas han ingresado en prisión provisional. ¡Enhorabuena, instructora!';
+      } else {
+        res.style.background = 'rgba(239, 68, 68, 0.15)';
+        res.style.border = '1px solid #ef4444';
+        res.style.color = '#f87171';
+        res.innerHTML = '<strong>[DENEGADO]:</strong> Código judicial no reconocido o pieza aún no desbloqueada. Revise los informes de los sobres oficiales.';
+      }
+    }
+
+    function playSpeechTransmission(num) {
+      if (!('speechSynthesis' in window)) {
+        alert('Síntesis de voz no disponible en este navegador.');
+        return;
+      }
+      window.speechSynthesis.cancel();
+
+      let text = '';
+      if (num === 1) {
+        text = 'Central, aquí radiopatrulla Z-14, Agente Patricia Normand desde Cala Cortina. Comunico hallazgo de varón fallecido con traje de buceo atrapado en las rocas del espigón sur. El gato de la cala, Paco, me ha guiado hacia una cápsula estanca sumergible con posibles indicios. Solicito presencia urgente de comisión judicial, médico forense y equipo GEAS. Mantengo acordonamiento de la playa.';
+      } else {
+        text = 'Atención embarcaciones en la bocana de Cartagena, aquí Capitanía Marítima. Vigilancia de radares detecta embarcación semirrígida navegando a gran velocidad sin luces de posición entre el Faro de Navidad y el Dique de Curra. Extremen precauciones en el canal principal.';
+      }
+
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'es-ES';
+      utter.rate = 1.0;
+      utter.pitch = 1.05;
+
+      const voices = window.speechSynthesis.getVoices();
+      const spanishVoice = voices.find(v => v.lang.startsWith('es'));
+      if (spanishVoice) utter.voice = spanishVoice;
+
+      window.speechSynthesis.speak(utter);
+    }
+  </script>
+</body>
+</html>

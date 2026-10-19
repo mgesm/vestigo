@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VESTIGO // BRIEFING AUDIOVISUAL - CASO 04: LOS DOS FAROS DE CARTAGENA</title>
+  <link rel="icon" type="image/svg+xml" href="../../../branding/vestigo_icon.svg">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Inter:wght@400;600;800;900&family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #03070d;
+      --card-bg: #09111c;
+      --border: #1e293b;
+      --accent: #00e5ff;
+      --red: #ef4444;
+      --green: #22c55e;
+      --yellow: #facc15;
+      --font-mono: 'Fira Code', monospace;
+      --font-sans: 'Inter', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: #e2e8f0;
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+    .top-header {
+      background: #050a12;
+      border-bottom: 1px solid var(--border);
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .hud-tag {
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .rec-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 8px var(--red);
+      animation: blink 1.2s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+    .player-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      max-width: 1000px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .screen-frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .scene-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 30px;
+      background-size: cover;
+      background-position: center;
+      pointer-events: none;
+    }
+    .scene-slide.active { opacity: 1; pointer-events: auto; }
+    .slide-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(3, 7, 13, 0.95) 0%, rgba(3, 7, 13, 0.5) 45%, rgba(3, 7, 13, 0.2) 100%);
+      z-index: 1;
+    }
+    .slide-content {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+    }
+    .slide-act {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+      display: inline-block;
+      background: rgba(0, 229, 255, 0.15);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      padding: 3px 10px;
+      border-radius: 4px;
+    }
+    .slide-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+    .slide-text {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+    .controls-wrapper {
+      width: 100%;
+      margin-top: 14px;
+      background: #060c16;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+    }
+    .scrubber-bar {
+      width: 100%;
+      height: 6px;
+      background: #1e293b;
+      border-radius: 3px;
+      cursor: pointer;
+      position: relative;
+      margin-bottom: 12px;
+    }
+    .scrubber-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.2s linear;
+    }
+    .act-tabs {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .act-tab-btn {
+      background: #0b1320;
+      border: 1px solid #1e293b;
+      color: #94a3b8;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+    .act-tab-btn:hover { background: #111e32; color: #fff; }
+    .act-tab-btn.active {
+      background: rgba(0, 229, 255, 0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .playback-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .ctrl-btn {
+      background: #0d1829;
+      border: 1px solid #1e293b;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .ctrl-btn:hover { background: #162640; border-color: var(--accent); }
+    .ctrl-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+    @media (max-width: 640px) {
+      .act-tabs { grid-template-columns: repeat(3, 1fr); }
+      .slide-title { font-size: 17px; }
+      .slide-text { font-size: 11.5px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-header">
+    <div class="hud-tag">
+      <div class="rec-dot"></div>
+      VESTIGO CINEMATIC BRIEFING // CASO 04: CARTAGENA
+    </div>
+    <div style="font-family:var(--font-mono); color:var(--text-muted);">
+      POLICÍA LOCAL DE CARTAGENA · AGENTE PATRICIA NORMAND (1482)
+    </div>
+  </div>
+
+  <div class="player-container">
+    <div class="screen-frame">
+
+      <!-- ACTO 1: AMANECER EN CALA CORTINA -->
+      <div class="scene-slide active" id="slide-0" style="background-image: url('../imagenes/escena_cala_cortina.png');">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-act">ACTO I · 06:45 H · RONDA COSTERA</div>
+          <h2 class="slide-title">Amanecer en Cala Cortina</h2>
+          <p class="slide-text">
+            Sábado 18 de octubre. Como cada mañana, la Agente Patricia Normand de la Policía Local de Cartagena inicia su servicio de vigilancia de playas descendiendo por el túnel hacia Cala Cortina. La ensenada, protegida por acantilados de piedra caliza, amanece en un silencio inquietante bajo la brisa del Mediterráneo.
+          </p>
+        </div>
+      </div>
+
+      <!-- ACTO 2: EL CENTINELA PACO Y EL HALLAZGO -->
+      <div class="scene-slide" id="slide-1" style="background-image: url('../imagenes/paco_el_gato.png');">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-act">ACTO II · EL TESTIGO FELINO</div>
+          <h2 class="slide-title">Paco y la Cápsula Sumergible</h2>
+          <p class="slide-text">
+            Sobre los bloques del espigón sur, Paco —el conocido gato naranja y blanco de la cala— maúlla con insistencia y araña una oquedad rocosa. Al acercarse Patricia, descubre que el felino retiene una cápsula estanca de buceo con mosquetón de titanio. Guiada por la mirada del animal hacia el agua, avista el cadáver de un buceador atrapado en las rompientes.
+          </p>
+        </div>
+      </div>
+
+      <!-- ACTO 3: LA BOCANA Y LOS DOS FAROS -->
+      <div class="scene-slide" id="slide-2" style="background-image: url('../imagenes/faro_verde_curra.png');">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-act">ACTO III · LAS LUCES DE CARTAGENA</div>
+          <h2 class="slide-title">La Enfilación de Navidad y Curra</h2>
+          <p class="slide-text">
+            El fallecido es Aurelio Saura, veterano arqueólogo del ARQVA. Investigaba en secreto el pecio púnico-romano Curra-II, hundido a 28 metros de profundidad justo en la línea que une el Faro Rojo de Navidad y el Faro Verde de Curra. Esa madrugada, la cámara térmica del Faro Verde sufrió un sospechoso corte de señal de 42 minutos.
+          </p>
+        </div>
+      </div>
+
+      <!-- ACTO 4: RED DE INTERESES EN TIERRA -->
+      <div class="scene-slide" id="slide-3" style="background-image: url('../imagenes/patricia_normand.png');">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-act">ACTO IV · EL CÍRCULO DE SOSPECHOSOS</div>
+          <h2 class="slide-title">Dudas en la Dársena y el Centro de Buceo</h2>
+          <p class="slide-text">
+            Patricia Normand inicia la ronda de pesquisas. En el punto de mira: Víctor Huesca, instructor de buceo que cargó las botellas; Bernardo Conesa, patrón de Santa Lucía con litigios sobre artes de arrastre; la Dra. Marina Belmonte del ARQVA; y Claudia Vicedo, la controladora portuaria a cargo de los faros.
+          </p>
+        </div>
+      </div>
+
+      <!-- ACTO 5: LA AUTOPSIA Y EL GAS MORTAL -->
+      <div class="scene-slide" id="slide-4" style="background-image: url('../imagenes/evidencia_capsula_paco.png');">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-act">ACTO V · EL DICTAMEN TOXICOLÓGICO</div>
+          <h2 class="slide-title">Monóxido de Carbono a 28 Metros</h2>
+          <p class="slide-text">
+            El Instituto de Medicina Legal descarta el ahogamiento accidental: un 58% de carboxihemoglobina en sangre y botellas cargadas con monóxido de carbono letal. Aurelio fue envenenado antes de sumergirse, y un golpe en la nuca remató el ataque en superficie. En la cápsula rescatada por Paco descansa la tarjeta que grabó al asesino.
+          </p>
+        </div>
+      </div>
+
+      <!-- ACTO 6: LA MISIÓN DEL INVESTIGADOR -->
+      <div class="scene-slide" id="slide-5" style="background-image: url('../imagenes/faro_rojo_navidad.png');">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-act">ACTO VI · LA MISIÓN POLICIAL</div>
+          <h2 class="slide-title">Abrid el Sobre A: Pieza Principal</h2>
+          <p class="slide-text">
+            Vuestra investigación comienza en la Policía Local de Cartagena. Abrid el Sobre A para examinar el atestado de Patricia Normand, la autopsia preliminar y el plano de la bocana. Utilizad la Terminal SITRA-JUD para verificar coartadas y hacer justicia por la memoria de Aurelio y la bahía de Cartagena.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CONTROLES -->
+    <div class="controls-wrapper">
+      <div class="scrubber-bar" onclick="seekVideo(event)">
+        <div class="scrubber-fill" id="scrubber-fill"></div>
+      </div>
+
+      <div class="act-tabs">
+        <button class="act-tab-btn active" onclick="jumpToScene(0)">I · Cala Cortina</button>
+        <button class="act-tab-btn" onclick="jumpToScene(1)">II · Paco el Gato</button>
+        <button class="act-tab-btn" onclick="jumpToScene(2)">III · Dos Faros</button>
+        <button class="act-tab-btn" onclick="jumpToScene(3)">IV · Sospechosos</button>
+        <button class="act-tab-btn" onclick="jumpToScene(4)">V · Gas Adulterado</button>
+        <button class="act-tab-btn" onclick="jumpToScene(5)">VI · Sobre A</button>
+      </div>
+
+      <div class="playback-toolbar">
+        <div style="display:flex; gap:6px;">
+          <button class="ctrl-btn" id="btn-play" onclick="togglePlay()">
+            <span id="play-text">PLAY / PAUSA</span>
+          </button>
+          <button class="ctrl-btn" id="btn-voice" onclick="toggleVoice()">
+            VOZ: ON
+          </button>
+          <button class="ctrl-btn" id="btn-music" onclick="toggleMusic()">
+            MÚSICA: ON
+          </button>
+        </div>
+
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted);">
+          <span id="time-display">00:00 / 03:00</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    if (window.self !== window.top) {
+      document.querySelectorAll('a[href="../index.html"]').forEach(function(el) { el.remove(); });
+    }
+
+    const SCENES = [
+      { id: 0, title: "Amanecer en Cala Cortina", dur: 30, text: "Sábado 18 de octubre. Como cada mañana, la Agente Patricia Normand de la Policía Local de Cartagena inicia su servicio de vigilancia de playas descendiendo por el túnel hacia Cala Cortina. La ensenada, protegida por acantilados de piedra caliza, amanece en un silencio inquietante bajo la brisa del Mediterráneo." },
+      { id: 1, title: "Paco y la Cápsula Sumergible", dur: 30, text: "Sobre los bloques del espigón sur, Paco —el conocido gato naranja y blanco de la cala— maúlla con insistencia y araña una oquedad rocosa. Al acercarse Patricia, descubre que el felino retiene una cápsula estanca de buceo con mosquetón de titanio. Guiada por la mirada del animal hacia el agua, avista el cadáver de un buceador atrapado en las rompientes." },
+      { id: 2, title: "La Enfilación de Navidad y Curra", dur: 30, text: "El fallecido es Aurelio Saura, veterano arqueólogo del ARQVA. Investigaba en secreto el pecio púnico-romano Curra-II, hundido a 28 metros de profundidad justo en la línea que une el Faro Rojo de Navidad y el Faro Verde de Curra. Esa madrugada, la cámara térmica del Faro Verde sufrió un sospechoso corte de señal de 42 minutos." },
+      { id: 3, title: "Dudas en la Dársena y el Centro de Buceo", dur: 30, text: "Patricia Normand inicia la ronda de pesquisas. En el punto de mira: Víctor Huesca, instructor de buceo que cargó las botellas; Bernardo Conesa, patrón de Santa Lucía con litigios sobre artes de arrastre; la Dra. Marina Belmonte del ARQVA; y Claudia Vicedo, la controladora portuaria a cargo de los faros." },
+      { id: 4, title: "Monóxido de Carbono a 28 Metros", dur: 30, text: "El Instituto de Medicina Legal descarta el ahogamiento accidental: un 58% de carboxihemoglobina en sangre y botellas cargadas con monóxido de carbono letal. Aurelio fue envenenado antes de sumergirse, y un golpe en la nuca remató el ataque en superficie. En la cápsula rescatada por Paco descansa la tarjeta que grabó al asesino." },
+      { id: 5, title: "Abrid el Sobre A: Pieza Principal", dur: 30, text: "Vuestra investigación comienza en la Policía Local de Cartagena. Abrid el Sobre A para examinar el atestado de Patricia Normand, la autopsia preliminar y el plano de la bocana. Utilizad la Terminal SITRA-JUD para verificar coartadas y hacer justicia por la memoria de Aurelio y la bahía de Cartagena." }
+    ];
+
+    let currentScene = 0;
+    let isPlaying = false;
+    let playTimer = null;
+    let sceneTime = 0;
+    let voiceEnabled = true;
+    let musicEnabled = true;
+    let audioCtx = null;
+    let droneOsc = null;
+
+    function jumpToScene(idx) {
+      document.querySelectorAll('.scene-slide').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.act-tab-btn').forEach(b => b.classList.remove('active'));
+
+      currentScene = idx;
+      sceneTime = 0;
+      const targetSlide = document.getElementById('slide-' + idx);
+      const targetBtn = document.querySelectorAll('.act-tab-btn')[idx];
+
+      if (targetSlide) targetSlide.classList.add('active');
+      if (targetBtn) targetBtn.classList.add('active');
+
+      updateScrubber();
+      if (voiceEnabled && isPlaying) speakScene(idx);
+    }
+
+    function togglePlay() {
+      isPlaying = !isPlaying;
+      const btn = document.getElementById('btn-play');
+      if (btn) btn.classList.toggle('active', isPlaying);
+
+      if (isPlaying) {
+        startAudioDrone();
+        speakScene(currentScene);
+        playTimer = setInterval(tick, 1000);
+      } else {
+        stopAudioDrone();
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        if (playTimer) clearInterval(playTimer);
+      }
+    }
+
+    function tick() {
+      sceneTime++;
+      if (sceneTime >= SCENES[currentScene].dur) {
+        if (currentScene < SCENES.length - 1) {
+          jumpToScene(currentScene + 1);
+        } else {
+          togglePlay();
+          jumpToScene(0);
+        }
+      }
+      updateScrubber();
+    }
+
+    function updateScrubber() {
+      const totalDur = SCENES.reduce((acc, s) => acc + s.dur, 0);
+      let elapsed = 0;
+      for (let i = 0; i < currentScene; i++) elapsed += SCENES[i].dur;
+      elapsed += sceneTime;
+
+      const pct = (elapsed / totalDur) * 100;
+      const fill = document.getElementById('scrubber-fill');
+      if (fill) fill.style.width = pct + '%';
+
+      const disp = document.getElementById('time-display');
+      if (disp) {
+        const m = Math.floor(elapsed / 60);
+        const s = elapsed % 60;
+        disp.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s + ' / 03:00';
+      }
+    }
+
+    function seekVideo(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      const targetIdx = Math.min(5, Math.floor(pos * 6));
+      jumpToScene(targetIdx);
+    }
+
+    function speakScene(idx) {
+      if (!voiceEnabled || !('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(SCENES[idx].title + '. ' + SCENES[idx].text);
+      u.lang = 'es-ES';
+      u.rate = 0.95;
+      window.speechSynthesis.speak(u);
+    }
+
+    function toggleVoice() {
+      voiceEnabled = !voiceEnabled;
+      const btn = document.getElementById('btn-voice');
+      if (btn) btn.textContent = 'VOZ: ' + (voiceEnabled ? 'ON' : 'OFF');
+      if (!voiceEnabled && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+    }
+
+    function toggleMusic() {
+      musicEnabled = !musicEnabled;
+      const btn = document.getElementById('btn-music');
+      if (btn) btn.textContent = 'MÚSICA: ' + (musicEnabled ? 'ON' : 'OFF');
+      if (!musicEnabled) stopAudioDrone();
+      else if (isPlaying) startAudioDrone();
+    }
+
+    function startAudioDrone() {
+      if (!musicEnabled) return;
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      if (!droneOsc) {
+        droneOsc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        droneOsc.type = 'sine';
+        droneOsc.frequency.setValueAtTime(65.41, audioCtx.currentTime); // C2 drone
+        gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+        droneOsc.connect(gain);
+        gain.connect(audioCtx.destination);
+        droneOsc.start();
+      }
+    }
+
+    function stopAudioDrone() {
+      if (droneOsc) {
+        try { droneOsc.stop(); } catch(e) {}
+        droneOsc.disconnect();
+        droneOsc = null;
+      }
+    }
+  </script>
+</body>
+</html>
