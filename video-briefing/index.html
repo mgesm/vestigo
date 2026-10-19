@@ -328,6 +328,142 @@
       border-radius: 6px;
       font-size: 12px;
     }
+
+    /* ========================================================================
+       RESPONSIVE MOBILE VIEWPORT & TOUCH CONTROLS (< 768px)
+       ======================================================================== */
+    @media screen and (max-width: 768px) {
+      body {
+        padding: 0 !important;
+        min-height: 100% !important;
+        height: 100% !important;
+        justify-content: flex-start !important;
+        background: #04070D !important;
+      }
+
+      .video-wrapper {
+        border-radius: 0 !important;
+        border: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        box-shadow: none !important;
+      }
+
+      .top-header {
+        padding: 6px 12px !important;
+        font-size: 9px !important;
+      }
+
+      .top-header div:first-child span:last-child {
+        display: none !important;
+      }
+
+      .hud-overlay {
+        top: 10px !important;
+        left: 12px !important;
+        right: 12px !important;
+        font-size: 9px !important;
+      }
+
+      .hud-tag {
+        padding: 2px 6px !important;
+        font-size: 9px !important;
+      }
+
+      .caption-box {
+        bottom: 8px !important;
+        left: 8px !important;
+        right: 8px !important;
+        padding: 8px 12px !important;
+        border-radius: 8px !important;
+      }
+
+      .caption-act {
+        font-size: 9px !important;
+        letter-spacing: 1px !important;
+        margin-bottom: 2px !important;
+      }
+
+      .caption-text {
+        font-size: 11px !important;
+        line-height: 1.35 !important;
+        min-height: unset !important;
+        max-height: 48px !important;
+        overflow-y: auto !important;
+      }
+
+      .controls-bar {
+        padding: 8px 10px !important;
+        gap: 6px !important;
+        background: #070B14 !important;
+      }
+
+      .controls-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+      }
+
+      .ctrl-left {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 6px !important;
+      }
+
+      .ctrl-btn {
+        flex: 1 !important;
+        min-height: 40px !important;
+        padding: 6px 4px !important;
+        font-size: 10px !important;
+        justify-content: center !important;
+        border-radius: 8px !important;
+      }
+
+      #play-btn {
+        flex: 1.3 !important;
+      }
+
+      .timer-display {
+        font-size: 10px !important;
+        min-width: 64px !important;
+        text-align: right !important;
+        padding-left: 4px !important;
+      }
+
+      .act-tabs {
+        width: 100% !important;
+        display: flex !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        gap: 6px !important;
+        padding: 2px 0 4px 0 !important;
+      }
+
+      .act-tabs::-webkit-scrollbar {
+        display: none !important;
+      }
+
+      .act-tab {
+        flex-shrink: 0 !important;
+        padding: 6px 10px !important;
+        font-size: 10px !important;
+        white-space: nowrap !important;
+        border-radius: 6px !important;
+        min-height: 32px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+      }
+
+      .export-banner {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body>

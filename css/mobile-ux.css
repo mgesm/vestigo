@@ -44,6 +44,12 @@
   }
 }
 
+/* Hide mobile-specific reader components on desktop by default */
+.vg-reader-mobile-dock,
+.vg-reader-mobile-close-btn {
+  display: none;
+}
+
 /* ============================================================================
    2. MOBILE RESET & HORIZONTAL SCROLL ELIMINATION (< 768px)
    ============================================================================ */
@@ -144,76 +150,94 @@
    4. DE-CLUTTERING & PROGRESSIVE DISCLOSURE (NO MORE WALL-OF-TEXT FATIGUE!)
    ============================================================================ */
 @media screen and (max-width: 768px) {
-  /* --- MOBILE TOPBAR ANTI-OVERFLOW & COMPACTNESS --- */
-  .vg-desktop-header {
-    width: calc(100% - 24px) !important;
-    margin: 8px auto 14px auto !important;
-    height: 52px !important;
-    padding: 0 14px !important;
-    gap: 8px !important;
-  }
-
-  .vg-header-brand {
-    gap: 8px !important;
-  }
-
-  .vg-header-brand span:first-child {
-    font-size: 0.95rem !important;
-  }
-
-  .vg-header-brand span:last-child {
-    font-size: 0.52rem !important;
-  }
-
-  .vg-header-logo-icon {
-    width: 30px !important;
-    height: 30px !important;
-  }
-
-  .vg-header-logo-img {
-    width: 18px !important;
-    height: 18px !important;
-  }
-
-  /* Strict Mobile Rule: Hide desktop command pills to eliminate horizontal cutoff */
-  .vg-header-right .vg-cmd-pill {
+  /* --- HIDE DESKTOP/BULKY HEADERS ENTIRELY ON MOBILE --- */
+  .vg-desktop-header,
+  .topbar,
+  .vg-header-floating {
     display: none !important;
   }
 
-  .vg-header-right {
+  /* Catalog Container Top Safe Area Clearance (Dynamic Island / Notch Safe) */
+  body:not(.in-case-view) #view-catalog {
+    padding-top: calc(env(safe-area-inset-top, 0px) + 20px) !important;
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 32px) !important;
+  }
+
+  /* Strictly Hide Bottom Navigation in Catalog View */
+  body:not(.in-case-view) .mobile-bottom-nav,
+  body:not(.in-case-view) .vg-bottom-nav-container {
+    display: none !important;
+  }
+
+  /* Dedicated Mobile In-Case Topbar (Notch & Safe-Area Compliant) */
+  body.in-case-view .case-header-nav {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding-top: max(12px, env(safe-area-inset-top, 0px)) !important;
+    padding-bottom: 12px !important;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(16px, env(safe-area-inset-right, 0px)) !important;
+    background: rgba(4, 7, 13, 0.92) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 950 !important;
+    margin: 0 -16px 16px -16px !important;
+  }
+
+  body.in-case-view .case-header-nav .back-btn {
+    height: 40px !important;
+    padding: 8px 16px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    border-radius: 9999px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    color: #ffffff !important;
+    display: inline-flex !important;
+    align-items: center !important;
     gap: 6px !important;
+    letter-spacing: 0.04em !important;
   }
 
-  .vg-status-pill {
-    font-size: 9px !important;
-    padding: 3px 8px !important;
+  body.in-case-view .case-header-nav .back-btn:active {
+    transform: scale(0.94) !important;
+    background: rgba(0, 229, 255, 0.15) !important;
+    border-color: rgba(0, 229, 255, 0.4) !important;
   }
 
-  /* --- MINIMALIST CATALOG HEADER (NO BULKY HERO BANNER) --- */
+  body.in-case-view .mobile-bottom-nav {
+    display: flex !important;
+  }
+
+  /* --- MINIMALIST CATALOG HEADER (NOTCH PROTECTED) --- */
   .catalog-clean-header {
     display: flex !important;
     justify-content: space-between !important;
     align-items: flex-end !important;
-    margin-bottom: 16px !important;
-    padding: 4px 0 12px 0 !important;
+    margin-bottom: 24px !important;
+    padding: 0 4px 12px 4px !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
   }
 
   .catalog-kicker {
     font-family: var(--vg-font-mono, monospace) !important;
-    font-size: 9px !important;
+    font-size: 10px !important;
     color: var(--vg-cyan, #00E5FF) !important;
-    letter-spacing: 0.12em !important;
+    letter-spacing: 1.5px !important;
     text-transform: uppercase !important;
     display: block !important;
-    margin-bottom: 2px !important;
+    margin-bottom: 6px !important;
   }
 
   .catalog-main-title {
-    font-size: 19px !important;
+    font-size: 26px !important;
     font-weight: 800 !important;
     color: #FFFFFF !important;
-    letter-spacing: -0.02em !important;
+    letter-spacing: -0.025em !important;
     margin: 0 !important;
     line-height: 1.2 !important;
   }
@@ -839,39 +863,158 @@
 }
 
 /* ============================================================================
-   8. NOTCH & STATUS BAR INTEGRATION (TOPBAR)
+   8. MOBILE FORENSIC DOCUMENT READER & FLOATING DOCK (< 768px)
    ============================================================================ */
 @media screen and (max-width: 768px) {
-  .topbar,
-  .vg-header-floating {
-    padding-top: max(12px, var(--vg-safe-top)) !important;
-    height: calc(58px + max(0px, var(--vg-safe-top))) !important;
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-    background: rgba(4, 7, 13, 0.85) !important;
-    backdrop-filter: blur(24px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  .vg-desktop-only {
+    display: none !important;
   }
 
-  .brand-logo-img {
-    width: 32px !important;
-    height: 32px !important;
-    border-radius: 8px !important;
+  /* 1. Safe Area Aware Reader Topbar */
+  .vg-reader-topbar {
+    height: auto !important;
+    min-height: calc(56px + env(safe-area-inset-top, 0px)) !important;
+    padding-top: max(14px, calc(env(safe-area-inset-top, 0px) + 8px)) !important;
+    padding-bottom: 10px !important;
+    padding-left: max(14px, env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(14px, env(safe-area-inset-right, 0px)) !important;
+    background: rgba(7, 11, 20, 0.94) !important;
+    backdrop-filter: blur(28px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
   }
 
-  .brand-title {
+  /* 2. Prominent Mobile Close Button */
+  .vg-reader-mobile-close-btn {
+    height: 38px !important;
+    padding: 0 14px !important;
+    border-radius: 9999px !important;
+    background: rgba(255, 45, 85, 0.15) !important;
+    border: 1px solid rgba(255, 45, 85, 0.4) !important;
+    color: #ffffff !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
+    text-decoration: none !important;
+  }
+
+  .vg-reader-mobile-close-btn:active {
+    transform: scale(0.94) !important;
+    background: rgba(255, 45, 85, 0.3) !important;
+  }
+
+  .vg-reader-meta {
+    flex: 1 !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  .vg-reader-title {
+    font-size: 13px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    color: #ffffff !important;
+  }
+
+  .vg-reader-badge {
+    font-size: 9px !important;
+    padding: 2px 6px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* 3. Viewport stage bottom clearance for the floating dock */
+  .vg-reader-viewport {
+    padding: 16px 12px 100px 12px !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .vg-reader-frame-container {
+    border-radius: 14px !important;
+    min-height: calc(100dvh - 180px) !important;
+    transform-origin: top center !important;
+  }
+
+  /* 4. Mobile Floating Glass Zoom Dock */
+  .vg-reader-mobile-dock {
+    position: fixed !important;
+    bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 8px)) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 2500 !important;
+    width: calc(100% - 32px) !important;
+    max-width: 380px !important;
+    height: 52px !important;
+    border-radius: 9999px !important;
+    background: rgba(11, 17, 32, 0.88) !important;
+    backdrop-filter: blur(28px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 229, 255, 0.12) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+    padding: 0 8px !important;
+  }
+
+  .vg-reader-dock-btn {
+    height: 38px !important;
+    min-width: 38px !important;
+    border-radius: 9999px !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
     font-size: 15px !important;
-    letter-spacing: 1.5px !important;
+    font-weight: 700 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    padding: 0 10px !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
   }
 
-  .brand-subtitle {
-    font-size: 8px !important;
+  .vg-reader-dock-btn:active {
+    transform: scale(0.92) !important;
   }
 
-  .icon-link-btn {
-    padding: 6px 10px !important;
-    font-size: 10px !important;
-    height: 34px !important;
+  .vg-reader-dock-pill {
+    height: 32px !important;
+    padding: 0 12px !important;
+    border-radius: 9999px !important;
+    background: rgba(0, 229, 255, 0.1) !important;
+    border: 1px solid rgba(0, 229, 255, 0.3) !important;
+    color: var(--vg-cyan, #00e5ff) !important;
+    font-family: var(--vg-font-mono, monospace) !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+  }
+
+  .vg-reader-dock-btn.uv-btn.active {
+    background: #38bdf8 !important;
+    color: #020408 !important;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.6) !important;
+  }
+
+  .vg-reader-dock-btn.pdf-btn {
+    font-size: 11px !important;
+    background: rgba(2, 132, 199, 0.25) !important;
+    border-color: rgba(56, 189, 248, 0.4) !important;
+    color: #38bdf8 !important;
   }
 }

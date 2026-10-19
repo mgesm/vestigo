@@ -78,6 +78,30 @@ flowchart TD
 
 ## 📝 4. REGISTRO HISTÓRICO DE CAMBIOS (CHANGELOG)
 
+### [v1.5.0] — 2026-10-19
+#### Overhaul Móvil: Reproductor Responsivo, Navegación Segura frente a Notch y Visor Documental Táctil con Zoom
+- **Escalado Integral del Vídeo Briefing en Móvil (`video-briefing/index.html`):**
+  - Reestructuración responsiva de la barra de controles en 2 niveles táctiles en pantallas móviles (< 768px): fila superior de reproducción (Play/Pause destacado, Voz, Música y Contador) y fila inferior con carril horizontal deslizable para cambiar entre los 6 actos del sumario.
+  - Subtítulos cinemáticos compactos de altura dinámica (11px, 2 líneas máx) para que no tapen la escena pericial.
+  - Eliminación de padding en body y ocultación del banner inferior de descargas para encajar limpiamente dentro del iframe de la app sin desbordamientos ni botones invisibles.
+- **Ergonomía de Inicio y Protección frente al Dynamic Island / Notch:**
+  - En la vista inicial de catálogo en móvil, se elimina completamente la cabecera superior de escritorio y la barra de navegación inferior, dejando una pantalla limpia y enfocada exclusivamente en los casos disponibles.
+  - Aplicación de márgenes seguros superiores (`padding-top: calc(env(safe-area-inset-top, 0px) + 20px)`) para evitar que el Dynamic Island o notch de la cámara tape los títulos o identificadores.
+- **Barra de Navegación Superior en Caso Activo:**
+  - Al acceder a un expediente, se despliega una barra superior nativa fijada con `backdrop-filter: blur(24px)` y zona segura que incorpora el botón de retorno `← Expedientes` (con diana táctil de 44pt) y el badge del caso activo.
+  - Al pulsar `← Expedientes`, el usuario regresa limpiamente al catálogo y desaparecen tanto la barra superior como el dock flotante inferior.
+- **Visor Documental Nativo Reestructurado:**
+  - Botón de salida ineludible y destacado `✕ Cerrar` en la parte superior izquierda, inmune a cortes de pantalla o solapamiento con la cámara frontal.
+  - Dock flotante inferior translúcido de controles ergonómicos (`−`, porcentaje `100%`, `+`, `Modo UV` y acceso directo `PDF Externo`) optimizado para alcance con el pulgar.
+  - Sincronización bidireccional de niveles de zoom y enlace dinámico al PDF correspondiente al documento visualizado.
+- **Modernización Visual Squircles estilo Apple:**
+  - Actualización de radios a squircles continuos (24px en tarjetas, 28px en modales y 9999px en cápsulas).
+  - Micro-bordes especulares con reflejos de luz y física de rebote táctil en pulsaciones.
+- **Simulador Móvil Actualizado (`mobile_preview.html`):**
+  - Chasis interactivo de iPhone 15 Pro con Dynamic Island que embebe directamente la aplicación de producción en tiempo real.
+
+---
+
 ### [v1.4.0] — 2026-10-19
 #### Refactorización Estética, Navegación Móvil y Estándar Cero Emojis
 - **Eliminación Total del Hero Banner:** Supresión completa del bloque inicial decorativo ("Plataforma de Investigación Policial Híbrida", síntesis y desplegables innecesarios). Reemplazado por un encabezado de expedientes minimalista, limpio y profesional (`catalog-clean-header`) con badge dinámico de casos activos.

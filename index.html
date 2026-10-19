@@ -1648,13 +1648,19 @@
   <div id="vg-doc-reader-modal" class="vg-native-reader" role="dialog" aria-modal="true" aria-labelledby="vg-reader-doc-name">
     <!-- Top Glass Toolbar -->
     <div class="vg-reader-topbar">
+      <!-- Left: Prominent Touchable Close / Exit Button (Mobile Accessible) -->
+      <button class="vg-reader-mobile-close-btn" onclick="closeDocReader()" title="Cerrar Lector (Esc)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        <span>Cerrar</span>
+      </button>
+
       <div class="vg-reader-meta">
         <span class="vg-reader-badge" id="vg-reader-badge-text">DILIGENCIA JUDICIAL</span>
         <h3 class="vg-reader-title" id="vg-reader-doc-name">Sobre A: Pieza Principal</h3>
       </div>
 
-      <!-- Zoom & Luminol UV Controls -->
-      <div class="vg-reader-controls">
+      <!-- Zoom & Luminol UV Controls (Desktop only) -->
+      <div class="vg-reader-controls vg-desktop-only">
         <button class="vg-reader-ctrl-btn" onclick="adjustDocZoom(-0.1)" title="Alejar (-)">−</button>
         <span class="vg-reader-zoom-level" id="vg-zoom-display">100%</span>
         <button class="vg-reader-ctrl-btn" onclick="adjustDocZoom(0.1)" title="Acercar (+)">+</button>
@@ -1665,8 +1671,8 @@
         </button>
       </div>
 
-      <!-- Actions -->
-      <div class="vg-reader-actions">
+      <!-- Actions (Desktop only) -->
+      <div class="vg-reader-actions vg-desktop-only">
         <button class="vg-cmd-pill" onclick="printCurrentDoc()" title="Imprimir Documento">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
           <span>Imprimir</span>
@@ -1684,6 +1690,27 @@
       <div class="vg-reader-frame-container" id="vg-reader-frame-container">
         <iframe id="vg-reader-iframe" src="about:blank" title="Visor Documental Nativo"></iframe>
       </div>
+    </div>
+
+    <!-- MOBILE FLOATING GLASS ZOOM DOCK (Active on < 768px) -->
+    <div class="vg-reader-mobile-dock">
+      <button class="vg-reader-dock-btn" onclick="adjustDocZoom(-0.1)" title="Alejar (-)">
+        <span>−</span>
+      </button>
+      <button class="vg-reader-dock-pill" onclick="resetDocZoom()" title="Restablecer (100%)">
+        <span id="vg-mobile-zoom-display">100%</span>
+      </button>
+      <button class="vg-reader-dock-btn" onclick="adjustDocZoom(0.1)" title="Acercar (+)">
+        <span>+</span>
+      </button>
+      <button class="vg-reader-dock-btn uv-btn" id="btn-reader-uv-mobile" onclick="toggleReaderUV()" title="Modo UV Luminol">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        <span>UV</span>
+      </button>
+      <a id="btn-reader-download-pdf-mobile" href="documentos-imprimibles/SOBRE_A_PIEZA_PRINCIPAL.pdf" target="_blank" class="vg-reader-dock-btn pdf-btn" title="Abrir PDF Externo">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        <span>PDF</span>
+      </a>
     </div>
   </div>
 
@@ -1904,6 +1931,15 @@
     }
 
     // VISOR DOCUMENTAL NATIVO (IN-APP NATIVE READER)
+    const DOC_PDF_MAP = {
+      'documentos-imprimibles/instrucciones_juego.html': 'documentos-imprimibles/INSTRUCCIONES_DE_JUEGO.pdf',
+      'documentos-imprimibles/sobre_a.html': 'documentos-imprimibles/SOBRE_A_PIEZA_PRINCIPAL.pdf',
+      'documentos-imprimibles/sobre_b.html': 'documentos-imprimibles/SOBRE_B_PIEZA_SEPARADA_1.pdf',
+      'documentos-imprimibles/sobre_c.html': 'documentos-imprimibles/SOBRE_C_PIEZA_CONVICCION.pdf',
+      'documentos-imprimibles/extras_inmersion.html': 'documentos-imprimibles/EXTRAS_INMERSION.pdf',
+      'documentos-imprimibles/dossier_notarial_y_forense.html': 'documentos-imprimibles/DOSSIER_NOTARIAL_Y_FORENSE.pdf'
+    };
+
     function openDocReader(docUrl, title, badge) {
       const modal = document.getElementById('vg-doc-reader-modal');
       const iframe = document.getElementById('vg-reader-iframe');
@@ -1913,6 +1949,13 @@
       if (titleEl) titleEl.textContent = title || 'Documento Judicial';
       if (badgeEl) badgeEl.textContent = badge || 'CONFIDENCIAL';
       if (iframe) iframe.src = docUrl;
+
+      // Actualizar enlace al PDF original tanto en desktop como en dock móvil
+      const pdfUrl = DOC_PDF_MAP[docUrl] || docUrl;
+      const downloadBtnDesktop = document.getElementById('btn-reader-download-pdf');
+      const downloadBtnMobile = document.getElementById('btn-reader-download-pdf-mobile');
+      if (downloadBtnDesktop) downloadBtnDesktop.href = pdfUrl;
+      if (downloadBtnMobile) downloadBtnMobile.href = pdfUrl;
 
       docReaderZoom = 1.0;
       updateZoomDisplay();
@@ -1932,7 +1975,7 @@
     }
 
     function adjustDocZoom(delta) {
-      docReaderZoom = Math.max(0.6, Math.min(2.0, docReaderZoom + delta));
+      docReaderZoom = Math.max(0.6, Math.min(2.0, +(docReaderZoom + delta).toFixed(1)));
       updateZoomDisplay();
     }
 
@@ -1943,8 +1986,11 @@
 
     function updateZoomDisplay() {
       const display = document.getElementById('vg-zoom-display');
+      const mobileDisplay = document.getElementById('vg-mobile-zoom-display');
       const container = document.getElementById('vg-reader-frame-container');
-      if (display) display.textContent = Math.round(docReaderZoom * 100) + '%';
+      const pct = Math.round(docReaderZoom * 100) + '%';
+      if (display) display.textContent = pct;
+      if (mobileDisplay) mobileDisplay.textContent = pct;
       if (container) container.style.transform = `scale(${docReaderZoom})`;
     }
 
@@ -1952,12 +1998,15 @@
       readerUVActive = !readerUVActive;
       const viewport = document.getElementById('vg-reader-viewport');
       const btn = document.getElementById('btn-reader-uv');
+      const btnMobile = document.getElementById('btn-reader-uv-mobile');
       if (readerUVActive) {
         if (viewport) viewport.classList.add('uv-active');
         if (btn) btn.classList.add('active');
+        if (btnMobile) btnMobile.classList.add('active');
       } else {
         if (viewport) viewport.classList.remove('uv-active');
         if (btn) btn.classList.remove('active');
+        if (btnMobile) btnMobile.classList.remove('active');
       }
       if (window.VestigoTouch) window.VestigoTouch.triggerHaptic('medium');
     }
