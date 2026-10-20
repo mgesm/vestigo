@@ -20,11 +20,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Core Design System CSS -->
-  <link rel="stylesheet" href="css/liquid-glass.css">
+  <link rel="stylesheet" href="css/liquid-glass.css?v=3.0.0">
   <!-- Desktop & Tablet Specialized Layout -->
-  <link rel="stylesheet" href="css/desktop-layout.css">
+  <link rel="stylesheet" href="css/desktop-layout.css?v=3.0.0">
   <!-- Mobile Phone & Touch Specialist UX -->
-  <link rel="stylesheet" href="css/mobile-ux.css">
+  <link rel="stylesheet" href="css/mobile-ux.css?v=3.0.0">
 
   <style>
     /* ========================================================
@@ -310,11 +310,20 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 24px;
+      margin-bottom: 48px;
+      width: 100%;
     }
 
     @media (min-width: 768px) {
       .catalog-grid {
-        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .catalog-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 28px;
       }
     }
 
@@ -338,7 +347,9 @@
 
     .case-cover-wrap {
       width: 100%;
-      height: 200px;
+      aspect-ratio: 16 / 9;
+      min-height: 200px;
+      max-height: 260px;
       background: #020617;
       position: relative;
       overflow: hidden;
@@ -579,20 +590,35 @@
     }
 
     /* IFRAMES RESPONSIVOS (BRIEFING & TERMINAL) */
+    .vg-split-primary {
+      flex: 1 1 0% !important;
+      min-width: 0 !important;
+      width: 100% !important;
+    }
+
+    .tab-content.active {
+      display: block !important;
+      width: 100% !important;
+    }
+
     .embed-viewport {
-      width: 100%;
-      height: 78vh;
-      border: 1px solid var(--border-subtle);
+      width: 100% !important;
+      height: calc(100vh - 230px);
+      min-height: 560px;
+      max-height: 980px;
+      border: 1px solid rgba(255, 255, 255, 0.10);
       border-radius: 16px;
       overflow: hidden;
       background: #000;
       position: relative;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
     }
 
     .embed-iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
+      width: 100% !important;
+      height: 100% !important;
+      border: none !important;
+      display: block !important;
     }
 
     .embed-toolbar {
@@ -1029,48 +1055,48 @@
         </div>
         <!-- VÍDEO BRIEFING -->
         <div class="vg-search-item" onclick="selectSearchResult('briefing')">
-          <span class="vg-search-item-badge" style="background:#e11d48; color:#fff;">BRIEFING</span>
+          <span class="vg-search-item-badge badge-red">BRIEFING</span>
           <span>Vídeo Briefing Audiovisual Oficial (Ambientación y Reglas)</span>
         </div>
         <!-- TERMINAL SITRA-JUD -->
         <div class="vg-search-item" onclick="selectSearchResult('terminal')">
-          <span class="vg-search-item-badge">SITRA-JUD</span>
+          <span class="vg-search-item-badge badge-blue">SITRA-JUD</span>
           <span>Terminal Policial (Fases 1-4, Radar LPR, Mapa SIG, CCTV)</span>
         </div>
         <!-- SOBRE A -->
         <div class="vg-search-item" onclick="selectSearchResult('dossier_a')">
-          <span class="vg-search-item-badge" style="background:#0284c7; color:#fff;">SOBRE A</span>
+          <span class="vg-search-item-badge badge-blue">SOBRE A</span>
           <span>Sobre A: Pieza Principal, Atestado y Autopsia (Tina 4)</span>
         </div>
         <!-- SOBRE B -->
         <div class="vg-search-item" onclick="selectSearchResult('dossier_b')">
-          <span class="vg-search-item-badge" style="background:#ca8a04; color:#000;">SOBRE B</span>
+          <span class="vg-search-item-badge badge-amber">SOBRE B</span>
           <span>Sobre B: Pieza Separada I, Interrogatorios y Luminol</span>
         </div>
         <!-- SOBRE C -->
         <div class="vg-search-item" onclick="selectSearchResult('dossier_c')">
-          <span class="vg-search-item-badge" style="background:#dc2626; color:#fff;">SOBRE C</span>
+          <span class="vg-search-item-badge badge-red">SOBRE C</span>
           <span>Sobre C: Pieza de Convicción Final y Auto de Prisión</span>
         </div>
         <!-- PERSONAJES / SOSPECHOSOS C01 -->
         <div class="vg-search-item" onclick="selectSearchResult('suspect_gonzalo')">
-          <span class="vg-search-item-badge" style="background:#475569; color:#fff;">VÍCTIMA</span>
+          <span class="vg-search-item-badge badge-gray">VÍCTIMA</span>
           <span>Gonzalo de la Serna y Mendieta (Propietario Bodega)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('suspect_elena')">
-          <span class="vg-search-item-badge" style="background:#f43f5e; color:#fff;">SOSPECHOSA</span>
+          <span class="vg-search-item-badge badge-red">SOSPECHOSA</span>
           <span>Elena Fontanals Puig · Directora Financiera Vitis (Audi A5)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('suspect_javier')">
-          <span class="vg-search-item-badge" style="background:#f59e0b; color:#000;">SOSPECHOSO</span>
+          <span class="vg-search-item-badge badge-amber">SOSPECHOSO</span>
           <span>Javier Beltrán Gómez · Capataz General Bodega (Nissan Navara)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('suspect_lucia')">
-          <span class="vg-search-item-badge" style="background:#06b6d4; color:#000;">SOSPECHOSA</span>
+          <span class="vg-search-item-badge badge-cyan">SOSPECHOSA</span>
           <span>Lucía de la Serna Montes · Enóloga Adjunta (Hija de Gonzalo)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('suspect_marcos')">
-          <span class="vg-search-item-badge" style="background:#3b82f6; color:#fff;">SOSPECHOSO</span>
+          <span class="vg-search-item-badge badge-blue">SOSPECHOSO</span>
           <span>Marcos Varela Ríos · Socio Inversor CFO (Volvo XC60)</span>
         </div>
 
@@ -1079,43 +1105,43 @@
           Caso 02 · Marea Negra en Ría de Arousa
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_briefing')">
-          <span class="vg-search-item-badge" style="background:#e11d48; color:#fff;">C02 BRIEFING</span>
+          <span class="vg-search-item-badge badge-red">C02 BRIEFING</span>
           <span>Vídeo Briefing: Marea Negra en Ría de Arousa (6 Actos Náuticos)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_terminal')">
-          <span class="vg-search-item-badge" style="background:#0284c7; color:#fff;">SITRA-NÁUTICA</span>
+          <span class="vg-search-item-badge badge-blue">SITRA-NÁUTICA</span>
           <span>Terminal Policial Arousa (Radar SIVE, AIS, VHF Ch16, Diatomeas)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_sobre_a')">
-          <span class="vg-search-item-badge" style="background:#0284c7; color:#fff;">C02 SOBRE A</span>
+          <span class="vg-search-item-badge badge-blue">C02 SOBRE A</span>
           <span>Sobre A: Levantamiento «Novo Alborada» y Autopsia Diatomeas</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_sobre_b')">
-          <span class="vg-search-item-badge" style="background:#ca8a04; color:#000;">C02 SOBRE B</span>
+          <span class="vg-search-item-badge badge-amber">C02 SOBRE B</span>
           <span>Sobre B: Interrogatorios Batea B-12 y Modelo de Deriva</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_sobre_c')">
-          <span class="vg-search-item-badge" style="background:#dc2626; color:#fff;">C02 SOBRE C</span>
+          <span class="vg-search-item-badge badge-red">C02 SOBRE C</span>
           <span>Sobre C: NMEA Furuno GPS, Radar SIVE y Espectrometría Pintura</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_suspect_xurxo')">
-          <span class="vg-search-item-badge" style="background:#475569; color:#fff;">VÍCTIMA</span>
+          <span class="vg-search-item-badge badge-gray">VÍCTIMA</span>
           <span>Xurxo Otero Barral (Patrón Mayor de Cambados)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_suspect_suso')">
-          <span class="vg-search-item-badge" style="background:#f59e0b; color:#000;">SOSPECHOSO</span>
+          <span class="vg-search-item-badge badge-amber">SOSPECHOSO</span>
           <span>Jesús «Suso O Rubio» Trigo Vidal (Empresario bateeiro)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_suspect_carla')">
-          <span class="vg-search-item-badge" style="background:#06b6d4; color:#000;">SOSPECHOSA</span>
+          <span class="vg-search-item-badge badge-cyan">SOSPECHOSA</span>
           <span>Carla Souto Méndez (Bióloga marina INTECMAR)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_suspect_manuel')">
-          <span class="vg-search-item-badge" style="background:#3b82f6; color:#fff;">SOSPECHOSO</span>
+          <span class="vg-search-item-badge badge-blue">SOSPECHOSO</span>
           <span>Manuel Otero Freire (Marinero y sobrino de la víctima)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_suspect_brais')">
-          <span class="vg-search-item-badge" style="background:#f43f5e; color:#fff;">SOSPECHOSO</span>
+          <span class="vg-search-item-badge badge-red">SOSPECHOSO</span>
           <span>Brais Lema Castro (Ingeniero naval y dueño de astillero)</span>
         </div>
         <!-- CASO 04 CARTAGENA (OCULTO TEMPORALMENTE)
@@ -1157,7 +1183,7 @@
         </div>
         -->
         <div class="vg-search-item" onclick="selectSearchResult('notes')">
-          <span class="vg-search-item-badge" style="background:#8b5cf6; color:#fff;">NOTAS</span>
+          <span class="vg-search-item-badge badge-purple">NOTAS</span>
           <span>Cuaderno de Campo del Investigador (Bloc de Notas Dual)</span>
         </div>
       </div>
@@ -1218,8 +1244,8 @@
           <div class="case-cover-wrap">
             <img src="imagenes/escena_tina4_bodega.png" alt="Caso 01: El Último Mosto de Bodegas Valdeluna" class="case-cover-img" width="600" height="200" loading="eager" decoding="async">
             <div class="case-badge-overlay">
-              <span class="case-badge badge-active">CASO 01 · ACTIVO</span>
-              <span class="case-badge" style="background:#ca8a04; color:#000;">DIFICULTAD MEDIA</span>
+              <span class="case-badge badge-active"><span class="catalog-badge-dot"></span>CASO 01 · ACTIVO</span>
+              <span class="case-badge" style="background:rgba(245,158,11,0.12); color:#F59E0B; border:1px solid rgba(245,158,11,0.3);">DIFICULTAD MEDIA</span>
             </div>
           </div>
           <div class="case-body">
@@ -1260,8 +1286,8 @@
           <div class="case-cover-wrap">
             <img src="casos/caso-02-arousa/imagenes/escena_barco_batea.png" alt="Caso 02: Marea Negra en Ría de Arousa" class="case-cover-img" width="600" height="200" loading="eager" decoding="async">
             <div class="case-badge-overlay">
-              <span class="case-badge badge-active">CASO 02 · ACTIVO</span>
-              <span class="case-badge" style="background:#0284c7; color:#fff;">DIFICULTAD MEDIA-ALTA</span>
+              <span class="case-badge badge-active"><span class="catalog-badge-dot"></span>CASO 02 · ACTIVO</span>
+              <span class="case-badge" style="background:rgba(56,189,248,0.12); color:#38BDF8; border:1px solid rgba(56,189,248,0.3);">DIFICULTAD MEDIA-ALTA</span>
             </div>
           </div>
           <div class="case-body">
@@ -1303,7 +1329,7 @@
             <img src="casos/caso-04-cartagena/imagenes/escena_cala_cortina.png" alt="Caso 04: El Enigma de los Dos Faros (Cala Cortina)" class="case-cover-img" width="600" height="200" loading="eager" decoding="async">
             <div class="case-badge-overlay">
               <span class="case-badge badge-active" style="background:#00e5ff; color:#000;">CASO 04 · ACTIVO</span>
-              <span class="case-badge" style="background:#0284c7; color:#fff;">DIFICULTAD MEDIA-ALTA</span>
+              <span class="case-badge" style="background:rgba(56,189,248,0.12); color:#38BDF8; border:1px solid rgba(56,189,248,0.3);">DIFICULTAD MEDIA-ALTA</span>
             </div>
           </div>
           <div class="case-body">
@@ -1379,8 +1405,8 @@
           <p id="case-meta-court">DILIGENCIAS PREVIAS 402/2024 · JUZGADO DE INSTRUCCIÓN Nº 2 DE VALLADOLID</p>
         </div>
         <div style="display:flex; gap:8px;" id="case-header-badges">
-          <span class="case-badge" style="background:var(--evidence-red); color:#fff;">HOMICIDIO</span>
-          <span class="case-badge" style="background:#0284c7; color:#fff;">FORMATO HÍBRIDO</span>
+          <span class="case-badge" style="background:rgba(255,45,85,0.12); color:#FF2D55; border:1px solid rgba(255,45,85,0.3);"><span class="vg-pulse-dot" style="background:#FF2D55; box-shadow:0 0 6px #FF2D55;"></span>HOMICIDIO</span>
+          <span class="case-badge" style="background:rgba(56,189,248,0.12); color:#38BDF8; border:1px solid rgba(56,189,248,0.3);">FORMATO HÍBRIDO</span>
         </div>
       </div>
 
@@ -1966,7 +1992,7 @@
   </div>
 
   <!-- MOTOR DE GESTOS Y TOUCH NATIVO MÓVIL -->
-  <script src="css/mobile-touch-engine.js"></script>
+  <script src="css/mobile-touch-engine.js?v=3.0.0"></script>
 
   <!-- LÓGICA JAVASCRIPT DEL CLIENTE -->
   <script>
@@ -2077,11 +2103,11 @@
         sidecarDocTitle: 'EXTRACTO DE AUTOPSIA (SOBRE A)',
         dossiers: [
           {
-            cardStyle: 'border-color:#facc15; background: #172033; grid-column: 1 / -1;',
-            badgeStyle: 'background:#facc15; color:#000;',
+            cardStyle: 'border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.04); grid-column: 1 / -1;',
+            badgeStyle: 'background:rgba(245,158,11,0.12); color:#F59E0B; border:1px solid rgba(245,158,11,0.3);',
             badgeText: 'LEER PRIMERO — GUÍA DE OPERACIONES',
             title: 'Manual del Investigador y Reglas de Juego (4 páginas)',
-            titleStyle: 'color:#fde047;',
+            titleStyle: 'color:#FFFFFF;',
             desc: 'Protocolo de montaje de la mesa de investigación, preparación de sobres físicos, uso del sistema híbrido con la terminal digital y el decálogo forense.',
             htmlUrl: 'documentos-imprimibles/instrucciones_juego.html',
             pdfUrl: 'documentos-imprimibles/INSTRUCCIONES_DE_JUEGO.pdf',
@@ -2091,7 +2117,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:#0284c7; color:#fff;',
+            badgeStyle: 'background:rgba(56,189,248,0.12); color:#38BDF8; border:1px solid rgba(56,189,248,0.3);',
             badgeText: 'SOBRE A — ABIERTO DE INICIO',
             title: 'Pieza Principal: Hallazgo y Autopsia',
             titleStyle: '',
@@ -2104,7 +2130,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:#ca8a04; color:#000;',
+            badgeStyle: 'background:rgba(245,158,11,0.12); color:#F59E0B; border:1px solid rgba(245,158,11,0.3);',
             badgeText: 'SOBRE B — PRECINTADO',
             title: 'Pieza I: Escenario y Testigos',
             titleStyle: '',
@@ -2117,7 +2143,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:#dc2626; color:#fff;',
+            badgeStyle: 'background:rgba(255,45,85,0.12); color:#FF2D55; border:1px solid rgba(255,45,85,0.3);',
             badgeText: 'SOBRE C — PRECINTADO',
             title: 'Pieza II: Convicción Final',
             titleStyle: '',
@@ -2130,7 +2156,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:#8b5cf6; color:#fff;',
+            badgeStyle: 'background:rgba(168,85,247,0.12); color:#C084FC; border:1px solid rgba(168,85,247,0.3);',
             badgeText: 'EXTRAS DISPONIBLES DESDE EL INICIO',
             title: 'Fichas de Filiación y Prensa Local',
             titleStyle: '',
@@ -2143,7 +2169,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:#06b6d4; color:#000;',
+            badgeStyle: 'background:rgba(0,229,255,0.12); color:#00E5FF; border:1px solid rgba(0,229,255,0.3);',
             badgeText: 'PIEZA ANEXA DE COLECCIONISTA',
             title: 'Dossier Notarial, Bancario y Fotos',
             titleStyle: '',
@@ -2236,11 +2262,11 @@
         sidecarDocTitle: 'LEVANTAMIENTO CADÁVER (SOBRE A)',
         dossiers: [
           {
-            cardStyle: 'border-color:#facc15; background: #172033; grid-column: 1 / -1;',
-            badgeStyle: 'background:#facc15; color:#000;',
+            cardStyle: 'border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.04); grid-column: 1 / -1;',
+            badgeStyle: 'background:rgba(245,158,11,0.12); color:#F59E0B; border:1px solid rgba(245,158,11,0.3);',
             badgeText: 'LEER PRIMERO — PROTOCOLO NÁUTICO',
             title: 'Manual de Instrucciones Náuticas y Reglas (4 páginas)',
-            titleStyle: 'color:#fde047;',
+            titleStyle: 'color:#FFFFFF;',
             desc: 'Metodología pericial marítima, cartas náuticas IHM, protocolo de diatomeas, descifrado de registros NMEA GPS y pautas del caso.',
             htmlUrl: 'casos/caso-02-arousa/documentos-imprimibles/instrucciones_juego.html',
             pdfUrl: 'casos/caso-02-arousa/documentos-imprimibles/INSTRUCCIONES_DE_JUEGO.pdf',
@@ -2250,7 +2276,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:#0284c7; color:#fff;',
+            badgeStyle: 'background:rgba(56,189,248,0.12); color:#38BDF8; border:1px solid rgba(56,189,248,0.3);',
             badgeText: 'SOBRE A — ABIERTO DE INICIO',
             title: 'Pieza Principal: Hallazgo y Autopsia Marina',
             titleStyle: '',
@@ -2263,7 +2289,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:#ca8a04; color:#000;',
+            badgeStyle: 'background:rgba(245,158,11,0.12); color:#F59E0B; border:1px solid rgba(245,158,11,0.3);',
             badgeText: 'SOBRE B — PRECINTADO',
             title: 'Pieza I: Interrogatorios y Modelo de Corrientes',
             titleStyle: '',
@@ -2276,7 +2302,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:#dc2626; color:#fff;',
+            badgeStyle: 'background:rgba(255,45,85,0.12); color:#FF2D55; border:1px solid rgba(255,45,85,0.3);',
             badgeText: 'SOBRE C — PRECINTADO',
             title: 'Pieza II: Convicción Final y Peritajes Náuticos',
             titleStyle: '',
@@ -2289,7 +2315,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:#8b5cf6; color:#fff;',
+            badgeStyle: 'background:rgba(168,85,247,0.12); color:#C084FC; border:1px solid rgba(168,85,247,0.3);',
             badgeText: 'EXTRAS DISPONIBLES DESDE EL INICIO',
             title: 'Fichas Policiales y La Voz de Galicia',
             titleStyle: '',
@@ -2302,7 +2328,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:#06b6d4; color:#000;',
+            badgeStyle: 'background:rgba(0,229,255,0.12); color:#00E5FF; border:1px solid rgba(0,229,255,0.3);',
             badgeText: 'PIEZA ANEXA DE COLECCIONISTA',
             title: 'Dossier Cofradía de Pescadores y Forense',
             titleStyle: '',
@@ -2396,11 +2422,11 @@
         sidecarDocTitle: 'ATESTADO CALA CORTINA (SOBRE A)',
         dossiers: [
           {
-            cardStyle: 'border-color:#facc15; background: #172033; grid-column: 1 / -1;',
-            badgeStyle: 'background:#facc15; color:#000;',
+            cardStyle: 'border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.04); grid-column: 1 / -1;',
+            badgeStyle: 'background:rgba(245,158,11,0.12); color:#F59E0B; border:1px solid rgba(245,158,11,0.3);',
             badgeText: 'LEER PRIMERO — PROTOCOLO POLICIAL',
             title: 'Manual de Instrucciones del Investigador (4 páginas)',
-            titleStyle: 'color:#fde047;',
+            titleStyle: 'color:#FFFFFF;',
             desc: 'Protocolo de la Policía Local de Cartagena, balizamiento de los Faros de Navidad y Curra, rol de la Agente Patricia Normand y decálogo del caso.',
             htmlUrl: 'casos/caso-04-cartagena/documentos-imprimibles/instrucciones_juego.html',
             pdfUrl: 'casos/caso-04-cartagena/documentos-imprimibles/INSTRUCCIONES_DE_JUEGO.pdf',
@@ -2410,7 +2436,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:#0284c7; color:#fff;',
+            badgeStyle: 'background:rgba(56,189,248,0.12); color:#38BDF8; border:1px solid rgba(56,189,248,0.3);',
             badgeText: 'SOBRE A — ABIERTO DE INICIO',
             title: 'Pieza Principal: Hallazgo en Cala Cortina y Autopsia',
             titleStyle: '',
@@ -2423,7 +2449,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:#ca8a04; color:#000;',
+            badgeStyle: 'background:rgba(245,158,11,0.12); color:#F59E0B; border:1px solid rgba(245,158,11,0.3);',
             badgeText: 'SOBRE B — PRECINTADO',
             title: 'Pieza I: Interrogatorios y Telemetría de los Faros',
             titleStyle: '',
@@ -2436,7 +2462,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:#dc2626; color:#fff;',
+            badgeStyle: 'background:rgba(255,45,85,0.12); color:#FF2D55; border:1px solid rgba(255,45,85,0.3);',
             badgeText: 'SOBRE C — PRECINTADO',
             title: 'Pieza II: Convicción Final y Volcado de Vídeo',
             titleStyle: '',
@@ -2449,7 +2475,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:#8b5cf6; color:#fff;',
+            badgeStyle: 'background:rgba(168,85,247,0.12); color:#C084FC; border:1px solid rgba(168,85,247,0.3);',
             badgeText: 'EXTRAS DISPONIBLES DESDE EL INICIO',
             title: 'Fichas Policiales y Portada de La Verdad',
             titleStyle: '',
@@ -2462,7 +2488,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:#06b6d4; color:#000;',
+            badgeStyle: 'background:rgba(0,229,255,0.12); color:#00E5FF; border:1px solid rgba(0,229,255,0.3);',
             badgeText: 'PIEZA ANEXA CIENTÍFICA',
             title: 'Dossier Arqueológico ARQVA y Balizamiento',
             titleStyle: '',

@@ -22,7 +22,7 @@
     }
   }
 
-  // 2. iOS BOTTOM SHEET PULL-TO-DISMISS GESTURE ENGINE
+  // 2. iOS BOTTOM SHEET PULL-TO-DISMISS GESTURE ENGINE (FLUID DYNAMICS)
   function initBottomSheetGesture(modalId, contentSelector, handleSelector, closeCallback) {
     const backdrop = document.getElementById(modalId);
     if (!backdrop) return;
@@ -46,6 +46,7 @@
       isDragging = true;
       startTimestamp = Date.now();
       content.style.transition = 'none';
+      backdrop.style.transition = 'none';
     }, { passive: true });
 
     dragTarget.addEventListener('touchmove', function (e) {
@@ -53,12 +54,16 @@
       currentY = e.touches[0].clientY;
       const deltaY = currentY - startY;
 
-      // Only allow downward drag
       if (deltaY > 0) {
+        // Downward drag: translate sheet and interpolate backdrop opacity
         content.style.transform = 'translateY(' + deltaY + 'px)';
+        const maxDrag = window.innerHeight * 0.55;
+        const progress = Math.min(deltaY / maxDrag, 1);
+        backdrop.style.backgroundColor = 'rgba(2, 4, 8, ' + (0.85 * (1 - progress * 0.75)) + ')';
       } else {
-        // Subtle resistance when dragging upwards
-        content.style.transform = 'translateY(' + (deltaY * 0.15) + 'px)';
+        // Upward drag: subtle logarithmic rubber-band resistance
+        const dampened = -Math.log10(1 + Math.abs(deltaY) * 0.05) * 18;
+        content.style.transform = 'translateY(' + dampened + 'px)';
       }
     }, { passive: true });
 
@@ -69,11 +74,13 @@
       const dragDuration = Date.now() - startTimestamp;
       const velocity = deltaY / (dragDuration || 1);
 
-      content.style.transition = 'transform 0.34s cubic-bezier(0.16, 1, 0.3, 1)';
+      content.style.transition = 'transform 0.36s cubic-bezier(0.32, 0.72, 0, 1)';
+      backdrop.style.transition = 'opacity 0.30s ease, background-color 0.30s ease';
 
-      // Dismiss if dragged down more than 80px or flicked downwards with speed
-      if (deltaY > 80 || (deltaY > 35 && velocity > 0.45)) {
+      // Dismiss if dragged down more than 75px or flicked downwards with speed
+      if (deltaY > 75 || (deltaY > 30 && velocity > 0.35)) {
         content.style.transform = 'translateY(100%)';
+        backdrop.style.opacity = '0';
         triggerHaptic('light');
         setTimeout(function () {
           if (typeof closeCallback === 'function') {
@@ -83,13 +90,18 @@
           }
           content.style.transform = '';
           content.style.transition = '';
-        }, 280);
+          backdrop.style.backgroundColor = '';
+          backdrop.style.opacity = '';
+          backdrop.style.transition = '';
+        }, 300);
       } else {
-        // Snap back to open position
+        // Snap back to resting open position
         content.style.transform = 'translateY(0)';
+        backdrop.style.backgroundColor = '';
         setTimeout(function () {
           content.style.transition = '';
-        }, 340);
+          backdrop.style.transition = '';
+        }, 360);
       }
     });
   }
@@ -115,16 +127,66 @@
     });
   }
 
-  // 4. FLOATING DOCK & VIEW SYNCHRONIZATION
-  function initDockHaptics() {
-    document.querySelectorAll('.nav-item, .vg-nav-item, .tab-btn').forEach(function (btn) {
+  // 4. FORENSIC EVIDENCE DOUBLE-TAP LOUPE / ZOOM
+  function initEvidencePhotoZoom() {
+    const modalImg = document.getElementById('modal-img');
+    if (!modalImg) return;
+    
+    let lastTap = 0;
+    let isZoomed = false;
+
+    modalImg.addEventListener('touchend', function (e) {
+      const currentTime = new Date().getTime();
+      const tapLength = currentTime - lastTap;
+      if (tapLength < 320 && tapLength > 40) {
+        // Double tap detected!
+        e.preventDefault();
+        e.stopPropagation();
+        isZoomed = !isZoomed;
+        triggerHaptic(isZoomed ? 'medium' : 'light');
+        if (isZoomed) {
+          modalImg.style.transform = 'scale(2.2)';
+          modalImg.style.cursor = 'zoom-out';
+          modalImg.style.transition = 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1)';
+        } else {
+          modalImg.style.transform = 'scale(1)';
+          modalImg.style.cursor = 'zoom-in';
+          modalImg.style.transition = 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1)';
+        }
+      }
+      lastTap = currentTime;
+    });
+
+    // Reset zoom when modal closes
+    const resetZoom = function () {
+      isZoomed = false;
+      if (modalImg) {
+        modalImg.style.transform = 'scale(1)';
+        modalImg.style.transition = '';
+      }
+    };
+    
+    const photoModal = document.getElementById('photo-modal');
+    if (photoModal) {
+      const observer = new MutationObserver(function () {
+        if (!photoModal.classList.contains('open') && photoModal.style.display === 'none') {
+          resetZoom();
+        }
+      });
+      observer.observe(photoModal, { attributes: true, attributeFilter: ['class', 'style'] });
+    }
+  }
+
+  // 5. FLOATING DOCK, CARDS & INTERACTION HAPTICS
+  function initInteractiveHaptics() {
+    document.querySelectorAll('.nav-item, .vg-nav-item, .tab-btn, .case-card, .profile-card, .btn-enter-case, .back-btn, .vg-reader-dock-btn').forEach(function (btn) {
       btn.addEventListener('click', function () {
         triggerHaptic('light');
       });
     });
   }
 
-  // 5. VIEWPORT RESIZE & ORIENTATION MONITOR (100dvh Fix)
+  // 6. VIEWPORT RESIZE & ORIENTATION MONITOR (100dvh Fix)
   function syncViewportUnits() {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', vh + 'px');
@@ -156,14 +218,16 @@
     });
 
     initProgressiveDisclosure();
-    initDockHaptics();
+    initInteractiveHaptics();
+    initEvidencePhotoZoom();
   }
 
   // Export to window for global access
   window.VestigoTouch = {
     triggerHaptic: triggerHaptic,
     initBottomSheetGesture: initBottomSheetGesture,
-    initProgressiveDisclosure: initProgressiveDisclosure
+    initProgressiveDisclosure: initProgressiveDisclosure,
+    initEvidencePhotoZoom: initEvidencePhotoZoom
   };
 
 })();

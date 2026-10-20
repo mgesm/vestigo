@@ -1141,3 +1141,116 @@ body.vg-desktop-optimized {
     height: 100% !important;
   }
 }
+
+/* ============================================================================
+   12. VESTIGO STRUCTURAL RESILIENCE ENGINE (FULL-WIDTH WORKSPACE & RESILIENT GRIDS)
+   ============================================================================ */
+.app-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  width: 100%;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 1440px) {
+  .app-container {
+    max-width: 1560px;
+  }
+}
+
+.catalog-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 24px;
+  width: 100%;
+  margin-bottom: 48px;
+}
+
+@media (min-width: 1024px) {
+  .catalog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 24px !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .catalog-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 28px !important;
+  }
+}
+
+.case-card {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+.case-cover-wrap {
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+  min-height: 200px !important;
+  max-height: 260px !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.case-cover-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+.vg-split-workspace {
+  display: flex !important;
+  width: 100% !important;
+  gap: 24px !important;
+  position: relative !important;
+  align-items: flex-start !important;
+}
+
+.vg-split-primary {
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
+  width: 100% !important;
+}
+
+.tab-content {
+  display: none;
+  width: 100%;
+}
+
+.tab-content.active {
+  display: block !important;
+  width: 100% !important;
+  animation: vgFadeIn 240ms ease-out;
+}
+
+.embed-viewport {
+  width: 100% !important;
+  height: calc(100vh - 230px) !important;
+  min-height: 560px !important;
+  max-height: 980px !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  background: #000000 !important;
+  position: relative !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75) !important;
+}
+
+.embed-iframe {
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+  display: block !important;
+  background: transparent !important;
+}
+
