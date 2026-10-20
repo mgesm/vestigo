@@ -811,6 +811,34 @@ body.vg-desktop-optimized {
   .profiles-grid, .vg-grid-profiles {
     grid-template-columns: repeat(4, 1fr) !important;
   }
+
+  .vg-split-workspace.sidecar-open .profiles-grid,
+  .vg-split-workspace.sidecar-open .vg-grid-profiles {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Biometric Profile Portrait Aspect Ratio & Modal Desktop Enhancements */
+@media (min-width: 769px) {
+  .profile-thumb-wrap {
+    aspect-ratio: 1 / 1;
+    height: auto !important;
+    overflow: hidden;
+  }
+  .profile-thumb {
+    object-fit: cover !important;
+    object-position: center 20% !important;
+  }
+  #photo-modal .vg-sheet-handle-wrap,
+  .modal-content .vg-sheet-handle-wrap {
+    display: none !important;
+  }
+  #photo-modal .modal-content {
+    max-width: 820px !important;
+  }
+  #photo-modal #modal-img {
+    max-height: 68vh !important;
+  }
 }
 
 /* Minimum 44x44px touch targets on tablet interactive controls */
@@ -1083,4 +1111,33 @@ body.vg-desktop-optimized {
   background: rgba(0, 229, 255, 0.10);
   border: 1px solid rgba(0, 229, 255, 0.35);
   color: #00E5FF;
+}
+
+/* ============================================================================
+   11. PRINT MEDIA OPTIMIZATION (CLEAN DOSSIER PRINTS)
+   ============================================================================ */
+@media print {
+  .vg-desktop-header,
+  .mobile-bottom-nav,
+  .vg-reader-dock-bar,
+  .vg-reader-topbar,
+  .vg-floating-controls,
+  .vg-split-sidecar,
+  .btn-enter-case,
+  .case-meta-header,
+  .vg-hud-pill,
+  .hud-badge {
+    display: none !important;
+  }
+  body, .vg-app-workspace {
+    background: #ffffff !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  iframe#vg-reader-iframe {
+    position: static !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
 }

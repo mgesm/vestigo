@@ -13,6 +13,7 @@
     if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
       try {
         if (type === 'light') navigator.vibrate(10);
+        else if (type === 'selection') navigator.vibrate(8);
         else if (type === 'medium') navigator.vibrate(18);
         else if (type === 'success') navigator.vibrate([10, 30, 15]);
       } catch (e) {
@@ -127,6 +128,7 @@
   function syncViewportUnits() {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', vh + 'px');
+    document.documentElement.style.setProperty('--vg-dvh', window.innerHeight + 'px');
   }
 
   // INITIALIZE ON DOM READY

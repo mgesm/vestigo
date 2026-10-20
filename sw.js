@@ -1,5 +1,5 @@
-// VESTIGO Service Worker v2.0.0 — Multi-Case Forensic Engine & Anti-FOUC
-const CACHE_NAME = 'vestigo-cache-v2.0.0';
+// VESTIGO Service Worker v2.1.0 — Multi-Case Forensic Engine & Anti-FOUC
+const CACHE_NAME = 'vestigo-cache-v2.1.0';
 
 const PRECACHE_ASSETS = [
   './',
@@ -8,12 +8,12 @@ const PRECACHE_ASSETS = [
   './css/liquid-glass.css',
   './css/desktop-layout.css',
   './css/mobile-ux.css',
+  './css/mobile-touch-engine.js',
   './branding/vestigo_icon_2d.svg',
   './branding/vestigo_wordmark.svg',
+  './imagenes/vestigo_icon_2d.png',
   './video-briefing/index.html',
-  './video-briefing/video_briefing.js',
-  './terminal-policial/index.html',
-  './terminal-policial/terminal.js'
+  './terminal-policial/index.html'
 ];
 
 self.addEventListener('install', (e) => {

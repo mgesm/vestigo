@@ -339,8 +339,26 @@
 
   <script>
     if (window.self !== window.top) {
-      document.querySelectorAll('a[href="../index.html"]').forEach(function(el) { el.remove(); });
+      document.querySelectorAll('a[href="../index.html"], a[href="../../index.html"], a[href="../../../index.html"]').forEach(function(el) { el.remove(); });
     }
+
+    // Receptor de parada remota desde el workspace principal
+    window.addEventListener('message', (e) => {
+      if (e.data && e.data.type === 'VESTIGO_PAUSE_AUDIO') {
+        if (isPlaying) togglePlay();
+      }
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && isPlaying) {
+        togglePlay();
+      }
+    });
+
+    window.addEventListener('pagehide', () => {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      stopAudioDrone();
+    });
 
     const SCENES = [
       { id: 0, title: "Amanecer en Cala Cortina", dur: 30, text: "Sábado 18 de octubre. Como cada mañana, la Agente Patricia Normand de la Policía Local de Cartagena inicia su servicio de vigilancia de playas descendiendo por el túnel hacia Cala Cortina. La ensenada, protegida por acantilados de piedra caliza, amanece en un silencio inquietante bajo la brisa del Mediterráneo." },
@@ -430,12 +448,17 @@
       jumpToScene(targetIdx);
     }
 
+    window._vestigoUtteranceCartagena = null;
+
     function speakScene(idx) {
       if (!voiceEnabled || !('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(SCENES[idx].title + '. ' + SCENES[idx].text);
       u.lang = 'es-ES';
       u.rate = 0.95;
+      u.onend = () => { window._vestigoUtteranceCartagena = null; };
+      u.onerror = () => { window._vestigoUtteranceCartagena = null; };
+      window._vestigoUtteranceCartagena = u;
       window.speechSynthesis.speak(u);
     }
 

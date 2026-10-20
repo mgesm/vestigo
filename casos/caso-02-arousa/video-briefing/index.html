@@ -395,8 +395,26 @@
   <script>
     // Safeguard anti-anidamiento
     if (window.self !== window.top) {
-      document.querySelectorAll('a[href="../index.html"]').forEach(function(el) { el.remove(); });
+      document.querySelectorAll('a[href="../index.html"], a[href="../../index.html"], a[href="../../../index.html"]').forEach(function(el) { el.remove(); });
     }
+
+    // Receptor de parada remota desde el workspace principal
+    window.addEventListener('message', (e) => {
+      if (e.data && e.data.type === 'VESTIGO_PAUSE_AUDIO') {
+        if (isPlaying) togglePlay();
+      }
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && isPlaying) {
+        togglePlay();
+      }
+    });
+
+    window.addEventListener('pagehide', () => {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      stopAudioDrone();
+    });
 
     const SCENES = [
       { id: 0, title: "Madrugada en la Ría de Arousa", dur: 30, text: "14 de marzo de 2025. Un temporal del suroeste azota los muelles de Cambados con vientos de 45 nudos y mareas vivas. A las 21:30 h, el Patrón Mayor Xurxo Otero cena en la cantina de la lonja tras un día de enfrentamientos por las cuotas de marisqueo. A medianoche, su pesquero abandona el amarre." },
@@ -486,12 +504,17 @@
       jumpToScene(targetIdx);
     }
 
+    window._vestigoUtteranceArousa = null;
+
     function speakScene(idx) {
       if (!voiceEnabled || !('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(SCENES[idx].title + '. ' + SCENES[idx].text);
       u.lang = 'es-ES';
       u.rate = 0.95;
+      u.onend = () => { window._vestigoUtteranceArousa = null; };
+      u.onerror = () => { window._vestigoUtteranceArousa = null; };
+      window._vestigoUtteranceArousa = u;
       window.speechSynthesis.speak(u);
     }
 

@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VÍDEO BRIEFING JUDICIAL — EL ÚLTIMO MOSTO DE BODEGAS VALDELUNA</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -849,25 +850,47 @@
     // ========================================================
     // SÍNTESIS DE VOZ EN CASTELLANO (SPEECH SYNTHESIS API)
     // ========================================================
-    let activeUtterance = null;
+    window._vestigoActiveUtterance = null;
 
     function speakText(text) {
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
       if (!voiceEnabled || !isPlaying) return;
 
-      activeUtterance = new SpeechSynthesisUtterance(text);
-      activeUtterance.lang = 'es-ES';
-      activeUtterance.rate = 0.96; // Pausa solemne policial
-      activeUtterance.pitch = 0.88; // Voz grave y autoritaria
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'es-ES';
+      utter.rate = 0.96; // Pausa solemne policial
+      utter.pitch = 0.88; // Voz grave y autoritaria
 
       // Intentar seleccionar voz en castellano
       const voices = window.speechSynthesis.getVoices();
       const esVoice = voices.find(v => v.lang.startsWith('es') && (v.name.includes('Castilian') || v.name.includes('Spain') || v.name.includes('Pablo') || v.name.includes('Jorge') || v.name.includes('Google español')));
-      if (esVoice) activeUtterance.voice = esVoice;
+      if (esVoice) utter.voice = esVoice;
 
-      window.speechSynthesis.speak(activeUtterance);
+      utter.onend = () => { window._vestigoActiveUtterance = null; };
+      utter.onerror = () => { window._vestigoActiveUtterance = null; };
+
+      window._vestigoActiveUtterance = utter;
+      window.speechSynthesis.speak(utter);
     }
+
+    // Receptor de mensajes de parada desde el espacio de trabajo padre
+    window.addEventListener('message', (e) => {
+      if (e.data && e.data.type === 'VESTIGO_PAUSE_AUDIO') {
+        pauseVideo();
+      }
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && isPlaying) {
+        pauseVideo();
+      }
+    });
+
+    window.addEventListener('pagehide', () => {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      stopDrone();
+    });
 
     // ========================================================
     // CONTROL DEL VÍDEO Y TRANSICIÓN DE ESCENAS
@@ -921,7 +944,7 @@
       clearTimeout(sceneTimer);
     }
 
-    function renderScene(idx) {
+    function renderScene(idx, sceneElapsedOffset = 0) {
       if (idx >= SCENES.length) {
         pauseVideo();
         return;
@@ -951,11 +974,12 @@
 
       clearTimeout(sceneTimer);
       if (isPlaying) {
+        const remainingSeconds = Math.max(0.5, s.duration - sceneElapsedOffset);
         sceneTimer = setTimeout(() => {
           if (isPlaying) {
-            renderScene(idx + 1);
+            renderScene(idx + 1, 0);
           }
-        }, s.duration * 1000);
+        }, remainingSeconds * 1000);
       }
     }
 
@@ -967,7 +991,7 @@
       if (!isPlaying) {
         playVideo();
       } else {
-        renderScene(idx);
+        renderScene(idx, 0);
       }
     }
 
@@ -984,20 +1008,22 @@
       const rect = e.currentTarget.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
       const pct = Math.max(0, Math.min(1, clickX / rect.width));
-      elapsedTime = pct * totalDuration;
+      elapsedTime = +(pct * totalDuration).toFixed(1);
       updateProgress();
 
       // Encontrar a qué escena corresponde
       let acc = 0;
       let targetIdx = 0;
+      let sceneStartOffset = 0;
       for (let i = 0; i < SCENES.length; i++) {
         if (elapsedTime >= acc && elapsedTime < acc + SCENES[i].duration) {
           targetIdx = i;
+          sceneStartOffset = acc;
           break;
         }
         acc += SCENES[i].duration;
       }
-      renderScene(targetIdx);
+      renderScene(targetIdx, elapsedTime - sceneStartOffset);
     }
 
     function toggleVoice() {

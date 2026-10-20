@@ -687,7 +687,7 @@
           Consulte los pasos registrados por los pórticos LPR en la N-122 durante la noche del crimen:
         </p>
         <div class="dgt-search-box">
-          <input type="text" id="dgt-input" placeholder="Ej: 4188KLT" maxlength="8">
+          <input type="text" id="dgt-input" placeholder="Ej: 4188KLT" maxlength="8" onkeydown="if(event.key==='Enter'){event.preventDefault(); searchDGT();}">
           <button class="tool-btn" style="margin-top:0; width: auto;" onclick="searchDGT()">BUSCAR</button>
         </div>
         <div id="dgt-result-container" style="display: none; margin-top: 10px;">

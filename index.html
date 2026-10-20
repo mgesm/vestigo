@@ -96,7 +96,7 @@
       padding-bottom: 70px; /* Espacio para barra de navegación móvil */
     }
 
-    @media (min-width: 800px) {
+    @media (min-width: 768px) {
       body {
         padding-bottom: 0;
       }
@@ -719,6 +719,7 @@
       flex-direction: column;
       gap: 8px;
       transition: border-color 0.2s, background 0.2s;
+      align-self: start;
     }
 
     .case-card-teaser:hover {
@@ -880,7 +881,7 @@
       display: flex;
     }
 
-    @media (min-width: 800px) {
+    @media (min-width: 768px) {
       .mobile-bottom-nav,
       body.in-case-view .mobile-bottom-nav {
         display: none !important;
@@ -918,6 +919,7 @@
       top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       z-index: 2000;
       align-items: center;
       justify-content: center;
@@ -996,12 +998,16 @@
       <nav class="vg-breadcrumbs" aria-label="Ruta de navegación">
         <span class="vg-breadcrumb-sep">/</span>
         <a class="vg-breadcrumb-item" onclick="switchView('catalog')">Expedientes</a>
-        <span class="vg-breadcrumb-sep">/</span>
-        <span class="vg-breadcrumb-item" id="crumb-case-name" style="display:none;">Caso 01 · Valdeluna</span>
-        <span class="vg-breadcrumb-sep">/</span>
-        <span class="vg-breadcrumb-current" id="crumb-active-tab" style="display:none;">
-          <span style="width:6px; height:6px; border-radius:50%; background:#00E5FF; box-shadow:0 0 8px #00E5FF;"></span>
-          <span id="crumb-tab-text">Vídeo Briefing</span>
+        <span id="crumb-case-wrapper" style="display:none; align-items:center; gap:6px;">
+          <span class="vg-breadcrumb-sep">/</span>
+          <span class="vg-breadcrumb-item" id="crumb-case-name">Caso 01 · Valdeluna</span>
+        </span>
+        <span id="crumb-tab-wrapper" style="display:none; align-items:center; gap:6px;">
+          <span class="vg-breadcrumb-sep">/</span>
+          <span class="vg-breadcrumb-current" id="crumb-active-tab">
+            <span style="width:6px; height:6px; border-radius:50%; background:#00E5FF; box-shadow:0 0 8px #00E5FF;"></span>
+            <span id="crumb-tab-text">Vídeo Briefing</span>
+          </span>
         </span>
       </nav>
     </div>
@@ -1208,7 +1214,7 @@
       <div class="catalog-grid">
         
         <!-- CASO 01: EL ÚLTIMO MOSTO (ACTIVO) -->
-        <div class="case-card">
+        <div class="case-card vg-case-card" onclick="openCase('valdeluna')" style="cursor:pointer;" role="button" tabindex="0">
           <div class="case-cover-wrap">
             <img src="imagenes/escena_tina4_bodega.png" alt="Caso 01: El Último Mosto de Bodegas Valdeluna" class="case-cover-img" width="600" height="200" loading="eager" decoding="async">
             <div class="case-badge-overlay">
@@ -1241,7 +1247,7 @@
                 </div>
               </div>
 
-              <button class="btn-enter-case" onclick="openCase('valdeluna')">
+              <button class="btn-enter-case" onclick="event.stopPropagation(); openCase('valdeluna')">
                 <span>ABRIR EXPEDIENTE</span>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
               </button>
@@ -1250,7 +1256,7 @@
         </div>
 
         <!-- CASO 02: MAREA NEGRA EN RÍA DE AROUSA (ACTIVO) -->
-        <div class="case-card">
+        <div class="case-card vg-case-card" onclick="openCase('arousa')" style="cursor:pointer;" role="button" tabindex="0">
           <div class="case-cover-wrap">
             <img src="casos/caso-02-arousa/imagenes/escena_barco_batea.png" alt="Caso 02: Marea Negra en Ría de Arousa" class="case-cover-img" width="600" height="200" loading="eager" decoding="async">
             <div class="case-badge-overlay">
@@ -1283,7 +1289,7 @@
                 </div>
               </div>
 
-              <button class="btn-enter-case" onclick="openCase('arousa')">
+              <button class="btn-enter-case" onclick="event.stopPropagation(); openCase('arousa')">
                 <span>ABRIR EXPEDIENTE</span>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
               </button>
@@ -1292,7 +1298,7 @@
         </div>
 
         <!-- CASO 04: EL ENIGMA DE LOS DOS FAROS (OCULTO TEMPORALMENTE A PETICIÓN, PRESERVADO PARA APERTURA PRÓXIMA) -->
-        <div class="case-card" id="case-card-cartagena" style="display:none;">
+        <div class="case-card vg-case-card" id="case-card-cartagena" style="display:none; cursor:pointer;" onclick="openCase('cartagena')" role="button" tabindex="0">
           <div class="case-cover-wrap">
             <img src="casos/caso-04-cartagena/imagenes/escena_cala_cortina.png" alt="Caso 04: El Enigma de los Dos Faros (Cala Cortina)" class="case-cover-img" width="600" height="200" loading="eager" decoding="async">
             <div class="case-badge-overlay">
@@ -1325,7 +1331,7 @@
                 </div>
               </div>
 
-              <button class="btn-enter-case" onclick="openCase('cartagena')">
+              <button class="btn-enter-case" onclick="event.stopPropagation(); openCase('cartagena')">
                 <span>ABRIR EXPEDIENTE</span>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
               </button>
@@ -1590,9 +1596,9 @@
         </h4>
         <div class="profiles-grid" id="suspects-grid-container">
           
-          <div class="profile-card" onclick="openPhotoModal('imagenes/gonzalo_de_la_serna.png', 'Gonzalo de la Serna y Mendieta', 'Víctima (58 años) · Enólogo y Propietario de Bodegas Valdeluna')">
+          <div class="profile-card vg-profile-card" onclick="openPhotoModal('imagenes/gonzalo_de_la_serna.png', 'Gonzalo de la Serna y Mendieta', 'Víctima (58 años) · Enólogo y Propietario de Bodegas Valdeluna')">
             <div class="profile-thumb-wrap">
-              <img src="imagenes/gonzalo_de_la_serna.png" alt="Gonzalo de la Serna" class="profile-thumb" width="300" height="300" loading="eager" decoding="sync">
+              <img src="imagenes/gonzalo_de_la_serna.png" alt="Gonzalo de la Serna" class="profile-thumb" width="300" height="300" loading="lazy" decoding="async">
             </div>
             <div class="profile-info">
               <div class="profile-name">Gonzalo de la Serna y Mendieta</div>
@@ -1600,9 +1606,9 @@
             </div>
           </div>
 
-          <div class="profile-card" onclick="openPhotoModal('imagenes/marcos_varela.png', 'Marcos Varela Ríos', 'Investigado (44 años) · CFO y Primo de la víctima · Volvo XC60 4188-KLT')">
+          <div class="profile-card vg-profile-card" onclick="openPhotoModal('imagenes/marcos_varela.png', 'Marcos Varela Ríos', 'Investigado (44 años) · CFO y Primo de la víctima · Volvo XC60 4188-KLT')">
             <div class="profile-thumb-wrap">
-              <img src="imagenes/marcos_varela.png" alt="Marcos Varela" class="profile-thumb" width="300" height="300" loading="eager" decoding="sync">
+              <img src="imagenes/marcos_varela.png" alt="Marcos Varela" class="profile-thumb" width="300" height="300" loading="lazy" decoding="async">
             </div>
             <div class="profile-info">
               <div class="profile-name">Marcos Varela Ríos</div>
@@ -1610,9 +1616,9 @@
             </div>
           </div>
 
-          <div class="profile-card" onclick="openPhotoModal('imagenes/lucia_de_la_serna.png', 'Lucía de la Serna Montes', 'Investigada (29 años) · Enóloga Adjunta e Hija única · VW Golf 9012-GTV')">
+          <div class="profile-card vg-profile-card" onclick="openPhotoModal('imagenes/lucia_de_la_serna.png', 'Lucía de la Serna Montes', 'Investigada (29 años) · Enóloga Adjunta e Hija única · VW Golf 9012-GTV')">
             <div class="profile-thumb-wrap">
-              <img src="imagenes/lucia_de_la_serna.png" alt="Lucía de la Serna" class="profile-thumb" width="300" height="300" loading="eager" decoding="sync">
+              <img src="imagenes/lucia_de_la_serna.png" alt="Lucía de la Serna" class="profile-thumb" width="300" height="300" loading="lazy" decoding="async">
             </div>
             <div class="profile-info">
               <div class="profile-name">Lucía de la Serna Montes</div>
@@ -1620,9 +1626,9 @@
             </div>
           </div>
 
-          <div class="profile-card" onclick="openPhotoModal('imagenes/javier_beltran.png', 'Javier Beltrán Gómez', 'Investigado (53 años) · Capataz histórico · Nissan Navara 8209-FDC')">
+          <div class="profile-card vg-profile-card" onclick="openPhotoModal('imagenes/javier_beltran.png', 'Javier Beltrán Gómez', 'Investigado (53 años) · Capataz histórico · Nissan Navara 8209-FDC')">
             <div class="profile-thumb-wrap">
-              <img src="imagenes/javier_beltran.png" alt="Javier Beltrán" class="profile-thumb" width="300" height="300" loading="eager" decoding="sync">
+              <img src="imagenes/javier_beltran.png" alt="Javier Beltrán" class="profile-thumb" width="300" height="300" loading="lazy" decoding="async">
             </div>
             <div class="profile-info">
               <div class="profile-name">Javier Beltrán Gómez</div>
@@ -1630,9 +1636,9 @@
             </div>
           </div>
 
-          <div class="profile-card" onclick="openPhotoModal('imagenes/elena_fontanals.png', 'Elena Fontanals Puig', 'Investigada (47 años) · Socia de Vitis Capital · Audi A5 5512-LMN')">
+          <div class="profile-card vg-profile-card" onclick="openPhotoModal('imagenes/elena_fontanals.png', 'Elena Fontanals Puig', 'Investigada (47 años) · Socia de Vitis Capital · Audi A5 5512-LMN')">
             <div class="profile-thumb-wrap">
-              <img src="imagenes/elena_fontanals.png" alt="Elena Fontanals" class="profile-thumb" width="300" height="300" loading="eager" decoding="sync">
+              <img src="imagenes/elena_fontanals.png" alt="Elena Fontanals" class="profile-thumb" width="300" height="300" loading="lazy" decoding="async">
             </div>
             <div class="profile-info">
               <div class="profile-name">Elena Fontanals Puig</div>
@@ -1648,9 +1654,9 @@
         </h4>
         <div class="profiles-grid" id="scenes-grid-container">
           
-          <div class="profile-card" onclick="openPhotoModal('imagenes/escena_tina4_bodega.png', 'Inspección Ocular Tina 4', 'Nave subterránea 2 de fermentación. Silueta del cadáver y testigo métrico #1.')">
+          <div class="profile-card vg-profile-card" onclick="openPhotoModal('imagenes/escena_tina4_bodega.png', 'Inspección Ocular Tina 4', 'Nave subterránea 2 de fermentación. Silueta del cadáver y testigo métrico #1.')">
             <div class="profile-thumb-wrap">
-              <img src="imagenes/escena_tina4_bodega.png" alt="Tina 4" class="profile-thumb" width="300" height="300" loading="eager" decoding="sync">
+              <img src="imagenes/escena_tina4_bodega.png" alt="Tina 4" class="profile-thumb" width="300" height="300" loading="lazy" decoding="async">
             </div>
             <div class="profile-info">
               <div class="profile-name">Nave 2 de Cubas (Tina 4)</div>
@@ -1658,9 +1664,9 @@
             </div>
           </div>
 
-          <div class="profile-card" onclick="openPhotoModal('imagenes/escena_laboratorio_reactivo.png', 'Laboratorio Enológico', 'Pila de reactivo sulfato de cobre derramado y manómetro en la 1ª planta.')">
+          <div class="profile-card vg-profile-card" onclick="openPhotoModal('imagenes/escena_laboratorio_reactivo.png', 'Laboratorio Enológico', 'Pila de reactivo sulfato de cobre derramado y manómetro en la 1ª planta.')">
             <div class="profile-thumb-wrap">
-              <img src="imagenes/escena_laboratorio_reactivo.png" alt="Laboratorio" class="profile-thumb" width="300" height="300" loading="eager" decoding="sync">
+              <img src="imagenes/escena_laboratorio_reactivo.png" alt="Laboratorio" class="profile-thumb" width="300" height="300" loading="lazy" decoding="async">
             </div>
             <div class="profile-info">
               <div class="profile-name">Laboratorio Enológico</div>
@@ -1668,9 +1674,9 @@
             </div>
           </div>
 
-          <div class="profile-card" onclick="openPhotoModal('imagenes/evidencia_calzado_alfombrilla.png', 'Vestigio Químico en Vehículo', 'Macro pericial de calzado y alfombrilla con tinción azul de reactivo.')">
+          <div class="profile-card vg-profile-card" onclick="openPhotoModal('imagenes/evidencia_calzado_alfombrilla.png', 'Vestigio Químico en Vehículo', 'Macro pericial de calzado y alfombrilla con tinción azul de reactivo.')">
             <div class="profile-thumb-wrap">
-              <img src="imagenes/evidencia_calzado_alfombrilla.png" alt="Evidencia calzado" class="profile-thumb" width="300" height="300" loading="eager" decoding="sync">
+              <img src="imagenes/evidencia_calzado_alfombrilla.png" alt="Evidencia calzado" class="profile-thumb" width="300" height="300" loading="lazy" decoding="async">
             </div>
             <div class="profile-info">
               <div class="profile-name">Alfombrilla y Tacón</div>
@@ -1678,9 +1684,9 @@
             </div>
           </div>
 
-          <div class="profile-card" onclick="openPhotoModal('imagenes/mirador_castillo_penafiel.png', 'Mirador del Castillo de Peñafiel', 'Ubicación nocturna captada por cámaras de tráfico y antenas BTS.')">
+          <div class="profile-card vg-profile-card" onclick="openPhotoModal('imagenes/mirador_castillo_penafiel.png', 'Mirador del Castillo de Peñafiel', 'Ubicación nocturna captada por cámaras de tráfico y antenas BTS.')">
             <div class="profile-thumb-wrap">
-              <img src="imagenes/mirador_castillo_penafiel.png" alt="Castillo de Peñafiel" class="profile-thumb" width="300" height="300" loading="eager" decoding="sync">
+              <img src="imagenes/mirador_castillo_penafiel.png" alt="Castillo de Peñafiel" class="profile-thumb" width="300" height="300" loading="lazy" decoding="async">
             </div>
             <div class="profile-info">
               <div class="profile-name">Mirador de Peñafiel</div>
@@ -1814,7 +1820,7 @@
   </nav>
 
   <!-- MODAL DE IMÁGENES / PERFILES EN ALTA DEFINICIÓN (NATIVE iOS BOTTOM SHEET) -->
-  <div id="photo-modal" class="modal-backdrop" style="display:none;" onclick="closePhotoModal(event)">
+  <div id="photo-modal" class="modal-backdrop" style="display:none;" onclick="closePhotoModal(event)" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-content" onclick="event.stopPropagation()">
       <!-- Handle bar for iOS pull-to-dismiss gesture -->
       <div class="vg-sheet-handle-wrap" onclick="closePhotoModal()">
@@ -1825,10 +1831,10 @@
           <h3 id="modal-title" style="font-size:16px; color:#fff;">Detalle</h3>
           <p id="modal-sub" style="font-size:11px; font-family:var(--font-mono); color:var(--cyan-neon);"></p>
         </div>
-        <button class="modal-close" onclick="closePhotoModal()">&times;</button>
+        <button class="modal-close" onclick="closePhotoModal()" aria-label="Cerrar ventana modal">&times;</button>
       </div>
       <div class="modal-body">
-        <img id="modal-img" src="" alt="Prueba" loading="eager" decoding="sync" style="width:100%; max-height:48vh; object-fit:contain; border-radius:12px; margin-bottom:14px; box-shadow:0 10px 30px rgba(0,0,0,0.6); display:block; background:#000;">
+        <img id="modal-img" src="" alt="Prueba" loading="lazy" decoding="async" style="width:100%; max-height:48vh; object-fit:contain; border-radius:12px; margin-bottom:14px; box-shadow:0 10px 30px rgba(0,0,0,0.6); display:block; background:#000;">
         <p id="modal-desc" style="font-size:13px; color:var(--text-secondary); line-height:1.5;"></p>
       </div>
     </div>
@@ -1909,14 +1915,14 @@
   <!-- ===================================================================== -->
   <!-- KEYBOARD SHORTCUTS CHEATSHEET MODAL                                   -->
   <!-- ===================================================================== -->
-  <div id="vg-shortcuts-modal" class="vg-shortcuts-modal-backdrop" style="display:none;" onclick="closeShortcutsModal(event)">
+  <div id="vg-shortcuts-modal" class="vg-shortcuts-modal-backdrop" style="display:none;" onclick="closeShortcutsModal(event)" role="dialog" aria-modal="true" aria-label="Atajos de Teclado del Investigador">
     <div class="vg-shortcuts-modal-card" onclick="event.stopPropagation()">
       <div class="vg-shortcuts-header">
         <div style="display:flex; align-items:center; gap:8px;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6" y2="8"></line><line x1="10" y1="8" x2="10" y2="8"></line><line x1="14" y1="8" x2="14" y2="8"></line><line x1="18" y1="8" x2="18" y2="8"></line><line x1="6" y1="12" x2="6" y2="12"></line><line x1="10" y1="12" x2="10" y2="12"></line><line x1="14" y1="12" x2="14" y2="12"></line><line x1="18" y1="12" x2="18" y2="12"></line><line x1="7" y1="16" x2="17" y2="16"></line></svg>
           <h3 style="font-size:1.05rem; font-weight:800; color:#fff;">Atajos de Teclado del Investigador</h3>
         </div>
-        <button class="modal-close" onclick="closeShortcutsModal()">&times;</button>
+        <button class="modal-close" onclick="closeShortcutsModal()" aria-label="Cerrar ventana de atajos">&times;</button>
       </div>
       <div class="vg-shortcuts-body">
         <div class="vg-shortcut-row">
@@ -1987,8 +1993,35 @@
       'notas': 'Bloc de Notas'
     };
 
+    // SILENCIADOR MAESTRO DE MEDIOS Y AUDIO
+    function silenceActiveMedia() {
+      const briefingIframe = document.getElementById('briefing-iframe');
+      const terminalIframe = document.getElementById('terminal-iframe');
+      const readerIframe = document.getElementById('vg-reader-iframe');
+      const pauseMsg = { type: 'VESTIGO_PAUSE_AUDIO' };
+
+      try {
+        if (briefingIframe && briefingIframe.contentWindow) {
+          briefingIframe.contentWindow.postMessage(pauseMsg, '*');
+        }
+        if (terminalIframe && terminalIframe.contentWindow) {
+          terminalIframe.contentWindow.postMessage(pauseMsg, '*');
+        }
+        if (readerIframe && readerIframe.contentWindow) {
+          readerIframe.contentWindow.postMessage(pauseMsg, '*');
+        }
+      } catch (e) {}
+
+      if ('speechSynthesis' in window) {
+        try { window.speechSynthesis.cancel(); } catch (e) {}
+      }
+    }
+
     // CONTROL DE VISTAS PRINCIPALES
     function switchView(viewName) {
+      if (currentView === 'case' && viewName === 'catalog') {
+        silenceActiveMedia();
+      }
       currentView = viewName;
       document.querySelectorAll('.view-section').forEach(el => {
         el.classList.remove('active');
@@ -2002,16 +2035,16 @@
       }
 
       // Actualizar Breadcrumbs dinámicas y clase de vista en el body
-      const crumbCase = document.getElementById('crumb-case-name');
-      const crumbTab = document.getElementById('crumb-active-tab');
+      const crumbCaseWrap = document.getElementById('crumb-case-wrapper');
+      const crumbTabWrap = document.getElementById('crumb-tab-wrapper');
       if (viewName === 'catalog') {
         document.body.classList.remove('in-case-view');
-        if (crumbCase) crumbCase.style.display = 'none';
-        if (crumbTab) crumbTab.style.display = 'none';
+        if (crumbCaseWrap) crumbCaseWrap.style.display = 'none';
+        if (crumbTabWrap) crumbTabWrap.style.display = 'none';
       } else {
         document.body.classList.add('in-case-view');
-        if (crumbCase) crumbCase.style.display = 'inline-flex';
-        if (crumbTab) crumbTab.style.display = 'inline-flex';
+        if (crumbCaseWrap) crumbCaseWrap.style.display = 'inline-flex';
+        if (crumbTabWrap) crumbTabWrap.style.display = 'inline-flex';
       }
 
       // Actualizar bottom nav móvil (solo activo cuando se está dentro de un caso)
@@ -2579,9 +2612,9 @@
       const suspectsContainer = document.getElementById('suspects-grid-container');
       if (suspectsContainer) {
         suspectsContainer.innerHTML = data.suspects.map(s => `
-          <div class="profile-card" onclick="openPhotoModal('${s.img}', '${s.name}', '${s.desc.replace(/'/g, "\\'")}')">
+          <div class="profile-card vg-profile-card" onclick="openPhotoModal('${s.img}', '${s.name}', '${s.desc.replace(/'/g, "\\'").replace(/"/g, '&quot;')}')">
             <div class="profile-thumb-wrap">
-              <img src="${s.img}" alt="${s.name}" class="profile-thumb" width="300" height="300" loading="eager" decoding="sync">
+              <img src="${s.img}" alt="${s.name}" class="profile-thumb" width="300" height="300" loading="lazy" decoding="async">
             </div>
             <div class="profile-info">
               <div class="profile-name">${s.name}</div>
@@ -2595,9 +2628,9 @@
       const scenesContainer = document.getElementById('scenes-grid-container');
       if (scenesContainer) {
         scenesContainer.innerHTML = data.scenes.map(sc => `
-          <div class="profile-card" onclick="openPhotoModal('${sc.img}', '${sc.name}', '${sc.desc.replace(/'/g, "\\'")}')">
+          <div class="profile-card vg-profile-card" onclick="openPhotoModal('${sc.img}', '${sc.name}', '${sc.desc.replace(/'/g, "\\'").replace(/"/g, '&quot;')}')">
             <div class="profile-thumb-wrap">
-              <img src="${sc.img}" alt="${sc.name}" class="profile-thumb" width="300" height="300" loading="eager" decoding="sync">
+              <img src="${sc.img}" alt="${sc.name}" class="profile-thumb" width="300" height="300" loading="lazy" decoding="async">
             </div>
             <div class="profile-info">
               <div class="profile-name">${sc.name}</div>
@@ -2638,6 +2671,9 @@
 
     // CONTROL DE PESTAÑAS DENTRO DEL CASO
     function switchCaseTab(tabName) {
+      if (currentTab === 'briefing' && tabName !== 'briefing') {
+        silenceActiveMedia();
+      }
       currentTab = tabName;
       document.querySelectorAll('.tab-btn, .vg-tab-item').forEach(btn => btn.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
@@ -2697,6 +2733,7 @@
     }
 
     function switchSidecarTab(subTab) {
+      if (subTab === 'notes') subTab = 'notas';
       document.querySelectorAll('.vg-sidecar-tab-btn').forEach(b => b.classList.remove('active'));
       const activeBtn = document.getElementById('sidecar-tab-btn-' + subTab);
       if (activeBtn) activeBtn.classList.add('active');
@@ -2709,12 +2746,19 @@
       if (vSuspects) vSuspects.style.display = subTab === 'sospechosos' ? 'flex' : 'none';
       if (vDoc) vDoc.style.display = subTab === 'doc' ? 'flex' : 'none';
 
+      // Actualizar contador dinámico de personas de interés en cabecera del sidecar
+      const countEl = document.getElementById('sidecar-suspects-title');
+      if (countEl && CASES_DATA[activeCaseId]) {
+        countEl.textContent = `${CASES_DATA[activeCaseId].suspects.length} PERSONAS DE INTERÉS // ${CASES_DATA[activeCaseId].miniTitle.toUpperCase()}`;
+      }
+
       if (window.VestigoTouch) window.VestigoTouch.triggerHaptic('selection');
     }
 
     // BLOC DE NOTAS CON AUTOGUARDADO Y SINCRONIZACIÓN EN TIEMPO REAL
     const mainNotesArea = document.getElementById('investigator-notes');
     const sideNotesArea = document.getElementById('sidecar-notes-area');
+    const notesMemoryFallback = {};
 
     function getStorageKey(caseId) {
       return 'vestigo_notes_case_' + (caseId || activeCaseId);
@@ -2722,14 +2766,22 @@
 
     function loadCaseNotes(caseId) {
       const key = getStorageKey(caseId);
-      const notes = localStorage.getItem(key) || '';
+      let notes = '';
+      try {
+        notes = localStorage.getItem(key) || '';
+      } catch (e) {
+        notes = notesMemoryFallback[key] || '';
+      }
       if (mainNotesArea) mainNotesArea.value = notes;
       if (sideNotesArea) sideNotesArea.value = notes;
     }
 
     function syncNotes(text) {
       const key = getStorageKey(activeCaseId);
-      localStorage.setItem(key, text);
+      notesMemoryFallback[key] = text;
+      try {
+        localStorage.setItem(key, text);
+      } catch (e) {}
       if (mainNotesArea && mainNotesArea.value !== text) mainNotesArea.value = text;
       if (sideNotesArea && sideNotesArea.value !== text) sideNotesArea.value = text;
     }
@@ -2854,42 +2906,36 @@
       if (display) display.textContent = pct;
       if (mobileDisplay) mobileDisplay.textContent = pct;
 
-      // 1. Post native vector zoom to iframe document (crisp rendering, no raster blur)
+      if (!iframe || !iframe.src || iframe.src.includes('about:blank')) return;
+
+      let innerZoomApplied = false;
+
+      // 1. Prioritize crisp vector zoom inside iframe document (no raster blur)
       if (iframe && iframe.contentWindow) {
         try {
           iframe.contentWindow.postMessage({ type: 'VESTIGO_ZOOM', zoom: docReaderZoom }, '*');
+          innerZoomApplied = true;
         } catch (e) {}
         try {
           if (iframe.contentDocument && iframe.contentDocument.body) {
             iframe.contentDocument.body.style.zoom = docReaderZoom;
+            innerZoomApplied = true;
           }
         } catch (e) {}
       }
 
-      // 2. Adjust frame container layout
-      const isMobile = window.innerWidth < 768;
+      // 2. Adjust frame container layout: DO NOT MULTIPLY ZOOM
       if (container) {
-        if (isMobile) {
-          if (docReaderZoom === 1.0) {
-            container.style.transform = 'none';
-            container.style.width = '100%';
-            container.style.minWidth = '100%';
-          } else if (docReaderZoom > 1.0) {
-            container.style.transformOrigin = 'top left';
-            container.style.transform = `scale(${docReaderZoom})`;
-            container.style.width = `${Math.round(100 / docReaderZoom)}%`;
-            container.style.minWidth = `${Math.round(100 / docReaderZoom)}%`;
-          } else {
-            container.style.transformOrigin = 'top center';
-            container.style.transform = `scale(${docReaderZoom})`;
-            container.style.width = '100%';
-            container.style.minWidth = '100%';
-          }
-        } else {
-          container.style.transformOrigin = 'top center';
-          container.style.transform = `scale(${docReaderZoom})`;
+        if (innerZoomApplied) {
+          container.style.transform = 'none';
           container.style.width = '100%';
           container.style.minWidth = '100%';
+        } else {
+          // Fallback CSS transform scaling only if inner zoom is unsupported
+          container.style.transformOrigin = 'top center';
+          container.style.transform = `scale(${docReaderZoom})`;
+          container.style.width = docReaderZoom > 1.0 ? `${Math.round(100 / docReaderZoom)}%` : '100%';
+          container.style.minWidth = container.style.width;
         }
       }
     }
@@ -2928,6 +2974,26 @@
     // BUSCADOR FORENSE RÁPIDO
     const searchInput = document.getElementById('vg-global-search');
     const searchPop = document.getElementById('vg-search-results');
+    let searchDebounceTimer = null;
+    let currentSearchIndex = -1;
+
+    function getVisibleSearchItems() {
+      if (!searchPop) return [];
+      return Array.from(searchPop.querySelectorAll('.vg-search-item')).filter(el => el.style.display !== 'none');
+    }
+
+    function updateSearchHighlight(items) {
+      items.forEach((it, idx) => {
+        if (idx === currentSearchIndex) {
+          it.style.background = 'rgba(0, 229, 255, 0.15)';
+          it.style.borderColor = 'rgba(0, 229, 255, 0.4)';
+          it.scrollIntoView({ block: 'nearest' });
+        } else {
+          it.style.background = '';
+          it.style.borderColor = '';
+        }
+      });
+    }
 
     if (searchInput) {
       searchInput.addEventListener('focus', () => {
@@ -2938,15 +3004,56 @@
       });
 
       searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
-        const items = searchPop.querySelectorAll('.vg-search-item');
-        items.forEach(item => {
-          const text = item.textContent.toLowerCase();
-          item.style.display = text.includes(query) ? 'flex' : 'none';
-        });
-        if (searchPop) {
+        clearTimeout(searchDebounceTimer);
+        searchDebounceTimer = setTimeout(() => {
+          const query = e.target.value.toLowerCase().trim();
+          const items = searchPop.querySelectorAll('.vg-search-item');
+          let visibleCount = 0;
+
+          items.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            const matches = text.includes(query);
+            item.style.display = matches ? 'flex' : 'none';
+            if (matches) visibleCount++;
+          });
+
+          // Ocultar cabeceras de categorías sin resultados
+          searchPop.querySelectorAll('.vg-search-category').forEach(cat => {
+            let next = cat.nextElementSibling;
+            let hasVisible = false;
+            while (next && !next.classList.contains('vg-search-category')) {
+              if (next.classList.contains('vg-search-item') && next.style.display !== 'none') {
+                hasVisible = true;
+                break;
+              }
+              next = next.nextElementSibling;
+            }
+            cat.style.display = hasVisible || query === '' ? 'block' : 'none';
+          });
+
+          currentSearchIndex = -1;
           searchPop.style.display = 'block';
           searchPop.classList.add('open');
+        }, 120);
+      });
+
+      searchInput.addEventListener('keydown', (e) => {
+        const visibleItems = getVisibleSearchItems();
+        if (visibleItems.length === 0) return;
+
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          currentSearchIndex = (currentSearchIndex + 1) % visibleItems.length;
+          updateSearchHighlight(visibleItems);
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          currentSearchIndex = (currentSearchIndex - 1 + visibleItems.length) % visibleItems.length;
+          updateSearchHighlight(visibleItems);
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          if (currentSearchIndex >= 0 && visibleItems[currentSearchIndex]) {
+            visibleItems[currentSearchIndex].click();
+          }
         }
       });
     }
@@ -3130,8 +3237,10 @@
           closeShortcutsModal();
           return;
         }
-        if (searchPop && searchPop.classList.contains('open')) {
+        if (searchPop && (searchPop.classList.contains('open') || searchPop.style.display !== 'none')) {
           searchPop.classList.remove('open');
+          searchPop.style.display = 'none';
+          if (searchInput) searchInput.blur();
           return;
         }
         if (sidecarOpen) {

@@ -485,7 +485,7 @@
         </p>
 
         <div class="validador-form">
-          <input type="text" id="input-codigo" class="code-input" placeholder="INTRODUZCA CÓDIGO (EJ: CARTAGENA-NITROX-77)" autocomplete="off">
+          <input type="text" id="input-codigo" class="code-input" placeholder="INTRODUZCA CÓDIGO (EJ: CARTAGENA-NITROX-77)" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault(); validarCodigoJudicial();}">
           <button class="btn-submit" onclick="validarCodigoJudicial()">VALIDAR CÓDIGO</button>
         </div>
 
