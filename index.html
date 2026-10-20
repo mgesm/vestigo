@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="css/liquid-glass.css">
   <!-- Desktop & Tablet Specialized Layout -->
   <link rel="stylesheet" href="css/desktop-layout.css">
+  <!-- Mobile Phone & Touch Specialist UX -->
+  <link rel="stylesheet" href="css/mobile-ux.css">
 
   <style>
     /* ========================================================
@@ -56,10 +58,919 @@
         padding-bottom: 24px !important;
       }
     }
-  </style>
 
-  <!-- Mobile Phone & Touch Specialist UX (Authoritative Mobile Cascade) -->
-  <link rel="stylesheet" href="css/mobile-ux.css">
+    :root {
+      --bg-base: #070b12;
+      --bg-surface: #0f172a;
+      --bg-card: #131c31;
+      --border-subtle: #1e293b;
+      --border-accent: #334155;
+      --cyan-neon: #00e5ff;
+      --cyan-glow: rgba(0, 229, 255, 0.4);
+      --uv-flare: #38bdf8;
+      --evidence-red: #ff2d55;
+      --judicial-green: #22c55e;
+      --amber-alert: #f59e0b;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Courier Prime', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      padding-bottom: 70px; /* Espacio para barra de navegación móvil */
+    }
+
+    @media (min-width: 768px) {
+      body {
+        padding-bottom: 0;
+      }
+    }
+
+    /* TOP BAR NAVEGACIÓN GLOBAL */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 11, 18, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .brand-logo-img {
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
+      box-shadow: 0 0 14px var(--cyan-glow);
+      border: 1px solid rgba(0, 229, 255, 0.5);
+      transition: transform 0.2s;
+    }
+
+    .brand-group:hover .brand-logo-img {
+      transform: scale(1.05);
+    }
+
+    .brand-text-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 2.5px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .brand-title span {
+      color: var(--cyan-neon);
+      text-shadow: 0 0 10px var(--cyan-glow);
+    }
+
+    .brand-subtitle {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .status-pill {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--judicial-green);
+    }
+
+    @media (min-width: 640px) {
+      .status-pill {
+        display: inline-flex;
+      }
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--judicial-green);
+      box-shadow: 0 0 8px var(--judicial-green);
+      animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .icon-link-btn {
+      color: var(--text-secondary);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 8px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .icon-link-btn:hover {
+      color: var(--cyan-neon);
+      border-color: var(--cyan-neon);
+      background: rgba(0, 229, 255, 0.08);
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    @media (min-width: 800px) {
+      main {
+        padding: 30px 40px;
+      }
+    }
+
+    /* VISTAS */
+    .view-section {
+      display: none;
+      animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* VISTA 1: CATÁLOGO DE CASOS */
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(7, 11, 18, 0.95)),
+                  radial-gradient(circle at top right, rgba(0, 229, 255, 0.12), transparent 60%);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 30px 24px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 800px) {
+      .hero-banner {
+        padding: 44px 40px;
+      }
+    }
+
+    .hero-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--cyan-neon);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+
+    @media (min-width: 800px) {
+      .hero-title {
+        font-size: 34px;
+      }
+    }
+
+    .hero-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 720px;
+      margin-bottom: 20px;
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .catalog-grid {
+        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      }
+    }
+
+    /* TARJETA DE CASO */
+    .case-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .case-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--cyan-neon);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 24px rgba(0, 229, 255, 0.15);
+    }
+
+    .case-cover-wrap {
+      width: 100%;
+      height: 200px;
+      background: #020617;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .case-cover-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.75;
+      transition: transform 0.4s, opacity 0.4s;
+    }
+
+    .case-card:hover .case-cover-img {
+      transform: scale(1.04);
+      opacity: 0.9;
+    }
+
+    .case-badge-overlay {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .case-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .badge-active { background: #0284c7; color: #fff; }
+    .badge-locked { background: #334155; color: #94a3b8; }
+    .badge-evidence { background: var(--evidence-red); color: #fff; }
+
+    .case-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .case-number {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--cyan-neon);
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+
+    .case-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .case-summary {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 20px;
+    }
+
+    .case-specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 0;
+      margin-bottom: 20px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .spec-label { color: var(--text-muted); font-size: 9px; }
+    .spec-val { color: #fff; font-weight: 700; }
+
+    .btn-enter-case {
+      width: 100%;
+      background: var(--cyan-neon);
+      color: #000;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 13px;
+      font-family: var(--font-mono);
+      letter-spacing: 1px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-enter-case:hover {
+      background: #38bdf8;
+      box-shadow: 0 0 20px var(--cyan-glow);
+    }
+
+    .btn-locked {
+      background: #1e293b;
+      color: #64748b;
+      cursor: not-allowed;
+    }
+
+    .btn-locked:hover {
+      background: #1e293b;
+      box-shadow: none;
+    }
+
+    /* VISTA 2: ESPACIO DE TRABAJO DEL CASO */
+    .case-header-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .back-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      color: #fff;
+      border-color: var(--border-accent);
+      background: #1e293b;
+    }
+
+    .case-meta-header {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .case-meta-left h2 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .case-meta-left p {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* PESTAÑAS DEL CASO (DESKTOP & TABLET) */
+    .case-tabs-bar {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 24px;
+      overflow-x: hidden;
+      flex-wrap: wrap;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+
+    .case-tabs-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-secondary);
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .tab-btn.active {
+      color: var(--cyan-neon);
+      background: rgba(0, 229, 255, 0.08);
+      border-color: rgba(0, 229, 255, 0.3);
+    }
+
+    /* CONTENEDOR DE PESTAÑAS */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    /* IFRAMES RESPONSIVOS (BRIEFING & TERMINAL) */
+    .embed-viewport {
+      width: 100%;
+      height: 78vh;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      overflow: hidden;
+      background: #000;
+      position: relative;
+    }
+
+    .embed-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .embed-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    /* GRID DE DOSSIERS IMPRIMIBLES */
+    .dossier-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    @media (min-width: 640px) {
+      .dossier-grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      }
+    }
+
+    .dossier-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color 0.2s;
+    }
+
+    .dossier-card:hover {
+      border-color: var(--cyan-neon);
+    }
+
+    .dossier-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      width: fit-content;
+      margin-bottom: 10px;
+    }
+
+    .dossier-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .dossier-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    .dossier-btns {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-html {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 229, 255, 0.12);
+      color: var(--cyan-neon);
+      border: 1px solid rgba(0, 229, 255, 0.35);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      min-height: 40px;
+    }
+
+    .btn-html:hover {
+      background: var(--cyan-neon);
+      color: #04070d;
+      box-shadow: 0 4px 14px rgba(0, 229, 255, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .btn-pdf-icon-only {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-pdf-icon-only:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    /* TEASERS DE CASOS EN PLANIFICACIÓN */
+    .case-card-teaser {
+      background: rgba(11, 17, 32, 0.6);
+      border: 1px dashed rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 18px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: border-color 0.2s, background 0.2s;
+      align-self: start;
+    }
+
+    .case-card-teaser:hover {
+      border-color: rgba(255, 255, 255, 0.22);
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    .case-teaser-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .case-teaser-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .case-teaser-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.85);
+      margin: 0;
+    }
+
+    .case-teaser-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .case-header-mini-info {
+      display: none;
+    }
+
+    /* GRID DE SOSPECHOSOS Y FOTOTECA */
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+
+    .profile-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--cyan-neon);
+    }
+
+    .profile-thumb-wrap {
+      width: 100%;
+      height: 240px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .profile-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .profile-card:hover .profile-thumb {
+      transform: scale(1.04);
+    }
+
+    .profile-info {
+      padding: 14px;
+    }
+
+    .profile-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .profile-role {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--cyan-neon);
+    }
+
+    /* BLOC DE NOTAS / SCRATCHPAD */
+    .notepad-wrap {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .notepad-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .notepad-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .notepad-textarea {
+      width: 100%;
+      height: 480px;
+      background: #080d16;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      color: #e2e8f0;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      padding: 16px;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .notepad-textarea:focus {
+      border-color: var(--cyan-neon);
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+    }
+
+    /* BOTTOM NAV MÓVIL (iOS SAFE AREA READY) */
+    .mobile-bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      background: rgba(11, 16, 26, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border-subtle);
+      display: none; /* Oculto en catálogo por defecto */
+      justify-content: space-around;
+      align-items: center;
+      z-index: 1000;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    body.in-case-view .mobile-bottom-nav {
+      display: flex;
+    }
+
+    @media (min-width: 768px) {
+      .mobile-bottom-nav,
+      body.in-case-view .mobile-bottom-nav {
+        display: none !important;
+      }
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .nav-item.active {
+      color: var(--cyan-neon);
+    }
+
+    .nav-icon {
+      font-size: 18px;
+    }
+
+    /* MODAL DE INSPECCIÓN DE IMÁGENES / PERFILES */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-accent);
+      border-radius: 16px;
+      max-width: 600px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      animation: modalPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes modalPop {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 24px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .modal-close:hover { color: #fff; }
+
+    .modal-body {
+      padding: 20px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+  </style>
 </head>
 <body class="vg-desktop-optimized">
 
@@ -118,48 +1029,48 @@
         </div>
         <!-- VÍDEO BRIEFING -->
         <div class="vg-search-item" onclick="selectSearchResult('briefing')">
-          <span class="vg-search-item-badge badge-red">BRIEFING</span>
+          <span class="vg-search-item-badge" style="background:#e11d48; color:#fff;">BRIEFING</span>
           <span>Vídeo Briefing Audiovisual Oficial (Ambientación y Reglas)</span>
         </div>
         <!-- TERMINAL SITRA-JUD -->
         <div class="vg-search-item" onclick="selectSearchResult('terminal')">
-          <span class="vg-search-item-badge badge-blue">SITRA-JUD</span>
+          <span class="vg-search-item-badge">SITRA-JUD</span>
           <span>Terminal Policial (Fases 1-4, Radar LPR, Mapa SIG, CCTV)</span>
         </div>
         <!-- SOBRE A -->
         <div class="vg-search-item" onclick="selectSearchResult('dossier_a')">
-          <span class="vg-search-item-badge badge-blue">SOBRE A</span>
+          <span class="vg-search-item-badge" style="background:#0284c7; color:#fff;">SOBRE A</span>
           <span>Sobre A: Pieza Principal, Atestado y Autopsia (Tina 4)</span>
         </div>
         <!-- SOBRE B -->
         <div class="vg-search-item" onclick="selectSearchResult('dossier_b')">
-          <span class="vg-search-item-badge badge-amber">SOBRE B</span>
+          <span class="vg-search-item-badge" style="background:#ca8a04; color:#000;">SOBRE B</span>
           <span>Sobre B: Pieza Separada I, Interrogatorios y Luminol</span>
         </div>
         <!-- SOBRE C -->
         <div class="vg-search-item" onclick="selectSearchResult('dossier_c')">
-          <span class="vg-search-item-badge badge-red">SOBRE C</span>
+          <span class="vg-search-item-badge" style="background:#dc2626; color:#fff;">SOBRE C</span>
           <span>Sobre C: Pieza de Convicción Final y Auto de Prisión</span>
         </div>
         <!-- PERSONAJES / SOSPECHOSOS C01 -->
         <div class="vg-search-item" onclick="selectSearchResult('suspect_gonzalo')">
-          <span class="vg-search-item-badge badge-gray">VÍCTIMA</span>
+          <span class="vg-search-item-badge" style="background:#475569; color:#fff;">VÍCTIMA</span>
           <span>Gonzalo de la Serna y Mendieta (Propietario Bodega)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('suspect_elena')">
-          <span class="vg-search-item-badge badge-red">SOSPECHOSA</span>
+          <span class="vg-search-item-badge" style="background:#f43f5e; color:#fff;">SOSPECHOSA</span>
           <span>Elena Fontanals Puig · Directora Financiera Vitis (Audi A5)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('suspect_javier')">
-          <span class="vg-search-item-badge badge-amber">SOSPECHOSO</span>
+          <span class="vg-search-item-badge" style="background:#f59e0b; color:#000;">SOSPECHOSO</span>
           <span>Javier Beltrán Gómez · Capataz General Bodega (Nissan Navara)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('suspect_lucia')">
-          <span class="vg-search-item-badge badge-cyan">SOSPECHOSA</span>
+          <span class="vg-search-item-badge" style="background:#06b6d4; color:#000;">SOSPECHOSA</span>
           <span>Lucía de la Serna Montes · Enóloga Adjunta (Hija de Gonzalo)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('suspect_marcos')">
-          <span class="vg-search-item-badge badge-blue">SOSPECHOSO</span>
+          <span class="vg-search-item-badge" style="background:#3b82f6; color:#fff;">SOSPECHOSO</span>
           <span>Marcos Varela Ríos · Socio Inversor CFO (Volvo XC60)</span>
         </div>
 
@@ -168,85 +1079,85 @@
           Caso 02 · Marea Negra en Ría de Arousa
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_briefing')">
-          <span class="vg-search-item-badge badge-red">C02 BRIEFING</span>
+          <span class="vg-search-item-badge" style="background:#e11d48; color:#fff;">C02 BRIEFING</span>
           <span>Vídeo Briefing: Marea Negra en Ría de Arousa (6 Actos Náuticos)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_terminal')">
-          <span class="vg-search-item-badge badge-blue">SITRA-NÁUTICA</span>
+          <span class="vg-search-item-badge" style="background:#0284c7; color:#fff;">SITRA-NÁUTICA</span>
           <span>Terminal Policial Arousa (Radar SIVE, AIS, VHF Ch16, Diatomeas)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_sobre_a')">
-          <span class="vg-search-item-badge badge-blue">C02 SOBRE A</span>
+          <span class="vg-search-item-badge" style="background:#0284c7; color:#fff;">C02 SOBRE A</span>
           <span>Sobre A: Levantamiento «Novo Alborada» y Autopsia Diatomeas</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_sobre_b')">
-          <span class="vg-search-item-badge badge-amber">C02 SOBRE B</span>
+          <span class="vg-search-item-badge" style="background:#ca8a04; color:#000;">C02 SOBRE B</span>
           <span>Sobre B: Interrogatorios Batea B-12 y Modelo de Deriva</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_sobre_c')">
-          <span class="vg-search-item-badge badge-red">C02 SOBRE C</span>
+          <span class="vg-search-item-badge" style="background:#dc2626; color:#fff;">C02 SOBRE C</span>
           <span>Sobre C: NMEA Furuno GPS, Radar SIVE y Espectrometría Pintura</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_suspect_xurxo')">
-          <span class="vg-search-item-badge badge-gray">VÍCTIMA</span>
+          <span class="vg-search-item-badge" style="background:#475569; color:#fff;">VÍCTIMA</span>
           <span>Xurxo Otero Barral (Patrón Mayor de Cambados)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_suspect_suso')">
-          <span class="vg-search-item-badge badge-amber">SOSPECHOSO</span>
+          <span class="vg-search-item-badge" style="background:#f59e0b; color:#000;">SOSPECHOSO</span>
           <span>Jesús «Suso O Rubio» Trigo Vidal (Empresario bateeiro)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_suspect_carla')">
-          <span class="vg-search-item-badge badge-cyan">SOSPECHOSA</span>
+          <span class="vg-search-item-badge" style="background:#06b6d4; color:#000;">SOSPECHOSA</span>
           <span>Carla Souto Méndez (Bióloga marina INTECMAR)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_suspect_manuel')">
-          <span class="vg-search-item-badge badge-blue">SOSPECHOSO</span>
+          <span class="vg-search-item-badge" style="background:#3b82f6; color:#fff;">SOSPECHOSO</span>
           <span>Manuel Otero Freire (Marinero y sobrino de la víctima)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('arousa_suspect_brais')">
-          <span class="vg-search-item-badge badge-red">SOSPECHOSO</span>
+          <span class="vg-search-item-badge" style="background:#f43f5e; color:#fff;">SOSPECHOSO</span>
           <span>Brais Lema Castro (Ingeniero naval y dueño de astillero)</span>
         </div>
         <!-- CASO 04 CARTAGENA (OCULTO TEMPORALMENTE)
         <div class="vg-search-item" onclick="selectSearchResult('cartagena_briefing')">
-          <span class="vg-search-item-badge badge-cyan">C04 BRIEFING</span>
+          <span class="vg-search-item-badge" style="background:#00e5ff; color:#000;">C04 BRIEFING</span>
           <span>Vídeo Briefing: Los Dos Faros de Cartagena (Agente Patricia Normand)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('cartagena_terminal')">
-          <span class="vg-search-item-badge badge-blue">SITRA-CARTAGENA</span>
+          <span class="vg-search-item-badge" style="background:#0284c7; color:#fff;">SITRA-CARTAGENA</span>
           <span>Terminal Policial Cartagena (Faros Navidad/Curra, Radar Bocana, Paco)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('cartagena_sobre_a')">
-          <span class="vg-search-item-badge badge-blue">C04 SOBRE A</span>
+          <span class="vg-search-item-badge" style="background:#0284c7; color:#fff;">C04 SOBRE A</span>
           <span>Sobre A: Atestado Patricia Normand, Hallazgo en Cala Cortina y Autopsia</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('cartagena_sobre_b')">
-          <span class="vg-search-item-badge badge-amber">C04 SOBRE B</span>
+          <span class="vg-search-item-badge" style="background:#ca8a04; color:#000;">C04 SOBRE B</span>
           <span>Sobre B: Interrogatorios, Telemetría Faros y Hallazgo de Paco el Gato</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('cartagena_sobre_c')">
-          <span class="vg-search-item-badge badge-red">C04 SOBRE C</span>
+          <span class="vg-search-item-badge" style="background:#dc2626; color:#fff;">C04 SOBRE C</span>
           <span>Sobre C: Convicción Final, Microcápsula y Dictamen SECRIM</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('cartagena_patricia')">
-          <span class="vg-search-item-badge badge-cyan">INSTRUCTORA</span>
+          <span class="vg-search-item-badge" style="background:#00e5ff; color:#000;">INSTRUCTORA</span>
           <span>Agente Patricia Normand (Policía Local de Cartagena · Placa 1482)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('cartagena_paco')">
-          <span class="vg-search-item-badge badge-amber">CENTINELA</span>
+          <span class="vg-search-item-badge" style="background:#f97316; color:#fff;">CENTINELA</span>
           <span>Paco el Gato (Cala Cortina · Descubridor Evidencia E-01)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('cartagena_suspect_victor')">
-          <span class="vg-search-item-badge badge-red">INVESTIGADO</span>
+          <span class="vg-search-item-badge" style="background:#ef4444; color:#fff;">INVESTIGADO</span>
           <span>Víctor Huesca Vidal (Instructor Bocana Dive en Cala Cortina)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('cartagena_suspect_claudia')">
-          <span class="vg-search-item-badge badge-amber">INVESTIGADA</span>
+          <span class="vg-search-item-badge" style="background:#f59e0b; color:#000;">INVESTIGADA</span>
           <span>Claudia Vicedo Cánovas (Controladora de Faros del Puerto)</span>
         </div>
         -->
         <div class="vg-search-item" onclick="selectSearchResult('notes')">
-          <span class="vg-search-item-badge badge-purple">NOTAS</span>
+          <span class="vg-search-item-badge" style="background:#8b5cf6; color:#fff;">NOTAS</span>
           <span>Cuaderno de Campo del Investigador (Bloc de Notas Dual)</span>
         </div>
       </div>
@@ -307,8 +1218,8 @@
           <div class="case-cover-wrap">
             <img src="imagenes/escena_tina4_bodega.png" alt="Caso 01: El Último Mosto de Bodegas Valdeluna" class="case-cover-img" width="600" height="200" loading="eager" decoding="async">
             <div class="case-badge-overlay">
-              <span class="case-badge badge-active"><span class="catalog-badge-dot"></span>CASO 01 · ACTIVO</span>
-              <span class="case-badge" style="background:rgba(245,158,11,0.12); color:#F59E0B; border:1px solid rgba(245,158,11,0.3);">DIFICULTAD MEDIA</span>
+              <span class="case-badge badge-active">CASO 01 · ACTIVO</span>
+              <span class="case-badge" style="background:#ca8a04; color:#000;">DIFICULTAD MEDIA</span>
             </div>
           </div>
           <div class="case-body">
@@ -349,8 +1260,8 @@
           <div class="case-cover-wrap">
             <img src="casos/caso-02-arousa/imagenes/escena_barco_batea.png" alt="Caso 02: Marea Negra en Ría de Arousa" class="case-cover-img" width="600" height="200" loading="eager" decoding="async">
             <div class="case-badge-overlay">
-              <span class="case-badge badge-active"><span class="catalog-badge-dot"></span>CASO 02 · ACTIVO</span>
-              <span class="case-badge" style="background:rgba(56,189,248,0.12); color:#38BDF8; border:1px solid rgba(56,189,248,0.3);">DIFICULTAD MEDIA-ALTA</span>
+              <span class="case-badge badge-active">CASO 02 · ACTIVO</span>
+              <span class="case-badge" style="background:#0284c7; color:#fff;">DIFICULTAD MEDIA-ALTA</span>
             </div>
           </div>
           <div class="case-body">
@@ -391,8 +1302,8 @@
           <div class="case-cover-wrap">
             <img src="casos/caso-04-cartagena/imagenes/escena_cala_cortina.png" alt="Caso 04: El Enigma de los Dos Faros (Cala Cortina)" class="case-cover-img" width="600" height="200" loading="eager" decoding="async">
             <div class="case-badge-overlay">
-              <span class="case-badge badge-active"><span class="catalog-badge-dot"></span>CASO 04 · ACTIVO</span>
-              <span class="case-badge" style="background:rgba(56,189,248,0.12); color:#38BDF8; border:1px solid rgba(56,189,248,0.3);">DIFICULTAD MEDIA-ALTA</span>
+              <span class="case-badge badge-active" style="background:#00e5ff; color:#000;">CASO 04 · ACTIVO</span>
+              <span class="case-badge" style="background:#0284c7; color:#fff;">DIFICULTAD MEDIA-ALTA</span>
             </div>
           </div>
           <div class="case-body">
@@ -912,7 +1823,7 @@
   <div id="photo-modal" class="modal-backdrop" style="display:none;" onclick="closePhotoModal(event)" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-content" onclick="event.stopPropagation()">
       <!-- Handle bar for iOS pull-to-dismiss gesture -->
-      <div class="vg-sheet-handle-wrap">
+      <div class="vg-sheet-handle-wrap" onclick="closePhotoModal()">
         <div class="vg-sheet-handle"></div>
       </div>
       <div class="modal-header">
@@ -1157,8 +2068,8 @@
         metaCourt: 'DILIGENCIAS PREVIAS 402/2024 · JUZGADO DE INSTRUCCIÓN Nº 2 DE VALLADOLID',
         crumbTitle: 'Caso 01 · Valdeluna',
         badgesHtml: `
-          <span class="case-badge" style="background:rgba(255,45,85,0.12); color:#FF2D55; border:1px solid rgba(255,45,85,0.3);"><span class="vg-pulse-dot" style="background:#FF2D55; box-shadow:0 0 6px #FF2D55;"></span>HOMICIDIO</span>
-          <span class="case-badge" style="background:rgba(56,189,248,0.12); color:#38BDF8; border:1px solid rgba(56,189,248,0.3);">FORMATO HÍBRIDO</span>
+          <span class="case-badge" style="background:var(--evidence-red); color:#fff;">HOMICIDIO</span>
+          <span class="case-badge" style="background:#0284c7; color:#fff;">FORMATO HÍBRIDO</span>
         `,
         briefingUrl: 'video-briefing/index.html',
         terminalUrl: 'terminal-policial/index.html',
@@ -1166,21 +2077,21 @@
         sidecarDocTitle: 'EXTRACTO DE AUTOPSIA (SOBRE A)',
         dossiers: [
           {
-            cardStyle: 'border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.04); grid-column: 1 / -1;',
-            badgeStyle: 'background:rgba(245,158,11,0.12); color:#F59E0B; border:1px solid rgba(245,158,11,0.3);',
+            cardStyle: 'border-color:#facc15; background: #172033; grid-column: 1 / -1;',
+            badgeStyle: 'background:#facc15; color:#000;',
             badgeText: 'LEER PRIMERO — GUÍA DE OPERACIONES',
             title: 'Manual del Investigador y Reglas de Juego (4 páginas)',
-            titleStyle: 'color:#FFFFFF;',
+            titleStyle: 'color:#fde047;',
             desc: 'Protocolo de montaje de la mesa de investigación, preparación de sobres físicos, uso del sistema híbrido con la terminal digital y el decálogo forense.',
             htmlUrl: 'documentos-imprimibles/instrucciones_juego.html',
             pdfUrl: 'documentos-imprimibles/INSTRUCCIONES_DE_JUEGO.pdf',
             readerTitle: 'Manual de Instrucciones del Investigador',
             readerBadge: 'GUÍA DE OPERACIONES',
-            btnHtmlStyle: 'border-color: rgba(245, 158, 11, 0.4); color: #F59E0B; background: rgba(245, 158, 11, 0.10);'
+            btnHtmlStyle: 'border-color: rgba(250, 204, 21, 0.4); color: #fde047; background: rgba(250, 204, 21, 0.12);'
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:rgba(56,189,248,0.12); color:#38BDF8; border:1px solid rgba(56,189,248,0.3);',
+            badgeStyle: 'background:#0284c7; color:#fff;',
             badgeText: 'SOBRE A — ABIERTO DE INICIO',
             title: 'Pieza Principal: Hallazgo y Autopsia',
             titleStyle: '',
@@ -1193,7 +2104,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:rgba(245,158,11,0.12); color:#F59E0B; border:1px solid rgba(245,158,11,0.3);',
+            badgeStyle: 'background:#ca8a04; color:#000;',
             badgeText: 'SOBRE B — PRECINTADO',
             title: 'Pieza I: Escenario y Testigos',
             titleStyle: '',
@@ -1206,7 +2117,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:rgba(255,45,85,0.12); color:#FF2D55; border:1px solid rgba(255,45,85,0.3);',
+            badgeStyle: 'background:#dc2626; color:#fff;',
             badgeText: 'SOBRE C — PRECINTADO',
             title: 'Pieza II: Convicción Final',
             titleStyle: '',
@@ -1219,7 +2130,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:rgba(168,85,247,0.12); color:#C084FC; border:1px solid rgba(168,85,247,0.3);',
+            badgeStyle: 'background:#8b5cf6; color:#fff;',
             badgeText: 'EXTRAS DISPONIBLES DESDE EL INICIO',
             title: 'Fichas de Filiación y Prensa Local',
             titleStyle: '',
@@ -1232,7 +2143,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:rgba(0,229,255,0.12); color:#00E5FF; border:1px solid rgba(0,229,255,0.3);',
+            badgeStyle: 'background:#06b6d4; color:#000;',
             badgeText: 'PIEZA ANEXA DE COLECCIONISTA',
             title: 'Dossier Notarial, Bancario y Fotos',
             titleStyle: '',
@@ -1316,8 +2227,8 @@
         metaCourt: 'SUMARIO ORDINARIO Nº 118/2025 · JUZGADO DE PRIMERA INSTANCIA E INSTRUCCIÓN Nº 1 DE CAMBADOS',
         crumbTitle: 'Caso 02 · Ría de Arousa',
         badgesHtml: `
-          <span class="case-badge" style="background:rgba(255,45,85,0.12); color:#FF2D55; border:1px solid rgba(255,45,85,0.3);"><span class="vg-pulse-dot" style="background:#FF2D55; box-shadow:0 0 6px #FF2D55;"></span>HOMICIDIO</span>
-          <span class="case-badge" style="background:rgba(56,189,248,0.12); color:#38BDF8; border:1px solid rgba(56,189,248,0.3);">INVESTIGACIÓN NÁUTICA</span>
+          <span class="case-badge" style="background:var(--evidence-red); color:#fff;">HOMICIDIO</span>
+          <span class="case-badge" style="background:#0284c7; color:#fff;">INVESTIGACIÓN NÁUTICA</span>
         `,
         briefingUrl: 'casos/caso-02-arousa/video-briefing/index.html',
         terminalUrl: 'casos/caso-02-arousa/terminal-policial/index.html',
@@ -1325,21 +2236,21 @@
         sidecarDocTitle: 'LEVANTAMIENTO CADÁVER (SOBRE A)',
         dossiers: [
           {
-            cardStyle: 'border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.04); grid-column: 1 / -1;',
-            badgeStyle: 'background:rgba(245,158,11,0.12); color:#F59E0B; border:1px solid rgba(245,158,11,0.3);',
+            cardStyle: 'border-color:#facc15; background: #172033; grid-column: 1 / -1;',
+            badgeStyle: 'background:#facc15; color:#000;',
             badgeText: 'LEER PRIMERO — PROTOCOLO NÁUTICO',
             title: 'Manual de Instrucciones Náuticas y Reglas (4 páginas)',
-            titleStyle: 'color:#FFFFFF;',
+            titleStyle: 'color:#fde047;',
             desc: 'Metodología pericial marítima, cartas náuticas IHM, protocolo de diatomeas, descifrado de registros NMEA GPS y pautas del caso.',
             htmlUrl: 'casos/caso-02-arousa/documentos-imprimibles/instrucciones_juego.html',
             pdfUrl: 'casos/caso-02-arousa/documentos-imprimibles/INSTRUCCIONES_DE_JUEGO.pdf',
             readerTitle: 'Manual de Instrucciones Náuticas',
             readerBadge: 'PROTOCOLO NÁUTICO',
-            btnHtmlStyle: 'border-color: rgba(245, 158, 11, 0.4); color: #F59E0B; background: rgba(245, 158, 11, 0.10);'
+            btnHtmlStyle: 'border-color: rgba(250, 204, 21, 0.4); color: #fde047; background: rgba(250, 204, 21, 0.12);'
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:rgba(56,189,248,0.12); color:#38BDF8; border:1px solid rgba(56,189,248,0.3);',
+            badgeStyle: 'background:#0284c7; color:#fff;',
             badgeText: 'SOBRE A — ABIERTO DE INICIO',
             title: 'Pieza Principal: Hallazgo y Autopsia Marina',
             titleStyle: '',
@@ -1352,7 +2263,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:rgba(245,158,11,0.12); color:#F59E0B; border:1px solid rgba(245,158,11,0.3);',
+            badgeStyle: 'background:#ca8a04; color:#000;',
             badgeText: 'SOBRE B — PRECINTADO',
             title: 'Pieza I: Interrogatorios y Modelo de Corrientes',
             titleStyle: '',
@@ -1365,7 +2276,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:rgba(255,45,85,0.12); color:#FF2D55; border:1px solid rgba(255,45,85,0.3);',
+            badgeStyle: 'background:#dc2626; color:#fff;',
             badgeText: 'SOBRE C — PRECINTADO',
             title: 'Pieza II: Convicción Final y Peritajes Náuticos',
             titleStyle: '',
@@ -1378,7 +2289,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:rgba(168,85,247,0.12); color:#C084FC; border:1px solid rgba(168,85,247,0.3);',
+            badgeStyle: 'background:#8b5cf6; color:#fff;',
             badgeText: 'EXTRAS DISPONIBLES DESDE EL INICIO',
             title: 'Fichas Policiales y La Voz de Galicia',
             titleStyle: '',
@@ -1391,7 +2302,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:rgba(0,229,255,0.12); color:#00E5FF; border:1px solid rgba(0,229,255,0.3);',
+            badgeStyle: 'background:#06b6d4; color:#000;',
             badgeText: 'PIEZA ANEXA DE COLECCIONISTA',
             title: 'Dossier Cofradía de Pescadores y Forense',
             titleStyle: '',
@@ -1475,9 +2386,9 @@
         metaCourt: 'DILIGENCIAS PREVIAS Nº 204/2025 · JUZGADO DE INSTRUCCIÓN Nº 3 DE CARTAGENA',
         crumbTitle: 'Caso 04 · Cartagena',
         badgesHtml: `
-          <span class="case-badge" style="background:rgba(255,45,85,0.12); color:#FF2D55; border:1px solid rgba(255,45,85,0.3);"><span class="vg-pulse-dot" style="background:#FF2D55; box-shadow:0 0 6px #FF2D55;"></span>HOMICIDIO</span>
-          <span class="case-badge" style="background:rgba(56,189,248,0.12); color:#38BDF8; border:1px solid rgba(56,189,248,0.3);">POLICÍA LOCAL CARTAGENA</span>
-          <span class="case-badge" style="background:rgba(0,229,255,0.12); color:#00E5FF; border:1px solid rgba(0,229,255,0.3);">ARQUEOLOGÍA SUBACUÁTICA</span>
+          <span class="case-badge" style="background:var(--evidence-red); color:#fff;">HOMICIDIO</span>
+          <span class="case-badge" style="background:#0284c7; color:#fff;">POLICÍA LOCAL CARTAGENA</span>
+          <span class="case-badge" style="background:#00e5ff; color:#000;">ARQUEOLOGÍA SUBACUÁTICA</span>
         `,
         briefingUrl: 'casos/caso-04-cartagena/video-briefing/index.html',
         terminalUrl: 'casos/caso-04-cartagena/terminal-policial/index.html',
@@ -1485,21 +2396,21 @@
         sidecarDocTitle: 'ATESTADO CALA CORTINA (SOBRE A)',
         dossiers: [
           {
-            cardStyle: 'border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.04); grid-column: 1 / -1;',
-            badgeStyle: 'background:rgba(245,158,11,0.12); color:#F59E0B; border:1px solid rgba(245,158,11,0.3);',
+            cardStyle: 'border-color:#facc15; background: #172033; grid-column: 1 / -1;',
+            badgeStyle: 'background:#facc15; color:#000;',
             badgeText: 'LEER PRIMERO — PROTOCOLO POLICIAL',
             title: 'Manual de Instrucciones del Investigador (4 páginas)',
-            titleStyle: 'color:#FFFFFF;',
+            titleStyle: 'color:#fde047;',
             desc: 'Protocolo de la Policía Local de Cartagena, balizamiento de los Faros de Navidad y Curra, rol de la Agente Patricia Normand y decálogo del caso.',
             htmlUrl: 'casos/caso-04-cartagena/documentos-imprimibles/instrucciones_juego.html',
             pdfUrl: 'casos/caso-04-cartagena/documentos-imprimibles/INSTRUCCIONES_DE_JUEGO.pdf',
             readerTitle: 'Manual de Instrucciones del Investigador',
             readerBadge: 'PROTOCOLO POLICIAL',
-            btnHtmlStyle: 'border-color: rgba(245, 158, 11, 0.4); color: #F59E0B; background: rgba(245, 158, 11, 0.10);'
+            btnHtmlStyle: 'border-color: rgba(250, 204, 21, 0.4); color: #fde047; background: rgba(250, 204, 21, 0.12);'
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:rgba(56,189,248,0.12); color:#38BDF8; border:1px solid rgba(56,189,248,0.3);',
+            badgeStyle: 'background:#0284c7; color:#fff;',
             badgeText: 'SOBRE A — ABIERTO DE INICIO',
             title: 'Pieza Principal: Hallazgo en Cala Cortina y Autopsia',
             titleStyle: '',
@@ -1512,7 +2423,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:rgba(245,158,11,0.12); color:#F59E0B; border:1px solid rgba(245,158,11,0.3);',
+            badgeStyle: 'background:#ca8a04; color:#000;',
             badgeText: 'SOBRE B — PRECINTADO',
             title: 'Pieza I: Interrogatorios y Telemetría de los Faros',
             titleStyle: '',
@@ -1525,7 +2436,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:rgba(255,45,85,0.12); color:#FF2D55; border:1px solid rgba(255,45,85,0.3);',
+            badgeStyle: 'background:#dc2626; color:#fff;',
             badgeText: 'SOBRE C — PRECINTADO',
             title: 'Pieza II: Convicción Final y Volcado de Vídeo',
             titleStyle: '',
@@ -1538,7 +2449,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:rgba(168,85,247,0.12); color:#C084FC; border:1px solid rgba(168,85,247,0.3);',
+            badgeStyle: 'background:#8b5cf6; color:#fff;',
             badgeText: 'EXTRAS DISPONIBLES DESDE EL INICIO',
             title: 'Fichas Policiales y Portada de La Verdad',
             titleStyle: '',
@@ -1551,7 +2462,7 @@
           },
           {
             cardStyle: '',
-            badgeStyle: 'background:rgba(0,229,255,0.12); color:#00E5FF; border:1px solid rgba(0,229,255,0.3);',
+            badgeStyle: 'background:#06b6d4; color:#000;',
             badgeText: 'PIEZA ANEXA CIENTÍFICA',
             title: 'Dossier Arqueológico ARQVA y Balizamiento',
             titleStyle: '',

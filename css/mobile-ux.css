@@ -169,110 +169,44 @@
     display: none !important;
   }
 
-  /* Dedicated Mobile In-Case Topbar (Native iOS App Bar) */
+  /* Dedicated Mobile In-Case Topbar (Notch & Safe-Area Compliant) */
   body.in-case-view .case-header-nav {
     display: flex !important;
     align-items: center !important;
-    justify-content: flex-start !important;
-    gap: 12px !important;
+    justify-content: space-between !important;
     padding-top: max(12px, env(safe-area-inset-top, 0px)) !important;
     padding-bottom: 12px !important;
     padding-left: max(16px, env(safe-area-inset-left, 0px)) !important;
     padding-right: max(16px, env(safe-area-inset-right, 0px)) !important;
-    background: rgba(5, 8, 15, 0.88) !important;
-    backdrop-filter: blur(28px) saturate(200%) !important;
-    -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
-    border-bottom: 0.5px solid rgba(255, 255, 255, 0.09) !important;
+    background: rgba(4, 7, 13, 0.92) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
     position: sticky !important;
     top: 0 !important;
     z-index: 950 !important;
-    margin: 0 -16px 14px -16px !important;
+    margin: 0 -16px 16px -16px !important;
   }
 
-  /* Compact Circular iOS Back Chevron Button */
   body.in-case-view .case-header-nav .back-btn {
-    width: 38px !important;
-    height: 38px !important;
-    min-width: 38px !important;
-    max-width: 38px !important;
-    padding: 0 !important;
-    border-radius: 50% !important;
+    height: 40px !important;
+    padding: 8px 16px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    border-radius: 9999px !important;
     background: rgba(255, 255, 255, 0.08) !important;
-    border: 1px solid rgba(255, 255, 255, 0.13) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
     color: #ffffff !important;
-    display: flex !important;
+    display: inline-flex !important;
     align-items: center !important;
-    justify-content: center !important;
-    font-size: 0 !important; /* Hides long 'VOLVER A EXPEDIENTES' text on mobile */
-    cursor: pointer !important;
-    flex-shrink: 0 !important;
-    transition: transform var(--vg-touch-duration) var(--vg-touch-spring), background 0.2s ease !important;
-  }
-
-  body.in-case-view .case-header-nav .back-btn svg {
-    width: 16px !important;
-    height: 16px !important;
-    stroke-width: 2.5 !important;
-    stroke: #ffffff !important;
-    margin: 0 !important;
+    gap: 6px !important;
+    letter-spacing: 0.04em !important;
   }
 
   body.in-case-view .case-header-nav .back-btn:active {
-    transform: scale(0.92) !important;
-    background: rgba(0, 229, 255, 0.18) !important;
-    border-color: rgba(0, 229, 255, 0.45) !important;
-  }
-
-  /* Two-line Case Title Stack in Mobile App Bar */
-  body.in-case-view .case-header-mini-info {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    min-width: 0 !important;
-    flex: 1 !important;
-    gap: 1px !important;
-  }
-
-  body.in-case-view .case-header-mini-info .mini-tag {
-    font-family: var(--vg-font-mono, monospace) !important;
-    font-size: 8.5px !important;
-    font-weight: 700 !important;
-    color: var(--vg-cyan, #00e5ff) !important;
-    letter-spacing: 0.1em !important;
-    text-transform: uppercase !important;
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-
-  body.in-case-view .case-header-mini-info .mini-title {
-    font-size: 14px !important;
-    font-weight: 800 !important;
-    color: #ffffff !important;
-    letter-spacing: -0.015em !important;
-    max-width: 100% !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    line-height: 1.2 !important;
-    margin: 0 !important;
-  }
-
-  /* Live Case Status Micro-Capsule Pill */
-  body.in-case-view .case-header-nav::after {
-    content: "ACTIVO" !important;
-    font-family: var(--vg-font-mono, monospace) !important;
-    font-size: 8.5px !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.08em !important;
-    padding: 3px 8px !important;
-    border-radius: 9999px !important;
-    background: rgba(34, 197, 94, 0.12) !important;
-    border: 1px solid rgba(34, 197, 94, 0.3) !important;
-    color: #4ade80 !important;
-    margin-left: auto !important;
-    flex-shrink: 0 !important;
+    transform: scale(0.94) !important;
+    background: rgba(0, 229, 255, 0.15) !important;
+    border-color: rgba(0, 229, 255, 0.4) !important;
   }
 
   body.in-case-view .mobile-bottom-nav {
@@ -338,123 +272,49 @@
     box-shadow: 0 0 6px rgba(34, 197, 94, 0.8) !important;
   }
 
-  /* --- HIGH-END MOBILE CASE CARDS (APPLE ARCADE / TV+ STYLE) --- */
+  /* --- CASE CARDS STREAMLINING --- */
   .catalog-grid {
-    gap: 18px !important;
+    gap: 16px !important;
     padding: 0 !important;
   }
 
   .case-card {
-    border-radius: 22px !important;
-    margin-bottom: 6px !important;
-    overflow: hidden !important;
-    background: linear-gradient(180deg, rgba(14, 21, 37, 0.88) 0%, rgba(6, 10, 18, 0.98) 100%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.11) !important;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
-    transition: transform var(--vg-touch-duration) var(--vg-touch-spring), 
-                border-color 0.2s ease, 
-                box-shadow 0.2s ease !important;
-  }
-
-  .case-card:active {
-    transform: scale(0.975) !important;
-    border-color: rgba(0, 229, 255, 0.45) !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.85), 0 0 20px rgba(0, 229, 255, 0.15) !important;
+    border-radius: 20px !important;
+    margin-bottom: 4px !important;
+    background: rgba(11, 17, 32, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
   }
 
   .case-cover-wrap {
-    height: 175px !important;
-    position: relative !important;
-    overflow: hidden !important;
-    background: #020408 !important;
-  }
-
-  /* Cinematic Vignette Overlay: Seamless photo bleed into obsidian card */
-  .case-cover-wrap::after {
-    content: '' !important;
-    position: absolute !important;
-    inset: 0 !important;
-    background: linear-gradient(180deg, rgba(6, 10, 18, 0) 0%, rgba(6, 10, 18, 0.45) 55%, rgba(6, 10, 18, 0.98) 100%) !important;
-    pointer-events: none !important;
-  }
-
-  .case-cover-img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    object-position: center 30% !important;
-    transition: transform 0.4s ease !important;
-  }
-
-  .case-card:active .case-cover-img {
-    transform: scale(1.03) !important;
-  }
-
-  /* Micro-Capsule Badges in Cover Corners */
-  .case-badge-overlay {
-    position: absolute !important;
-    top: 12px !important;
-    left: 12px !important;
-    display: flex !important;
-    gap: 6px !important;
-    z-index: 10 !important;
-  }
-
-  .case-badge {
-    padding: 4px 9px !important;
-    font-size: 8.5px !important;
-    font-weight: 700 !important;
-    border-radius: 9999px !important;
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    font-family: var(--vg-font-mono, monospace) !important;
-    letter-spacing: 0.05em !important;
-    line-height: 1.2 !important;
-  }
-
-  .case-badge.badge-active {
-    background: rgba(5, 20, 12, 0.82) !important;
-    border-color: rgba(34, 197, 94, 0.4) !important;
-    color: #4ade80 !important;
+    height: 190px !important;
   }
 
   .case-body {
-    padding: 14px 18px 18px 18px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 12px !important;
-    background: transparent !important;
+    padding: 16px !important;
+    gap: 14px !important;
   }
 
   .case-number {
-    font-family: var(--vg-font-mono, monospace) !important;
-    font-size: 9px !important;
-    letter-spacing: 0.12em !important;
-    color: var(--vg-cyan, #00e5ff) !important;
-    margin-bottom: 2px !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
+    font-size: 10px !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 4px !important;
   }
 
   .case-title {
-    font-size: 19px !important;
-    font-weight: 800 !important;
-    color: #ffffff !important;
-    line-height: 1.24 !important;
-    letter-spacing: -0.025em !important;
-    margin: 0 0 6px 0 !important;
+    font-size: 18px !important;
+    line-height: 1.3 !important;
+    margin-bottom: 6px !important;
   }
 
   /* Line-clamp summary on mobile to eliminate wall-of-text */
   .case-summary {
-    font-size: 12.5px !important;
-    line-height: 1.48 !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
     color: var(--vg-text-secondary, #94a3b8) !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 2 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     margin-bottom: 12px !important;
   }
 
@@ -463,69 +323,47 @@
     display: block !important;
   }
 
-  /* Sleek Inline Metadata Capsule Row (No Boxy Tables) */
+  /* Compact 3-Pill Specs Bar */
   .case-specs {
     display: flex !important;
     flex-direction: row !important;
-    gap: 6px !important;
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    margin-bottom: 12px !important;
-    justify-content: flex-start !important;
-    flex-wrap: wrap !important;
+    gap: 8px !important;
+    background: rgba(4, 7, 13, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    padding: 8px 12px !important;
+    border-radius: 12px !important;
+    margin-bottom: 14px !important;
+    justify-content: space-around !important;
   }
 
   .spec-item {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.09) !important;
-    border-radius: 9999px !important;
-    padding: 4px 10px !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    flex: none !important;
-    text-align: left !important;
+    text-align: center !important;
+    flex: 1 !important;
+    padding: 0 !important;
+    border: none !important;
   }
 
   .spec-label {
-    font-size: 8.5px !important;
-    letter-spacing: 0.04em !important;
+    font-size: 8px !important;
+    letter-spacing: 0.5px !important;
     color: var(--vg-text-muted, #64748b) !important;
-    font-family: var(--vg-font-mono, monospace) !important;
-    font-weight: 700 !important;
-    margin: 0 !important;
+    margin-bottom: 2px !important;
   }
 
   .spec-val {
-    font-size: 11px !important;
+    font-size: 12px !important;
     font-weight: 700 !important;
-    color: #ffffff !important;
-    font-family: var(--vg-font-mono, monospace) !important;
+    color: #fff !important;
   }
 
-  /* Luminous Full-Width Tactile CTA Button */
+  /* Full-width High-Tactile CTA */
   .btn-enter-case {
     width: 100% !important;
-    height: 46px !important;
-    font-size: 12.5px !important;
-    border-radius: 12px !important;
+    height: 48px !important;
+    font-size: 13px !important;
+    border-radius: 14px !important;
     font-weight: 800 !important;
-    letter-spacing: 0.06em !important;
-    background: linear-gradient(135deg, rgba(0, 229, 255, 0.16) 0%, rgba(0, 229, 255, 0.06) 100%) !important;
-    border: 1px solid rgba(0, 229, 255, 0.35) !important;
-    color: var(--vg-cyan, #00e5ff) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 8px !important;
-    box-shadow: 0 4px 14px rgba(0, 229, 255, 0.10) !important;
-    transition: transform var(--vg-touch-duration) var(--vg-touch-spring), background 0.2s ease !important;
-  }
-
-  .btn-enter-case:active {
-    transform: scale(0.96) !important;
-    background: rgba(0, 229, 255, 0.25) !important;
+    letter-spacing: 1px !important;
   }
 
   /* --- CASE WORKSPACE HEADER & TABS DECLUTTER --- */
@@ -652,57 +490,48 @@
     border: 1px solid rgba(255, 255, 255, 0.12) !important;
   }
 
-  /* --- SUSPECTS & SCENE PHOTO GRID (POLICE CREDENTIAL PASS LAYOUT) --- */
+  /* --- SUSPECTS & SCENE PHOTO GRID (MOBILE POLICE DOSSIER OVERHAUL) --- */
   .profiles-grid {
     display: flex !important;
     flex-direction: column !important;
-    gap: 10px !important;
+    gap: 12px !important;
     margin-bottom: 24px !important;
   }
 
   .profile-card {
     display: flex !important;
     flex-direction: row !important;
-    align-items: center !important;
+    align-items: stretch !important;
     border-radius: 18px !important;
     overflow: hidden !important;
-    background: rgba(11, 17, 32, 0.82) !important;
+    background: rgba(15, 23, 42, 0.78) !important;
     backdrop-filter: blur(28px) saturate(190%) !important;
     -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.10) !important;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-    min-height: 84px !important;
-    padding: 10px 14px !important;
-    gap: 12px !important;
-    margin-bottom: 4px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+    min-height: 104px !important;
     cursor: pointer !important;
     position: relative !important;
-    transition: transform var(--vg-touch-duration) var(--vg-touch-spring), 
-                border-color 0.2s ease, 
-                background 0.2s ease !important;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, background 0.2s ease !important;
     -webkit-tap-highlight-color: transparent !important;
   }
 
   .profile-card:active {
-    transform: scale(0.975) !important;
-    border-color: rgba(0, 229, 255, 0.5) !important;
+    transform: scale(0.98) !important;
+    border-color: rgba(0, 229, 255, 0.6) !important;
     background: rgba(15, 23, 42, 0.95) !important;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6), 0 0 16px rgba(0, 229, 255, 0.15) !important;
   }
 
-  /* Squircle Biometric Portrait Thumbnail */
   .profile-thumb-wrap {
-    width: 68px !important;
-    min-width: 68px !important;
-    max-width: 68px !important;
-    height: 68px !important;
-    min-height: 68px !important;
-    border-radius: 14px !important;
+    width: 104px !important;
+    min-width: 104px !important;
+    max-width: 104px !important;
+    height: auto !important;
+    min-height: 104px !important;
     position: relative !important;
     overflow: hidden !important;
     background: #060a12 !important;
-    border: 1.5px solid rgba(0, 229, 255, 0.32) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -710,9 +539,9 @@
   }
 
   #scenes-grid-container .profile-thumb-wrap {
-    width: 84px !important;
-    min-width: 84px !important;
-    max-width: 84px !important;
+    width: 120px !important;
+    min-width: 120px !important;
+    max-width: 120px !important;
   }
 
   .profile-thumb {
@@ -723,70 +552,59 @@
     object-fit: cover !important;
     object-position: center 20% !important;
     display: block !important;
+    opacity: 1 !important;
     transition: transform 0.3s ease !important;
   }
 
   .profile-info {
     flex: 1 !important;
-    padding: 0 !important;
+    padding: 12px 14px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
     min-width: 0 !important;
-    gap: 3px !important;
-  }
-
-  .profile-role {
-    font-size: 9.5px !important;
-    font-weight: 700 !important;
-    color: var(--vg-cyan, #00e5ff) !important;
-    font-family: var(--vg-font-mono, monospace) !important;
-    line-height: 1.3 !important;
-    text-transform: uppercase !important;
-    margin: 0 !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    letter-spacing: 0.05em !important;
+    position: relative !important;
   }
 
   .profile-name {
     font-size: 15px !important;
     font-weight: 800 !important;
     color: #ffffff !important;
-    line-height: 1.25 !important;
+    line-height: 1.3 !important;
+    margin: 0 0 5px 0 !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
     letter-spacing: -0.015em !important;
-    margin: 0 !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
   }
 
-  /* Trailing Glass Chevron Action Indicator */
-  .profile-card::after {
-    content: "›" !important;
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    border-radius: 50% !important;
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.09) !important;
-    color: #94a3b8 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 17px !important;
-    font-weight: 300 !important;
-    line-height: 1 !important;
-    margin-left: auto !important;
-    flex-shrink: 0 !important;
-    transition: all 0.2s ease !important;
+  .profile-role {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    color: var(--cyan-neon, #00e5ff) !important;
+    font-family: var(--vg-font-mono, monospace) !important;
+    line-height: 1.4 !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    letter-spacing: 0.02em !important;
   }
 
-  .profile-card:active::after {
-    color: #00e5ff !important;
-    background: rgba(0, 229, 255, 0.15) !important;
-    border-color: rgba(0, 229, 255, 0.4) !important;
+  .profile-info::after {
+    content: "PULSA PARA AMPLIAR ↗";
+    display: block;
+    font-family: var(--vg-font-mono, monospace);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 6px;
+    transition: color 0.2s ease;
+  }
+
+  .profile-card:active .profile-info::after {
+    color: #00e5ff;
   }
 }
 
@@ -1094,16 +912,16 @@
   .vg-bottom-nav {
     pointer-events: auto !important;
     width: 100% !important;
-    max-width: 380px !important;
-    height: 60px !important;
-    background: rgba(8, 13, 24, 0.88) !important;
-    backdrop-filter: blur(32px) saturate(220%) !important;
-    -webkit-backdrop-filter: blur(32px) saturate(220%) !important;
-    border-radius: 30px !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.88), 
-                0 0 24px rgba(0, 229, 255, 0.09),
-                inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+    max-width: 390px !important;
+    height: var(--vg-dock-height) !important;
+    background: rgba(11, 17, 32, 0.82) !important;
+    backdrop-filter: blur(28px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+    border-radius: 9999px !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 
+                0 0 24px rgba(0, 229, 255, 0.08),
+                inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-around !important;
@@ -1117,21 +935,21 @@
     flex: 1 !important;
     height: 100% !important;
     min-width: 44px !important;
-    min-height: 48px !important;
+    min-height: 44px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 3px !important;
-    border-radius: 20px !important;
+    gap: 2px !important;
+    border-radius: 9999px !important;
     color: rgba(255, 255, 255, 0.42) !important;
     text-decoration: none !important;
     background: transparent !important;
-    border: 1px solid transparent !important;
+    border: none !important;
     cursor: pointer !important;
     position: relative !important;
     padding: 4px 2px !important;
-    transition: all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    transition: all 0.22s var(--vg-touch-spring) !important;
   }
 
   .nav-item:active,
@@ -1144,7 +962,7 @@
   .vg-nav-icon {
     font-size: 1.15rem !important;
     line-height: 1 !important;
-    transition: transform 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.22s ease !important;
+    transition: transform 0.22s var(--vg-touch-spring), color 0.22s ease !important;
   }
 
   .nav-item span:not(.nav-icon),
@@ -1160,14 +978,13 @@
   .nav-item.active,
   .vg-nav-item.active {
     color: #FFFFFF !important;
-    background: linear-gradient(180deg, rgba(0, 229, 255, 0.16) 0%, rgba(0, 229, 255, 0.05) 100%) !important;
-    border: 1px solid rgba(0, 229, 255, 0.32) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
   }
 
   .nav-item.active .nav-icon,
   .vg-nav-item.active .vg-nav-icon {
     color: var(--vg-cyan, #00e5ff) !important;
-    transform: translateY(-1px) scale(1.1) !important;
+    transform: translateY(-2px) scale(1.08) !important;
     filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.75)) !important;
   }
 
@@ -1177,17 +994,17 @@
     font-weight: 700 !important;
   }
 
-  /* Luminous Bottom Micro-Dot Indicator */
+  /* Luminous Bottom Indicator Bar */
   .nav-item.active::after,
   .vg-nav-item.active::after {
     content: '' !important;
     position: absolute !important;
-    bottom: 3.5px !important;
-    width: 4px !important;
-    height: 4px !important;
-    border-radius: 50% !important;
+    bottom: 3px !important;
+    width: 14px !important;
+    height: 2.5px !important;
+    border-radius: 2px !important;
     background: var(--vg-cyan, #00e5ff) !important;
-    box-shadow: 0 0 8px var(--vg-cyan, #00e5ff), 0 0 12px rgba(0, 229, 255, 0.8) !important;
+    box-shadow: 0 0 10px var(--vg-cyan, #00e5ff), 0 0 16px rgba(0, 229, 255, 0.6) !important;
   }
 }
 
@@ -1202,28 +1019,28 @@
   /* 1. Safe Area Aware Reader Topbar */
   .vg-reader-topbar {
     height: auto !important;
-    min-height: calc(54px + env(safe-area-inset-top, 0px)) !important;
-    padding-top: max(12px, calc(env(safe-area-inset-top, 0px) + 6px)) !important;
+    min-height: calc(56px + env(safe-area-inset-top, 0px)) !important;
+    padding-top: max(14px, calc(env(safe-area-inset-top, 0px) + 8px)) !important;
     padding-bottom: 10px !important;
     padding-left: max(14px, env(safe-area-inset-left, 0px)) !important;
     padding-right: max(14px, env(safe-area-inset-right, 0px)) !important;
-    background: rgba(5, 8, 15, 0.92) !important;
-    backdrop-filter: blur(28px) saturate(200%) !important;
-    -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
-    border-bottom: 0.5px solid rgba(255, 255, 255, 0.10) !important;
+    background: rgba(7, 11, 20, 0.94) !important;
+    backdrop-filter: blur(28px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: flex-start !important;
     gap: 12px !important;
   }
 
-  /* 2. Refined Neutral Frosted Glass Close Button */
+  /* 2. Prominent Mobile Close Button */
   .vg-reader-mobile-close-btn {
-    height: 36px !important;
-    padding: 0 12px !important;
+    height: 38px !important;
+    padding: 0 14px !important;
     border-radius: 9999px !important;
-    background: rgba(255, 255, 255, 0.08) !important;
-    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    background: rgba(255, 45, 85, 0.15) !important;
+    border: 1px solid rgba(255, 45, 85, 0.4) !important;
     color: #ffffff !important;
     font-size: 12px !important;
     font-weight: 700 !important;
@@ -1237,39 +1054,29 @@
 
   .vg-reader-mobile-close-btn:active {
     transform: scale(0.94) !important;
-    background: rgba(255, 45, 85, 0.2) !important;
-    border-color: rgba(255, 45, 85, 0.5) !important;
+    background: rgba(255, 45, 85, 0.3) !important;
   }
 
   .vg-reader-meta {
     flex: 1 !important;
     min-width: 0 !important;
     display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    gap: 1px !important;
+    align-items: center !important;
+    gap: 8px !important;
   }
 
   .vg-reader-title {
-    font-size: 13.5px !important;
-    font-weight: 800 !important;
+    font-size: 13px !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     color: #ffffff !important;
-    line-height: 1.2 !important;
   }
 
   .vg-reader-badge {
-    font-family: var(--vg-font-mono, monospace) !important;
-    font-size: 8.5px !important;
-    font-weight: 700 !important;
-    color: var(--vg-cyan, #00e5ff) !important;
-    letter-spacing: 0.08em !important;
-    text-transform: uppercase !important;
-    padding: 0 !important;
-    background: transparent !important;
-    border: none !important;
+    font-size: 9px !important;
+    padding: 2px 6px !important;
+    flex-shrink: 0 !important;
   }
 
   /* 3. Viewport stage bottom clearance for the floating dock */
@@ -1306,35 +1113,34 @@
     -webkit-overflow-scrolling: touch !important;
   }
 
-  /* 4. Mobile Floating Glass Zoom Dock (Ergonomic Thumb-Zone) */
+  /* 4. Mobile Floating Glass Zoom Dock */
   .vg-reader-mobile-dock {
     position: fixed !important;
-    bottom: max(14px, calc(env(safe-area-inset-bottom, 0px) + 8px)) !important;
-    left: 16px !important;
-    right: 16px !important;
-    width: auto !important;
-    max-width: 360px !important;
-    margin: 0 auto !important;
-    height: 56px !important;
-    border-radius: 28px !important;
-    background: rgba(8, 13, 24, 0.90) !important;
-    backdrop-filter: blur(32px) saturate(220%) !important;
-    -webkit-backdrop-filter: blur(32px) saturate(220%) !important;
+    bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 8px)) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 2500 !important;
+    width: calc(100% - 32px) !important;
+    max-width: 380px !important;
+    height: 52px !important;
+    border-radius: 9999px !important;
+    background: rgba(11, 17, 32, 0.88) !important;
+    backdrop-filter: blur(28px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
     border: 1px solid rgba(255, 255, 255, 0.14) !important;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9), 0 0 24px rgba(0, 229, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 229, 255, 0.12) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-around !important;
     padding: 0 8px !important;
-    z-index: 2500 !important;
   }
 
   .vg-reader-dock-btn {
     height: 38px !important;
     min-width: 38px !important;
     border-radius: 9999px !important;
-    background: rgba(255, 255, 255, 0.07) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
     color: #ffffff !important;
     font-size: 15px !important;
     font-weight: 700 !important;
@@ -1345,7 +1151,6 @@
     padding: 0 10px !important;
     cursor: pointer !important;
     text-decoration: none !important;
-    transition: transform var(--vg-touch-duration) var(--vg-touch-spring), background 0.2s ease !important;
   }
 
   .vg-reader-dock-btn:active {
@@ -1354,13 +1159,13 @@
 
   .vg-reader-dock-pill {
     height: 32px !important;
-    padding: 0 10px !important;
+    padding: 0 12px !important;
     border-radius: 9999px !important;
     background: rgba(0, 229, 255, 0.1) !important;
     border: 1px solid rgba(0, 229, 255, 0.3) !important;
     color: var(--vg-cyan, #00e5ff) !important;
     font-family: var(--vg-font-mono, monospace) !important;
-    font-size: 11px !important;
+    font-size: 12px !important;
     font-weight: 700 !important;
     display: inline-flex !important;
     align-items: center !important;
@@ -1368,25 +1173,16 @@
     cursor: pointer !important;
   }
 
-  .vg-reader-dock-btn.uv-btn {
-    font-size: 11px !important;
-    padding: 0 12px !important;
-    background: rgba(56, 189, 248, 0.14) !important;
-    border-color: rgba(56, 189, 248, 0.35) !important;
-    color: #38bdf8 !important;
-  }
-
   .vg-reader-dock-btn.uv-btn.active {
     background: #38bdf8 !important;
     color: #020408 !important;
-    box-shadow: 0 0 16px rgba(56, 189, 248, 0.7) !important;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.6) !important;
   }
 
   .vg-reader-dock-btn.pdf-btn {
     font-size: 11px !important;
-    padding: 0 12px !important;
-    background: rgba(255, 255, 255, 0.07) !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
-    color: #cbd5e1 !important;
+    background: rgba(2, 132, 199, 0.25) !important;
+    border-color: rgba(56, 189, 248, 0.4) !important;
+    color: #38bdf8 !important;
   }
 }
