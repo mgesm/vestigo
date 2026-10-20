@@ -1,5 +1,5 @@
 // VESTIGO Service Worker v2.1.0 — Multi-Case Forensic Engine & Anti-FOUC
-const CACHE_NAME = 'vestigo-cache-v3.0.0';
+const CACHE_NAME = 'vestigo-cache-v3.0.1';
 
 const PRECACHE_ASSETS = [
   './',
