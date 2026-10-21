@@ -1573,10 +1573,8 @@ body {
   color: var(--vg-text-secondary);
   line-height: 1.58;
   margin-bottom: 20px;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  display: block;
+  overflow: visible;
 }
 
 .case-specs {

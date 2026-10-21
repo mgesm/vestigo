@@ -446,21 +446,16 @@
     margin: 0 0 6px 0 !important;
   }
 
-  /* Line-clamp summary on mobile to eliminate wall-of-text */
+    /* Full summary visible on mobile without truncation */
   .case-summary {
-    font-size: 12.5px !important;
-    line-height: 1.48 !important;
+    font-size: 13px !important;
+    line-height: 1.54 !important;
     color: var(--vg-text-secondary, #94a3b8) !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 2 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
-    margin-bottom: 12px !important;
-  }
-
-  .case-summary.expanded {
-    -webkit-line-clamp: unset !important;
     display: block !important;
+    -webkit-line-clamp: unset !important;
+    -webkit-box-orient: unset !important;
+    overflow: visible !important;
+    margin-bottom: 14px !important;
   }
 
   /* Sleek Inline Metadata Capsule Row (No Boxy Tables) */
