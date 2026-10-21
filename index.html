@@ -20,11 +20,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Core Design System CSS -->
-  <link rel="stylesheet" href="css/liquid-glass.css?v=3.0.1">
+  <link rel="stylesheet" href="css/liquid-glass.css?v=3.0.2">
   <!-- Desktop & Tablet Specialized Layout -->
-  <link rel="stylesheet" href="css/desktop-layout.css?v=3.0.1">
+  <link rel="stylesheet" href="css/desktop-layout.css?v=3.0.2">
   <!-- Mobile Phone & Touch Specialist UX -->
-  <link rel="stylesheet" href="css/mobile-ux.css?v=3.0.1">
+  <link rel="stylesheet" href="css/mobile-ux.css?v=3.0.2">
 
   <style>
     /* ========================================================
@@ -1144,44 +1144,46 @@
           <span class="vg-search-item-badge badge-red">SOSPECHOSO</span>
           <span>Brais Lema Castro (Ingeniero naval y dueño de astillero)</span>
         </div>
-        <!-- CASO 04 CARTAGENA (OCULTO TEMPORALMENTE)
+                <!-- CASO 04 CARTAGENA -->
+        <div style="font-family:var(--vg-font-mono, monospace); font-size:0.68rem; color:#00E5FF; padding:8px 8px 4px 8px; text-transform:uppercase; border-top: 1px solid rgba(255,255,255,0.06); margin-top:4px;">
+          Caso 04 · El Enigma de los Dos Faros (Cala Cortina)
+        </div>
         <div class="vg-search-item" onclick="selectSearchResult('cartagena_briefing')">
-          <span class="vg-search-item-badge" style="background:#00e5ff; color:#000;">C04 BRIEFING</span>
+          <span class="vg-search-item-badge badge-cyan">C04 BRIEFING</span>
           <span>Vídeo Briefing: Los Dos Faros de Cartagena (Agente Patricia Normand)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('cartagena_terminal')">
-          <span class="vg-search-item-badge" style="background:#0284c7; color:#fff;">SITRA-CARTAGENA</span>
+          <span class="vg-search-item-badge badge-blue">SITRA-CARTAGENA</span>
           <span>Terminal Policial Cartagena (Faros Navidad/Curra, Radar Bocana, Paco)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('cartagena_sobre_a')">
-          <span class="vg-search-item-badge" style="background:#0284c7; color:#fff;">C04 SOBRE A</span>
+          <span class="vg-search-item-badge badge-blue">C04 SOBRE A</span>
           <span>Sobre A: Atestado Patricia Normand, Hallazgo en Cala Cortina y Autopsia</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('cartagena_sobre_b')">
-          <span class="vg-search-item-badge" style="background:#ca8a04; color:#000;">C04 SOBRE B</span>
+          <span class="vg-search-item-badge badge-amber">C04 SOBRE B</span>
           <span>Sobre B: Interrogatorios, Telemetría Faros y Hallazgo de Paco el Gato</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('cartagena_sobre_c')">
-          <span class="vg-search-item-badge" style="background:#dc2626; color:#fff;">C04 SOBRE C</span>
+          <span class="vg-search-item-badge badge-red">C04 SOBRE C</span>
           <span>Sobre C: Convicción Final, Microcápsula y Dictamen SECRIM</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('cartagena_patricia')">
-          <span class="vg-search-item-badge" style="background:#00e5ff; color:#000;">INSTRUCTORA</span>
-          <span>Agente Patricia Normand (Policía Local de Cartagena · Placa 1482)</span>
+          <span class="vg-search-item-badge badge-cyan">INSTRUCTORA</span>
+          <span>Agente Patricia Normand (Policía Local de Cartagena — Placa 1482)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('cartagena_paco')">
-          <span class="vg-search-item-badge" style="background:#f97316; color:#fff;">CENTINELA</span>
-          <span>Paco el Gato (Cala Cortina · Descubridor Evidencia E-01)</span>
+          <span class="vg-search-item-badge badge-amber">CENTINELA</span>
+          <span>Paco el Gato (Cala Cortina — Descubridor Evidencia E-01)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('cartagena_suspect_victor')">
-          <span class="vg-search-item-badge" style="background:#ef4444; color:#fff;">INVESTIGADO</span>
+          <span class="vg-search-item-badge badge-red">INVESTIGADO</span>
           <span>Víctor Huesca Vidal (Instructor Bocana Dive en Cala Cortina)</span>
         </div>
         <div class="vg-search-item" onclick="selectSearchResult('cartagena_suspect_claudia')">
-          <span class="vg-search-item-badge" style="background:#f59e0b; color:#000;">INVESTIGADA</span>
+          <span class="vg-search-item-badge badge-amber">INVESTIGADA</span>
           <span>Claudia Vicedo Cánovas (Controladora de Faros del Puerto)</span>
         </div>
-        -->
         <div class="vg-search-item" onclick="selectSearchResult('notes')">
           <span class="vg-search-item-badge badge-purple">NOTAS</span>
           <span>Cuaderno de Campo del Investigador (Bloc de Notas Dual)</span>
@@ -1232,7 +1234,7 @@
         </div>
         <div class="catalog-header-badge">
           <span class="catalog-badge-dot"></span>
-          <span>2 ACTIVOS</span>
+          <span>3 ACTIVOS</span>
         </div>
       </div>
 
@@ -1323,12 +1325,12 @@
           </div>
         </div>
 
-        <!-- CASO 04: EL ENIGMA DE LOS DOS FAROS (OCULTO TEMPORALMENTE A PETICIÓN, PRESERVADO PARA APERTURA PRÓXIMA)
-<div class="case-card vg-case-card" id="case-card-cartagena" style="display:none; cursor:pointer;" onclick="openCase('cartagena')" role="button" tabindex="0">
+                <!-- CASO 04: EL ENIGMA DE LOS DOS FAROS (ACTIVO) -->
+        <div class="case-card vg-case-card" id="case-card-cartagena" style="cursor:pointer;" onclick="openCase('cartagena')" role="button" tabindex="0">
           <div class="case-cover-wrap">
             <img src="casos/caso-04-cartagena/imagenes/escena_cala_cortina.png" alt="Caso 04: El Enigma de los Dos Faros (Cala Cortina)" class="case-cover-img" width="600" height="200" loading="eager" decoding="async">
             <div class="case-badge-overlay">
-              <span class="case-badge badge-active" style="background:#00e5ff; color:#000;">CASO 04 · ACTIVO</span>
+              <span class="case-badge badge-active"><span class="catalog-badge-dot"></span>CASO 04 · ACTIVO</span>
               <span class="case-badge" style="background:rgba(56,189,248,0.12); color:#38BDF8; border:1px solid rgba(56,189,248,0.3);">DIFICULTAD MEDIA-ALTA</span>
             </div>
           </div>
@@ -1364,7 +1366,6 @@
             </div>
           </div>
         </div>
-        -->
 
         <!-- CASO 03: PLANIFICADO (TEASER COMPACTO) -->
         <div class="case-card-teaser">
@@ -1993,7 +1994,7 @@
   </div>
 
   <!-- MOTOR DE GESTOS Y TOUCH NATIVO MÓVIL -->
-  <script src="css/mobile-touch-engine.js?v=3.0.1"></script>
+  <script src="css/mobile-touch-engine.js?v=3.0.2"></script>
 
   <!-- LÓGICA JAVASCRIPT DEL CLIENTE -->
   <script>
